@@ -1,0 +1,43 @@
+wav格式:
+4	"RIFF"
+4	size=fileLen-8
+4	"WAVE"
+
+4	"fmt "
+4	size固定=16或18
+2	编码方式,一般=0x0001
+2 	声道	例如:2
+4	采样率  例如:44100
+4	每秒字节数 例如:176400=采样率*采样率字节数
+2	每个采样率的字节数 例如:4=声道*采样bit/2
+2	每个采样的bit数 例如:16
+2	附加(通过size决定是否有.
+
+//可能有
+4	"fact"
+
+4	"data"
+4	size 一般情况下=fileLen-12-24-8
+
+MP3:
+FF FB 92 84
+11111111 11111011 10010010 10000100
+11111111111 11 01 1 1001 00 1 0 10 00 0 1 00
+11 	固定全1
+2 11	mpeg version :MPEG Version 1
+2 01 	layer version:Layer III 
+1 1     crc保护:1 不保护
+4 1001  比特率:128
+2 00 	采样率:44100
+1 1     padding :多一个bit的padding
+1 0     未知
+2 10    声道:2
+2 00    mode扩张,off
+1 0	版权:无版权
+1 1	original,
+2 00	emphasis:none
+
+数据帧大小:
+FrameSize = (((MpegVersion == MPEG1 ? 144 : 72) * Bitrate) / SamplingRate) + PaddingBit
+FrameSize = (144 * 128000) / 44100 + 1 = 417 bytes
+每帧固定26ms

@@ -16,6 +16,7 @@
 // FORWARD DECLARATIONS
 class CLemonMicroAppView;
 class CFileRecordAdapter;
+class CStreamRecordAdapter;
 // CLASS DECLARATION
 /**
  * CLemonMicroAppUi application UI class.
@@ -80,6 +81,7 @@ private:
 	CLemonMicroAppView* iAppView;
 
 	CFileRecordAdapter* iFileRecorder;
+	CStreamRecordAdapter* iStreamRecorder;
 	};
 
 #endif // __LEMONMICROAPPUI_h__

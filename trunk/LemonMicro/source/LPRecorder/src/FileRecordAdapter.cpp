@@ -52,17 +52,17 @@ void CFileRecordAdapter::MoscoStateChangeEvent(CBase* /*Object*/, TInt aPrevious
 	if (aErrorCode != KErrNone)
 		{	
 			//If user wants record, but errors occurs, warning note is shown
-			if (iStatus == ERecording)
+			if (iStatus == ERecorderAdapterRecording)
 				{
 				_LIT(text, "Recording failed!");
 				CAknWarningNote* note = new (ELeave) CAknWarningNote();
 				note -> ExecuteLD(text);
 				}
 				
-			iStatus = EStop;
+			iStatus = ERecorderAdapterStop;
 		}
 	//When recorder is ready and state is ERecording, recording may start
-	else if (iStatus == ERecording && CurrentState == 1 && aPreviousState == 0)
+	else if (iStatus == ERecorderAdapterRecording && CurrentState == 1 && aPreviousState == 0)
 		{
 		// Set maximum gain for recording
 	    iMdaAudioRecorderUtility->SetGain(iMdaAudioRecorderUtility->MaxGain());
@@ -72,9 +72,9 @@ void CFileRecordAdapter::MoscoStateChangeEvent(CBase* /*Object*/, TInt aPrevious
 	    iMdaAudioRecorderUtility->RecordL();
 		}
 	//If playing stops to end of the file, status changes to EStop	
-	else if (iStatus == EPlaying && CurrentState == 1)
+	else if (iStatus == ERecorderAdapterPlaying && CurrentState == 1)
 		{
-				iStatus = EStop;				
+				iStatus = ERecorderAdapterStop;				
 		}
 }
 
@@ -87,7 +87,7 @@ void CFileRecordAdapter::SetFileName(const TDesC& aFileName)
 	//¿ªÊ¼Â¼ÖÆ
 void CFileRecordAdapter::StartRecordL()
 	{
-	iStatus = ERecording;
+	iStatus = ERecorderAdapterRecording;
 	
 	iMdaAudioRecorderUtility->OpenFileL(iFileName);
 	}

@@ -48,7 +48,7 @@ LIBRARY		   commonengine.lib
 LIBRARY		   efsrv.lib 
 LIBRARY		   estor.lib
 LIBRARY        aknnotify.lib
-LIBRARY        hlplch.lib mediaclientaudio.lib charconv.lib
+LIBRARY        hlplch.lib mediaclientaudio.lib charconv.lib mediaclientaudiostream.lib mediaclientaudioinputstream.lib
  
 
 LANG SC
@@ -65,3 +65,5 @@ SOURCEPATH ..\source\LPRecorder\src
 SOURCE FileRecordAdapter.cpp StreamRecordAdapter.cpp
 SOURCEPATH ..\source\LPDebug\src
 SOURCE FileLogger.cpp
+SOURCEPATH ..\source\LPRecorder\src
+SOURCE StreamPlayerdapter.cpp

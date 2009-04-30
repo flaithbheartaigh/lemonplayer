@@ -17,10 +17,18 @@ enum TLemonMicroPanics
 	// add further panics here
 	};
 
-inline void Panic(TLemonMicroPanics aReason)
+inline void Panic(TInt aReason)
 	{
 	_LIT(applicationName, "LemonMicro");
 	User::Panic(applicationName, aReason);
+	}
+
+inline void PanicIfError(TInt aPanicCode)
+	{
+	if (aPanicCode != KErrNone)
+		{
+		Panic(aPanicCode);
+		}
 	}
 
 #endif // __LEMONMICRO_PAN__
