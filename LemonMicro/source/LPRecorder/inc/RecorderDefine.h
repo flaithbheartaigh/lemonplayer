@@ -3,10 +3,11 @@
 
 enum TRecorderAdapterStatus
 {
-	EPlaying = 1,
-	ERecording,
-	EStop,
-	EPause
+	ERecorderAdapterNotReady = 0,
+	ERecorderAdapterPlaying,
+	ERecorderAdapterRecording,
+	ERecorderAdapterStop,
+	ERecorderAdapterPause
 };
 
 #endif /*RECODERDEFINE_H_*/

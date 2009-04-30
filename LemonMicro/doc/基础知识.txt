@@ -1,0 +1,17 @@
+改进离散余弦变换（MDCT）
+MDCT（Modified Discrete Cosine Transform，变址离散余弦变换）
+
+subband 感知子带（subband）/
+
+傅立叶变化 fourier-related transform
+
+MDCT
+http://en.wikipedia.org/wiki/Modified_discrete_cosine_transform
+
+傅里叶变换
+http://zh.wikipedia.org/wiki/%E5%82%85%E9%87%8C%E5%8F%B6%E5%8F%98%E6%8D%A2
+
+大学数学,线形代数,微积分
+
+应用高等数学基础——线性代数与积分变换
+http://product.dangdang.com/product.aspx?product_id=9269274

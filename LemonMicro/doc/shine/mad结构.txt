@@ -1,0 +1,5 @@
+MP3Decode大概结构:
+MP3Decode,
+MP3DecodeEngine,
+MMP3DecodeNotifier 虚函数,
+包括Read,错误报告,解码三个函数,只有第一个函数有用.

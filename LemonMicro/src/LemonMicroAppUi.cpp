@@ -26,6 +26,7 @@
 #include "LemonMicroAppView.h"
 
 #include "FileRecordAdapter.h"
+#include "StreamRecordAdapter.h"
 #include "MacroUtil.h"
 
 _LIT(KFileName, "C:\\private\\EFE1B7CE\\LemonMicro.txt");
@@ -71,6 +72,8 @@ void CLemonMicroAppUi::ConstructL()
 	
 	iFileRecorder = CFileRecordAdapter::NewL();
 	iFileRecorder->SetFileName(_L("c:\\myrecord.wav"));
+	
+	iStreamRecorder = CStreamRecordAdapter::NewL();
 
 	}
 // -----------------------------------------------------------------------------
@@ -92,6 +95,7 @@ CLemonMicroAppUi::~CLemonMicroAppUi()
 	{
 	
 	SAFE_DELETE(iFileRecorder);
+	SAFE_DELETE(iStreamRecorder);
 	
 	if (iAppView)
 		{
@@ -117,32 +121,12 @@ void CLemonMicroAppUi::HandleCommandL(TInt aCommand)
 
 		case ECommand1:
 			{
-			iFileRecorder->StartRecordL();
+//			iFileRecorder->StartRecordL();
 			}
 			break;
 		case ECommand2:
 			{
-			RFile rFile;
-
-			//Open file where the stream text is
-			User::LeaveIfError(rFile.Open(CCoeEnv::Static()->FsSession(), KFileName, EFileStreamText));//EFileShareReadersOnly));// EFileStreamText));
-			CleanupClosePushL(rFile);
-
-			// copy stream from file to RFileStream object
-			RFileReadStream inputFileStream(rFile);
-			CleanupClosePushL(inputFileStream);
-
-			// HBufC descriptor is created from the RFileStream object.
-			HBufC* fileData = HBufC::NewLC(inputFileStream, 32);
-
-			CAknInformationNote* informationNote;
-
-			informationNote = new ( ELeave ) CAknInformationNote;
-			// Show the information Note
-			informationNote->ExecuteLD( *fileData);
-
-			// Pop loaded resources from the cleanup stack
-			CleanupStack::PopAndDestroy(3); // filedata, inputFileStream, rFile
+			iStreamRecorder->Record();
 			}
 			break;
 		case EHelp:
