@@ -1,0 +1,17 @@
+EXPORTS
+	??1CMP3EncodeDLL@@UAE@XZ @ 1 NONAME ; CMP3EncodeDLL::~CMP3EncodeDLL(void)
+	?Close@CMP3EncodeEngine@@QAEHXZ @ 2 NONAME ; int CMP3EncodeEngine::Close(void)
+	?EncodeOneFrame@CMP3EncodeEngine@@QAEHXZ @ 3 NONAME ; int CMP3EncodeEngine::EncodeOneFrame(void)
+	?ExampleFuncAddCharL@CMP3EncodeDLL@@QAEXABVTChar@@@Z @ 4 NONAME ; void CMP3EncodeDLL::ExampleFuncAddCharL(class TChar const &)
+	?ExampleFuncRemoveLast@CMP3EncodeDLL@@QAEXXZ @ 5 NONAME ; void CMP3EncodeDLL::ExampleFuncRemoveLast(void)
+	?ExampleFuncString@CMP3EncodeDLL@@QBE?BVTPtrC16@@XZ @ 6 NONAME ; class TPtrC16 const CMP3EncodeDLL::ExampleFuncString(void) const
+	?GetFileLength@CMP3EncodeEngine@@QAEHXZ @ 7 NONAME ; int CMP3EncodeEngine::GetFileLength(void)
+	?GetFilePosition@CMP3EncodeEngine@@QAEHXZ @ 8 NONAME ; int CMP3EncodeEngine::GetFilePosition(void)
+	?NewL@CMP3EncodeDLL@@SAPAV1@XZ @ 9 NONAME ; class CMP3EncodeDLL * CMP3EncodeDLL::NewL(void)
+	?NewL@CMP3EncodeEngine@@SAPAV1@XZ @ 10 NONAME ; class CMP3EncodeEngine * CMP3EncodeEngine::NewL(void)
+	?NewLC@CMP3EncodeDLL@@SAPAV1@XZ @ 11 NONAME ; class CMP3EncodeDLL * CMP3EncodeDLL::NewLC(void)
+	?NewLC@CMP3EncodeEngine@@SAPAV1@XZ @ 12 NONAME ; class CMP3EncodeEngine * CMP3EncodeEngine::NewLC(void)
+	?Open@CMP3EncodeEngine@@QAEHABVTDesC16@@0@Z @ 13 NONAME ; int CMP3EncodeEngine::Open(class TDesC16 const &, class TDesC16 const &)
+	?Open@CMP3EncodeEngine@@QAEHPAVMMP3EncodeNotifier@@ABVTDesC16@@@Z @ 14 NONAME ; int CMP3EncodeEngine::Open(class MMP3EncodeNotifier *, class TDesC16 const &)
+	?Version@CMP3EncodeDLL@@QBE?AVTVersion@@XZ @ 15 NONAME ; class TVersion CMP3EncodeDLL::Version(void) const
+
