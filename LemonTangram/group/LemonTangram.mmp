@@ -1,0 +1,89 @@
+/*
+============================================================================
+ Name		: LemonTangram.mmp
+ Author	  : zengcity
+ Copyright   : Your copyright notice
+ Description : This is the project specification file for LemonTangram.
+============================================================================
+*/
+
+
+TARGET			LemonTangram_0xEAE107BA.exe
+TARGETTYPE		exe
+UID		  0x100039CE 0xEAE107BA
+
+SOURCEPATH		..\src
+SOURCE			LemonTangram.cpp
+SOURCE			LemonTangramApplication.cpp
+SOURCE			LemonTangramAppView.cpp
+SOURCE			LemonTangramAppUi.cpp
+SOURCE			LemonTangramDocument.cpp
+
+SOURCEPATH		..\data
+
+START RESOURCE	LemonTangram.rss
+HEADER
+TARGET LemonTangram_0xEAE107BA
+TARGETPATH resource\apps
+END //RESOURCE
+
+START RESOURCE	LemonTangram_reg.rss
+TARGET LemonTangram_0xEAE107BA_reg
+TARGETPATH 	  \private\10003a3f\apps
+END //RESOURCE
+
+
+
+USERINCLUDE	   ..\inc
+USERINCLUDE    ..\help ..\source\TangImage\inc ..\source\Tools\inc ..\source\ImageLib\inc ..\source\XmlLib\inc ..\source\Framework\inc
+
+SYSTEMINCLUDE	 \epoc32\include
+SYSTEMINCLUDE	 \epoc32\include\libc
+SYSTEMINCLUDE   \epoc32\thirdinc
+
+LIBRARY		   euser.lib
+LIBRARY		   apparc.lib
+LIBRARY		   cone.lib
+LIBRARY		   eikcore.lib
+LIBRARY		   avkon.lib
+LIBRARY		   commonengine.lib
+LIBRARY		   efsrv.lib 
+LIBRARY		   estor.lib
+LIBRARY        aknnotify.lib
+LIBRARY        hlplch.lib fbscli.lib bitmaptransforms.lib imageconversion.lib YCParser.lib estlib.lib bitgdi.lib
+ 
+
+LANG SC
+
+VENDORID	  	  0
+SECUREID		  0xEAE107BA
+CAPABILITY	  	  ReadUserData
+
+#ifdef ENABLE_ABIV2_MODE
+DEBUGGABLE
+#endif
+// End of File
+SOURCEPATH ..\source\TangImage\src
+SOURCE ImageElement.cpp TangImageManager.cpp
+SOURCEPATH ..\source\ImageLib\src
+SOURCE ImageArrayReader.cpp ImageBitmapReader.cpp ImageConvertor.cpp ImageRotator.cpp StaticAnimation.cpp TransparentBitmap.cpp
+SOURCEPATH ..\source\XmlLib\src
+SOURCE DefaultDeclHandler.cpp DefaultDocHandler.cpp
+SOURCEPATH ..\source\Tools\src
+SOURCE CommonUtils.cpp
+SOURCEPATH ..\source\TangImage\src
+SOURCE TangImageDataReader.cpp
+SOURCEPATH ..\source\Framework\src
+SOURCE AnimationStruct.cpp TimeOutTimer.cpp
+SOURCEPATH ..\src
+SOURCE LemonTangramContainer.cpp
+SOURCEPATH ..\source\TangImage\src
+SOURCE TangElementUtil.cpp
+
+START BITMAP LemonTangram.mbm
+	TARGETPATH resource\apps
+	HEADER
+	SOURCEPATH ..\gfx
+	SOURCE c24 log.bmp image2.bmp
+	SOURCE 1 image2_mask.bmp
+END

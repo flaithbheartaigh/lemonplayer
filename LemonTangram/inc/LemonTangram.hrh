@@ -1,0 +1,30 @@
+/*
+ ============================================================================
+ Name		: LemonTangram.hrh
+ Author	  : zengcity
+ Copyright   : Your copyright notice
+ Description : This file contains declarations for constants of LemonTangram.
+ The file can be included in C++ or resource file.
+ ============================================================================
+ */
+#ifndef __LEMONTANGRAM_HRH__
+#define __LEMONTANGRAM_HRH__
+
+#define _UID3 0xEAE107BA
+
+// LemonTangram enumerate command codes
+enum TLemonTangramIds
+	{
+	ECommand1 = 0x6001, // start value must not be 0
+	ECommand2,
+	EHelp,
+	EAbout
+	};
+
+enum TLemonTangrameViewID
+{
+	ELemonViewMain,
+	ESettingView
+};
+
+#endif // __LEMONTANGRAM_HRH__
