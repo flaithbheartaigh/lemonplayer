@@ -27,5 +27,10 @@ enum TImageMoveDirection
 	EMoveWest
 	};
 
+static const TInt TANGRAM_ELEMENT_MOVE_X = 2;
+static const TInt TANGRAM_ELEMENT_MOVE_Y = 2;
+static const TInt TANGRAM_ELEMENT_ROTATOE_DEGREE = 5;
+
+
 
 #endif 	//_TANGIMAGEDEFINE_H_

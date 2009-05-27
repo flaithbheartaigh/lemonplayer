@@ -129,19 +129,20 @@ void CLemonTangramContainer::HandleControlEventL(CCoeControl* /*aControl*/,
 TKeyResponse CLemonTangramContainer::OfferKeyEventL(const TKeyEvent& aKeyEvent,
 		TEventCode aType)
 	{	
-	switch(aType)
-		{
-		case EEventKey:
-			switch (aKeyEvent.iCode)
-				{
-					case EKeyDevice3://ok
-						iManager->Rotate(6,30);
-						return EKeyWasConsumed;
-					break;
-				}
-		break;
-		}
-	return EKeyWasNotConsumed;	
+	return StateKey(aKeyEvent,aType);
+//	switch(aType)
+//		{
+//		case EEventKey:
+//			switch (aKeyEvent.iCode)
+//				{
+//					case EKeyDevice3://ok
+//						iManager->Rotate(6,30);
+//						return EKeyWasConsumed;
+//					break;
+//				}
+//		break;
+//		}
+//	return EKeyWasNotConsumed;	
 	}
 void CLemonTangramContainer::CreateDoubleBufferBitmapL()
 {
@@ -238,10 +239,12 @@ TKeyResponse CLemonTangramContainer::StateKey(const TKeyEvent& aKeyEvent,
 		case EGameStateInit:
 			break;
 		case EGameStateMain:
+			return StateMainKey(aKeyEvent,aType);
 			break;
 		default:
 			break;
 		}	
+	return EKeyWasNotConsumed;
 	}
 
 void CLemonTangramContainer::StateLogoInit()
@@ -315,5 +318,11 @@ void CLemonTangramContainer::StateMainLoop()
 void CLemonTangramContainer::StateMainDisplay(CFbsBitGc& gc)
 	{
 	iManager->Draw(gc);
+	}
+
+TKeyResponse CLemonTangramContainer::StateMainKey(const TKeyEvent& aKeyEvent,
+		TEventCode aType)
+	{
+	return iManager->OfferKeyEventL(aKeyEvent,aType);
 	}
 // End of File  
