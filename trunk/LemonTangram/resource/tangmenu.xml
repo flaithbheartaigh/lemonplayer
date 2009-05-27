@@ -1,0 +1,9 @@
+<menudata>
+<menu parent="-1">
+<item text="item1" id="100" command="100"></item>
+<item text="item2" command="200"></item> 
+</menu>
+<menu parent="100">
+<item text="item11" command="110"></item>
+</menu>
+</menudata>

@@ -75,6 +75,7 @@ private:
 	
 	void StateMainInit();
 	void StateMainLoop();
+	TKeyResponse StateMainKey(const TKeyEvent& aKeyEvent,TEventCode aType);
 	void StateMainDisplay(CFbsBitGc& gc);
 public:
 	void HandleCommandL(TInt aCommand);

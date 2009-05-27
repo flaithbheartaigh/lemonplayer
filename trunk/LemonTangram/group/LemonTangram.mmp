@@ -35,7 +35,7 @@ END //RESOURCE
 
 
 USERINCLUDE	   ..\inc
-USERINCLUDE    ..\help ..\source\TangImage\inc ..\source\Tools\inc ..\source\ImageLib\inc ..\source\XmlLib\inc ..\source\Framework\inc
+USERINCLUDE    ..\help ..\source\TangImage\inc ..\source\Tools\inc ..\source\ImageLib\inc ..\source\XmlLib\inc ..\source\Framework\inc ..\source\Controller\inc ..\source\UI\inc
 
 SYSTEMINCLUDE	 \epoc32\include
 SYSTEMINCLUDE	 \epoc32\include\libc
@@ -84,6 +84,11 @@ START BITMAP LemonTangram.mbm
 	TARGETPATH resource\apps
 	HEADER
 	SOURCEPATH ..\gfx
-	SOURCE c24 log.bmp image2.bmp
-	SOURCE 1 image2_mask.bmp
+	SOURCE c24 log.bmp
 END
+SOURCEPATH ..\source\Controller\src
+SOURCE LemonMenuBar.cpp LemonMenuItem.cpp LemonMenuList.cpp
+SOURCEPATH ..\source\UI\src
+SOURCE TangramMenu.cpp
+SOURCEPATH ..\source\Controller\src
+SOURCE LemonMenu.cpp

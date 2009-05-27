@@ -61,6 +61,12 @@ public:
 	void SetOffsetX(TInt aOffset){iOffsetX = aOffset;};
 	void SetOffsetY(TInt aOffset){iOffsetY = aOffset;};
 	
+	void SetIndex(TInt aIndex){iIndex = aIndex;};
+	TInt GetIndex(){return iIndex;};
+	
+	void SetSelected(TBool aSelected){iSelected = aSelected;};
+	TBool GetSelected(){return iSelected;};
+	
 	void Draw(CBitmapContext& aGc);
 
 public:
@@ -77,6 +83,8 @@ private:
 	CFbsBitmap* iBitmapMask;
 	EImageElementState iState;
 	TInt iDegree;
+	TInt iIndex;
+	TBool iSelected;
 
 	};
 

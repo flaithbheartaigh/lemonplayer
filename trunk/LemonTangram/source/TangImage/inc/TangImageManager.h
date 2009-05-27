@@ -16,6 +16,7 @@
 #include <e32std.h>
 #include <e32base.h>
 #include <w32std.h>
+#include <coedef.h>
 #include "TangImageDefine.h"
 #include "ImageArrayReader.h"
 // CLASS DECLARATION
@@ -42,6 +43,7 @@ public:
 	void LoadImageFromFileL(const TDesC& aFileName);
 	void LoadImageDataFileL(const TDesC& aFileName);
 	void Draw(CBitmapContext& aGc);
+	TKeyResponse OfferKeyEventL(const TKeyEvent& aKeyEvent,TEventCode aType);
 	void Rotate(TInt aIndex,TInt aDegree);
 	
 	TInt GetConvertedNum(){return iConverted;};
@@ -51,6 +53,15 @@ private:
 	CTangImageManager();
 	void ConstructL();
 	
+	TKeyResponse KeyChoose(const TKeyEvent& aKeyEvent,TEventCode aType);
+	TKeyResponse KeyMove(const TKeyEvent& aKeyEvent,TEventCode aType);
+	
+	enum TSelectedState
+		{
+		ESelectedStateMove,
+		ESelectedStateChoose
+		};
+	
 private:
 	CImageElement** iElements;
 	CImageArrayReader* iBitmapArray;
@@ -58,6 +69,9 @@ private:
 
 	TInt iConverted;
 	TInt iConvertDown;
+	
+	TInt iSelectedIndex;
+	TSelectedState iSelectedState;
 	
 	};
 
