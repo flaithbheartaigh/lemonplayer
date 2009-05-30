@@ -17,9 +17,10 @@
 #include "CommonUtils.h"
 #include "LemonMenuItem.h"
 #include "MacroUtil.h"
+#include <eikenv.h>
 
 CLemonMenu::CLemonMenu(MLemonMenuNotify* aNotify)
-:iNotify(aNotify),iMenuList(NULL),iPtrList(iMenuList)
+:iNotify(aNotify),iMenuList(NULL),iPtrList(NULL),iMenuActive(EFalse)
 	{
 	// No implementation required
 	}
@@ -79,10 +80,51 @@ void CLemonMenu::LoadMenu(const TDesC& aFileName)
 	CleanupStack::PopAndDestroy(2);	
 	}
 void CLemonMenu::Draw(CFbsBitGc& gc)
-	{}
+	{
+	if (iMenuActive)
+		{
+		gc.SetPenStyle( CGraphicsContext::ESolidPen );
+		gc.SetPenColor(KRgbRed);	
+		gc.SetBrushStyle( CGraphicsContext::ESolidBrush );
+		gc.SetBrushColor( KRgbGray );
+		gc.UseFont(CEikonEnv::Static()->LegendFont());	
+		iMenuList->Draw(gc);
+		gc.DiscardFont();
+		}
+	}
 TKeyResponse CLemonMenu::OfferKeyEventL(const TKeyEvent& aKeyEvent,
 		TEventCode aType)
 	{
+	if (iMenuActive)
+		{
+		switch(aType)
+			{
+			case EEventKeyUp:
+				switch (aKeyEvent.iScanCode)
+					{
+						case EStdKeyDevice3://ok
+							iMenuActive = EFalse;
+							return EKeyWasConsumed;
+						break;
+					}
+			break;
+			}
+		}
+	else
+		{
+		switch(aType)
+			{
+			case EEventKeyUp:
+				switch (aKeyEvent.iScanCode)
+					{
+						case EStdKeyDevice3://ok
+							iMenuActive = ETrue;
+							return EKeyWasConsumed;
+						break;
+					}
+			break;
+			}
+		}
 	return EKeyWasNotConsumed;
 	}
 
@@ -138,7 +180,7 @@ void CLemonMenu::ParseMenu(const RArray<TAttribute>& aAttributes)
 			{
 			TInt num = CCommonUtils::StrToInt(attrValue->Des());
 			FindListById(num);
-			iPtrList = CLemonMenuList::NewL();
+//			iPtrList = CLemonMenuList::NewL();
 			}
 		CleanupStack::PopAndDestroy(2);
 		}
@@ -174,12 +216,16 @@ void CLemonMenu::FindListById(const TInt& aId)
 	{
 	if (aId < 0 )
 		{
+		iMenuList = CLemonMenuList::NewL();
 		iPtrList = iMenuList;
+		iPtrList->SetPositon(TPoint(30,30));
 		return;
 		}
 	else
 		{
-		iPtrList = iMenuList->FindListById(aId);
+		CLemonMenuList*& list = iMenuList->FindListById(aId);
+		list = CLemonMenuList::NewL();
+		iPtrList = list;
 		}
 //	CLemonMenuItem* item = iMenuList->FindItemById(aId);
 //	if (item)

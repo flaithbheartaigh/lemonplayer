@@ -50,7 +50,7 @@ LIBRARY		   commonengine.lib
 LIBRARY		   efsrv.lib 
 LIBRARY		   estor.lib
 LIBRARY        aknnotify.lib
-LIBRARY        hlplch.lib fbscli.lib bitmaptransforms.lib imageconversion.lib YCParser.lib estlib.lib bitgdi.lib
+LIBRARY        hlplch.lib fbscli.lib bitmaptransforms.lib imageconversion.lib estlib.lib bitgdi.lib SyExpat.lib
  
 
 LANG SC

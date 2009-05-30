@@ -18,6 +18,7 @@
 #include "TangImageManager.h"
 #include <LemonTangram.mbg>
 #include <eikenv.h>
+#include "LemonMenu.h"
 
 // ================= MEMBER FUNCTIONS =======================
 
@@ -28,6 +29,7 @@
 //
 _LIT(KFileTangram,"c:\\mytangram.xml");
 _LIT(KFileMbm,"z:\\resource\\apps\\LemonTangram.mbm");
+_LIT(KFileMenu,"c:\\tangmenu.xml");
 void CLemonTangramContainer::ConstructL(const TRect& aRect)
 	{
 	iWidth = aRect.Width();
@@ -50,6 +52,8 @@ CLemonTangramContainer::~CLemonTangramContainer()
 	{
 //	delete iManager;
 	SAFE_DELETE(iLogo);
+	
+	SAFE_DELETE(iMenu);
 	
 	SAFE_DELETE(iDoubleBufferGc);
 	SAFE_DELETE(iDoubleBufferDevice);
@@ -312,17 +316,28 @@ void CLemonTangramContainer::StateInitDisplay(CFbsBitGc& gc)
 	}
 
 void CLemonTangramContainer::StateMainInit()
-	{}
+	{
+	iMenu = CLemonMenu::NewL(this);
+	iMenu->LoadMenu(KFileMenu);
+	}
 void CLemonTangramContainer::StateMainLoop()
 	{}
 void CLemonTangramContainer::StateMainDisplay(CFbsBitGc& gc)
 	{
 	iManager->Draw(gc);
+	iMenu->Draw(gc);
 	}
 
 TKeyResponse CLemonTangramContainer::StateMainKey(const TKeyEvent& aKeyEvent,
 		TEventCode aType)
 	{
-	return iManager->OfferKeyEventL(aKeyEvent,aType);
+	TKeyResponse res = iMenu->OfferKeyEventL(aKeyEvent,aType);
+	if (res == EKeyWasNotConsumed)
+		return iManager->OfferKeyEventL(aKeyEvent,aType);
+	else
+		return res;
 	}
+
+void CLemonTangramContainer::HandMenuCommand(TInt aCommandId)
+	{}
 // End of File  
