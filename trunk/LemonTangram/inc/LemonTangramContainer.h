@@ -16,11 +16,13 @@
 // INCLUDES
 #include <coecntrl.h>
 #include "AnimationStruct.h"
+#include "MLemonMenuNotify.h"
 // FORWARD DECLARATIONS
 
 // CLASS DECLARATION
 class CUIManager;
 class CTangImageManager;
+class CLemonMenu;
 
 enum TGameState
 	{
@@ -34,7 +36,7 @@ enum TGameState
  *  
  */
 class CLemonTangramContainer : 	public CCoeControl, MCoeControlObserver,
-								public CAnimationStruct
+								public CAnimationStruct, public MLemonMenuNotify
 	{
 public:
 	// Constructors and destructor
@@ -48,7 +50,10 @@ public:
 	// Functions from base classes
 	virtual TBool Tick();
 	virtual void Update();
-		
+	
+	//MLemonMenuNotify
+	virtual void HandMenuCommand(TInt aCommandId);
+	
 private:
 	// Functions from base classes
 	void SizeChanged();
@@ -94,6 +99,8 @@ private:
 	CFbsBitmap* 			iDoubleBufferBmp;			// 位图缓冲,owned
 	CFbsBitmapDevice*   	iDoubleBufferDevice;	// 位图缓冲关联的device,owned,
 	CFbsBitGc*  			iDoubleBufferGc;		// 位图缓冲绘制环境,owned
+	
+	CLemonMenu* iMenu;
 	};
 
 #endif

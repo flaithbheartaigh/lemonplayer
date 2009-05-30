@@ -46,7 +46,7 @@ public:
 	void SetCommand(const TInt& aCommand){iCommand = aCommand;};
 	TInt GetCommand() const {return iCommand;};
 	void SetText(const TDesC& aText) {iText = aText.AllocL();};
-	const TDesC& GetText() const {return iText->Des();};
+	const TDesC& GetText() const {return *iText;};
 	
 	void Clear();
 private:

@@ -65,7 +65,6 @@ CLemonMenuList*& CLemonMenuList::FindListById(const TInt& aId)
 		if(item)
 			{
 			return item->GetChildListAdd();
-			break;
 			}
 		}
 	}
@@ -105,6 +104,7 @@ void CLemonMenuList::Draw(CFbsBitGc& gc)
 		gc.DrawText(item->GetText(),TPoint(x,y));
 		if (child)
 			child->Draw(gc);
+		gc.DrawText(_L("Hello,world!"),TPoint(30,30));
 		y += iItemHeight;
 		}
 //	gc.DiscardFont();

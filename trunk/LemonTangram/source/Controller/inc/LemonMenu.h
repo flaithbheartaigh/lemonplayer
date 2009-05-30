@@ -62,7 +62,9 @@ private:
 	MLemonMenuNotify* iNotify;
 	CLemonMenuBar* iMenuBar;
 	CLemonMenuList* iMenuList;
-	CLemonMenuList*& iPtrList;	//no own,用于添加数据用
+	CLemonMenuList* iPtrList;	//no own,用于添加数据用
+
+	TBool iMenuActive;
 	};
 
 #endif // LEMONMENU_H

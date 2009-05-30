@@ -33,6 +33,7 @@ private:
 	CLemonMenuBar();
 	void ConstructL();
 
+
 	};
 
 #endif // LEMONMENUBAR_H

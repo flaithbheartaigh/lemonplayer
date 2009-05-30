@@ -59,3 +59,5 @@
 menu 构建一个menu对象,
 根据ID,查找到父item,赋值指针.
 item,把item加入到menu对象里面.
+
+菜单的绘制：
