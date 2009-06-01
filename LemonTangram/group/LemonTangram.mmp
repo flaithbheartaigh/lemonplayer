@@ -35,7 +35,7 @@ END //RESOURCE
 
 
 USERINCLUDE	   ..\inc
-USERINCLUDE    ..\help ..\source\TangImage\inc ..\source\Tools\inc ..\source\ImageLib\inc ..\source\XmlLib\inc ..\source\Framework\inc ..\source\Controller\inc ..\source\UI\inc
+USERINCLUDE    ..\help ..\source\TangImage\inc ..\source\Tools\inc ..\source\ImageLib\inc ..\source\XmlLib\inc ..\source\Framework\inc ..\source\Controller\inc ..\source\LTUI\inc
 
 SYSTEMINCLUDE	 \epoc32\include
 SYSTEMINCLUDE	 \epoc32\include\libc
@@ -50,7 +50,7 @@ LIBRARY		   commonengine.lib
 LIBRARY		   efsrv.lib 
 LIBRARY		   estor.lib
 LIBRARY        aknnotify.lib
-LIBRARY        hlplch.lib fbscli.lib bitmaptransforms.lib imageconversion.lib estlib.lib bitgdi.lib SyExpat.lib
+LIBRARY        hlplch.lib fbscli.lib bitmaptransforms.lib imageconversion.lib estlib.lib bitgdi.lib SyExpat.lib gdi.lib ws32.lib charconv.lib
  
 
 LANG SC
@@ -88,7 +88,11 @@ START BITMAP LemonTangram.mbm
 END
 SOURCEPATH ..\source\Controller\src
 SOURCE LemonMenuBar.cpp LemonMenuItem.cpp LemonMenuList.cpp
-SOURCEPATH ..\source\UI\src
-SOURCE TangramMenu.cpp
 SOURCEPATH ..\source\Controller\src
 SOURCE LemonMenu.cpp
+SOURCEPATH ..\source\LTUI\src
+SOURCE IconFileProvider.cpp UI240x320.cpp UI320x240.cpp UI320x240orig.cpp UIFactory.cpp
+SOURCEPATH ..\source\Tools\src
+SOURCE Utils.cpp Configuration.cpp
+SOURCEPATH ..\source\TangImage\src
+SOURCE TangImageDataWriter.cpp

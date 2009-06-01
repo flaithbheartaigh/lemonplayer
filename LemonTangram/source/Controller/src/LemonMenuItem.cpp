@@ -12,8 +12,10 @@
 #include "LemonMenuList.h"
 #include "MacroUtil.h"
 
-CLemonMenuItem::CLemonMenuItem():
-iChildList(NULL),iText(NULL)
+CLemonMenuItem::CLemonMenuItem(const CFont* aFont):
+iChildList(NULL),iText(NULL),
+iTextColor(KRgbBlack),iSelectedColor(KRgbDarkGray),iUnSelectedColor(KRgbWhite),
+iFont(aFont),iSelected(EFalse)
 	{
 	// No implementation required
 	}
@@ -23,17 +25,17 @@ CLemonMenuItem::~CLemonMenuItem()
 	Clear();
 	}
 
-CLemonMenuItem* CLemonMenuItem::NewLC()
+CLemonMenuItem* CLemonMenuItem::NewLC(const CFont* aFont)
 	{
-	CLemonMenuItem* self = new (ELeave)CLemonMenuItem();
+	CLemonMenuItem* self = new (ELeave)CLemonMenuItem(aFont);
 	CleanupStack::PushL(self);
 	self->ConstructL();
 	return self;
 	}
 
-CLemonMenuItem* CLemonMenuItem::NewL()
+CLemonMenuItem* CLemonMenuItem::NewL(const CFont* aFont)
 	{
-	CLemonMenuItem* self=CLemonMenuItem::NewLC();
+	CLemonMenuItem* self=CLemonMenuItem::NewLC(aFont);
 	CleanupStack::Pop(); // self;
 	return self;
 	}
@@ -73,4 +75,26 @@ void CLemonMenuItem::Clear()
 	}
 
 void CLemonMenuItem::Draw(CFbsBitGc& gc)
-	{}
+	{
+	TRect rect;
+
+	rect.iTl.iX = iItemPosition.iX;
+	rect.iTl.iY = iItemPosition.iY;
+	rect.iBr.iX = iItemPosition.iX + iItemWidth;
+	rect.iBr.iY = iItemPosition.iY + iItemHeight;
+
+	if (iSelected)
+		{
+		gc.SetBrushColor(iSelectedColor);
+		gc.Clear(rect);
+		}
+	else
+		{
+		gc.SetBrushColor(iUnSelectedColor);
+		gc.Clear(rect);		
+		}
+	gc.SetPenColor(iTextColor);
+	gc.UseFont(iFont);	
+	gc.DrawText(iText->Des(),rect,rect.Height()/2 + iFont->AscentInPixels()/2);
+	gc.DiscardFont();
+	}

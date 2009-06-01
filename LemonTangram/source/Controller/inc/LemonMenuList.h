@@ -27,11 +27,11 @@ class CLemonMenuList : public CBase
 public:
 	// Constructors and destructor
 	~CLemonMenuList();
-	static CLemonMenuList* NewL();
-	static CLemonMenuList* NewLC();
+	static CLemonMenuList* NewL(const CFont* aFont);
+	static CLemonMenuList* NewLC(const CFont* aFont);
 
 private:
-	CLemonMenuList();
+	CLemonMenuList(const CFont* aFont);
 	void ConstructL();
 	
 public:
@@ -44,11 +44,36 @@ public:
 	
 	void SetPositon(const TPoint& aPosition) {iPosition = aPosition;};
 	TPoint GetPosition() const {return iPosition;};
+	void SetListSize(const TSize& aSize) {iSize = aSize;};
+	TSize GetListSize(){return iSize;};
+	
+	void SetItemHeight(const TInt& aHeight) {iItemHeight = aHeight;};
+	TInt GetItemHeight(){return iItemHeight;};
+	void RecordItemWidth(TInt aWidth);
+	void OffsetItem();
+	
+	void SetSelectedIndex(const TInt& aIndex);
+	void IncreaseSelected();
+	void DecreaseSelected();
+	
+	TInt GetSelectedCommand();
+	
+private:
+	void DrawFrame(CFbsBitGc& gc);
 private:
 	RPointerArray<CLemonMenuItem> iItems;
 	TPoint iPosition;
+	TSize  iSize;
+	TRgb iFrameColor;
+	TRgb iBackgroundColor;
 	
+	TInt iItemWidth;
 	TInt iItemHeight;
+	
+	const CFont* iFont;
+	
+	TInt iSelectedIndex;
+
 	};
 
 #endif // LEMONMENULIST_H
