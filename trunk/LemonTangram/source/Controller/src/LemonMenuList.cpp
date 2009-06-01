@@ -13,8 +13,10 @@
 #include "LemonMenuDef.h"
 #include <eikenv.h>
 
-CLemonMenuList::CLemonMenuList()
-:iItemHeight(MENU_ITEM_HEIGHT)
+CLemonMenuList::CLemonMenuList(const CFont* aFont)
+:iItemHeight(0),iItemWidth(0),
+iFrameColor(KRgbGray),iBackgroundColor(KRgbWhite),
+iFont(aFont),iSelectedIndex(0)
 	{
 	// No implementation required
 	}
@@ -24,17 +26,17 @@ CLemonMenuList::~CLemonMenuList()
 	Clear();
 	}
 
-CLemonMenuList* CLemonMenuList::NewLC()
+CLemonMenuList* CLemonMenuList::NewLC(const CFont* aFont)
 	{
-	CLemonMenuList* self = new (ELeave)CLemonMenuList();
+	CLemonMenuList* self = new (ELeave)CLemonMenuList(aFont);
 	CleanupStack::PushL(self);
 	self->ConstructL();
 	return self;
 	}
 
-CLemonMenuList* CLemonMenuList::NewL()
+CLemonMenuList* CLemonMenuList::NewL(const CFont* aFont)
 	{
-	CLemonMenuList* self=CLemonMenuList::NewLC();
+	CLemonMenuList* self=CLemonMenuList::NewLC(aFont);
 	CleanupStack::Pop(); // self;
 	return self;
 	}
@@ -86,26 +88,103 @@ void CLemonMenuList::Clear()
 
 void CLemonMenuList::Draw(CFbsBitGc& gc)
 	{
+	DrawFrame(gc);
+	
 	TInt x = iPosition.iX;
 	TInt y = iPosition.iY;
 	CLemonMenuItem* item = NULL;
 	CLemonMenuList* child = NULL;
 	
-//	gc.SetPenStyle( CGraphicsContext::ESolidPen );
-//	gc.SetPenColor(KRgbRed);	
-//	gc.SetBrushStyle( CGraphicsContext::ESolidBrush );
-//	gc.SetBrushColor( KRgbGray );
-//	gc.UseFont(CEikonEnv::Static()->LegendFont());	
-	
 	for(TInt i=0; i<iItems.Count(); i++)
 		{
 		item = iItems[i];
+		item->Draw(gc);
 		child = item->GetChildList();
-		gc.DrawText(item->GetText(),TPoint(x,y));
+//		gc.DrawText(item->GetText(),TPoint(x,y));
 		if (child)
 			child->Draw(gc);
-		gc.DrawText(_L("Hello,world!"),TPoint(30,30));
 		y += iItemHeight;
 		}
-//	gc.DiscardFont();
+	}
+
+void CLemonMenuList::DrawFrame(CFbsBitGc& gc)
+	{
+	gc.SetBrushStyle( CGraphicsContext::ESolidBrush );
+	gc.SetBrushColor( iFrameColor );
+//	gc.SetPenSize(TSize(2,2));
+	TRect rect;
+	rect.iTl.iX = iPosition.iX - 1;
+	rect.iTl.iY = iPosition.iY - 1;
+	rect.iBr.iX = rect.iTl.iX + iSize.iWidth + 2;
+	rect.iBr.iY = rect.iTl.iY + iSize.iHeight + 2;
+//	gc.DrawRect(rect);
+	gc.Clear(rect);
+	
+	gc.SetBrushColor( iBackgroundColor );
+	rect.iTl.iX = iPosition.iX ;
+	rect.iTl.iY = iPosition.iY ;
+	rect.iBr.iX = rect.iTl.iX + iSize.iWidth ;
+	rect.iBr.iY = rect.iTl.iY + iSize.iHeight ;	
+//	gc.DrawRect(rect);
+	gc.Clear(rect);
+	}
+
+void CLemonMenuList::RecordItemWidth(TInt aWidth)
+	{
+	if (aWidth > iItemWidth)
+		iItemWidth = aWidth;
+	}
+void CLemonMenuList::OffsetItem()
+	{
+	TInt x = iPosition.iX;
+	TInt y = iPosition.iY;
+	for(TInt i=0; i<iItems.Count(); i++)
+		{
+		CLemonMenuItem* item = iItems[i];
+		item->SetItemHeight(iItemHeight);
+		item->SetItemWidth(iItemWidth);
+		item->SetItemPosition(TPoint(x,y));
+		y += iItemHeight;
+		}
+	
+	iSize.iWidth = iItemWidth;
+	iSize.iHeight = y - iPosition.iY;
+	}
+
+void CLemonMenuList::SetSelectedIndex(const TInt& aIndex)
+	{
+	CLemonMenuItem* item = iItems[aIndex];
+	item->SetSelected(ETrue);
+	iSelectedIndex = aIndex;
+	}
+void CLemonMenuList::IncreaseSelected()
+	{
+	CLemonMenuItem* item = iItems[iSelectedIndex];
+	item->SetSelected(EFalse);
+	
+	if (++iSelectedIndex > iItems.Count())
+		iSelectedIndex = 0;
+	
+	item = iItems[iSelectedIndex];
+	item->SetSelected(ETrue);	
+	}
+
+void CLemonMenuList::DecreaseSelected()
+	{
+	CLemonMenuItem* item = iItems[iSelectedIndex];
+	item->SetSelected(EFalse);
+	
+	if (--iSelectedIndex < 0)
+		iSelectedIndex = iItems.Count()-1;
+	
+	item = iItems[iSelectedIndex];
+	item->SetSelected(ETrue);	
+	}
+
+TInt CLemonMenuList::GetSelectedCommand()
+	{
+	TInt command;
+	CLemonMenuItem* item = iItems[iSelectedIndex];
+	command = item->GetCommand();
+	return command;
 	}

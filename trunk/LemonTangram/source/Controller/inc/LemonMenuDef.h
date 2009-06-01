@@ -9,7 +9,6 @@ _LIT(KMenuAttrText,		"text");
 _LIT(KMenuAttrId,		"id");
 _LIT(KMenuAttrCommand,	"command");
 
-#define MENU_ITEM_HEIGHT 20
 
 enum TMenuTag
 	{

@@ -18,6 +18,7 @@
 #include "LemonMenuItem.h"
 #include "MacroUtil.h"
 #include <eikenv.h>
+#include "LemonTangramAppUi.h"
 
 CLemonMenu::CLemonMenu(MLemonMenuNotify* aNotify)
 :iNotify(aNotify),iMenuList(NULL),iPtrList(NULL),iMenuActive(EFalse)
@@ -47,7 +48,7 @@ CLemonMenu* CLemonMenu::NewL(MLemonMenuNotify* aNotify)
 
 void CLemonMenu::ConstructL()
 	{
-
+	iUIMgr = STATIC_CAST(CLemonTangramAppUi*,CEikonEnv::Static()->AppUi())->GetUIMgr();
 	}
 
 void CLemonMenu::LoadMenu(const TDesC& aFileName)
@@ -83,13 +84,13 @@ void CLemonMenu::Draw(CFbsBitGc& gc)
 	{
 	if (iMenuActive)
 		{
-		gc.SetPenStyle( CGraphicsContext::ESolidPen );
-		gc.SetPenColor(KRgbRed);	
-		gc.SetBrushStyle( CGraphicsContext::ESolidBrush );
-		gc.SetBrushColor( KRgbGray );
-		gc.UseFont(CEikonEnv::Static()->LegendFont());	
+//		gc.SetPenStyle( CGraphicsContext::ESolidPen );
+//		gc.SetPenColor(KRgbRed);	
+//		gc.SetBrushStyle( CGraphicsContext::ESolidBrush );
+//		gc.SetBrushColor( KRgbGray );
+//		gc.UseFont(CEikonEnv::Static()->LegendFont());	
 		iMenuList->Draw(gc);
-		gc.DiscardFont();
+//		gc.DiscardFont();
 		}
 	}
 TKeyResponse CLemonMenu::OfferKeyEventL(const TKeyEvent& aKeyEvent,
@@ -102,10 +103,19 @@ TKeyResponse CLemonMenu::OfferKeyEventL(const TKeyEvent& aKeyEvent,
 			case EEventKeyUp:
 				switch (aKeyEvent.iScanCode)
 					{
-						case EStdKeyDevice3://ok
+						case EStdKeyDevice0://ok
+							iNotify->HandMenuCommand(iMenuList->GetSelectedCommand());
+							iMenuActive = EFalse;
+							return EKeyWasConsumed;					
+						case EStdKeyDevice1://ok
 							iMenuActive = EFalse;
 							return EKeyWasConsumed;
-						break;
+						case EStdKeyUpArrow:
+							iMenuList->DecreaseSelected();
+							return EKeyWasConsumed;
+						case EStdKeyDownArrow:
+							iMenuList->IncreaseSelected();
+							return EKeyWasConsumed;				
 					}
 			break;
 			}
@@ -117,10 +127,9 @@ TKeyResponse CLemonMenu::OfferKeyEventL(const TKeyEvent& aKeyEvent,
 			case EEventKeyUp:
 				switch (aKeyEvent.iScanCode)
 					{
-						case EStdKeyDevice3://ok
+						case EStdKeyDevice0://ok
 							iMenuActive = ETrue;
 							return EKeyWasConsumed;
-						break;
 					}
 			break;
 			}
@@ -146,8 +155,17 @@ void CLemonMenu::StartElement(const TQualified& aName,
 		}
 	}
 
-void CLemonMenu::EndElement(const TQualified& /*aName*/)
+void CLemonMenu::EndElement(const TQualified& aName)
 	{
+	TInt num = ConvertNameToNumber(aName.iLocalName);
+	switch (num)
+		{
+		case EMenuTagMenu:
+			EndParseMenu();
+			break;
+		default:
+			break;
+		}	
 	}
 
 TInt CLemonMenu::ConvertNameToNumber(const TDesC& aName)
@@ -187,7 +205,8 @@ void CLemonMenu::ParseMenu(const RArray<TAttribute>& aAttributes)
 	}
 void CLemonMenu::ParseItem(const RArray<TAttribute>& aAttributes)
 	{
-	CLemonMenuItem* item = CLemonMenuItem::NewL();
+	CLemonMenuItem* item = CLemonMenuItem::NewL(iUIMgr->iSysFont);
+	TInt width;
 	for (TInt i = 0; i < aAttributes.Count(); i++)
 		{
 		HBufC *attrName = aAttributes[i].iName.iLocalName.AllocLC();
@@ -209,25 +228,37 @@ void CLemonMenu::ParseItem(const RArray<TAttribute>& aAttributes)
 			}		
 		CleanupStack::PopAndDestroy(2);
 		}
+	width = iUIMgr->SubMenuWidth();
+	iPtrList->RecordItemWidth(width);
 	iPtrList->AddItem(item);
+	}
+
+void CLemonMenu::EndParseMenu()
+	{
+	iPtrList->SetSelectedIndex(0);
+	iPtrList->SetItemHeight(iUIMgr->MainMenuItemHeight());
+	iPtrList->OffsetItem();	
 	}
 
 void CLemonMenu::FindListById(const TInt& aId)
 	{
 	if (aId < 0 )
 		{
-		iMenuList = CLemonMenuList::NewL();
+		iMenuList = CLemonMenuList::NewL(iUIMgr->iSysFont);
 		iPtrList = iMenuList;
-		iPtrList->SetPositon(TPoint(30,30));
+		iPtrList->SetPositon(iUIMgr->MainMenuPos());
 		return;
 		}
 	else
 		{
 		CLemonMenuList*& list = iMenuList->FindListById(aId);
-		list = CLemonMenuList::NewL();
+		list = CLemonMenuList::NewL(iUIMgr->iSysFont);
 		iPtrList = list;
+		
+		CLemonMenuItem* item = iMenuList->FindItemById(aId);
+		TInt x = item->GetItemPosition().iX;
+		TInt y = item->GetItemPosition().iY;
+		x += item->GetItemWidth();
+		iPtrList->SetPositon(TPoint(x,y));
 		}
-//	CLemonMenuItem* item = iMenuList->FindItemById(aId);
-//	if (item)
-//		iPtrList = iMenuList->FindListById(aId);
 	}

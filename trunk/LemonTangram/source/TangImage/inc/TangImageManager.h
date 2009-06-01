@@ -48,6 +48,8 @@ public:
 	
 	TInt GetConvertedNum(){return iConverted;};
 	TInt GetConvertDown(){return iConvertDown;};
+	
+	void SaveProcess();
 
 private:
 	CTangImageManager();

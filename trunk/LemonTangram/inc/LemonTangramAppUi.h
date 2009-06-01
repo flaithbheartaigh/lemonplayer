@@ -12,6 +12,8 @@
 
 // INCLUDES
 #include <aknViewAppUi.h>//<aknappui.h>
+#include "UIMgr.h"
+#include "UIFactory.h"
 
 // FORWARD DECLARATIONS
 class CLemonTangramAppView;
@@ -28,57 +30,24 @@ class CLemonTangramAppUi : public CAknViewAppUi
 public:
 	// Constructors and destructor
 
-	/**
-	 * ConstructL.
-	 * 2nd phase constructor.
-	 */
 	void ConstructL();
-
-	/**
-	 * CLemonTangramAppUi.
-	 * C++ default constructor. This needs to be public due to
-	 * the way the framework constructs the AppUi
-	 */
 	CLemonTangramAppUi();
-
-	/**
-	 * ~CLemonTangramAppUi.
-	 * Virtual Destructor.
-	 */
 	virtual ~CLemonTangramAppUi();
+	
+	//สนำร STATIC_CAST(CLemonTangramAppUi*,CEikonEnv::Static()->AppUi())->GetUIMgr()
+	MUIMgr* GetUIMgr();
+	void ChangeUIMgr(TInt aWidth,TInt aHeight);
 
 private:
 	// Functions from base classes
-
-	/**
-	 * From CEikAppUi, HandleCommandL.
-	 * Takes care of command handling.
-	 * @param aCommand Command to be handled.
-	 */
 	void HandleCommandL(TInt aCommand);
-
-	/**
-	 *  HandleStatusPaneSizeChange.
-	 *  Called by the framework when the application status pane
-	 *  size is changed.
-	 */
 	void HandleStatusPaneSizeChange();
-
-	/**
-	 *  From CCoeAppUi, HelpContextL.
-	 *  Provides help context for the application.
-	 *  size is changed.
-	 */
 	CArrayFix<TCoeHelpContext>* HelpContextL() const;
 
 private:
 	// Data
-
-	/**
-	 * The application view
-	 * Owned by CLemonTangramAppUi
-	 */
 	CLemonTangramAppView* iAppView;
+	MUIMgr* iUIMgr;
 	
 
 	};

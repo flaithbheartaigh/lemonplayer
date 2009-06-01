@@ -27,11 +27,11 @@ class CLemonMenuItem : public CBase
 public:
 	// Constructors and destructor
 	~CLemonMenuItem();
-	static CLemonMenuItem* NewL();
-	static CLemonMenuItem* NewLC();
+	static CLemonMenuItem* NewL(const CFont* aFont);
+	static CLemonMenuItem* NewLC(const CFont* aFont);
 
 private:
-	CLemonMenuItem();
+	CLemonMenuItem(const CFont* aFont);
 	void ConstructL();
 	
 public:
@@ -49,11 +49,33 @@ public:
 	const TDesC& GetText() const {return *iText;};
 	
 	void Clear();
+	
+	void SetItemWidth(TInt aWidth){iItemWidth = aWidth;};
+	TInt GetItemWidth(){return iItemWidth;};
+	void SetItemHeight(TInt aHeight){iItemHeight = aHeight;};
+	TInt GetItemHeight() {return iItemHeight;};
+	void SetItemPosition(const TPoint& aPoint) {iItemPosition = aPoint;};
+	TPoint GetItemPosition(){return iItemPosition;};
+	
+	void SetSelected(TBool aSelected) {iSelected = aSelected;};
+	TBool GetSelected() const {return iSelected;};
 private:
 	TInt iId;
 	TInt iCommand;
 	HBufC* iText;
 	CLemonMenuList* iChildList;
+	
+	TInt iItemWidth;
+	TInt iItemHeight;
+	TPoint iItemPosition;
+	
+	TRgb iTextColor;
+	TRgb iSelectedColor;
+	TRgb iUnSelectedColor;
+	
+	const CFont* iFont;
+	
+	TBool iSelected;
 	
 	};
 

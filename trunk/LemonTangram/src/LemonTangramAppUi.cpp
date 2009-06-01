@@ -24,6 +24,7 @@
 #include "LemonTangramApplication.h"
 #include "LemonTangramAppUi.h"
 #include "LemonTangramAppView.h"
+#include "MacroUtil.h"
 
 
 _LIT(KFileName, "C:\\private\\EAE107BA\\LemonTangram.txt");
@@ -43,8 +44,11 @@ void CLemonTangramAppUi::ConstructL()
 	// Initialise app UI with standard value.
 	BaseConstructL(CAknAppUi::EAknEnableSkin);
 	
+	TRect rect = ClientRect() ;
+	ChangeUIMgr(rect.Width(),rect.Height());
+	
 	// Create view object
-	iAppView = CLemonTangramAppView::NewL(ClientRect() );
+	iAppView = CLemonTangramAppView::NewL(rect);
 	AddViewL(iAppView);
 	ActivateLocalViewL(iAppView->Id());
 
@@ -55,6 +59,7 @@ void CLemonTangramAppUi::ConstructL()
 // -----------------------------------------------------------------------------
 //
 CLemonTangramAppUi::CLemonTangramAppUi()
+:iUIMgr(NULL)
 	{
 	// No implementation required
 	}
@@ -182,4 +187,36 @@ CArrayFix<TCoeHelpContext>* CLemonTangramAppUi::HelpContextL() const
 	return array;
 	}
 
+void CLemonTangramAppUi::ChangeUIMgr(TInt aWidth,TInt aHeight)
+	{
+	SAFE_DELETE(iUIMgr);
+	
+	TPixelsAndRotation nPR;
+	CEikonEnv::Static()->ScreenDevice()->GetDefaultScreenSizeAndRotation(nPR);
+		
+	if ( aWidth==240 && aHeight==320 )
+		iUIMgr = UIFactory::CreateUIMgr(EUIType240x320);
+	else if ( aWidth==320 && aHeight==240 )
+		{
+		if (nPR.iRotation == CFbsBitGc::EGraphicsOrientationNormal)	
+			iUIMgr = UIFactory::CreateUIMgr(EUIType320x240orig);
+		else
+			iUIMgr = UIFactory::CreateUIMgr(EUIType320x240);
+		}
+	else if ( aWidth==352 && aHeight==416 )
+		iUIMgr = UIFactory::CreateUIMgr(EUIType352x416);
+	else if ( aWidth==416 && aHeight==352 )
+		iUIMgr = UIFactory::CreateUIMgr(EUIType416x352);
+	else if ( aWidth==208 && aHeight==208 )
+		iUIMgr = UIFactory::CreateUIMgr(EUIType208x208);
+	else	
+		iUIMgr = UIFactory::CreateUIMgr(EUIType176x208);
+	}
+
+MUIMgr* CLemonTangramAppUi::GetUIMgr()
+	{
+	if (iUIMgr == NULL)
+		ChangeUIMgr(176,208);
+	return iUIMgr;
+	}
 // End of File

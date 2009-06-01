@@ -13,12 +13,16 @@
 #include "MacroUtil.h"
 #include <stdlib.h>
 #include "TangImageDataReader.h"
+#include "TangImageDataWriter.h"
 #include "ImageRotator.h"
 #include "TangElementUtil.h"
+#include "Utils.h"
+
 
 #include <LemonTangram.mbg>
 #include <eikenv.h>
 _LIT(KFileMbm,"z:\\resource\\apps\\LemonTangram.mbm");
+_LIT(KSaveProcessFile,"process.xml");
 
 CTangImageManager::CTangImageManager() :
 	iConverted(0), iConvertDown(0), iSelectedState(ESelectedStateChoose)
@@ -263,4 +267,14 @@ void CTangImageManager::Rotate(TInt aIndex, TInt aDegree)
 	element->SetOffsetX(rotator->GetOffsetX());
 	element->SetOffsetY(rotator->GetOffsetY());
 	delete rotator;
+	}
+
+void CTangImageManager::SaveProcess()
+	{
+	CTangImageDataWriter* writer = CTangImageDataWriter::NewLC(iElements);
+	TFileName file;
+	GetAppPath(file);
+	file.Append(KSaveProcessFile);
+	writer->SaveDataToFile(file);
+	CleanupStack::PopAndDestroy(writer);
 	}

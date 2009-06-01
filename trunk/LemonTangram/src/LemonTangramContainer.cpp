@@ -19,6 +19,8 @@
 #include <LemonTangram.mbg>
 #include <eikenv.h>
 #include "LemonMenu.h"
+#include "LemonTangramAppUi.h"
+#include "LemonTangram.hrh"
 
 // ================= MEMBER FUNCTIONS =======================
 
@@ -36,6 +38,9 @@ void CLemonTangramContainer::ConstructL(const TRect& aRect)
 	iHeight = aRect.Height();
 	CAnimationStruct::ConstructL();
 	
+	iDoubleBufferGc = NULL;
+	iDoubleBufferDevice = NULL;
+	iDoubleBufferBmp = NULL;
 	CreateDoubleBufferBitmapL();
 	
 	iGameState = EGameStateLogo;
@@ -339,5 +344,15 @@ TKeyResponse CLemonTangramContainer::StateMainKey(const TKeyEvent& aKeyEvent,
 	}
 
 void CLemonTangramContainer::HandMenuCommand(TInt aCommandId)
-	{}
+	{
+	switch (aCommandId)
+		{
+		case ECommandSaveProcess:
+			iManager->SaveProcess();
+			break;
+		default:
+			STATIC_CAST(CLemonTangramAppUi*,CEikonEnv::Static()->AppUi())->Exit();
+			break;
+		}
+	}
 // End of File  

@@ -20,6 +20,7 @@
 
 #include "MLemonMenuNotify.h"
 #include "DefaultDocHandler.h"
+#include "UIMgr.h"
 
 // CLASS DECLARATION
 class CLemonMenuBar;
@@ -56,6 +57,7 @@ private:
 	
 	void ParseMenu(const RArray<TAttribute>& aAttributes);
 	void ParseItem(const RArray<TAttribute>& aAttributes);
+	void EndParseMenu();
 	
 	void FindListById(const TInt& aId);
 private:
@@ -65,6 +67,8 @@ private:
 	CLemonMenuList* iPtrList;	//no own,用于添加数据用
 
 	TBool iMenuActive;
+	
+	MUIMgr* iUIMgr;
 	};
 
 #endif // LEMONMENU_H
