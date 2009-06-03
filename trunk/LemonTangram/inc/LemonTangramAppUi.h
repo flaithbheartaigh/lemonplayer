@@ -17,6 +17,7 @@
 
 // FORWARD DECLARATIONS
 class CLemonTangramAppView;
+class CYCSettingView;
 
 
 // CLASS DECLARATION
@@ -38,15 +39,18 @@ public:
 	MUIMgr* GetUIMgr();
 	void ChangeUIMgr(TInt aWidth,TInt aHeight);
 
-private:
+public:
 	// Functions from base classes
 	void HandleCommandL(TInt aCommand);
+	
+private:
 	void HandleStatusPaneSizeChange();
 	CArrayFix<TCoeHelpContext>* HelpContextL() const;
 
 private:
 	// Data
 	CLemonTangramAppView* iAppView;
+	CYCSettingView *iSettingView;
 	MUIMgr* iUIMgr;
 	
 

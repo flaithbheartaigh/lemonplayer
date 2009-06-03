@@ -22,6 +22,7 @@
 // CLASS DECLARATION
 class CImageElement;
 class CTangImageDataReader;
+class CTangImageSave;
 
 /**
  *  CTangImageManager
@@ -50,6 +51,8 @@ public:
 	TInt GetConvertDown(){return iConvertDown;};
 	
 	void SaveProcess();
+	void OpenProcess();
+	void SaveScreen();
 
 private:
 	CTangImageManager();
@@ -68,6 +71,7 @@ private:
 	CImageElement** iElements;
 	CImageArrayReader* iBitmapArray;
 	CTangImageDataReader* iDataArray;
+	CTangImageSave* iScreenSave;
 
 	TInt iConverted;
 	TInt iConvertDown;

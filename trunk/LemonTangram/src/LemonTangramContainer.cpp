@@ -60,6 +60,8 @@ CLemonTangramContainer::~CLemonTangramContainer()
 	
 	SAFE_DELETE(iMenu);
 	
+	SAFE_DELETE(iManager);
+	
 	SAFE_DELETE(iDoubleBufferGc);
 	SAFE_DELETE(iDoubleBufferDevice);
 	SAFE_DELETE(iDoubleBufferBmp);
@@ -350,6 +352,22 @@ void CLemonTangramContainer::HandMenuCommand(TInt aCommandId)
 		case ECommandSaveProcess:
 			iManager->SaveProcess();
 			break;
+		case ECommandReset:
+			iManager->LoadImageDataFileL(KFileTangram);
+			break;
+		case ECommandOpenProcess:
+			iManager->OpenProcess();
+			break;
+		case ECommandSnapshot:
+			iManager->SaveScreen();
+			break;
+		case ECommandSetting:
+			STATIC_CAST(CLemonTangramAppUi*,iEikonEnv->AppUi())->ActivateLocalViewL(TUid::Uid(ESettingView));
+			break;
+		case ECommandHelp:
+		case ECommandExit:
+			STATIC_CAST(CLemonTangramAppUi*,iEikonEnv->AppUi())->HandleCommandL(aCommandId);
+			break;			
 		default:
 			STATIC_CAST(CLemonTangramAppUi*,CEikonEnv::Static()->AppUi())->Exit();
 			break;

@@ -2,7 +2,7 @@
 <!DOCTYPE cshproj SYSTEM "/epoc32/tools/cshlpcmp/dtd/cshproj.dtd">
 <?xml:stylesheet href="/epoc32/tools/cshlpcmp/xsl/CSHproj.xsl" title="CS-Help project" type="text/xsl"?>
 <cshproj>
-<helpfileUID>0xEAE107BA</helpfileUID>
+<helpfileUID>0x20001D8E</helpfileUID>
 <directories>
 	<input></input>
 	<output></output>
@@ -11,9 +11,9 @@
 </directories>
 <files>
 	<source>
-	<xmlfile>LemonTangram.xml</xmlfile>
+	<file>LemonTangram.rtf</file>
 	</source>
-	<destination>LemonTangram_0xEAE107BA.hlp</destination>
+	<destination>LemonTangram.hlp</destination>
 	<customization>custom.xml</customization>
 	</files>
 </cshproj>

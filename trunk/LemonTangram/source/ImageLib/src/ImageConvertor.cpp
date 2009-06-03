@@ -224,7 +224,7 @@ void CImageConvertor::RunL()
 				if (iImgDecodeListener)
 					{
 					iImgDecodeListener->OnConvertErrorL(MWImageConvertorListener::EConvertSucceed);
-					iImgDecodeListener->OnImageConvertedL(*iBitmapBuffer);
+					//iImgDecodeListener->OnImageConvertedL(*iBitmapBuffer);
 					}
 				}
 				break;

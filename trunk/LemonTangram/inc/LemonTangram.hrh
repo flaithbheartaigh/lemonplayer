@@ -11,15 +11,27 @@
 #define __LEMONTANGRAM_HRH__
 
 #define _UID3 0xEAE107BA
+//#define HELPFILE_UID 0xEAE107BB
+#define HELPFILE_UID 0x20001D8E
 
 // LemonTangram enumerate command codes
 enum TLemonTangramIds
 	{
 	ECommandSaveProcess = 100,
+	ECommandReset = 200,
+	ECommandOpenProcess = 300,
+	ECommandSnapshot = 400,
+	ECommandSetting = 500,
+	ECommandHelp = 600,
+	ECommandExit = 700,
 	ECommand1 = 0x6001, // start value must not be 0
 	ECommand2,
 	EHelp,
-	EAbout
+	EAbout,
+	
+	//…Ë÷√“≥√Ê
+	EListboxCmdChange,
+	EListboxCmdBack
 	};
 
 enum TLemonTangrameViewID
@@ -27,5 +39,11 @@ enum TLemonTangrameViewID
 	ELemonViewMain,
 	ESettingView
 };
+
+enum TYCSettingPageIds
+    {
+    EYCSettingFont = 0
+    };
+
 
 #endif // __LEMONTANGRAM_HRH__

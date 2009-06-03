@@ -17,6 +17,7 @@ NAME LEMO	// 4 letter ID
 #include <appinfo.rh>
 #include "LemonTangram.hrh"
 #include "LemonTangram.rls"
+#include "YCSettingDefine.h"
 
 //  RESOURCE DEFINITIONS
 // -----------------------------------------------------------------------------
@@ -174,4 +175,123 @@ RESOURCE LOCALISABLE_APP_INFO r_localisable_app_info
 		};
 	}
 
+//setting view
+// -----------------------------------------------------------------------------
+//
+// r_listbox_settings_view
+//
+// -----------------------------------------------------------------------------
+// 
+RESOURCE AVKON_VIEW r_listbox_settings_view
+    {
+    menubar = r_listbox_settings_menubar;
+    cba = r_listbox_settingview_options_exit__change;
+    }   
+
+// -----------------------------------------------------------------------------
+//
+// r_listbox_settings_menubar
+//
+// -----------------------------------------------------------------------------
+// 
+RESOURCE MENU_BAR r_listbox_settings_menubar
+    {
+    titles =
+        {
+        MENU_TITLE
+            {
+            menu_pane = r_listbox_settings_menu;
+            }
+        };
+    }
+
+// -----------------------------------------------------------------------------
+//
+// r_listbox_settings_menu
+//
+// -----------------------------------------------------------------------------
+// 
+RESOURCE MENU_PANE r_listbox_settings_menu
+    {
+    items = 
+        {
+        MENU_ITEM
+            {
+            command = EListboxCmdChange;
+            txt = qtn_setting_change;
+            },
+        MENU_ITEM
+            {
+            command = EListboxCmdBack;
+            txt = qtn_setting_back;
+            }
+        };
+    }
+// -----------------------------------------------------------------------------
+//
+// r_listbox_settingview_options_exit__change
+//
+// -----------------------------------------------------------------------------
+// 
+RESOURCE CBA r_listbox_settingview_options_exit__change
+    {
+    flags = 0;
+    buttons =
+        {
+        CBA_BUTTON {id=EAknSoftkeyOptions; 	txt=qtn_setting_option;},
+        CBA_BUTTON {id=EListboxCmdBack; 	txt=qtn_setting_back;},
+        CBA_BUTTON {id=EListboxCmdChange; 	txt=qtn_setting_change;}
+        };
+    }
+// -----------------------------------------------------------------------------
+//
+// r_listbox_setting_item_list
+//
+// -----------------------------------------------------------------------------
+// 
+RESOURCE AVKON_SETTING_ITEM_LIST r_listbox_setting_item_list
+  {
+  title = qtn_setting_title;
+  initial_number = 1;
+  items = 
+    { 
+    AVKON_SETTING_ITEM
+      {
+      identifier = EYCSettingFont;
+      setting_page_resource = r_listbox_font_setting_page;
+      associated_resource = r_listbox_font_popup_setting_associated;
+      name = qtn_setting_font_item;
+      }
+    };
+  }   
+
+//font
+RESOURCE AVKON_POPUP_SETTING_TEXTS r_listbox_font_popup_setting_associated
+    {
+    flags = 0;
+    setting_texts_resource = r_listbox_font_mode;
+    }
+
+RESOURCE ARRAY r_listbox_font_mode
+    {
+    items =
+        {
+        AVKON_ENUMERATED_TEXT { value=KFontSizeSmall; 	text = qtn_setting_font_small; },
+        AVKON_ENUMERATED_TEXT { value=KFontSizeMiddle; 	text = qtn_setting_font_middle; },
+        AVKON_ENUMERATED_TEXT { value=KFontSizeBig; 	text = qtn_setting_font_big; }
+        };
+    }
+
+RESOURCE AVKON_SETTING_PAGE r_listbox_font_setting_page
+    {   
+    type = EAknCtPopupSettingList;
+    editor_resource_id = r_listbox_font_popup_setting_editor;
+    softkey_resource = R_AVKON_SOFTKEYS_OK_CANCEL;
+    invalid_contents_softkey_resource = R_AVKON_SOFTKEYS_CANCEL;
+    }
+
+RESOURCE POPUP_SETTING_LIST r_listbox_font_popup_setting_editor
+    {
+    flags = 0;
+    }
 // End of File
