@@ -2,8 +2,10 @@
 <!DOCTYPE asptml SYSTEM "/epoc32/tools/cshlpcmp/dtd/asptml.dtd">
 <?xml:stylesheet href="/epoc32/tools/cshlpcmp/xsl/asptml.xsl" title="asptml" type="text/xsl"?>
 <asptml>
-<uid value="0xEAE107BA"/>
-<topic><category>LemonTangram</category><topictitle>General Information</topictitle>
+<uid value="0xEAE107BB"/>
+<topic>
+<category>LemonTangram</category>
+<topictitle>General Information</topictitle>
 <synonyms>General Information</synonyms>
 <context contextUID="General_Information"/>
 <index>General Information</index>

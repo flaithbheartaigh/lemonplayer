@@ -96,7 +96,7 @@ private:
 	
 	TInt iWidth;
 	TInt iHeight;
-	CFbsBitmap* 			iDoubleBufferBmp;			// 位图缓冲,owned
+	CFbsBitmap* 			iDoubleBufferBmp;		// 位图缓冲,owned
 	CFbsBitmapDevice*   	iDoubleBufferDevice;	// 位图缓冲关联的device,owned,
 	CFbsBitGc*  			iDoubleBufferGc;		// 位图缓冲绘制环境,owned
 	

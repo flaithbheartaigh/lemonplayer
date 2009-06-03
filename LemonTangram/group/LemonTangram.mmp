@@ -35,7 +35,14 @@ END //RESOURCE
 
 
 USERINCLUDE	   ..\inc
-USERINCLUDE    ..\help ..\source\TangImage\inc ..\source\Tools\inc ..\source\ImageLib\inc ..\source\XmlLib\inc ..\source\Framework\inc ..\source\Controller\inc ..\source\LTUI\inc
+USERINCLUDE    ..\help 
+USERINCLUDE    ..\source\TangImage\inc 
+USERINCLUDE    ..\source\Tools\inc 
+USERINCLUDE    ..\source\ImageLib\inc 
+USERINCLUDE    ..\source\XmlLib\inc 
+USERINCLUDE    ..\source\Framework\inc 
+USERINCLUDE    ..\source\Controller\inc 
+USERINCLUDE    ..\source\LTUI\inc
 
 SYSTEMINCLUDE	 \epoc32\include
 SYSTEMINCLUDE	 \epoc32\include\libc
@@ -50,7 +57,18 @@ LIBRARY		   commonengine.lib
 LIBRARY		   efsrv.lib 
 LIBRARY		   estor.lib
 LIBRARY        aknnotify.lib
-LIBRARY        hlplch.lib fbscli.lib bitmaptransforms.lib imageconversion.lib estlib.lib bitgdi.lib SyExpat.lib gdi.lib ws32.lib charconv.lib
+LIBRARY        hlplch.lib 
+LIBRARY        fbscli.lib 
+LIBRARY        bitmaptransforms.lib 
+LIBRARY        imageconversion.lib 
+LIBRARY        estlib.lib 
+LIBRARY        bitgdi.lib 
+LIBRARY        SyExpat.lib 
+LIBRARY        gdi.lib 
+LIBRARY        ws32.lib 
+LIBRARY        charconv.lib 
+LIBRARY        eikctl.lib 
+LIBRARY        eikcoctl.lib
  
 
 LANG SC
@@ -64,19 +82,34 @@ DEBUGGABLE
 #endif
 // End of File
 SOURCEPATH ..\source\TangImage\src
-SOURCE ImageElement.cpp TangImageManager.cpp
+SOURCE ImageElement.cpp 
+SOURCE TangImageManager.cpp
+
 SOURCEPATH ..\source\ImageLib\src
-SOURCE ImageArrayReader.cpp ImageBitmapReader.cpp ImageConvertor.cpp ImageRotator.cpp StaticAnimation.cpp TransparentBitmap.cpp
+SOURCE ImageArrayReader.cpp 
+SOURCE ImageBitmapReader.cpp 
+SOURCE ImageConvertor.cpp 
+SOURCE ImageRotator.cpp 
+SOURCE StaticAnimation.cpp 
+SOURCE TransparentBitmap.cpp
+
 SOURCEPATH ..\source\XmlLib\src
-SOURCE DefaultDeclHandler.cpp DefaultDocHandler.cpp
+SOURCE DefaultDeclHandler.cpp 
+SOURCE DefaultDocHandler.cpp
+
 SOURCEPATH ..\source\Tools\src
 SOURCE CommonUtils.cpp
+
 SOURCEPATH ..\source\TangImage\src
 SOURCE TangImageDataReader.cpp
+
 SOURCEPATH ..\source\Framework\src
-SOURCE AnimationStruct.cpp TimeOutTimer.cpp
+SOURCE AnimationStruct.cpp 
+SOURCE TimeOutTimer.cpp
+
 SOURCEPATH ..\src
 SOURCE LemonTangramContainer.cpp
+
 SOURCEPATH ..\source\TangImage\src
 SOURCE TangElementUtil.cpp
 
@@ -87,12 +120,33 @@ START BITMAP LemonTangram.mbm
 	SOURCE c24 log.bmp
 END
 SOURCEPATH ..\source\Controller\src
-SOURCE LemonMenuBar.cpp LemonMenuItem.cpp LemonMenuList.cpp
+SOURCE LemonMenuBar.cpp 
+SOURCE LemonMenuItem.cpp 
+SOURCE LemonMenuList.cpp
+
 SOURCEPATH ..\source\Controller\src
 SOURCE LemonMenu.cpp
+
 SOURCEPATH ..\source\LTUI\src
-SOURCE IconFileProvider.cpp UI240x320.cpp UI320x240.cpp UI320x240orig.cpp UIFactory.cpp
+SOURCE IconFileProvider.cpp 
+SOURCE UI240x320.cpp 
+SOURCE UI320x240.cpp 
+SOURCE UI320x240orig.cpp 
+SOURCE UIFactory.cpp
+
 SOURCEPATH ..\source\Tools\src
-SOURCE Utils.cpp Configuration.cpp
+SOURCE Utils.cpp 
+SOURCE Configuration.cpp
+
 SOURCEPATH ..\source\TangImage\src
-SOURCE TangImageDataWriter.cpp
+SOURCE TangImageDataWriter.cpp 
+SOURCE TangImageSave.cpp
+
+SOURCEPATH ..\src
+SOURCE YCSettingList.cpp 
+SOURCE YCSettingView.cpp
+
+SOURCEPATH      ..\help
+DOCUMENT        LemonTangram.rtf
+DOCUMENT        LemonTangram.cshlp
+DOCUMENT        Custom.xml

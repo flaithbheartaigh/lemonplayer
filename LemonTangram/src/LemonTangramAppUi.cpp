@@ -17,7 +17,7 @@
 #include <hlplch.h>
 
 #include <LemonTangram_0xEAE107BA.rsg>
-
+#include "LemonTangram.hlp.hrh"
 
 #include "LemonTangram.hrh"
 #include "LemonTangram.pan"
@@ -25,7 +25,9 @@
 #include "LemonTangramAppUi.h"
 #include "LemonTangramAppView.h"
 #include "MacroUtil.h"
+#include "YCSettingView.h"
 
+const TUid KUidHelpFile = { HELPFILE_UID };
 
 _LIT(KFileName, "C:\\private\\EAE107BA\\LemonTangram.txt");
 _LIT(KText, "Hello World!");
@@ -50,6 +52,9 @@ void CLemonTangramAppUi::ConstructL()
 	// Create view object
 	iAppView = CLemonTangramAppView::NewL(rect);
 	AddViewL(iAppView);
+	iSettingView = CYCSettingView::NewL();
+	AddViewL(iSettingView);
+		
 	ActivateLocalViewL(iAppView->Id());
 
 	}
@@ -90,6 +95,7 @@ void CLemonTangramAppUi::HandleCommandL(TInt aCommand)
 		{
 		case EEikCmdExit:
 		case EAknSoftkeyExit:
+		case ECommandExit:
 			Exit();
 			break;
 
@@ -136,8 +142,8 @@ void CLemonTangramAppUi::HandleCommandL(TInt aCommand)
 			}
 			break;
 		case EHelp:
+		case ECommandHelp:
 			{
-
 			CArrayFix<TCoeHelpContext>* buf = CCoeAppUi::AppHelpContextL();
 			HlpLauncher::LaunchHelpApplicationL(iEikonEnv->WsSession(), buf);
 			}
@@ -183,6 +189,8 @@ CArrayFix<TCoeHelpContext>* CLemonTangramAppUi::HelpContextL() const
 	// work.
 	CArrayFixFlat<TCoeHelpContext>* array = new(ELeave)CArrayFixFlat<TCoeHelpContext>(1);
 	CleanupStack::PushL(array);
+	array->AppendL( TCoeHelpContext( KUidHelpFile, KGeneral_Information ) );
+	//array->AppendL( TCoeHelpContext( KUidHelpFile, KContextApplication ) );
 	CleanupStack::Pop(array);
 	return array;
 	}

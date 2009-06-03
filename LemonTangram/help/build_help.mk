@@ -16,18 +16,17 @@ do_nothing :
 # will be found by cpp.exe when calculating the dependency information
 # in the mmp makefiles.
 
-MAKMAKE : LemonTangram_0xEAE107BA.hlp
-LemonTangram_0xEAE107BA.hlp : LemonTangram.xml LemonTangram.cshlp Custom.xml
+MAKMAKE : LemonTangram.hlp
+LemonTangram.hlp : LemonTangram.xml LemonTangram.cshlp Custom.xml
 	cshlpcmp LemonTangram.cshlp
 ifeq (WINS,$(findstring WINS, $(PLATFORM)))
-	copy LemonTangram_0xEAE107BA.hlp $(EPOCROOT)epoc32\$(PLATFORM)\c\resource\help
+	copy LemonTangram.hlp $(EPOCROOT)epoc32\$(PLATFORM)\c\resource\help
 endif
 
 BLD : do_nothing
 
 CLEAN :
-	del LemonTangram_0xEAE107BA.hlp
-	del LemonTangram_0xEAE107BA.hlp.hrh
+	del LemonTangram.hlp
 
 LIB : do_nothing
 
@@ -40,6 +39,6 @@ FREEZE : do_nothing
 SAVESPACE : do_nothing
 
 RELEASABLES :
-	@echo LemonTangram_0xEAE107BA.hlp
+	@echo LemonTangram.hlp
 
 FINAL : do_nothing

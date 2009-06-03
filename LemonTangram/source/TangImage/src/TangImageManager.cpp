@@ -17,21 +17,25 @@
 #include "ImageRotator.h"
 #include "TangElementUtil.h"
 #include "Utils.h"
+#include "TangImageSave.h"
 
 
 #include <LemonTangram.mbg>
 #include <eikenv.h>
 _LIT(KFileMbm,"z:\\resource\\apps\\LemonTangram.mbm");
 _LIT(KSaveProcessFile,"process.xml");
+_LIT(KSaveScreenFile,"screen.jpg");
 
 CTangImageManager::CTangImageManager() :
-	iConverted(0), iConvertDown(0), iSelectedState(ESelectedStateChoose)
+	iConverted(0), iConvertDown(0), iSelectedState(ESelectedStateChoose),
+	iDataArray(NULL),iScreenSave(NULL)
 	{
 	// No implementation required
 	}
 
 CTangImageManager::~CTangImageManager()
 	{
+	SAFE_DELETE(iScreenSave);
 	SAFE_DELETE(iDataArray);
 	SAFE_DELETE(iBitmapArray);
 	SAFE_DELETE_ARRAY(iElements,EImageNumber);
@@ -91,7 +95,8 @@ void CTangImageManager::LoadImageFromFileL(const TDesC& aFileName)
 
 void CTangImageManager::LoadImageDataFileL(const TDesC& aFileName)
 	{
-	iDataArray = CTangImageDataReader::NewL(iElements);
+	if (!iDataArray)
+		iDataArray = CTangImageDataReader::NewL(iElements);
 	iDataArray->LoadImageDataFileL(aFileName);
 	}
 
@@ -277,4 +282,23 @@ void CTangImageManager::SaveProcess()
 	file.Append(KSaveProcessFile);
 	writer->SaveDataToFile(file);
 	CleanupStack::PopAndDestroy(writer);
+	}
+
+void CTangImageManager::OpenProcess()
+	{
+	TFileName file;
+	GetAppPath(file);
+	file.Append(KSaveProcessFile);
+	LoadImageDataFileL(file);
+	}
+
+void CTangImageManager::SaveScreen()
+	{
+	TFileName file;
+	GetAppPath(file);
+	file.Append(KSaveScreenFile);	
+	SAFE_DELETE(iScreenSave);
+	iScreenSave = CTangImageSave::NewL(file);
+	Draw(iScreenSave->CreateBufferBitmapL());
+	iScreenSave->StartSave();
 	}
