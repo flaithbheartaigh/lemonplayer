@@ -45,7 +45,7 @@ class CYCSettingList : public CAknSettingItemList
         * @param aSettingId Type of the setting item.
         * @return  Pointer to CAknSettingItem object.
         */
-        CAknSettingItem* CreateSettingItemL( TInt aSettingId );
+        //CAknSettingItem* CreateSettingItemL( TInt aSettingId );
             
         /**
         * From CAknSettingItemList.
@@ -54,7 +54,7 @@ class CYCSettingList : public CAknSettingItemList
         * @param aIndex Setting item index.
         * @param aCalledFromMenu is called from menu.
         */
-        void EditItemL( TInt aIndex, TBool aCalledFromMenu );
+        //void EditItemL( TInt aIndex, TBool aCalledFromMenu );
         
     
     private:
@@ -66,6 +66,11 @@ class CYCSettingList : public CAknSettingItemList
         
     public:
     	void SaveData();
+    	void CreateList();
+    private:
+    	void CreateSkinFolderItem(TInt aSettingId);
+    	void CreateSkinChooseItem(TInt aSettingId);
+    	void CreateSaveFolderItem(TInt aSettingId);
     	
     private: // Data        
         /**
@@ -75,6 +80,10 @@ class CYCSettingList : public CAknSettingItemList
         
         TInt iFontSizeOld;
         TInt iFontSize;
+        
+        TFileName iSkinFolder;
+        TInt iSkinChoose;
+        TFileName iSaveFolder;
 
     };
     

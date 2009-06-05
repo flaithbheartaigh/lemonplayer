@@ -12,7 +12,6 @@
 *  Nokia Corporation.
 * ==============================================================================
 */
-
 #include "YCSettingView.h"
 #include "YCSettingList.h"
 #include "LemonTangram.hrh"
@@ -20,6 +19,7 @@
 #include <akncontext.h>
 #include <aknViewAppUi.h> 
 #include <LemonTangram_0xEAE107BA.rsg>
+#include "YCSettingContainer.h"
 
 // ============================ MEMBER FUNCTIONS ===============================
 
@@ -53,11 +53,16 @@ CYCSettingView::CYCSettingView()
 //
 CYCSettingView::~CYCSettingView()
 	{
-	if ( iContainer )
+//	if ( iContainer )
+//        {
+//        AppUi()->RemoveFromStack( iContainer );
+//        delete iContainer;
+//        }    
+	if ( iAppView )
         {
-        AppUi()->RemoveFromStack( iContainer );
-        delete iContainer;
-        }    
+        AppUi()->RemoveFromStack( iAppView );
+        delete iAppView;
+        }
 	}
 
 // ---------------------------------------------------------------------------
@@ -94,15 +99,22 @@ void CYCSettingView::DoActivateL( const TVwsViewId& /*aPrevViewId*/,
                       TUid /*aCustomMessageId*/,
                       const TDesC8& /*aCustomMessage*/ )
     {    
-    iContainer = CYCSettingList::NewL();
-    
-    iContainer->SetMopParent( this );
-    iContainer->ConstructFromResourceL( R_LISTBOX_SETTING_ITEM_LIST );
-    AppUi()->AddToStackL( *this, iContainer );
-    
-    iContainer->MakeVisible( ETrue );
-    iContainer->SetRect( ClientRect() );
-    iContainer->ActivateL();
+//    iContainer = CYCSettingList::NewL();
+//    
+//    iContainer->SetMopParent( this );
+//    iContainer->ConstructFromResourceL( R_LISTBOX_SETTING_ITEM_LIST );
+//    iContainer->CreateList();
+//    AppUi()->AddToStackL( *this, iContainer );
+//    
+//    iContainer->MakeVisible( ETrue );
+//    iContainer->SetRect( ClientRect() );
+//    iContainer->ActivateL();
+	
+	iAppView = new (ELeave) CYCSettingContainer;
+	iAppView->SetMopParent(this);
+	iAppView->ConstructL(ClientRect());
+	
+	AppUi()->AddToStackL(*this, iAppView);
     }
 
 // ---------------------------------------------------------------------------
@@ -112,12 +124,18 @@ void CYCSettingView::DoActivateL( const TVwsViewId& /*aPrevViewId*/,
 //
 void CYCSettingView::DoDeactivate()
     {
-    if ( iContainer )
-        {
-        AppUi()->RemoveFromViewStack( *this, iContainer );
-        delete iContainer;
-        iContainer = NULL;
-        }    
+//    if ( iContainer )
+//        {
+//        AppUi()->RemoveFromViewStack( *this, iContainer );
+//        delete iContainer;
+//        iContainer = NULL;
+//        }    
+    if (iAppView)
+    	{
+    	AppUi()->RemoveFromViewStack( *this, iAppView );
+    	delete iAppView;
+    	iAppView = NULL;
+    	}
     }
 
 // ---------------------------------------------------------------------------
@@ -127,7 +145,8 @@ void CYCSettingView::DoDeactivate()
 //
 void CYCSettingView::ConstructL()
 {
-    BaseConstructL(R_LISTBOX_SETTINGS_VIEW);
+	BaseConstructL(R_LISTBOX_SETTINGS_VIEW);
+	//BaseConstructL(EAknEnableSkin);
 }
 
 // ---------------------------------------------------------------------------
@@ -153,15 +172,15 @@ void CYCSettingView::DynInitMenuPaneL( TInt aResourceId,
 //
 void CYCSettingView::HandleSizeChange( TInt aType )
     {
-    if( iContainer )
-        {
-        iContainer->HandleResourceChange( aType );
-        
-        if( aType==KEikDynamicLayoutVariantSwitch )
-            {        
-            TRect rect;
-            AknLayoutUtils::LayoutMetricsRect(AknLayoutUtils::EMainPane, rect);
-            iContainer->SetRect(rect);
-            }
-        }         
+//    if( iContainer )
+//        {
+//        iContainer->HandleResourceChange( aType );
+//        
+//        if( aType==KEikDynamicLayoutVariantSwitch )
+//            {        
+//            TRect rect;
+//            AknLayoutUtils::LayoutMetricsRect(AknLayoutUtils::EMainPane, rect);
+//            iContainer->SetRect(rect);
+//            }
+//        }         
     } 

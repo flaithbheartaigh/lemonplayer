@@ -36,4 +36,7 @@
 
 #define qtn_about_dialog_text "LemonTangram Version 1.0.0\n\nAuthor: zengcity\n\nSupport: support@mycompany.com\n\n(c) Your copyright notice"
 
+#define qtn_setting_skin_folder "Skin Folder"
+#define qtn_setting_skin_choose "Skin Choose"
+#define qtn_setting_save_folder "Save Foloder"
 // End of File

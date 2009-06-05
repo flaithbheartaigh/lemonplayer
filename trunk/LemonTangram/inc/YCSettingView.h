@@ -21,6 +21,7 @@
 
 class CYCSettingList;
 class CYCBrowserView;
+class CYCSettingContainer;
 
 
 /**
@@ -115,7 +116,8 @@ class CYCSettingView : public CAknView
         * Container.
         * Own.
         */
-        CYCSettingList* iContainer;
+        //CYCSettingList* iContainer;
+    	CYCSettingContainer* iAppView;
     };
 
 #endif // __LISTBOXSETTINGVIEW_H__
