@@ -252,17 +252,22 @@ RESOURCE CBA r_listbox_settingview_options_exit__change
 RESOURCE AVKON_SETTING_ITEM_LIST r_listbox_setting_item_list
   {
   title = qtn_setting_title;
-  initial_number = 1;
-  items = 
-    { 
-    AVKON_SETTING_ITEM
-      {
-      identifier = EYCSettingFont;
-      setting_page_resource = r_listbox_font_setting_page;
-      associated_resource = r_listbox_font_popup_setting_associated;
-      name = qtn_setting_font_item;
-      }
-    };
+//  initial_number = 3;
+//  items = 
+//      { 
+//      AVKON_SETTING_ITEM
+//        {
+//        identifier = ELTSettingSkinFolder;
+//        },
+//      AVKON_SETTING_ITEM
+//        {
+//        identifier = ELTSettingSkinChosse;
+//        },
+//      AVKON_SETTING_ITEM
+//        {
+//        identifier = ELTSettingSaveFolder;
+//        }
+//      };
   }   
 
 //font
@@ -294,4 +299,44 @@ RESOURCE POPUP_SETTING_LIST r_listbox_font_popup_setting_editor
     {
     flags = 0;
     }
+
+RESOURCE AVKON_SETTING_PAGE r_text_setting_page
+    {
+    type = EEikCtEdwin;
+    editor_resource_id = r_name_edwin;
+    }
+    
+RESOURCE EDWIN r_name_edwin
+    {
+    width = 10;
+    maxlength = 256;
+    }
+
+RESOURCE AVKON_SETTING_PAGE r_enumeratedtext_setting_page
+	{
+	type = EAknCtPopupSettingList;
+	editor_resource_id = r_popup_setting_list;
+	}
+	
+RESOURCE POPUP_SETTING_LIST r_popup_setting_list
+    {
+	flags = 0;
+	}
+	
+RESOURCE AVKON_POPUP_SETTING_TEXTS r_popup_setting_texts
+	{
+    setting_texts_resource = r_texts;
+	}
+	
+RESOURCE ARRAY r_texts
+    {
+    items =
+        {
+        AVKON_ENUMERATED_TEXT { value=0; text = "dummy";}
+        };
+    }
+
+RESOURCE TBUF r_text_setting_skin_folder { buf=qtn_setting_skin_folder; }
+RESOURCE TBUF r_text_setting_save_folder { buf=qtn_setting_save_folder; }
+RESOURCE TBUF r_text_setting_skin_choose { buf=qtn_setting_skin_choose; }
 // End of File

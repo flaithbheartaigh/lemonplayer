@@ -40,9 +40,12 @@ enum TLemonTangrameViewID
 	ESettingView
 };
 
-enum TYCSettingPageIds
+enum TLTSettingPageIds
     {
-    EYCSettingFont = 0
+    //EYCSettingFont = 0,
+    ELTSettingSkinFolder = 2,
+    ELTSettingSkinChosse,
+    ELTSettingSaveFolder
     };
 
 

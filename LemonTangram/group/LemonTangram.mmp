@@ -150,3 +150,7 @@ SOURCEPATH      ..\help
 DOCUMENT        LemonTangram.rtf
 DOCUMENT        LemonTangram.cshlp
 DOCUMENT        Custom.xml
+SOURCEPATH ..\source\TangImage\src
+SOURCE SkinImageScan.cpp
+SOURCEPATH ..\src
+SOURCE YCSettingContainer.cpp
