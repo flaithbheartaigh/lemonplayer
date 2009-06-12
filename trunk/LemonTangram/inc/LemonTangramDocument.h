@@ -12,6 +12,7 @@
 
 // INCLUDES
 #include <akndoc.h>
+#include "IconFileProvider.h"
 
 // FORWARD DECLARATIONS
 class CLemonTangramAppUi;
@@ -84,6 +85,13 @@ private:
 	 * @param aApp Application creating this document.
 	 */
 	CLemonTangramDocument(CEikApplication& aApp);
+	
+public:
+	CIconFileProvider* GetIconFileProvider() {return iIconProvider;};
+	void SetIconFileProvider(CIconFileProvider* aIconProvider) {iIconProvider = aIconProvider;};
+
+private:
+	CIconFileProvider* iIconProvider;
 
 	};
 

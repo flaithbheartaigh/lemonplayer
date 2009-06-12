@@ -1,9 +1,9 @@
 <image number="7">
-<img x="40" y="80" index="0" degree="270" file="c:\tangram\bigtriangle1.bmp"></img>
-<img x="80" y="40" index="1" degree="180" file="c:\tangram\bigtriangle2.bmp"></img>
-<img x="120" y="120" index="2" degree="0" file="c:\tangram\midtriangle.bmp"></img>
-<img x="40" y="140" index="3" degree="0" file="c:\tangram\smalltriangle1.bmp"></img>
-<img x="100" y="80" index="4" degree="90" file="c:\tangram\smalltriangle2.bmp"></img>
-<img x="140" y="60" index="5" degree="0" file="c:\tangram\rect.bmp"></img>
-<img x="80" y="120" index="6" degree="0" file="c:\tangram\square.bmp"></img>
+<img x="40" y="80" index="0" degree="270"></img>
+<img x="80" y="40" index="1" degree="180"></img>
+<img x="140" y="138" index="2" degree="225"></img>
+<img x="40" y="140" index="3" degree="0"></img>
+<img x="100" y="80" index="4" degree="90"></img>
+<img x="140" y="60" index="5" degree="0"></img>
+<img x="80" y="120" index="6" degree="0"></img>
 </image>

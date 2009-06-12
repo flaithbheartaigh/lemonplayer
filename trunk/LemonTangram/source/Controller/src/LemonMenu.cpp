@@ -29,6 +29,7 @@ CLemonMenu::CLemonMenu(MLemonMenuNotify* aNotify)
 CLemonMenu::~CLemonMenu()
 	{
 	SAFE_DELETE(iMenuList);
+	SAFE_DELETE(iMenuBar);
 	}
 
 CLemonMenu* CLemonMenu::NewLC(MLemonMenuNotify* aNotify)
@@ -49,6 +50,7 @@ CLemonMenu* CLemonMenu::NewL(MLemonMenuNotify* aNotify)
 void CLemonMenu::ConstructL()
 	{
 	iUIMgr = STATIC_CAST(CLemonTangramAppUi*,CEikonEnv::Static()->AppUi())->GetUIMgr();
+	iMenuBar = CLemonMenuBar::NewL();
 	}
 
 void CLemonMenu::LoadMenu(const TDesC& aFileName)
@@ -82,15 +84,11 @@ void CLemonMenu::LoadMenu(const TDesC& aFileName)
 	}
 void CLemonMenu::Draw(CFbsBitGc& gc)
 	{
+	iMenuBar->Draw(gc,iMenuActive);
+	
 	if (iMenuActive)
 		{
-//		gc.SetPenStyle( CGraphicsContext::ESolidPen );
-//		gc.SetPenColor(KRgbRed);	
-//		gc.SetBrushStyle( CGraphicsContext::ESolidBrush );
-//		gc.SetBrushColor( KRgbGray );
-//		gc.UseFont(CEikonEnv::Static()->LegendFont());	
 		iMenuList->Draw(gc);
-//		gc.DiscardFont();
 		}
 	}
 TKeyResponse CLemonMenu::OfferKeyEventL(const TKeyEvent& aKeyEvent,
@@ -103,11 +101,12 @@ TKeyResponse CLemonMenu::OfferKeyEventL(const TKeyEvent& aKeyEvent,
 			case EEventKeyUp:
 				switch (aKeyEvent.iScanCode)
 					{
-						case EStdKeyDevice0://ok
+						case EStdKeyDevice0:
+						case EStdKeyDevice3://ok
 							iNotify->HandMenuCommand(iMenuList->GetSelectedCommand());
 							iMenuActive = EFalse;
 							return EKeyWasConsumed;					
-						case EStdKeyDevice1://ok
+						case EStdKeyDevice1:
 							iMenuActive = EFalse;
 							return EKeyWasConsumed;
 						case EStdKeyUpArrow:
@@ -119,6 +118,7 @@ TKeyResponse CLemonMenu::OfferKeyEventL(const TKeyEvent& aKeyEvent,
 					}
 			break;
 			}
+		return EKeyWasConsumed;
 		}
 	else
 		{

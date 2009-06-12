@@ -111,7 +111,7 @@ void  CLemonTangramAppView::DoDeactivate ()
 	
 }
 
-void  CLemonTangramAppView::HandleCommandL (TInt aCommand)
+void  CLemonTangramAppView::HandleCommandL (TInt /*aCommand*/)
 	{
 	
 	}

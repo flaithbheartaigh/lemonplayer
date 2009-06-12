@@ -21,6 +21,10 @@
 #include "LemonMenu.h"
 #include "LemonTangramAppUi.h"
 #include "LemonTangram.hrh"
+#include "LMSvgUtil.h"
+#include <StringLoader.h> 
+#include <LemonTangram_0xEAE107BA.rsg>
+#include "Utils.h"
 
 // ================= MEMBER FUNCTIONS =======================
 
@@ -30,8 +34,7 @@
 // ---------------------------------------------------------
 //
 _LIT(KFileTangram,"c:\\mytangram.xml");
-_LIT(KFileMbm,"z:\\resource\\apps\\LemonTangram.mbm");
-_LIT(KFileMenu,"c:\\tangmenu.xml");
+_LIT(KFileTangramImage,"c:\\tangvect.xml");
 void CLemonTangramContainer::ConstructL(const TRect& aRect)
 	{
 	iWidth = aRect.Width();
@@ -103,7 +106,7 @@ CCoeControl* CLemonTangramContainer::ComponentControl(TInt aIndex) const
 // CLemonPlayerContainer::Draw(const TRect& aRect) const
 // ---------------------------------------------------------
 //
-void CLemonTangramContainer::Draw(const TRect& aRect) const
+void CLemonTangramContainer::Draw(const TRect& /*aRect*/) const
 	{
 	CWindowGc& gc = SystemGc();
 	// TODO: Add your drawing code here
@@ -261,7 +264,8 @@ TKeyResponse CLemonTangramContainer::StateKey(const TKeyEvent& aKeyEvent,
 void CLemonTangramContainer::StateLogoInit()
 	{
 	iLogoState = 0;
-	iLogo = CEikonEnv::Static()->CreateBitmapL(KFileMbm,EMbmLemontangramLog);
+	iLogo = LMSvgUtil::GetImageFromResourceL(EMbmLemontangramLog);
+	//iLogo = CEikonEnv::Static()->CreateBitmapL(KFileMbm,EMbmLemontangramLog);
 	}
 
 void CLemonTangramContainer::StateLogoLoop()
@@ -289,7 +293,7 @@ void CLemonTangramContainer::StateLogoDisplay(CFbsBitGc& gc)
 void CLemonTangramContainer::StateInitInit()
 	{
 	iManager = CTangImageManager::NewL();
-	iManager->LoadImageFromFileL(KFileTangram);
+	iManager->LoadImageFromFileL(KFileTangramImage);
 	}
 void CLemonTangramContainer::StateInitLoop()
 	{
@@ -325,7 +329,15 @@ void CLemonTangramContainer::StateInitDisplay(CFbsBitGc& gc)
 void CLemonTangramContainer::StateMainInit()
 	{
 	iMenu = CLemonMenu::NewL(this);
-	iMenu->LoadMenu(KFileMenu);
+	
+	TFileName file;
+	GetAppPath(file);
+	HBufC* textResource = StringLoader::LoadLC(R_RES_MAIN_MENU);
+	file.Append(textResource->Des());
+	CleanupStack::PopAndDestroy(textResource);
+	
+	iMenu->LoadMenu(file);
+	
 	}
 void CLemonTangramContainer::StateMainLoop()
 	{}
@@ -353,7 +365,7 @@ void CLemonTangramContainer::HandMenuCommand(TInt aCommandId)
 			iManager->SaveProcess();
 			break;
 		case ECommandReset:
-			iManager->LoadImageDataFileL(KFileTangram);
+			iManager->ResetProcess();
 			break;
 		case ECommandOpenProcess:
 			iManager->OpenProcess();

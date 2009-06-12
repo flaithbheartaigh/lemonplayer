@@ -16,8 +16,11 @@
 #include <f32file.h>
 #include <coemain.h>
 #include <s32file.h>
+#include "UIMgr.h"
+#include "LemonTangramAppUi.h"
 
-CTangImageSave::CTangImageSave()
+CTangImageSave::CTangImageSave(MSaveScreenNotify* aNotify)
+:iNotify(aNotify)
 	{
 	// No implementation required
 	}
@@ -30,17 +33,17 @@ CTangImageSave::~CTangImageSave()
 	SAFE_DELETE(iConvertor);
 	}
 
-CTangImageSave* CTangImageSave::NewLC(const TDesC& aFileName)
+CTangImageSave* CTangImageSave::NewLC(const TDesC& aFileName,MSaveScreenNotify* aNotify)
 	{
-	CTangImageSave* self = new (ELeave)CTangImageSave();
+	CTangImageSave* self = new (ELeave)CTangImageSave(aNotify);
 	CleanupStack::PushL(self);
 	self->ConstructL(aFileName);
 	return self;
 	}
 
-CTangImageSave* CTangImageSave::NewL(const TDesC& aFileName)
+CTangImageSave* CTangImageSave::NewL(const TDesC& aFileName,MSaveScreenNotify* aNotify)
 	{
-	CTangImageSave* self=CTangImageSave::NewLC(aFileName);
+	CTangImageSave* self=CTangImageSave::NewLC(aFileName,aNotify);
 	CleanupStack::Pop(); // self;
 	return self;
 	}
@@ -80,6 +83,8 @@ void CTangImageSave::OnImageConvertedL(const TDesC8 &aImgData)
 	outputFileStream.WriteL(aImgData);
 
 	CleanupStack::PopAndDestroy(2); // outputFileStream, file
+	
+	iNotify->SaveComplete();
 	}
 void CTangImageSave::OnConvertErrorL(TConvertResult /*aConvertResult*/)
 	{
@@ -95,7 +100,9 @@ CFbsBitGc& CTangImageSave::CreateBufferBitmapL()
 	
 	iDoubleBufferBmp = new(ELeave) CFbsBitmap();
 	CleanupStack::PushL(iDoubleBufferBmp);
-	TInt nErr =	iDoubleBufferBmp->Create(TSize(240,320),displayMode);
+	
+	MUIMgr* uiMgr = STATIC_CAST(CLemonTangramAppUi*,CEikonEnv::Static()->AppUi())->GetUIMgr();
+	TInt nErr =	iDoubleBufferBmp->Create(uiMgr->DrawableSize(),displayMode);
 	if (nErr != KErrNone)
 	{
 		CleanupStack::PopAndDestroy(iDoubleBufferBmp);

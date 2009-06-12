@@ -18,13 +18,17 @@
 #include "TangElementUtil.h"
 #include "Utils.h"
 #include "TangImageSave.h"
-
+#include "QueryDlgUtil.h"
 
 #include <LemonTangram.mbg>
 #include <eikenv.h>
-_LIT(KFileMbm,"z:\\resource\\apps\\LemonTangram.mbm");
+#include <LemonTangram_0xEAE107BA.rsg>
+
+_LIT(KFileTangram,"c:\\mytangram.xml");
 _LIT(KSaveProcessFile,"process.xml");
 _LIT(KSaveScreenFile,"screen.jpg");
+_LIT(KSaveScreenDefault,"snapshot");
+_LIT(KSaveScreenFormat,".jpg");
 
 CTangImageManager::CTangImageManager() :
 	iConverted(0), iConvertDown(0), iSelectedState(ESelectedStateChoose),
@@ -38,7 +42,11 @@ CTangImageManager::~CTangImageManager()
 	SAFE_DELETE(iScreenSave);
 	SAFE_DELETE(iDataArray);
 	SAFE_DELETE(iBitmapArray);
+	SAFE_DELETE_ARRAY(iBitmapFocus,EBitmapFocusTotal);
 	SAFE_DELETE_ARRAY(iElements,EImageNumber);
+	
+	iLayer.Reset();
+	iLayer.Close();
 	}
 
 CTangImageManager* CTangImageManager::NewLC()
@@ -61,7 +69,8 @@ void CTangImageManager::ConstructL()
 	iElements = (CImageElement**)malloc(sizeof(CImageElement*) * EImageNumber);
 	for (TInt i=0; i<EImageNumber; i++)
 		iElements[i] = CImageElement::NewL();
-
+	
+	iBitmapFocus = (CFbsBitmap**)malloc(sizeof(CFbsBitmap*) * EBitmapFocusTotal);
 	}
 void CTangImageManager::ConvertedOne()
 	{
@@ -72,17 +81,29 @@ void CTangImageManager::ConvertComplete()
 	{
 	CFbsBitmap** array = iBitmapArray->GetBitmapArray();
 	int count = iBitmapArray->GetBitmapCount();
-	if (count != EImageNumber)
-		return;
+	//if (count != EImageNumber)
+	//	return;
 	for (TInt i=0; i<EImageNumber; i++)
 		{
 		iElements[i]->SetState(KImageStateLoad);
 		iElements[i]->SetBitmapLoad(array[i]);
 		iElements[i]->SetIndex(i);
+		
+		iLayer.Append(i);
 		}
 	iElements[6]->SetSelected(ETrue);
 	iSelectedIndex = 6;
 	iConvertDown = 1;
+	
+	//
+	iBitmapFocus[EBitmapActive] = array[7];
+	CTransparentBitmap *tran1 =  CTransparentBitmap::NewL(iBitmapFocus[EBitmapActive],
+			iBitmapFocus[EBitmapActiveMask],KRgbMagenta);
+	delete tran1;
+	iBitmapFocus[EBitmapFocus] = array[8];
+	CTransparentBitmap *tran2 =  CTransparentBitmap::NewL(iBitmapFocus[EBitmapFocus],
+			iBitmapFocus[EBitmapFocusMask],KRgbMagenta);
+	delete tran2;
 	}
 
 void CTangImageManager::LoadImageFromFileL(const TDesC& aFileName)
@@ -103,10 +124,36 @@ void CTangImageManager::LoadImageDataFileL(const TDesC& aFileName)
 void CTangImageManager::Draw(CBitmapContext& aGc)
 	{
 	//EImageNumber
-	for (TInt i=0; i<EImageNumber; i++)
+	for(TInt i=0; i<iLayer.Count(); i++)
 		{
-		if (iElements[i])
-			iElements[i]->Draw(aGc);
+		TInt index = iLayer[i];
+		if (iElements[index])
+			iElements[index]->Draw(aGc);
+		}
+//	for (TInt i=0; i<EImageNumber; i++)
+//		{
+//		if (iElements[i])
+//			iElements[i]->Draw(aGc);
+//		}
+	
+	CImageElement* element = iElements[iSelectedIndex];
+	TInt x = element->GetPositionX();
+	TInt y = element->GetPositionY();
+	if (iSelectedState == ESelectedStateChoose)
+		{
+		x -= (iBitmapFocus[EBitmapFocus]->SizeInPixels().iWidth >> 1);
+		y -= (iBitmapFocus[EBitmapFocus]->SizeInPixels().iHeight >> 1);
+		TRect rect( TPoint( 0,0 ),iBitmapFocus[EBitmapFocus]->SizeInPixels() );
+		aGc.BitBltMasked(TPoint(x,y),iBitmapFocus[EBitmapFocus],
+				rect,iBitmapFocus[EBitmapFocusMask],ETrue);
+		}
+	else if (iSelectedState == ESelectedStateMove)
+		{
+		x -= (iBitmapFocus[EBitmapActive]->SizeInPixels().iWidth >> 1);
+		y -= (iBitmapFocus[EBitmapActive]->SizeInPixels().iHeight >> 1);
+		TRect rect( TPoint( 0,0 ),iBitmapFocus[EBitmapActive]->SizeInPixels() );
+		aGc.BitBltMasked(TPoint(x,y),iBitmapFocus[EBitmapActive],
+				rect,iBitmapFocus[EBitmapActiveMask],ETrue);		
 		}
 	}
 
@@ -135,7 +182,7 @@ TKeyResponse CTangImageManager::KeyChoose(const TKeyEvent& aKeyEvent,
 			switch (aKeyEvent.iScanCode)
 				{
 				case '2'://up
-				case EKeyUpArrow://
+				case EStdKeyUpArrow://
 					index = TangElementUtil::FindNearestVert(iElements,
 							iSelectedIndex,EMoveNorth);
 					if (index != iSelectedIndex)
@@ -143,11 +190,12 @@ TKeyResponse CTangImageManager::KeyChoose(const TKeyEvent& aKeyEvent,
 						iElements[iSelectedIndex]->SetSelected(EFalse);
 						iElements[index]->SetSelected(ETrue);						
 						iSelectedIndex = index;		
+						ChangeLayer();
 						}
 					return EKeyWasConsumed;					
 					break;
 				case '8'://down
-				case EKeyDownArrow://ok
+				case EStdKeyDownArrow://ok
 					index = TangElementUtil::FindNearestVert(iElements,
 							iSelectedIndex,EMoveSouth);
 					if (index != iSelectedIndex)
@@ -155,11 +203,12 @@ TKeyResponse CTangImageManager::KeyChoose(const TKeyEvent& aKeyEvent,
 						iElements[iSelectedIndex]->SetSelected(EFalse);
 						iElements[index]->SetSelected(ETrue);						
 						iSelectedIndex = index;		
+						ChangeLayer();
 						}
 					return EKeyWasConsumed;					
 					break;
 				case '4'://left
-				case EKeyLeftArrow://ok
+				case EStdKeyLeftArrow://ok
 					index = TangElementUtil::FindNearestHori(iElements,
 							iSelectedIndex,EMoveWest);
 					if (index != iSelectedIndex)
@@ -167,11 +216,12 @@ TKeyResponse CTangImageManager::KeyChoose(const TKeyEvent& aKeyEvent,
 						iElements[iSelectedIndex]->SetSelected(EFalse);
 						iElements[index]->SetSelected(ETrue);
 						iSelectedIndex = index;
+						ChangeLayer();
 						}
 					return EKeyWasConsumed;
 					break;
 				case '6'://right
-				case EKeyRightArrow://ok
+				case EStdKeyRightArrow://ok
 					index = TangElementUtil::FindNearestHori(iElements,
 							iSelectedIndex,EMoveEast);
 					if (index != iSelectedIndex)
@@ -179,6 +229,7 @@ TKeyResponse CTangImageManager::KeyChoose(const TKeyEvent& aKeyEvent,
 						iElements[iSelectedIndex]->SetSelected(EFalse);
 						iElements[index]->SetSelected(ETrue);						
 						iSelectedIndex = index;		
+						ChangeLayer();
 						}
 					return EKeyWasConsumed;
 					break;
@@ -276,29 +327,83 @@ void CTangImageManager::Rotate(TInt aIndex, TInt aDegree)
 
 void CTangImageManager::SaveProcess()
 	{
-	CTangImageDataWriter* writer = CTangImageDataWriter::NewLC(iElements);
-	TFileName file;
-	GetAppPath(file);
-	file.Append(KSaveProcessFile);
-	writer->SaveDataToFile(file);
-	CleanupStack::PopAndDestroy(writer);
+	if (ShowConfirmationQueryL(R_TEXT_DLG_CONFIRM_SAVE_PROGRESS))
+		{
+		TInt wait = StartWaitingDlg(R_TEXT_DLG_SAVE_PROGRESS);
+		
+		CTangImageDataWriter* writer = CTangImageDataWriter::NewLC(iElements);
+		TFileName file;
+		GetAppPath(file);
+		file.Append(KSaveProcessFile);
+		writer->SaveDataToFile(file);
+		CleanupStack::PopAndDestroy(writer);
+		
+		EndWaitingDlg(wait);
+		
+		ShowInfomationDlgL(R_TEXT_DLG_SAVE_PROGRESS_SUCCESS);
+		}
+	}
+
+void CTangImageManager::ResetProcess()
+	{
+	if (ShowConfirmationQueryL(R_TEXT_DLG_CONFIRM_RESET_PROGRESS))
+		{
+		TInt wait = StartWaitingDlg(R_TEXT_DLG_RESET_PROGRESS);
+		
+		LoadImageDataFileL(KFileTangram);
+		
+		EndWaitingDlg(wait);
+		}
 	}
 
 void CTangImageManager::OpenProcess()
 	{
-	TFileName file;
-	GetAppPath(file);
-	file.Append(KSaveProcessFile);
-	LoadImageDataFileL(file);
+	if (ShowConfirmationQueryL(R_TEXT_DLG_CONFIRM_OPEN_PROGRESS))
+		{
+		TInt wait = StartWaitingDlg(R_TEXT_DLG_OPEN_PROGRESS);
+		
+		TFileName file;
+		GetAppPath(file);
+		file.Append(KSaveProcessFile);
+		LoadImageDataFileL(file);
+		
+		EndWaitingDlg(wait);
+		}
 	}
 
 void CTangImageManager::SaveScreen()
 	{
-	TFileName file;
-	GetAppPath(file);
-	file.Append(KSaveScreenFile);	
-	SAFE_DELETE(iScreenSave);
-	iScreenSave = CTangImageSave::NewL(file);
-	Draw(iScreenSave->CreateBufferBitmapL());
-	iScreenSave->StartSave();
+	TBuf<KMaxName> name;
+	name.Copy(KSaveScreenDefault);
+	if (ShowInputDlgL(R_TEXT_DLG_SAVE_SCREEN_INPUT_NAME,name))
+		{
+		iWaitDlgId = StartWaitingDlg(R_TEXT_DLG_SAVE_SCREEN);
+		
+		TFileName file;
+		GetAppPath(file);
+		file.Append(name);
+		file.Append(KSaveScreenFormat);	
+		SAFE_DELETE(iScreenSave);
+		iScreenSave = CTangImageSave::NewL(file,this);
+		Draw(iScreenSave->CreateBufferBitmapL());
+		iScreenSave->StartSave();
+		}
+	}
+
+void CTangImageManager::ChangeLayer()
+	{
+	TInt index = iLayer.Find(iSelectedIndex);
+	
+	if (index != KErrNotFound)
+		{
+		iLayer.Remove(index);
+		iLayer.Append(iSelectedIndex);
+		}
+	}
+
+void CTangImageManager::SaveComplete()
+	{
+	EndWaitingDlg(iWaitDlgId);
+	
+	ShowInfomationDlgL(R_TEXT_DLG_SAVE_SCREEN_SUCCESS);
 	}

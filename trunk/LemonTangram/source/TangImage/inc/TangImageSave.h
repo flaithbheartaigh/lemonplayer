@@ -18,6 +18,7 @@
 #include <bitstd.h>
 #include <bitdev.h>
 #include <gdi.h>
+#include "MSaveScreenNotify.h"
 // CLASS DECLARATION
 class CImageConvertor;
 /**
@@ -29,11 +30,11 @@ class CTangImageSave : public CBase , public MWImageConvertorListener
 public:
 	// Constructors and destructor
 	~CTangImageSave();
-	static CTangImageSave* NewL(const TDesC& aFileName);
-	static CTangImageSave* NewLC(const TDesC& aFileName);
+	static CTangImageSave* NewL(const TDesC& aFileName,MSaveScreenNotify* aNotify);
+	static CTangImageSave* NewLC(const TDesC& aFileName,MSaveScreenNotify* aNotify);
 
 private:
-	CTangImageSave();
+	CTangImageSave(MSaveScreenNotify* aNotify);
 	void ConstructL(const TDesC& aFileName);
 	
 public:
@@ -53,6 +54,7 @@ private:
 	CFbsBitmapDevice*   	iDoubleBufferDevice;	// 位图缓冲关联的device,owned,
 	CFbsBitGc*  			iDoubleBufferGc;		// 位图缓冲绘制环境,owned
 
+	MSaveScreenNotify* iNotify;
 	};
 
 #endif // TANGIMAGESAVE_H
