@@ -16,6 +16,8 @@
 const TInt KMenuWidth = 86;
 const TInt KDLMenuWidth = 138;
 
+const TInt KSoftStateHeight = 48;
+
 CUI240x320::CUI240x320()
 	{
 	// No implementation required
@@ -35,19 +37,19 @@ CUI240x320::~CUI240x320()
 TPoint CUI240x320::BottomBarPos()
 	{
 	//320-×ÖÌå-4-1 = 303
-	return TPoint(0, iScreenHeight-iSysFontHeight-4);
+	return TPoint(0, iScreenHeight-iSysFontHeight-4 - KSoftStateHeight);
 //	return TPoint(0, 300);
 	}
 
 TPoint CUI240x320::BottomLeftOption()
 	{
-	return TPoint(2,318);
+	return TPoint(2,318 - KSoftStateHeight);
 	}
 
 TPoint CUI240x320::BottomRightOption()
 	{
 	//320-240 = 80   216
-	return TPoint(iScreenWidth-iSysFont->WidthZeroInPixels()*4-6,318);
+	return TPoint(iScreenWidth-iSysFont->WidthZeroInPixels()*4-6,318 - KSoftStateHeight);
 //	return TPoint(204,318);
 	}
 
@@ -80,11 +82,8 @@ TPoint CUI240x320::BottomTextConnect()
 
 TPoint CUI240x320::MainMenuPos()
 	{
-	//320-MainMenuSize-BottomBarSize
-	//320-h*7-35-h-4
-	TInt height = 240-MainMenuItemHeight()*KMainMenuItemNum;
+	TInt height = 251-MainMenuItemHeight()*KMainMenuItemNum ;
 	return TPoint(0,height); 
-//	return TPoint(0,152); 
 	}
 
 TSize CUI240x320::MainMenuSize() 

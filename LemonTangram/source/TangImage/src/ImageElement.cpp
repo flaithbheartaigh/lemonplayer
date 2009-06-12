@@ -73,6 +73,13 @@ void CImageElement::Draw(CBitmapContext& aGc)
 				rect,iBitmapMask,ETrue);
 //		if (iSelected)
 //			{
+//		aGc.BitBlt(TPoint(x,y),iBitmapMask);
+//		x += iBitmapMask->SizeInPixels().iWidth;
+//		y += iBitmapMask->SizeInPixels().iHeight;
+//		aGc.BitBlt(TPoint(x,y),iBitmapRotate);
+//			}
+//		if (iSelected)
+//			{
 //			aGc.SetPenStyle( CGraphicsContext::ESolidPen );
 //			aGc.SetPenColor(KRgbRed);	
 ////			aGc.SetBrushStyle( CGraphicsContext::ESolidBrush );

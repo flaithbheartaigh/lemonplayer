@@ -162,7 +162,7 @@ void CLemonMenuList::IncreaseSelected()
 	CLemonMenuItem* item = iItems[iSelectedIndex];
 	item->SetSelected(EFalse);
 	
-	if (++iSelectedIndex > iItems.Count())
+	if (++iSelectedIndex >= iItems.Count())
 		iSelectedIndex = 0;
 	
 	item = iItems[iSelectedIndex];

@@ -19,6 +19,7 @@
 #include <coedef.h>
 #include "TangImageDefine.h"
 #include "ImageArrayReader.h"
+#include "MSaveScreenNotify.h"
 // CLASS DECLARATION
 class CImageElement;
 class CTangImageDataReader;
@@ -28,7 +29,8 @@ class CTangImageSave;
  *  CTangImageManager
  * 
  */
-class CTangImageManager : public CBase , public MImageArrayNotify
+class CTangImageManager : public CBase , public MImageArrayNotify , 
+							public MSaveScreenNotify
 	{
 public:
 	// Constructors and destructor
@@ -41,6 +43,9 @@ public:
 	virtual void ConvertedOne();
 	virtual void ConvertComplete();
 	
+	//MSaveScreenNotify
+	virtual void SaveComplete();
+	
 	void LoadImageFromFileL(const TDesC& aFileName);
 	void LoadImageDataFileL(const TDesC& aFileName);
 	void Draw(CBitmapContext& aGc);
@@ -51,6 +56,7 @@ public:
 	TInt GetConvertDown(){return iConvertDown;};
 	
 	void SaveProcess();
+	void ResetProcess();
 	void OpenProcess();
 	void SaveScreen();
 
@@ -61,10 +67,20 @@ private:
 	TKeyResponse KeyChoose(const TKeyEvent& aKeyEvent,TEventCode aType);
 	TKeyResponse KeyMove(const TKeyEvent& aKeyEvent,TEventCode aType);
 	
+	void ChangeLayer();
+	
 	enum TSelectedState
 		{
 		ESelectedStateMove,
 		ESelectedStateChoose
+		};
+	enum TBitmapFocus
+		{		
+		EBitmapActive = 0,
+		EBitmapActiveMask,
+		EBitmapFocus,
+		EBitmapFocusMask,
+		EBitmapFocusTotal
 		};
 	
 private:
@@ -78,6 +94,12 @@ private:
 	
 	TInt iSelectedIndex;
 	TSelectedState iSelectedState;
+	
+	CFbsBitmap** iBitmapFocus;
+	
+	RArray<TInt> iLayer;
+	
+	TInt iWaitDlgId;
 	
 	};
 

@@ -12,9 +12,11 @@
 #include "LemonMenuList.h"
 #include "MacroUtil.h"
 
+#define KRgbMenuSelected	TRgb(0xA5AEFF)
+
 CLemonMenuItem::CLemonMenuItem(const CFont* aFont):
 iChildList(NULL),iText(NULL),
-iTextColor(KRgbBlack),iSelectedColor(KRgbDarkGray),iUnSelectedColor(KRgbWhite),
+iTextColor(KRgbBlack),iSelectedColor(KRgbMenuSelected),iUnSelectedColor(KRgbWhite),
 iFont(aFont),iSelected(EFalse)
 	{
 	// No implementation required

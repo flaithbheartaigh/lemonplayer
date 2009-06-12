@@ -160,28 +160,3 @@ TInt64 GetDriveFreeSpace()
 	else
 		return -1;
 	}
-
-
-//写日志，最长1024
-//void Log(const TDesC& aContent, TBool aIsEndLine)
-//{
-//	TBuf8<1024> buf;
-//	buf.Copy(aContent);
-//	if(aIsEndLine){
-//		ELOG2(_L8("%s\r\n"), buf.PtrZ());
-//	}
-//	else{
-//		ELOG2(_L8("%s"), buf.PtrZ());
-//	}
-//
-//}
-//void Log(const TInt iNumber, TBool aIsEndLine)
-//{
-//	if(aIsEndLine){
-//		ELOG2(_L8("%d\n"), iNumber);
-//	}
-//	else{
-//		ELOG2(_L8("%d"), iNumber);
-//	}
-//
-//}

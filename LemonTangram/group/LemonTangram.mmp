@@ -68,10 +68,10 @@ LIBRARY        gdi.lib
 LIBRARY        ws32.lib 
 LIBRARY        charconv.lib 
 LIBRARY        eikctl.lib 
-LIBRARY        eikcoctl.lib
+LIBRARY        eikcoctl.lib aknicon.lib
  
 
-LANG SC
+LANG 01 31 SC
 
 VENDORID	  	  0
 SECUREID		  0xEAE107BA
@@ -113,12 +113,13 @@ SOURCE LemonTangramContainer.cpp
 SOURCEPATH ..\source\TangImage\src
 SOURCE TangElementUtil.cpp
 
-START BITMAP LemonTangram.mbm
-	TARGETPATH resource\apps
-	HEADER
-	SOURCEPATH ..\gfx
-	SOURCE c24 log.bmp
-END
+//START BITMAP LemonTangram.mbm
+//	TARGETPATH resource\apps
+//	HEADER
+//	SOURCEPATH ..\gfx
+//	SOURCE c24 log.bmp
+//END
+
 SOURCEPATH ..\source\Controller\src
 SOURCE LemonMenuBar.cpp 
 SOURCE LemonMenuItem.cpp 
@@ -128,7 +129,6 @@ SOURCEPATH ..\source\Controller\src
 SOURCE LemonMenu.cpp
 
 SOURCEPATH ..\source\LTUI\src
-SOURCE IconFileProvider.cpp 
 SOURCE UI240x320.cpp 
 SOURCE UI320x240.cpp 
 SOURCE UI320x240orig.cpp 
@@ -154,3 +154,7 @@ SOURCEPATH ..\source\TangImage\src
 SOURCE SkinImageScan.cpp
 SOURCEPATH ..\src
 SOURCE YCSettingContainer.cpp
+SOURCEPATH ..\source\ImageLib\src
+SOURCE IconFileProvider.cpp LMSvgUtil.cpp
+SOURCEPATH ..\source\Controller\src
+SOURCE QueryDlgUtil.cpp

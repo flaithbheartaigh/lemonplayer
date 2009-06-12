@@ -14,6 +14,9 @@
 // INCLUDES
 #include <e32std.h>
 #include <e32base.h>
+#include <COEDEF.H>
+#include <BITSTD.H>
+#include <W32STD.H>
 
 // CLASS DECLARATION
 
@@ -29,11 +32,26 @@ public:
 	static CLemonMenuBar* NewL();
 	static CLemonMenuBar* NewLC();
 
+	void Draw(CFbsBitGc& gc,TBool aActive);
 private:
 	CLemonMenuBar();
 	void ConstructL();
+	
+	enum TOptionState
+		{
+		EOptionLeftHide = 0,
+		EOptionRightHide,
+		EOptionLeftActive,
+		EOptionRightActive,
+		EOptionTotal
+		};
 
-
+private:
+	CFbsBitmap* iFrame;
+	TRgb iTextColor;
+	TBuf<10> iOptionText[EOptionTotal];
+	
+	
 	};
 
 #endif // LEMONMENUBAR_H

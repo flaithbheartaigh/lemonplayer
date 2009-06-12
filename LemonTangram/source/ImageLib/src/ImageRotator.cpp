@@ -12,6 +12,7 @@
 #include <bitdev.h>
 #include <libc\math.h>
 #include "ImageRotator.h"
+#include "MacroUtil.h"
 
 #define PI 3.1415926
 
@@ -27,6 +28,7 @@ CImageRotator::CImageRotator(CFbsBitmap *aSrcBitmap,
 
 CImageRotator::~CImageRotator()
 	{
+	SAFE_DELETE(iTransparent);
 	}
 
 CImageRotator* CImageRotator::NewLC(CFbsBitmap *aSrcBitmap, 
@@ -61,7 +63,7 @@ void CImageRotator::ConstructL()
 
 	User::LeaveIfError(iDestBitmap->Create(iSize, iSrcBitmap->DisplayMode()) );
 
-	//	SetBackColor();
+	SetBackColor();
 	CopyPixel();
 	
 	iTransparent = CTransparentBitmap::NewL(iDestBitmap,iMaskBitmap,KRgbMagenta);
