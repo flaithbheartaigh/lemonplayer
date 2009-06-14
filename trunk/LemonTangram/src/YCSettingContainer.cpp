@@ -14,7 +14,7 @@
 #include <LemonTangram_0xEAE107BA.rsg>
 #include "SkinImageScan.h"
 
-_LIT(KDefaultScanFoloder,"c:\\tangram\\xml\\");
+#include "TangFileDefine.h"
 
 CYCSettingContainer::CYCSettingContainer()
 	{
@@ -32,7 +32,7 @@ void CYCSettingContainer::ConstructL(const TRect& aRect)
 	iSkinFolder.Copy(KDefaultScanFoloder);
 	
 	iScaner = CSkinImageScan::NewL();
-	iScaner->ScanFolder(iSkinFolder);
+	iScaner->ScanFolder(iSkinFolder,KXmlFormat);
 	
     CreateWindowL();
 
@@ -116,9 +116,7 @@ TKeyResponse CYCSettingContainer::OfferKeyEventL(    const TKeyEvent& aKeyEvent,
         }
     }
 
-_LIT(KEmptyText, "None");
-_LIT(KEmptyFolder, "c:\\");
-_LIT(KName, "Text");
+
 void CYCSettingContainer::LoadListL()
 	{
 	CreateSkinFolderItem(ELTSettingSkinFolder);
@@ -159,7 +157,7 @@ void CYCSettingContainer::CreateSkinChooseItem(TInt aSettingId)
 		pSkinImageStruct sk = skins[i];
 		CAknEnumeratedText* enumText;
 		
-		HBufC* text = sk->iFileName.AllocLC();
+		HBufC* text = sk->iShortName.AllocLC();
 		enumText = new (ELeave) CAknEnumeratedText(sk->iIndex, text);
 		CleanupStack::Pop(text);
 		CleanupStack::PushL(enumText);

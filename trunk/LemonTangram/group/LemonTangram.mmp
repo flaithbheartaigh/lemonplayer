@@ -21,11 +21,6 @@ SOURCE			LemonTangramDocument.cpp
 
 SOURCEPATH		..\data
 
-START RESOURCE	LemonTangram.rss
-HEADER
-TARGET LemonTangram_0xEAE107BA
-TARGETPATH resource\apps
-END //RESOURCE
 
 START RESOURCE	LemonTangram_reg.rss
 TARGET LemonTangram_0xEAE107BA_reg
@@ -143,7 +138,6 @@ SOURCE TangImageDataWriter.cpp
 SOURCE TangImageSave.cpp
 
 SOURCEPATH ..\src
-SOURCE YCSettingList.cpp 
 SOURCE YCSettingView.cpp
 
 SOURCEPATH      ..\help

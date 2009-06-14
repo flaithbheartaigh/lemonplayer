@@ -24,6 +24,10 @@ rls_string qtn_setting_skin_folder "Skin Folder"
 rls_string qtn_setting_skin_choose "Skin Choose"
 rls_string qtn_setting_save_folder "Save Foloder"
 
+rls_string qtn_setting_option	"Option"
+rls_string qtn_setting_change 	"Change"
+rls_string qtn_setting_back		"Back"
+
 rls_string qtn_option_left_active  "Choose"
 rls_string qtn_option_right_active "Cancel"
 rls_string qtn_option_left_hide 	"Option"

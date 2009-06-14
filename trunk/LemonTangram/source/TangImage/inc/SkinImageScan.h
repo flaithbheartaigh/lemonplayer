@@ -37,6 +37,7 @@ private:
 	
 public:
 	void ScanFolder(const TDes& aFolder);
+	void ScanFolder(const TDes& aFolder,const TDesC& aFilter);
 	RPointerArray<SkinImageStruct>& GetSkins() {return iSkins;};
 
 private:

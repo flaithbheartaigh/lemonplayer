@@ -25,6 +25,10 @@ rls_string qtn_setting_skin_folder "皮肤文件夹"
 rls_string qtn_setting_skin_choose "选择皮肤"
 rls_string qtn_setting_save_folder "保存截图文件夹"
 
+rls_string qtn_setting_option	"选项"
+rls_string qtn_setting_change 	"修改"
+rls_string qtn_setting_back		"返回"
+
 rls_string qtn_option_left_active  "选择"
 rls_string qtn_option_right_active "返回"
 rls_string qtn_option_left_hide 	"选项"

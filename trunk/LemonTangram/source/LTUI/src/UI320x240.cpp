@@ -9,7 +9,6 @@
  */
 
 #include "UI320x240.h"
-#include <YCBrowser_bg.mbg>
 #include "YCSettingDefine.h"
 
 const TInt KMenuWidth = 86;
