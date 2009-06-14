@@ -98,49 +98,6 @@ void CLemonTangramAppUi::HandleCommandL(TInt aCommand)
 		case ECommandExit:
 			Exit();
 			break;
-
-		case ECommand1:
-			{
-
-			// Load a string from the resource file and display it
-			HBufC* textResource = StringLoader::LoadLC(R_COMMAND1_TEXT);
-			CAknInformationNote* informationNote;
-
-			informationNote = new ( ELeave ) CAknInformationNote;
-
-			// Show the information Note with
-			// textResource loaded with StringLoader.
-			informationNote->ExecuteLD( *textResource);
-
-			// Pop HBuf from CleanUpStack and Destroy it.
-			CleanupStack::PopAndDestroy(textResource);
-			}
-			break;
-		case ECommand2:
-			{
-			RFile rFile;
-
-			//Open file where the stream text is
-			User::LeaveIfError(rFile.Open(CCoeEnv::Static()->FsSession(), KFileName, EFileStreamText));//EFileShareReadersOnly));// EFileStreamText));
-			CleanupClosePushL(rFile);
-
-			// copy stream from file to RFileStream object
-			RFileReadStream inputFileStream(rFile);
-			CleanupClosePushL(inputFileStream);
-
-			// HBufC descriptor is created from the RFileStream object.
-			HBufC* fileData = HBufC::NewLC(inputFileStream, 32);
-
-			CAknInformationNote* informationNote;
-
-			informationNote = new ( ELeave ) CAknInformationNote;
-			// Show the information Note
-			informationNote->ExecuteLD( *fileData);
-
-			// Pop loaded resources from the cleanup stack
-			CleanupStack::PopAndDestroy(3); // filedata, inputFileStream, rFile
-			}
-			break;
 		case EHelp:
 		case ECommandHelp:
 			{
@@ -150,7 +107,6 @@ void CLemonTangramAppUi::HandleCommandL(TInt aCommand)
 			break;
 		case EAbout:
 			{
-
 			CAknMessageQueryDialog* dlg = new (ELeave)CAknMessageQueryDialog();
 			dlg->PrepareLC(R_ABOUT_QUERY_DIALOG);
 			HBufC* title = iEikonEnv->AllocReadResourceLC(R_ABOUT_DIALOG_TITLE);
@@ -162,8 +118,11 @@ void CLemonTangramAppUi::HandleCommandL(TInt aCommand)
 			dlg->RunLD();
 			}
 			break;
+		case EListboxCmdBack:
+			STATIC_CAST(CLemonTangramAppUi*,iEikonEnv->AppUi())->ActivateLocalViewL(TUid::Uid(ELemonViewMain));
+			break;
 		default:
-			Panic(ELemonTangramUi);
+			//Panic(ELemonTangramUi);
 			break;
 		}
 	}

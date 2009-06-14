@@ -23,12 +23,8 @@
 #include <LemonTangram.mbg>
 #include <eikenv.h>
 #include <LemonTangram_0xEAE107BA.rsg>
+#include "TangFileDefine.h"
 
-_LIT(KFileTangram,"c:\\mytangram.xml");
-_LIT(KSaveProcessFile,"process.xml");
-_LIT(KSaveScreenFile,"screen.jpg");
-_LIT(KSaveScreenDefault,"snapshot");
-_LIT(KSaveScreenFormat,".jpg");
 
 CTangImageManager::CTangImageManager() :
 	iConverted(0), iConvertDown(0), iSelectedState(ESelectedStateChoose),

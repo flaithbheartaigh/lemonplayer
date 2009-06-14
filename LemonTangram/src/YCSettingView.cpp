@@ -13,7 +13,6 @@
 * ==============================================================================
 */
 #include "YCSettingView.h"
-#include "YCSettingList.h"
 #include "LemonTangram.hrh"
 #include "MacroUtil.h"
 #include <akncontext.h>

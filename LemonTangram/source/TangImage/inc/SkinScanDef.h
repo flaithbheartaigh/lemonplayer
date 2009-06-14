@@ -5,5 +5,6 @@ typedef struct _SkinImageStruct
 	{
 	TInt iIndex;
 	TFileName iFileName;
+	TFileName iShortName;
 	}SkinImageStruct,*pSkinImageStruct;
 #endif /*SKINSCANDEF_H_*/

@@ -25,7 +25,7 @@
 #include <StringLoader.h> 
 #include <LemonTangram_0xEAE107BA.rsg>
 #include "Utils.h"
-
+#include "TangFileDefine.h"
 // ================= MEMBER FUNCTIONS =======================
 
 // ---------------------------------------------------------
@@ -33,8 +33,7 @@
 // EPOC two phased constructor
 // ---------------------------------------------------------
 //
-_LIT(KFileTangram,"c:\\mytangram.xml");
-_LIT(KFileTangramImage,"c:\\tangvect.xml");
+
 void CLemonTangramContainer::ConstructL(const TRect& aRect)
 	{
 	iWidth = aRect.Width();
