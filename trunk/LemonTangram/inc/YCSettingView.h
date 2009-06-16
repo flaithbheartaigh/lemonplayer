@@ -116,8 +116,8 @@ class CYCSettingView : public CAknView
         * Container.
         * Own.
         */
-        //CYCSettingList* iContainer;
-    	CYCSettingContainer* iAppView;
+        CYCSettingList* iContainer;
+//    	CYCSettingContainer* iAppView;
     };
 
 #endif // __LISTBOXSETTINGVIEW_H__

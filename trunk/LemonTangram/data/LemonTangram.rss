@@ -286,6 +286,8 @@ RESOURCE TBUF r_text_setting_skin_folder { buf=qtn_setting_skin_folder; }
 RESOURCE TBUF r_text_setting_save_folder { buf=qtn_setting_save_folder; }
 RESOURCE TBUF r_text_setting_skin_choose { buf=qtn_setting_skin_choose; }
 
+RESOURCE TBUF r_text_default { buf=qtn_text_default; }
+
 RESOURCE TBUF r_text_option_left_active  { buf=qtn_option_left_active; }
 RESOURCE TBUF r_text_option_right_active { buf=qtn_option_right_active; }
 RESOURCE TBUF r_text_option_left_hide 	 { buf=qtn_option_left_hide; }

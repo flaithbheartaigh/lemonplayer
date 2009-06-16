@@ -9,8 +9,10 @@
 #ifndef TANGFILEDEFINE_H_
 #define TANGFILEDEFINE_H_
 
+_LIT(KFileTangImageDefault,"tangvect.xml");
+
 _LIT(KFileTangram,"c:\\mytangram.xml");
-_LIT(KFileTangramImage,"c:\\tangvect.xml");
+//_LIT(KFileTangramImage,"c:\\tangvect.xml");
 _LIT(KSaveProcessFile,"process.xml");
 //_LIT(KSaveScreenFile,"screen.jpg");
 _LIT(KSaveScreenDefault,"snapshot");

@@ -21,6 +21,7 @@
 
 // CLASS DECLARATION
 class CSkinImageScan;
+class CConfiguration;
 /**
  *  CYCSettingContainer
  * 
@@ -29,7 +30,6 @@ class CYCSettingContainer : public CCoeControl
 	{
 public:
 	// Constructors and destructor
-
 	~CYCSettingContainer();
 	CYCSettingContainer();
 	void ConstructL(const TRect& aRect);
@@ -48,15 +48,20 @@ private: // New Functions
 	void CreateSkinFolderItem(TInt aSettingId);
 	void CreateSkinChooseItem(TInt aSettingId);
 	void CreateSaveFolderItem(TInt aSettingId);
+	
+	void LoadConfigL();
+	void SaveL();
     
 private: // Data members
 	CAknSettingItemList* iItemList;
 	
-    TFileName iSkinFolder;
+    TFileName iSkinFolder;    
     TInt iSkinChoose;
+    TFileName iFileSkinChoose;    
     TFileName iSaveFolder;
     
     CSkinImageScan* iScaner;
+    CConfiguration* iConfig;
     
 	};
 

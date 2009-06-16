@@ -26,6 +26,8 @@
 #include <LemonTangram_0xEAE107BA.rsg>
 #include "Utils.h"
 #include "TangFileDefine.h"
+#include "Configuration.h"
+#include "ConfigDefine.h"
 // ================= MEMBER FUNCTIONS =======================
 
 // ---------------------------------------------------------
@@ -292,7 +294,16 @@ void CLemonTangramContainer::StateLogoDisplay(CFbsBitGc& gc)
 void CLemonTangramContainer::StateInitInit()
 	{
 	iManager = CTangImageManager::NewL();
-	iManager->LoadImageFromFileL(KFileTangramImage);
+	
+	TFileName setup;
+	GetAppPath(setup);
+	setup.Append(KSetupSaveFile);
+	CConfiguration* config = CConfiguration::NewL(setup);
+	TFileName img;
+	config->Get(KCfgSkinChoose,img);
+	delete config;
+	
+	iManager->LoadImageFromFileL(img);
 	}
 void CLemonTangramContainer::StateInitLoop()
 	{

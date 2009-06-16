@@ -18,7 +18,8 @@
 #include <akncontext.h>
 #include <aknViewAppUi.h> 
 #include <LemonTangram_0xEAE107BA.rsg>
-#include "YCSettingContainer.h"
+//#include "YCSettingContainer.h"
+#include "YCSettingList.h"
 
 // ============================ MEMBER FUNCTIONS ===============================
 
@@ -52,16 +53,16 @@ CYCSettingView::CYCSettingView()
 //
 CYCSettingView::~CYCSettingView()
 	{
-//	if ( iContainer )
-//        {
-//        AppUi()->RemoveFromStack( iContainer );
-//        delete iContainer;
-//        }    
-	if ( iAppView )
+	if ( iContainer )
         {
-        AppUi()->RemoveFromStack( iAppView );
-        delete iAppView;
-        }
+        AppUi()->RemoveFromStack( iContainer );
+        delete iContainer;
+        }    
+//	if ( iAppView )
+//        {
+//        AppUi()->RemoveFromStack( iAppView );
+//        delete iAppView;
+//        }
 	}
 
 // ---------------------------------------------------------------------------
@@ -98,22 +99,22 @@ void CYCSettingView::DoActivateL( const TVwsViewId& /*aPrevViewId*/,
                       TUid /*aCustomMessageId*/,
                       const TDesC8& /*aCustomMessage*/ )
     {    
-//    iContainer = CYCSettingList::NewL();
-//    
-//    iContainer->SetMopParent( this );
-//    iContainer->ConstructFromResourceL( R_LISTBOX_SETTING_ITEM_LIST );
-//    iContainer->CreateList();
-//    AppUi()->AddToStackL( *this, iContainer );
-//    
-//    iContainer->MakeVisible( ETrue );
-//    iContainer->SetRect( ClientRect() );
-//    iContainer->ActivateL();
+    iContainer = CYCSettingList::NewL();
+    
+    iContainer->SetMopParent( this );
+    iContainer->ConstructFromResourceL( R_LISTBOX_SETTING_ITEM_LIST );
+    iContainer->LoadListL();
+    AppUi()->AddToStackL( *this, iContainer );
+    
+    iContainer->MakeVisible( ETrue );
+    iContainer->SetRect( ClientRect() );
+    iContainer->ActivateL();
 	
-	iAppView = new (ELeave) CYCSettingContainer;
-	iAppView->SetMopParent(this);
-	iAppView->ConstructL(ClientRect());
-	
-	AppUi()->AddToStackL(*this, iAppView);
+//	iAppView = new (ELeave) CYCSettingContainer;
+//	iAppView->SetMopParent(this);
+//	iAppView->ConstructL(ClientRect());
+//	
+//	AppUi()->AddToStackL(*this, iAppView);
     }
 
 // ---------------------------------------------------------------------------
@@ -123,18 +124,18 @@ void CYCSettingView::DoActivateL( const TVwsViewId& /*aPrevViewId*/,
 //
 void CYCSettingView::DoDeactivate()
     {
-//    if ( iContainer )
-//        {
-//        AppUi()->RemoveFromViewStack( *this, iContainer );
-//        delete iContainer;
-//        iContainer = NULL;
-//        }    
-    if (iAppView)
-    	{
-    	AppUi()->RemoveFromViewStack( *this, iAppView );
-    	delete iAppView;
-    	iAppView = NULL;
-    	}
+    if ( iContainer )
+        {
+        AppUi()->RemoveFromViewStack( *this, iContainer );
+        delete iContainer;
+        iContainer = NULL;
+        }    
+//    if (iAppView)
+//    	{
+//    	AppUi()->RemoveFromViewStack( *this, iAppView );
+//    	delete iAppView;
+//    	iAppView = NULL;
+//    	}
     }
 
 // ---------------------------------------------------------------------------
@@ -171,15 +172,15 @@ void CYCSettingView::DynInitMenuPaneL( TInt aResourceId,
 //
 void CYCSettingView::HandleSizeChange( TInt aType )
     {
-//    if( iContainer )
-//        {
-//        iContainer->HandleResourceChange( aType );
-//        
-//        if( aType==KEikDynamicLayoutVariantSwitch )
-//            {        
-//            TRect rect;
-//            AknLayoutUtils::LayoutMetricsRect(AknLayoutUtils::EMainPane, rect);
-//            iContainer->SetRect(rect);
-//            }
-//        }         
+    if( iContainer )
+        {
+        iContainer->HandleResourceChange( aType );
+        
+        if( aType==KEikDynamicLayoutVariantSwitch )
+            {        
+            TRect rect;
+            AknLayoutUtils::LayoutMetricsRect(AknLayoutUtils::EMainPane, rect);
+            iContainer->SetRect(rect);
+            }
+        }         
     } 
