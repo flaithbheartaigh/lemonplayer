@@ -15,6 +15,9 @@
 #include "SkinImageScan.h"
 
 #include "TangFileDefine.h"
+#include "ConfigDefine.h"
+#include "Configuration.h"
+#include "Utils.h"
 
 CYCSettingContainer::CYCSettingContainer()
 	{
@@ -23,16 +26,14 @@ CYCSettingContainer::CYCSettingContainer()
 
 CYCSettingContainer::~CYCSettingContainer()
 	{
+	SaveL();
     delete iItemList;
     delete iScaner;
 	}
 
 void CYCSettingContainer::ConstructL(const TRect& aRect)
 	{
-	iSkinFolder.Copy(KDefaultScanFoloder);
-	
-	iScaner = CSkinImageScan::NewL();
-	iScaner->ScanFolder(iSkinFolder,KXmlFormat);
+	LoadConfigL();
 	
     CreateWindowL();
 
@@ -53,6 +54,35 @@ void CYCSettingContainer::ConstructL(const TRect& aRect)
 
     // Activate the window, which makes it ready to be drawn
     ActivateL();
+	}
+
+void CYCSettingContainer::LoadConfigL()
+	{
+	TFileName setup;
+	GetAppPath(setup);
+	setup.Append(KSetupSaveFile);
+	
+	iConfig = CConfiguration::NewL(setup);
+	
+	iConfig->Get(KCfgSkinFolder,iSkinFolder);
+	iConfig->Get(KCfgSkinChoose,iFileSkinChoose);
+	iConfig->Get(KCfgSaveFolder,iSaveFolder);	
+	
+	//adjust iSkinChoose
+	iScaner = CSkinImageScan::NewL();
+	iScaner->ScanFolder(iSkinFolder,KXmlFormat);
+	
+	iSkinChoose = 0;  //0ÎªÄ¬ÈÏ
+	RPointerArray<SkinImageStruct>& skins = iScaner->GetSkins();
+	for(TInt i=0; i<skins.Count(); i++)
+		{
+		pSkinImageStruct sk = skins[i];
+		if (sk->iFileName.Compare(iFileSkinChoose) == 0)
+			{
+			iSkinChoose = i+1;
+			break;
+			}
+		}
 	}
 
 void CYCSettingContainer::Draw(const TRect& /*aRect*/) const
@@ -151,6 +181,13 @@ void CYCSettingContainer::CreateSkinChooseItem(TInt aSettingId)
 	CArrayPtr<CAknEnumeratedText>* texts = item9->EnumeratedTextArray();
 	texts->ResetAndDestroy();
 	
+	HBufC* textDef = StringLoader::LoadLC(R_TEXT_DEFAULT);
+	CAknEnumeratedText* enumTextDef = new (ELeave) CAknEnumeratedText(0, textDef);
+	CleanupStack::Pop(textDef);
+	CleanupStack::PushL(enumTextDef);
+	texts->AppendL(enumTextDef);
+	CleanupStack::Pop(enumTextDef);
+	
 	RPointerArray<SkinImageStruct>& skins = iScaner->GetSkins();
 	for(TInt i=0; i<skins.Count(); i++)
 		{
@@ -158,7 +195,7 @@ void CYCSettingContainer::CreateSkinChooseItem(TInt aSettingId)
 		CAknEnumeratedText* enumText;
 		
 		HBufC* text = sk->iShortName.AllocLC();
-		enumText = new (ELeave) CAknEnumeratedText(sk->iIndex, text);
+		enumText = new (ELeave) CAknEnumeratedText(sk->iIndex+1, text);
 		CleanupStack::Pop(text);
 		CleanupStack::PushL(enumText);
 		texts->AppendL(enumText);
@@ -206,4 +243,29 @@ void CYCSettingContainer::CreateSaveFolderItem(TInt aSettingId)
 	CleanupStack::Pop(item);
 	
 	CleanupStack::PopAndDestroy(textResource);
+	}
+
+void CYCSettingContainer::SaveL()
+	{
+	iConfig->Set(KCfgSkinFolder,iSkinFolder);
+	iConfig->Set(KCfgSaveFolder,iSaveFolder);	
+	
+	iFileSkinChoose.Zero();
+	if (iSkinChoose == 0)
+		{
+		GetAppPath(iFileSkinChoose);
+		iFileSkinChoose.Copy(KFileTangImageDefault);
+		}
+	else
+		{
+		RPointerArray<SkinImageStruct>& skins = iScaner->GetSkins();
+		for(TInt i=0; i<skins.Count(); i++)
+			{
+			if (iSkinChoose == (i+1))
+				{
+				iFileSkinChoose.Copy(skins[i]->iFileName);
+				}
+			}
+		}
+	iConfig->Set(KCfgSkinChoose,iFileSkinChoose);
 	}

@@ -1,0 +1,328 @@
+/*
+ * ==============================================================================
+ *  Name        : ListboxSettingList.cpp
+ *  Part of     : Listbox example
+ *  Interface   :
+ *  Description :
+ *  Version     :
+ *
+ *  Copyright (c) 2007 Nokia Corporation.
+ *  This material, including documentation and any related
+ *  computer programs, is protected by copyright controlled by
+ *  Nokia Corporation.
+ * ==============================================================================
+ */
+
+#include "LemonTangram.hrh"
+#include "YCSettingList.h"
+#include <eikfrlbd.h>
+#include <akntitle.h>
+#include <eikspane.h>
+#include <akncontext.h>
+#include <StringLoader.h>
+#include <LemonTangram_0xEAE107BA.rsg>
+
+#include "SkinImageScan.h"
+#include "TangFileDefine.h"
+#include "ConfigDefine.h"
+#include "Configuration.h"
+#include "Utils.h"
+
+// ============================ MEMBER FUNCTIONS ===============================
+
+// ---------------------------------------------------------------------------
+// CListboxSettingList::CListboxSettingList()
+// C++ default constructor
+// ---------------------------------------------------------------------------
+//
+CYCSettingList::CYCSettingList()
+:iScaner(NULL)
+	{
+	}
+
+// ---------------------------------------------------------------------------
+// CListboxSettingList::~CListboxSettingList()
+// Destructor
+// ---------------------------------------------------------------------------
+//      
+CYCSettingList::~CYCSettingList()
+	{
+	SaveL();
+	delete iScaner;
+	}
+
+// ---------------------------------------------------------------------------
+// CListboxSettingList::NewL()
+// Two-phased constructor.
+// ---------------------------------------------------------------------------
+//      
+CYCSettingList* CYCSettingList::NewL()
+	{
+	CYCSettingList* self = new ( ELeave ) CYCSettingList;
+	CleanupStack::PushL(self);
+	self->ConstructL();
+	CleanupStack::Pop(self);
+	return self;
+	}
+
+// ---------------------------------------------------------------------------
+// CListboxSettingList::ConstructL()
+// 2nd phase constructor
+// ---------------------------------------------------------------------------
+//      
+void CYCSettingList::ConstructL()
+	{
+	LoadConfigL();
+	}
+
+// ---------------------------------------------------------------------------
+// CListboxSettingList::CreateSettingItemL()
+// Creates setting item
+// ---------------------------------------------------------------------------
+//    
+CAknSettingItem* CYCSettingList::CreateSettingItemL(TInt aSettingId)
+	{
+	CAknSettingItem* settingItem= NULL;
+
+	switch (aSettingId)
+		{
+		case ELTSettingSkinFolder:
+			settingItem = CreateSkinFolderItem(aSettingId);
+			break;
+		case ELTSettingSkinChosse:
+			settingItem = CreateSkinChooseItem(aSettingId);
+			break;
+		case ELTSettingSaveFolder:
+			settingItem = CreateSaveFolderItem(aSettingId);
+			break;
+		default:
+			break;
+		}
+
+	return settingItem;
+	}
+
+// ---------------------------------------------------------------------------
+// CListboxSettingList::EditItemL()
+// Edits setting item data.
+// ---------------------------------------------------------------------------
+//    
+void CYCSettingList::EditItemL(TInt aIndex, TBool aCalledFromMenu)
+	{
+	TInt currentItem = ((CAknSettingItemList*)this)->ListBox()->View()->CurrentItemIndex();
+	CAknSettingItemList::EditItemL(currentItem, aCalledFromMenu);
+	( *SettingItemArray() )[aIndex]->UpdateListBoxTextL();
+	( *SettingItemArray() )[aIndex]->StoreL();
+	ModifyItemL(aIndex);
+	}
+
+CAknSettingItem* CYCSettingList::CreateSkinChooseItem(TInt aSettingId)
+	{
+	TBool isNumberedStyle = this->IsNumberedStyle();
+	CArrayPtr<CGulIcon>* icons = this->ListBox()->ItemDrawer()->FormattedCellData()->IconArray();
+
+	CAknEnumeratedTextPopupSettingItem* item = new (ELeave) CAknEnumeratedTextPopupSettingItem(aSettingId, iSkinChoose);
+	CleanupStack::PushL(item);
+
+	HBufC* textResource= NULL;
+	textResource = StringLoader::LoadLC(R_TEXT_SETTING_SKIN_CHOOSE);
+	// The same resource id can be used for multiple enumerated text setting pages.
+	item->ConstructL(isNumberedStyle, aSettingId, textResource->Des(), icons, 
+	R_ENUMERATEDTEXT_SETTING_PAGE, -1, 0, R_POPUP_SETTING_TEXTS);
+
+	// Load texts dynamically.
+	CArrayPtr<CAknEnumeratedText>* texts = item->EnumeratedTextArray();
+	texts->ResetAndDestroy();
+
+	HBufC* textDef = StringLoader::LoadLC(R_TEXT_DEFAULT);
+	CAknEnumeratedText* enumTextDef = new (ELeave) CAknEnumeratedText(0, textDef);
+	CleanupStack::Pop(textDef);
+	CleanupStack::PushL(enumTextDef);
+	texts->AppendL(enumTextDef);
+	CleanupStack::Pop(enumTextDef);
+
+	RPointerArray<SkinImageStruct>& skins = iScaner->GetSkins();
+	for (TInt i=0; i<skins.Count(); i++)
+		{
+		pSkinImageStruct sk = skins[i];
+		CAknEnumeratedText* enumText;
+
+		HBufC* text = sk->iShortName.AllocLC();
+		enumText = new (ELeave) CAknEnumeratedText(sk->iIndex+1, text);
+		CleanupStack::Pop(text);
+		CleanupStack::PushL(enumText);
+		texts->AppendL(enumText);
+		CleanupStack::Pop(enumText);
+		}
+
+	this->SettingItemArray()->AppendL(item);
+
+	CleanupStack::PopAndDestroy(textResource);
+
+	CleanupStack::Pop(item);
+
+	return item;
+	}
+
+CAknSettingItem* CYCSettingList::CreateSkinFolderItem(TInt aSettingId)
+	{
+	TBool isNumberedStyle = this->IsNumberedStyle();
+	CArrayPtr<CGulIcon>* icons = this->ListBox()->ItemDrawer()->FormattedCellData()->IconArray();
+	HBufC* textResource = StringLoader::LoadLC(R_TEXT_SETTING_SKIN_FOLDER);
+
+	CAknTextSettingItem* item = new (ELeave) CAknTextSettingItem(aSettingId, iSkinFolder);
+	CleanupStack::PushL(item);
+	item->SetEmptyItemTextL(KEmptyFolder);
+	// The same resource id can be used for multiple text setting pages.
+	item->ConstructL(isNumberedStyle, aSettingId, textResource->Des(), icons,
+			R_TEXT_SETTING_PAGE, -1);
+	//item->ConstructL(isNumberedStyle, aSettingId, KName, icons, R_TEXT_SETTING_PAGE, -1);
+
+	this->SettingItemArray()->AppendL(item);
+
+	CleanupStack::Pop(item);
+	CleanupStack::PopAndDestroy(textResource);
+
+	return item;
+	}
+CAknSettingItem* CYCSettingList::CreateSaveFolderItem(TInt aSettingId)
+	{
+	TBool isNumberedStyle = this->IsNumberedStyle();
+	CArrayPtr<CGulIcon>* icons = this->ListBox()->ItemDrawer()->FormattedCellData()->IconArray();
+	HBufC* textResource = StringLoader::LoadLC(R_TEXT_SETTING_SAVE_FOLDER);
+
+	CAknTextSettingItem* item = new (ELeave) CAknTextSettingItem(aSettingId, iSaveFolder);
+	CleanupStack::PushL(item);
+	item->SetEmptyItemTextL(KEmptyFolder);
+	// The same resource id can be used for multiple text setting pages.
+	item->ConstructL(isNumberedStyle, aSettingId, textResource->Des(), icons,
+			R_TEXT_SETTING_PAGE, -1);
+	this->SettingItemArray()->AppendL(item);
+	CleanupStack::Pop(item);
+
+	CleanupStack::PopAndDestroy(textResource);
+
+	return item;
+	}
+
+void CYCSettingList::LoadConfigL()
+	{
+	TFileName setup;
+	GetAppPath(setup);
+	setup.Append(KSetupSaveFile);
+
+	iConfig = CConfiguration::NewL(setup);
+
+	iConfig->Get(KCfgSkinFolder, iSkinFolder);
+	iConfig->Get(KCfgSkinChoose, iFileSkinChoose);
+	iConfig->Get(KCfgSaveFolder, iSaveFolder);
+
+	iSkinFolderOld.Copy(iSkinFolder);
+	//adjust iSkinChoose
+	AdjustSkinChoose();
+	}
+
+void CYCSettingList::AdjustSkinChoose()
+	{
+	if (!iScaner)
+		iScaner = CSkinImageScan::NewL();
+	iScaner->ScanFolder(iSkinFolder, KXmlFormat);
+
+	iSkinChoose = 0; //0ÎªÄ¬ÈÏ
+	RPointerArray<SkinImageStruct>& skins = iScaner->GetSkins();
+	for (TInt i=0; i<skins.Count(); i++)
+		{
+		pSkinImageStruct sk = skins[i];
+		if (sk->iFileName.Compare(iFileSkinChoose) == 0)
+			{
+			iSkinChoose = i+1;
+			break;
+			}
+		}	
+	}
+
+void CYCSettingList::ResetSkinChooseItem()
+	{
+	CAknEnumeratedTextPopupSettingItem* item = (CAknEnumeratedTextPopupSettingItem*)(this->SettingItemArray()->At(ELTSettingSkinChosse));
+	CArrayPtr<CAknEnumeratedText>* texts = item->EnumeratedTextArray();
+	texts->ResetAndDestroy();
+
+	HBufC* textDef = StringLoader::LoadLC(R_TEXT_DEFAULT);
+	CAknEnumeratedText* enumTextDef = new (ELeave) CAknEnumeratedText(0, textDef);
+	CleanupStack::Pop(textDef);
+	CleanupStack::PushL(enumTextDef);
+	texts->AppendL(enumTextDef);
+	CleanupStack::Pop(enumTextDef);
+
+	RPointerArray<SkinImageStruct>& skins = iScaner->GetSkins();
+	for (TInt i=0; i<skins.Count(); i++)
+		{
+		pSkinImageStruct sk = skins[i];
+		CAknEnumeratedText* enumText;
+
+		HBufC* text = sk->iShortName.AllocLC();
+		enumText = new (ELeave) CAknEnumeratedText(sk->iIndex+1, text);
+		CleanupStack::Pop(text);
+		CleanupStack::PushL(enumText);
+		texts->AppendL(enumText);
+		CleanupStack::Pop(enumText);
+		}
+	}
+
+void CYCSettingList::SaveL()
+	{
+	iConfig->Set(KCfgSkinFolder, iSkinFolder);
+	iConfig->Set(KCfgSaveFolder, iSaveFolder);
+
+	iFileSkinChoose.Zero();
+	if (iSkinChoose == 0)
+		{
+		GetAppPath(iFileSkinChoose);
+		iFileSkinChoose.Copy(KFileTangImageDefault);
+		}
+	else
+		{
+		RPointerArray<SkinImageStruct>& skins = iScaner->GetSkins();
+		for (TInt i=0; i<skins.Count(); i++)
+			{
+			if (iSkinChoose == (i+1))
+				{
+				iFileSkinChoose.Copy(skins[i]->iFileName);
+				}
+			}
+		}
+	iConfig->Set(KCfgSkinChoose, iFileSkinChoose);
+	}
+
+void CYCSettingList::LoadListL()
+	{
+	CreateSkinFolderItem(ELTSettingSkinFolder);
+	CreateSkinChooseItem(ELTSettingSkinChosse);
+	CreateSaveFolderItem(ELTSettingSaveFolder);
+	
+    this->SettingItemArray()->RecalculateVisibleIndicesL();
+
+    this->HandleChangeInItemArrayOrVisibilityL();
+	}
+
+void CYCSettingList::ModifyItemL(TInt aIndex)
+	{
+	switch (aIndex)
+		{
+		case ELTSettingSkinFolder:
+			ModifySkinFolderItem();
+			break;
+		default:
+			break;
+		}
+	}
+
+void CYCSettingList::ModifySkinFolderItem()
+	{
+	if (iSkinFolder.Compare(iSkinFolderOld))
+		{
+		AdjustSkinChoose();
+		ResetSkinChooseItem();
+		iSkinFolderOld.Copy(iSkinFolder);
+		}
+	}

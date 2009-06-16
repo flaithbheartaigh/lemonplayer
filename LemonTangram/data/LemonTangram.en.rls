@@ -20,6 +20,10 @@ rls_string qtn_about_dialog_text "LemonTangram Version 1.0.0\n\nAuthor: zengcity
 
 rls_string qtn_res_main_menu "tangmenu.en.xml"
 
+rls_string qtn_text_default "Default"
+
+rls_string qtn_setting_title "Setting"
+
 rls_string qtn_setting_skin_folder "Skin Folder"
 rls_string qtn_setting_skin_choose "Skin Choose"
 rls_string qtn_setting_save_folder "Save Foloder"
