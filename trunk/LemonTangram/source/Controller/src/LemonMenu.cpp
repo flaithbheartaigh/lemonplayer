@@ -19,6 +19,7 @@
 #include "MacroUtil.h"
 #include <eikenv.h>
 #include "LemonTangramAppUi.h"
+#include "LemonTangram.hrh"
 
 CLemonMenu::CLemonMenu(MLemonMenuNotify* aNotify)
 :iNotify(aNotify),iMenuList(NULL),iPtrList(NULL),iMenuActive(EFalse)
@@ -51,6 +52,12 @@ void CLemonMenu::ConstructL()
 	{
 	iUIMgr = STATIC_CAST(CLemonTangramAppUi*,CEikonEnv::Static()->AppUi())->GetUIMgr();
 	iMenuBar = CLemonMenuBar::NewL();
+	}
+
+void CLemonMenu::HideMenu()
+	{
+	iMenuList->ResetSelectedIndex();
+	iMenuActive = EFalse;
 	}
 
 void CLemonMenu::LoadMenu(const TDesC& aFileName)
@@ -104,10 +111,10 @@ TKeyResponse CLemonMenu::OfferKeyEventL(const TKeyEvent& aKeyEvent,
 						case EStdKeyDevice0:
 						case EStdKeyDevice3://ok
 							iNotify->HandMenuCommand(iMenuList->GetSelectedCommand());
-							iMenuActive = EFalse;
+							HideMenu();
 							return EKeyWasConsumed;					
 						case EStdKeyDevice1:
-							iMenuActive = EFalse;
+							HideMenu();
 							return EKeyWasConsumed;
 						case EStdKeyUpArrow:
 							iMenuList->DecreaseSelected();
@@ -127,11 +134,21 @@ TKeyResponse CLemonMenu::OfferKeyEventL(const TKeyEvent& aKeyEvent,
 			case EEventKeyUp:
 				switch (aKeyEvent.iScanCode)
 					{
-						case EStdKeyDevice0://ok
+						case EStdKeyDevice0://left
 							iMenuActive = ETrue;
 							return EKeyWasConsumed;
 					}
 			break;
+			case EEventKey:
+				switch (aKeyEvent.iScanCode)
+					{
+					case EStdKeyDevice1://right
+						iNotify->HandMenuCommand(ECommandExit);
+						return EKeyWasConsumed;
+					default:
+						break;
+					}
+				break;
 			}
 		}
 	return EKeyWasNotConsumed;

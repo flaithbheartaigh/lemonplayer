@@ -48,6 +48,7 @@ public:
 			const RArray<TAttribute>& aAttributes);
 	virtual void EndElement(const TQualified& aName);
 	
+	void HideMenu();
 	void LoadMenu(const TDesC& aFileName);
 	void Draw(CFbsBitGc& gc);
 	TKeyResponse OfferKeyEventL(const TKeyEvent& aKeyEvent,TEventCode aType);

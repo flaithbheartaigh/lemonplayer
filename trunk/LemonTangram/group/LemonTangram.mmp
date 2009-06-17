@@ -69,7 +69,7 @@ LIBRARY        gdi.lib
 LIBRARY        ws32.lib 
 LIBRARY        charconv.lib 
 LIBRARY        eikctl.lib 
-LIBRARY        eikcoctl.lib aknicon.lib
+LIBRARY        eikcoctl.lib aknicon.lib bafl.lib
  
 
 LANG 01 31 SC

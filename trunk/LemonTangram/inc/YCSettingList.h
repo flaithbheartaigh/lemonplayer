@@ -80,17 +80,24 @@ private:
 	void AdjustSkinChoose();
 	void ResetSkinChooseItem();
 	
+	void BeforeEditItem(TInt aIndex);
 	void ModifyItemL(TInt aIndex);
 	
 	void ModifySkinFolderItem();
+	void ModifySaveFolderItem();
+	
+	TBool AdjustFolder(TDes& aDes);
 
 private:
 	// Data        
     TFileName iSkinFolder;    
     TFileName iSkinFolderOld;    
+    
     TInt iSkinChoose;
-    TFileName iFileSkinChoose;    
+    TFileName iFileSkinChoose;
+    
     TFileName iSaveFolder;
+    TFileName iSaveFolderOld;
     
     CSkinImageScan* iScaner;
     CConfiguration* iConfig;
