@@ -52,6 +52,7 @@ public:
 	void RecordItemWidth(TInt aWidth);
 	void OffsetItem();
 	
+	void ResetSelectedIndex();
 	void SetSelectedIndex(const TInt& aIndex);
 	void IncreaseSelected();
 	void DecreaseSelected();

@@ -50,4 +50,10 @@ rls_string qtn_dlg_reset_progress			"Reset"
 rls_string qtn_dlg_save_screen_input_name 	"input snapshot name"
 rls_string qtn_dlg_save_screen 				"snapshot"
 rls_string qtn_dlg_save_screen_success 		"snapshot success"
+
+rls_string qtn_dlg_input_folder_error	"Folder eidt error"
+
+rls_string qtn_dlg_overwrite_file		"File exist,overwrite"
+
+rls_string qtn_dlg_exit_confirm		"Please save the progress,confirm exit"
 // End of File

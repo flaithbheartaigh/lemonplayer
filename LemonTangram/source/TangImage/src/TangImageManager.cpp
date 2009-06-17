@@ -24,6 +24,9 @@
 #include <eikenv.h>
 #include <LemonTangram_0xEAE107BA.rsg>
 #include "TangFileDefine.h"
+#include "Configuration.h"
+#include "ConfigDefine.h"
+#include <BAUTILS.H>
 
 
 CTangImageManager::CTangImageManager() :
@@ -373,16 +376,26 @@ void CTangImageManager::SaveScreen()
 	name.Copy(KSaveScreenDefault);
 	if (ShowInputDlgL(R_TEXT_DLG_SAVE_SCREEN_INPUT_NAME,name))
 		{
-		iWaitDlgId = StartWaitingDlg(R_TEXT_DLG_SAVE_SCREEN);
-		
+		TFileName setup;
+		GetAppPath(setup);
+		setup.Append(KSetupSaveFile);
+		CConfiguration* config = CConfiguration::NewL(setup);
 		TFileName file;
-		GetAppPath(file);
+		config->Get(KCfgSaveFolder,file);
+		delete config;
 		file.Append(name);
 		file.Append(KSaveScreenFormat);	
-		SAFE_DELETE(iScreenSave);
-		iScreenSave = CTangImageSave::NewL(file,this);
-		Draw(iScreenSave->CreateBufferBitmapL());
-		iScreenSave->StartSave();
+		
+		if (!BaflUtils::FileExists(CCoeEnv::Static()->FsSession(),file) || 
+				ShowConfirmationQueryL(R_TEXT_DLG_OVERWRITE_FILE))
+			{
+				iWaitDlgId = StartWaitingDlg(R_TEXT_DLG_SAVE_SCREEN);
+				
+				SAFE_DELETE(iScreenSave);
+				iScreenSave = CTangImageSave::NewL(file,this);
+				Draw(iScreenSave->CreateBufferBitmapL());
+				iScreenSave->StartSave();
+			}
 		}
 	}
 

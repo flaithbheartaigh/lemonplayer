@@ -51,4 +51,10 @@ rls_string qtn_dlg_reset_progress 	"重置"
 rls_string qtn_dlg_save_screen_input_name 	"输入保存图像名称"
 rls_string qtn_dlg_save_screen 				"保存图像"
 rls_string qtn_dlg_save_screen_success 		"保存图像成功"
+
+rls_string qtn_dlg_input_folder_error	"文件夹输入错误"
+
+rls_string qtn_dlg_overwrite_file		"文件已存在,是否覆盖"
+
+rls_string qtn_dlg_exit_confirm		"请注意保存进度,确定要离开程序么"
 // End of File

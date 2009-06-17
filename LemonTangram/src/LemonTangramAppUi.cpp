@@ -26,11 +26,9 @@
 #include "LemonTangramAppView.h"
 #include "MacroUtil.h"
 #include "YCSettingView.h"
+#include "QueryDlgUtil.h"
 
 const TUid KUidHelpFile = { HELPFILE_UID };
-
-_LIT(KFileName, "C:\\private\\EAE107BA\\LemonTangram.txt");
-_LIT(KText, "Hello World!");
 
 
 // ============================ MEMBER FUNCTIONS ===============================
@@ -96,7 +94,8 @@ void CLemonTangramAppUi::HandleCommandL(TInt aCommand)
 		case EEikCmdExit:
 		case EAknSoftkeyExit:
 		case ECommandExit:
-			Exit();
+			if (ShowConfirmationQueryL(R_TEXT_DLG_EXIT_CONFIRM))
+				Exit();
 			break;
 		case EHelp:
 		case ECommandHelp:

@@ -21,12 +21,15 @@
 #include <akncontext.h>
 #include <StringLoader.h>
 #include <LemonTangram_0xEAE107BA.rsg>
+#include <BAUTILS.H>
+#include <COEMAIN.H>
 
 #include "SkinImageScan.h"
 #include "TangFileDefine.h"
 #include "ConfigDefine.h"
 #include "Configuration.h"
 #include "Utils.h"
+#include "QueryDlgUtil.h"
 
 // ============================ MEMBER FUNCTIONS ===============================
 
@@ -109,6 +112,7 @@ CAknSettingItem* CYCSettingList::CreateSettingItemL(TInt aSettingId)
 //    
 void CYCSettingList::EditItemL(TInt aIndex, TBool aCalledFromMenu)
 	{
+	BeforeEditItem(aIndex);
 	TInt currentItem = ((CAknSettingItemList*)this)->ListBox()->View()->CurrentItemIndex();
 	CAknSettingItemList::EditItemL(currentItem, aCalledFromMenu);
 	( *SettingItemArray() )[aIndex]->UpdateListBoxTextL();
@@ -218,6 +222,7 @@ void CYCSettingList::LoadConfigL()
 	iConfig->Get(KCfgSaveFolder, iSaveFolder);
 
 	iSkinFolderOld.Copy(iSkinFolder);
+	iSaveFolderOld.Copy(iSaveFolder);
 	//adjust iSkinChoose
 	AdjustSkinChoose();
 	}
@@ -305,12 +310,29 @@ void CYCSettingList::LoadListL()
     this->HandleChangeInItemArrayOrVisibilityL();
 	}
 
+void CYCSettingList::BeforeEditItem(TInt aIndex)
+	{
+	switch (aIndex)
+		{
+		case ELTSettingSkinFolder:
+			iSkinFolderOld.Copy(iSkinFolder);
+			break;
+		case ELTSettingSaveFolder:
+			iSaveFolderOld.Copy(iSaveFolder);
+			break;
+		default:
+			break;
+		}	
+	}
 void CYCSettingList::ModifyItemL(TInt aIndex)
 	{
 	switch (aIndex)
 		{
 		case ELTSettingSkinFolder:
 			ModifySkinFolderItem();
+			break;
+		case ELTSettingSaveFolder:
+			ModifySaveFolderItem();
 			break;
 		default:
 			break;
@@ -319,10 +341,42 @@ void CYCSettingList::ModifyItemL(TInt aIndex)
 
 void CYCSettingList::ModifySkinFolderItem()
 	{
+	if (AdjustFolder(iSkinFolder) == EFalse)
+		{
+		iSkinFolder.Copy(iSkinFolderOld);
+		return;
+		}
 	if (iSkinFolder.Compare(iSkinFolderOld))
 		{
 		AdjustSkinChoose();
 		ResetSkinChooseItem();
-		iSkinFolderOld.Copy(iSkinFolder);
 		}
+	}
+
+void CYCSettingList::ModifySaveFolderItem()
+	{
+	if (AdjustFolder(iSaveFolder) == EFalse)
+		{
+		iSaveFolder.Copy(iSaveFolderOld);
+		return;
+		}	
+	}
+
+TBool CYCSettingList::AdjustFolder(TDes& aDes)
+	{
+	//是否'/'结尾.
+	TInt pos = aDes.LocateReverse('\\');
+	if (pos != aDes.Length() - 1)
+		aDes.Append('\\');
+	
+	//是否存在文件夹
+	if (BaflUtils::PathExists(CCoeEnv::Static()->FsSession(),aDes))
+		{
+		return ETrue;
+		}
+	else
+		{
+		ShowInfomationDlgL(R_TEXT_DLG_INPUT_FOLDER_ERROR);
+		return EFalse;
+		}	
 	}

@@ -306,4 +306,10 @@ RESOURCE TBUF r_text_dlg_reset_progress  		{ buf=qtn_dlg_reset_progress; }
 RESOURCE TBUF r_text_dlg_save_screen_input_name	{ buf=qtn_dlg_save_screen_input_name; }
 RESOURCE TBUF r_text_dlg_save_screen		 	{ buf=qtn_dlg_save_screen; }
 RESOURCE TBUF r_text_dlg_save_screen_success 	{ buf=qtn_dlg_save_screen_success; }
+
+RESOURCE TBUF r_text_dlg_input_folder_error 	{ buf=qtn_dlg_input_folder_error; }
+
+RESOURCE TBUF r_text_dlg_overwrite_file 		{ buf=qtn_dlg_overwrite_file; }
+
+RESOURCE TBUF r_text_dlg_exit_confirm			{ buf=qtn_dlg_exit_confirm; }
 // End of File

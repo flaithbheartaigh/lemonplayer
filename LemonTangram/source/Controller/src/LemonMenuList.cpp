@@ -151,6 +151,16 @@ void CLemonMenuList::OffsetItem()
 	iSize.iHeight = y - iPosition.iY;
 	}
 
+void CLemonMenuList::ResetSelectedIndex()
+	{
+	CLemonMenuItem* item = iItems[iSelectedIndex];
+	item->SetSelected(EFalse);
+	
+	iSelectedIndex = 0;
+	
+	item = iItems[iSelectedIndex];
+	item->SetSelected(ETrue);		
+	}
 void CLemonMenuList::SetSelectedIndex(const TInt& aIndex)
 	{
 	CLemonMenuItem* item = iItems[aIndex];
