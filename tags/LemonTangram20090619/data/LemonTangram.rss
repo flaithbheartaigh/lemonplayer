@@ -1,0 +1,315 @@
+/*
+============================================================================
+ Name		: LemonTangram.rss
+ Author	  : zengcity
+ Copyright   : Your copyright notice
+ Description : This file contains all the resources for the LemonTangram.
+============================================================================
+*/
+//  RESOURCE IDENTIFIER
+NAME LEMO	// 4 letter ID
+
+
+//  INCLUDES
+#include <eikon.rh>
+#include <avkon.rsg>
+#include <avkon.rh>
+#include <appinfo.rh>
+#include "LemonTangram.hrh"
+#include "LemonTangram.rls"
+#include "YCSettingDefine.h"
+
+//  RESOURCE DEFINITIONS
+// -----------------------------------------------------------------------------
+//
+//	Define the resource file signature
+//	This resource should be empty.
+//
+// -----------------------------------------------------------------------------
+//
+RESOURCE RSS_SIGNATURE
+	{
+	}
+
+// -----------------------------------------------------------------------------
+//
+//	Default Document Name
+//
+// -----------------------------------------------------------------------------
+//
+RESOURCE TBUF r_default_document_name
+	{
+	buf="LEMO";
+	}
+
+// -----------------------------------------------------------------------------
+//
+//	Define default menu and CBA key.
+//
+// -----------------------------------------------------------------------------
+//
+RESOURCE EIK_APP_INFO
+	{
+	//menubar = r_menubar;
+	//cba = R_AVKON_SOFTKEYS_OPTIONS_EXIT;
+	}
+
+
+// -----------------------------------------------------------------------------
+//
+// About dialog resource.
+//
+// -----------------------------------------------------------------------------
+//
+RESOURCE DIALOG r_about_query_dialog
+	{
+	flags = EGeneralQueryFlags | EEikDialogFlagNoBorder | EEikDialogFlagNoShadow;
+	buttons = R_AVKON_SOFTKEYS_OK_EMPTY;
+	items=
+		{
+		DLG_LINE 
+			{
+			type = EAknCtPopupHeadingPane;
+			id = EAknMessageQueryHeaderId;
+			itemflags = EEikDlgItemNonFocusing;
+			control = AVKON_HEADING
+				{
+				};
+			},
+		DLG_LINE
+			{
+			type = EAknCtMessageQuery;
+			id = EAknMessageQueryContentId;
+			control = AVKON_MESSAGE_QUERY
+				{
+				};
+			}
+		};
+	}
+
+
+// -----------------------------------------------------------------------------
+//
+// Resources for messages.
+//
+// -----------------------------------------------------------------------------
+//
+RESOURCE TBUF32 r_caption_string 		{ buf=qtn_caption_string; }
+RESOURCE TBUF32 r_about_dialog_title 	{ buf=qtn_about_dialog_title; }
+RESOURCE TBUF r_about_dialog_text 		{ buf=qtn_about_dialog_text; }
+
+
+// ---------------------------------------------------------------------------- 
+//
+// r_localisable_app_info
+//
+// ---------------------------------------------------------------------------- 
+//
+RESOURCE LOCALISABLE_APP_INFO r_localisable_app_info
+	{
+	short_caption = qtn_caption_string;
+	caption_and_icon = 
+	CAPTION_AND_ICON_INFO
+		{
+		caption = qtn_caption_string;
+
+		number_of_icons = 1;
+		icon_file = "\\resource\\apps\\LemonTangram_0xEAE107BA.mif";
+		};
+	}
+
+//setting view
+// -----------------------------------------------------------------------------
+//
+// r_listbox_settings_view
+//
+// -----------------------------------------------------------------------------
+// 
+RESOURCE AVKON_VIEW r_listbox_settings_view
+    {
+    menubar = r_listbox_settings_menubar;
+    cba = r_listbox_settingview_options_exit__change;
+    }   
+
+// -----------------------------------------------------------------------------
+//
+// r_listbox_settings_menubar
+//
+// -----------------------------------------------------------------------------
+// 
+RESOURCE MENU_BAR r_listbox_settings_menubar
+    {
+    titles =
+        {
+        MENU_TITLE
+            {
+            menu_pane = r_listbox_settings_menu;
+            }
+        };
+    }
+
+// -----------------------------------------------------------------------------
+//
+// r_listbox_settings_menu
+//
+// -----------------------------------------------------------------------------
+// 
+RESOURCE MENU_PANE r_listbox_settings_menu
+    {
+    items = 
+        {
+        MENU_ITEM
+            {
+            command = EListboxCmdChange;
+            txt = qtn_setting_change;
+            },
+        MENU_ITEM
+            {
+            command = EListboxCmdBack;
+            txt = qtn_setting_back;
+            }
+        };
+    }
+// -----------------------------------------------------------------------------
+//
+// r_listbox_settingview_options_exit__change
+//
+// -----------------------------------------------------------------------------
+// 
+RESOURCE CBA r_listbox_settingview_options_exit__change
+    {
+    flags = 0;
+    buttons =
+        {
+        CBA_BUTTON {id=EAknSoftkeyOptions; 	txt=qtn_setting_option;},
+        CBA_BUTTON {id=EListboxCmdBack; 	txt=qtn_setting_back;},
+        CBA_BUTTON {id=EListboxCmdChange; 	txt=qtn_setting_change;}
+        };
+    }
+// -----------------------------------------------------------------------------
+//
+// r_listbox_setting_item_list
+//
+// -----------------------------------------------------------------------------
+// 
+RESOURCE AVKON_SETTING_ITEM_LIST r_listbox_setting_item_list
+  {
+  title = qtn_setting_title;
+  }   
+
+//文字输入型选项
+RESOURCE AVKON_SETTING_PAGE r_text_setting_page
+    {
+    type = EEikCtEdwin;
+    editor_resource_id = r_name_edwin;
+    }
+    
+RESOURCE EDWIN r_name_edwin
+    {
+    width = 10;
+    maxlength = 256;
+    }
+
+//枚举型文字选项
+RESOURCE AVKON_SETTING_PAGE r_enumeratedtext_setting_page
+	{
+	type = EAknCtPopupSettingList;
+	editor_resource_id = r_popup_setting_list;
+	}
+	
+RESOURCE POPUP_SETTING_LIST r_popup_setting_list
+    {
+	flags = 0;
+	}
+	
+
+RESOURCE AVKON_POPUP_SETTING_TEXTS r_popup_setting_texts
+	{
+    setting_texts_resource = r_texts;
+	}
+
+RESOURCE ARRAY r_texts
+    {
+    items =
+        {
+        AVKON_ENUMERATED_TEXT { value=0; text = "dummy";}
+        };
+    }
+
+RESOURCE DIALOG r_confirmation_query
+    {
+    flags = EGeneralQueryFlags;
+    buttons = R_AVKON_SOFTKEYS_YES_NO;
+    items =
+        {
+        DLG_LINE
+            {
+            type = EAknCtQuery;
+            id = EGeneralQuery;
+            control = AVKON_CONFIRMATION_QUERY
+                {
+                layout = EConfirmationQueryLayout;
+                label = STRING_r_contacts_con_label_text;
+                };
+            }
+        };
+    }
+
+RESOURCE DIALOG r_dialog_input
+    {
+    flags = EGeneralQueryFlags;
+    buttons = R_AVKON_SOFTKEYS_OK_CANCEL;
+    items =
+        {
+        DLG_LINE
+            {
+            type = EAknCtQuery;
+            id = EGeneralQuery;
+            control = AVKON_DATA_QUERY
+                {
+                layout = EDataLayout;
+                label = qtn_dialog_url;
+                control = EDWIN
+                    {
+                    maxlength = 40;
+                    };
+                };
+            }
+        };
+    }
+	
+
+
+RESOURCE TBUF r_res_main_menu 	{ buf=qtn_res_main_menu; }
+
+RESOURCE TBUF r_text_setting_skin_folder { buf=qtn_setting_skin_folder; }
+RESOURCE TBUF r_text_setting_save_folder { buf=qtn_setting_save_folder; }
+RESOURCE TBUF r_text_setting_skin_choose { buf=qtn_setting_skin_choose; }
+
+RESOURCE TBUF r_text_default { buf=qtn_text_default; }
+
+RESOURCE TBUF r_text_option_left_active  { buf=qtn_option_left_active; }
+RESOURCE TBUF r_text_option_right_active { buf=qtn_option_right_active; }
+RESOURCE TBUF r_text_option_left_hide 	 { buf=qtn_option_left_hide; }
+RESOURCE TBUF r_text_option_right_hide   { buf=qtn_option_right_hide; }
+
+RESOURCE TBUF r_text_dlg_confirm_save_progress  { buf=qtn_dlg_confirm_save_progress; }
+RESOURCE TBUF r_text_dlg_save_progress   		{ buf=qtn_dlg_save_progress; }
+RESOURCE TBUF r_text_dlg_save_progress_success  { buf=qtn_dlg_save_progress_success; }
+
+RESOURCE TBUF r_text_dlg_confirm_open_progress  { buf=qtn_dlg_confirm_open_progress; }
+RESOURCE TBUF r_text_dlg_open_progress   		{ buf=qtn_dlg_open_progress; }
+
+RESOURCE TBUF r_text_dlg_confirm_reset_progress { buf=qtn_dlg_confirm_reset_progress; }
+RESOURCE TBUF r_text_dlg_reset_progress  		{ buf=qtn_dlg_reset_progress; }
+
+RESOURCE TBUF r_text_dlg_save_screen_input_name	{ buf=qtn_dlg_save_screen_input_name; }
+RESOURCE TBUF r_text_dlg_save_screen		 	{ buf=qtn_dlg_save_screen; }
+RESOURCE TBUF r_text_dlg_save_screen_success 	{ buf=qtn_dlg_save_screen_success; }
+
+RESOURCE TBUF r_text_dlg_input_folder_error 	{ buf=qtn_dlg_input_folder_error; }
+
+RESOURCE TBUF r_text_dlg_overwrite_file 		{ buf=qtn_dlg_overwrite_file; }
+
+RESOURCE TBUF r_text_dlg_exit_confirm			{ buf=qtn_dlg_exit_confirm; }
+// End of File

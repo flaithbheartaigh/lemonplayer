@@ -1,0 +1,59 @@
+/*
+============================================================================
+ Name		: LemonTangram.rls
+ Author	  : zengcity
+ Copyright   : Your copyright notice
+ Description : This is a localisation file for LemonTangram
+				A .rls file is the one and only place where the logical
+				strings to be localised are defined. 
+============================================================================
+*/
+
+//  LOCALISATION STRINGS
+
+// Caption string for app.
+rls_string qtn_caption_string "LemonTangram"
+
+rls_string qtn_loc_resource_file_1 "\\resource\\apps\\LemonTangram_0xEAE107BA"
+
+rls_string qtn_about_dialog_text "LemonTangram Version 1.0.0\n\nAuthor: zengcity\n\nSupport: support@mycompany.com\n\n(c) Your copyright notice"
+
+rls_string qtn_res_main_menu "tangmenu.en.xml"
+
+rls_string qtn_text_default "Default"
+
+rls_string qtn_setting_title "Setting"
+
+rls_string qtn_setting_skin_folder "Skin Folder"
+rls_string qtn_setting_skin_choose "Skin Choose"
+rls_string qtn_setting_save_folder "Save Foloder"
+
+rls_string qtn_setting_option	"Option"
+rls_string qtn_setting_change 	"Change"
+rls_string qtn_setting_back		"Back"
+
+rls_string qtn_option_left_active  "Choose"
+rls_string qtn_option_right_active "Cancel"
+rls_string qtn_option_left_hide 	"Option"
+rls_string qtn_option_right_hide 	"Exit"
+
+rls_string qtn_dlg_confirm_save_progress	"Save Progress will overwrite last progress,continue"
+rls_string qtn_dlg_save_progress			"Save Progress"
+rls_string qtn_dlg_save_progress_success	"Save Progress Success"
+
+rls_string qtn_dlg_confirm_open_progress	"Open Progress will overwrite current progress,continue"
+rls_string qtn_dlg_open_progress			"Open Progress"
+
+rls_string qtn_dlg_confirm_reset_progress	"Reset will overwrite current progress,continue"
+rls_string qtn_dlg_reset_progress			"Reset"
+
+rls_string qtn_dlg_save_screen_input_name 	"input snapshot name"
+rls_string qtn_dlg_save_screen 				"snapshot"
+rls_string qtn_dlg_save_screen_success 		"snapshot success"
+
+rls_string qtn_dlg_input_folder_error	"Folder eidt error"
+
+rls_string qtn_dlg_overwrite_file		"File exist,overwrite"
+
+rls_string qtn_dlg_exit_confirm		"Please save the progress,confirm exit"
+// End of File
