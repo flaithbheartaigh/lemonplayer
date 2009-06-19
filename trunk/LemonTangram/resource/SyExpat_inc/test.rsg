@@ -1,0 +1,4 @@
+#define R_TEST_HOTKEYS                            0x8f6f004
+#define R_TEST_MENUBAR                            0x8f6f005
+#define R_TEST_MENU                               0x8f6f006
+#define R_DIALOG_TEXT_URL                         0x8f6f007

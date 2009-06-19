@@ -9,6 +9,7 @@ _LIT(KMenuAttrText,		"text");
 _LIT(KMenuAttrId,		"id");
 _LIT(KMenuAttrCommand,	"command");
 
+#define KRgbMenuSelected	TRgb(0xFFAEA5)
 
 enum TMenuTag
 	{

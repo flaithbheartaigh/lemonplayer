@@ -31,8 +31,8 @@ public:
 	virtual void ConvertComplete() = 0;
 	};
 
-class CImageArrayReader : public CBase, public CDefaultDocHandler,
-	public MWImageConvertorListener
+class CImageArrayReader : 	public CBase, public CDefaultDocHandler,
+							public MWImageConvertorListener
 	{
 public:
 	// Constructors and destructor

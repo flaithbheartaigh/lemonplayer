@@ -14,6 +14,7 @@ CHARACTER_SET UTF8
 
 // Caption string for app.
 rls_string qtn_caption_string "LemonTangram"
+rls_string qtn_app_short_caption_string "LemonTangram"
 
 rls_string qtn_loc_resource_file_1 "\\resource\\apps\\LemonTangram_0xEAE107BA"
 

@@ -12,9 +12,10 @@
 #define ICONFILEPROVIDER_H
 
 // INCLUDES
-#include <akniconutils.h> 
+
 
 #ifdef EKA2
+#include <akniconutils.h> 
 
 class MEikCommandObserver;
 

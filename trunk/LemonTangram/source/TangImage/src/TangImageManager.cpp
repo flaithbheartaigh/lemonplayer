@@ -22,7 +22,7 @@
 
 #include <LemonTangram.mbg>
 #include <eikenv.h>
-#include <LemonTangram_0xEAE107BA.rsg>
+#include <LemonTangram.rsg>
 #include "TangFileDefine.h"
 #include "Configuration.h"
 #include "ConfigDefine.h"

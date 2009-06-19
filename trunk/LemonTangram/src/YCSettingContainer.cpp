@@ -11,7 +11,7 @@
 #include "YCSettingContainer.h"
 #include <eikfrlbd.h>
 #include <StringLoader.h>
-#include <LemonTangram_0xEAE107BA.rsg>
+#include <LemonTangram.rsg>
 #include "SkinImageScan.h"
 
 #include "TangFileDefine.h"

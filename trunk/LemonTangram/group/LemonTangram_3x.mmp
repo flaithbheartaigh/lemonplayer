@@ -8,7 +8,7 @@
 */
 
 
-TARGET			LemonTangram_0xEAE107BA.exe
+TARGET			LemonTangram.exe
 TARGETTYPE		exe
 UID		  0x100039CE 0xEAE107BA
 
@@ -18,21 +18,71 @@ SOURCE			LemonTangramApplication.cpp
 SOURCE			LemonTangramAppView.cpp
 SOURCE			LemonTangramAppUi.cpp
 SOURCE			LemonTangramDocument.cpp
+SOURCE YCSettingList.cpp
+SOURCE YCSettingView.cpp
+SOURCE LemonTangramContainer.cpp
+SOURCE YCSettingContainer.cpp
+
+SOURCEPATH ..\source\ImageLib\src
+SOURCE ImageArrayReader.cpp 
+SOURCE ImageBitmapReader.cpp 
+SOURCE ImageConvertor.cpp 
+SOURCE ImageRotator.cpp 
+SOURCE StaticAnimation.cpp 
+SOURCE TransparentBitmap.cpp
+SOURCE IconFileProvider.cpp 
+SOURCE LMSvgUtil.cpp
+
+SOURCEPATH ..\source\XmlLib\src
+SOURCE DefaultDeclHandler.cpp 
+SOURCE DefaultDocHandler.cpp
+
+SOURCEPATH ..\source\Framework\src
+SOURCE AnimationStruct.cpp 
+SOURCE TimeOutTimer.cpp
+
+SOURCEPATH ..\source\Controller\src
+SOURCE LemonMenuBar.cpp 
+SOURCE LemonMenuItem.cpp 
+SOURCE LemonMenuList.cpp
+SOURCE QueryDlgUtil.cpp
+SOURCE LemonMenu.cpp
+
+SOURCEPATH ..\source\LTUI\src
+SOURCE UI240x320.cpp 
+SOURCE UI320x240.cpp 
+SOURCE UI320x240orig.cpp 
+SOURCE UIFactory.cpp
+
+SOURCEPATH ..\source\Tools\src
+SOURCE Utils.cpp 
+SOURCE Configuration.cpp
+SOURCE CommonUtils.cpp
+
+SOURCEPATH ..\source\TangImage\src
+SOURCE TangImageDataWriter.cpp 
+SOURCE TangImageSave.cpp
+SOURCE SkinImageScan.cpp
+SOURCE TangImageDataReader.cpp
+SOURCE TangElementUtil.cpp
+SOURCE ImageElement.cpp 
+SOURCE TangImageManager.cpp
+
+SOURCEPATH ..\source\TangFunc\src
+SOURCE TangConfig.cpp
 
 SOURCEPATH		..\data
 
 START RESOURCE	LemonTangram.rss
 HEADER
-TARGET LemonTangram_0xEAE107BA
+TARGET LemonTangram
 TARGETPATH resource\apps
 END //RESOURCE
 
 START RESOURCE	LemonTangram_reg.rss
-TARGET LemonTangram_0xEAE107BA_reg
+TARGET LemonTangram_reg
 TARGETPATH 	  \private\10003a3f\apps
 END //RESOURCE
-
-
 
 USERINCLUDE	   ..\inc
 USERINCLUDE    ..\help 
@@ -82,37 +132,6 @@ CAPABILITY	  	  ReadUserData
 DEBUGGABLE
 #endif
 // End of File
-SOURCEPATH ..\source\TangImage\src
-SOURCE ImageElement.cpp 
-SOURCE TangImageManager.cpp
-
-SOURCEPATH ..\source\ImageLib\src
-SOURCE ImageArrayReader.cpp 
-SOURCE ImageBitmapReader.cpp 
-SOURCE ImageConvertor.cpp 
-SOURCE ImageRotator.cpp 
-SOURCE StaticAnimation.cpp 
-SOURCE TransparentBitmap.cpp
-
-SOURCEPATH ..\source\XmlLib\src
-SOURCE DefaultDeclHandler.cpp 
-SOURCE DefaultDocHandler.cpp
-
-SOURCEPATH ..\source\Tools\src
-SOURCE CommonUtils.cpp
-
-SOURCEPATH ..\source\TangImage\src
-SOURCE TangImageDataReader.cpp
-
-SOURCEPATH ..\source\Framework\src
-SOURCE AnimationStruct.cpp 
-SOURCE TimeOutTimer.cpp
-
-SOURCEPATH ..\src
-SOURCE LemonTangramContainer.cpp
-
-SOURCEPATH ..\source\TangImage\src
-SOURCE TangElementUtil.cpp
 
 //START BITMAP LemonTangram.mbm
 //	TARGETPATH resource\apps
@@ -120,31 +139,6 @@ SOURCE TangElementUtil.cpp
 //	SOURCEPATH ..\gfx
 //	SOURCE c24 log.bmp
 //END
-
-SOURCEPATH ..\source\Controller\src
-SOURCE LemonMenuBar.cpp 
-SOURCE LemonMenuItem.cpp 
-SOURCE LemonMenuList.cpp
-
-SOURCEPATH ..\source\Controller\src
-SOURCE LemonMenu.cpp
-
-SOURCEPATH ..\source\LTUI\src
-SOURCE UI240x320.cpp 
-SOURCE UI320x240.cpp 
-SOURCE UI320x240orig.cpp 
-SOURCE UIFactory.cpp
-
-SOURCEPATH ..\source\Tools\src
-SOURCE Utils.cpp 
-SOURCE Configuration.cpp
-
-SOURCEPATH ..\source\TangImage\src
-SOURCE TangImageDataWriter.cpp 
-SOURCE TangImageSave.cpp
-
-SOURCEPATH ..\src
-SOURCE YCSettingView.cpp
 
 SOURCEPATH      ..\help
 DOCUMENT        LemonTangram.rtf

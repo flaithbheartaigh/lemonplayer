@@ -17,7 +17,7 @@
 #include "MacroUtil.h"
 #include <akncontext.h>
 #include <aknViewAppUi.h> 
-#include <LemonTangram_0xEAE107BA.rsg>
+#include <LemonTangram.rsg>
 //#include "YCSettingContainer.h"
 #include "YCSettingList.h"
 

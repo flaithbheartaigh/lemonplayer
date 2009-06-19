@@ -14,7 +14,9 @@ NAME LEMO	// 4 letter ID
 #include <eikon.rh>
 #include <avkon.rsg>
 #include <avkon.rh>
+#ifdef EKA2
 #include <appinfo.rh>
+#endif
 #include "LemonTangram.hrh"
 #include "LemonTangram.rls"
 #include "YCSettingDefine.h"
@@ -105,6 +107,7 @@ RESOURCE TBUF r_about_dialog_text 		{ buf=qtn_about_dialog_text; }
 //
 // ---------------------------------------------------------------------------- 
 //
+#ifdef EKA2
 RESOURCE LOCALISABLE_APP_INFO r_localisable_app_info
 	{
 	short_caption = qtn_caption_string;
@@ -114,9 +117,10 @@ RESOURCE LOCALISABLE_APP_INFO r_localisable_app_info
 		caption = qtn_caption_string;
 
 		number_of_icons = 1;
-		icon_file = "\\resource\\apps\\LemonTangram_0xEAE107BA.mif";
+		icon_file = "\\resource\\apps\\LemonTangram.mif";
 		};
 	}
+#endif
 
 //setting view
 // -----------------------------------------------------------------------------

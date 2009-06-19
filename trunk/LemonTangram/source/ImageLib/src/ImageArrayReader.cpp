@@ -29,7 +29,8 @@ CImageArrayReader::~CImageArrayReader()
 	iArray.Close();
 
 	SAFE_DELETE(iConvertor);
-	SAFE_DELETE_ARRAY(iBitmap,iBitmapCount);
+	SAFE_DELETE(iBitmap);
+//	SAFE_DELETE_ARRAY(iBitmap,iBitmapCount);
 //	SAFE_DELETE(iBitmap);
 	}
 

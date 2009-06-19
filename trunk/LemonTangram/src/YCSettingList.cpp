@@ -20,7 +20,7 @@
 #include <eikspane.h>
 #include <akncontext.h>
 #include <StringLoader.h>
-#include <LemonTangram_0xEAE107BA.rsg>
+#include <LemonTangram.rsg>
 #include <BAUTILS.H>
 #include <COEMAIN.H>
 
