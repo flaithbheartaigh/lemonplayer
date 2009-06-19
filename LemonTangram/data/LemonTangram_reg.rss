@@ -10,7 +10,7 @@
 #include "LemonTangram.hrh"
 #include "LemonTangram.rls"
 #include <appinfo.rh>
-#include <LemonTangram_0xEAE107BA.rsg>
+#include <LemonTangram.rsg>
 
 UID2 KUidAppRegistrationResourceFile
 UID3 _UID3

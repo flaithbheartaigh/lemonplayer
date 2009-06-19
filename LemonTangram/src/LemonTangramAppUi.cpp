@@ -16,7 +16,7 @@
 #include <s32file.h>
 #include <hlplch.h>
 
-#include <LemonTangram_0xEAE107BA.rsg>
+#include <LemonTangram.rsg>
 #include "LemonTangram.hlp.hrh"
 
 #include "LemonTangram.hrh"
@@ -74,12 +74,7 @@ CLemonTangramAppUi::CLemonTangramAppUi()
 //
 CLemonTangramAppUi::~CLemonTangramAppUi()
 	{
-//	if (iAppView)
-//		{
-//		delete iAppView;
-//		iAppView = NULL;
-//		}
-
+	SAFE_DELETE(iUIMgr);
 	}
 
 // -----------------------------------------------------------------------------

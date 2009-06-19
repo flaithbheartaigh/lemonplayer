@@ -23,7 +23,7 @@
 #include "LemonTangram.hrh"
 #include "LMSvgUtil.h"
 #include <StringLoader.h> 
-#include <LemonTangram_0xEAE107BA.rsg>
+#include <LemonTangram.rsg>
 #include "Utils.h"
 #include "TangFileDefine.h"
 #include "Configuration.h"
@@ -391,7 +391,7 @@ void CLemonTangramContainer::HandMenuCommand(TInt aCommandId)
 			STATIC_CAST(CLemonTangramAppUi*,iEikonEnv->AppUi())->HandleCommandL(aCommandId);
 			break;			
 		default:
-			STATIC_CAST(CLemonTangramAppUi*,CEikonEnv::Static()->AppUi())->Exit();
+			//STATIC_CAST(CLemonTangramAppUi*,CEikonEnv::Static()->AppUi())->Exit();
 			break;
 		}
 	}

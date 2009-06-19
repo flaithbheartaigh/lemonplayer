@@ -11,8 +11,8 @@
 #include "LemonMenuItem.h"
 #include "LemonMenuList.h"
 #include "MacroUtil.h"
+#include "LemonMenuDef.h"
 
-#define KRgbMenuSelected	TRgb(0xA5AEFF)
 
 CLemonMenuItem::CLemonMenuItem(const CFont* aFont):
 iChildList(NULL),iText(NULL),

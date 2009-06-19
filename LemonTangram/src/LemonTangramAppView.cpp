@@ -15,7 +15,6 @@
 #include "LemonTangram.hrh"
 #include "LemonTangramContainer.h"
 
-_LIT(KFileTangram,"c:\\mytangram.xml");
 
 // ============================ MEMBER FUNCTIONS ===============================
 

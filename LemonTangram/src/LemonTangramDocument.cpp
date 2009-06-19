@@ -10,6 +10,7 @@
 // INCLUDE FILES
 #include "LemonTangramAppUi.h"
 #include "LemonTangramDocument.h"
+#include "MacroUtil.h"
 
 // ============================ MEMBER FUNCTIONS ===============================
 
@@ -67,6 +68,7 @@ CLemonTangramDocument::CLemonTangramDocument(CEikApplication& aApp) :
 //
 CLemonTangramDocument::~CLemonTangramDocument()
 	{
+	SAFE_DELETE(iIconProvider);
 	// No implementation required
 	}
 

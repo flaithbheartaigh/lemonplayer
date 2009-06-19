@@ -9,7 +9,7 @@
  */
 
 #include "LemonMenuBar.h"
-#include <LemonTangram_0xEAE107BA.rsg>
+#include <LemonTangram.rsg>
 #include <StringLoader.h> 
 #include "LemonTangramAppUi.h"
 #include "MacroUtil.h"
@@ -62,7 +62,7 @@ void CLemonMenuBar::ConstructL()
 	iOptionText[EOptionRightActive].Append(text4->Des());
 	CleanupStack::PopAndDestroy(text4);
 	
-	iFrame = LMSvgUtil::GetImageFromResourceL(EMbmLemontangramBottomsvg);
+	iFrame = LMSvgUtil::GetImageFromResourceL(EMbmLemontangramBottom);
 	MUIMgr* uiMgr = STATIC_CAST(CLemonTangramAppUi*,CEikonEnv::Static()->AppUi())->GetUIMgr();
 	LMSvgUtil::SetIconSize(iFrame, uiMgr->BottomBarSize());
 	//iFrame = CEikonEnv::Static()->CreateBitmapL(KFileMbm,EMbmLemontangramBottomsvg);
