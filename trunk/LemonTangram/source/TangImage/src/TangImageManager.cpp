@@ -31,7 +31,7 @@
 
 CTangImageManager::CTangImageManager() :
 	iConverted(0), iConvertDown(0), iSelectedState(ESelectedStateChoose),
-	iDataArray(NULL),iScreenSave(NULL)
+	iDataArray(NULL),iScreenSave(NULL),iBitmapArray(NULL)
 	{
 	// No implementation required
 	}
@@ -71,6 +71,16 @@ void CTangImageManager::ConstructL()
 	
 	iBitmapFocus = (CFbsBitmap**)malloc(sizeof(CFbsBitmap*) * EBitmapFocusTotal);
 	}
+
+void CTangImageManager::ConvertError()
+	{
+	//¶ÁÆ¬×ª»»´íÎó£¬¶ÁÈ¡Ä¬ÈÏ
+	TFileName img;
+	GetAppPath(img);
+	img.Append(KFileTangImageDefault);
+	LoadImageFromFileL(img);
+	}
+
 void CTangImageManager::ConvertedOne()
 	{
 	iConverted++;
@@ -107,8 +117,11 @@ void CTangImageManager::ConvertComplete()
 
 void CTangImageManager::LoadImageFromFileL(const TDesC& aFileName)
 	{
-	iBitmapArray = CImageArrayReader::NewL();
-	iBitmapArray->SetNotify(this);
+	if (!iBitmapArray)
+		{
+		iBitmapArray = CImageArrayReader::NewL();
+		iBitmapArray->SetNotify(this);
+		}
 
 	iBitmapArray->LoadDataFromFile(aFileName);
 	}
@@ -349,7 +362,10 @@ void CTangImageManager::ResetProcess()
 		{
 		TInt wait = StartWaitingDlg(R_TEXT_DLG_RESET_PROGRESS);
 		
-		LoadImageDataFileL(KFileTangram);
+		TFileName path;
+		GetAppPath(path);
+		path.Append(KFileTangram);
+		LoadImageDataFileL(path);
 		
 		EndWaitingDlg(wait);
 		}

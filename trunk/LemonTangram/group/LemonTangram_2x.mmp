@@ -118,7 +118,7 @@ LANG 01 31 SC
 // End of File
 
 START BITMAP LemonTangram.mbm
-	TARGETPATH resource\apps
+	TARGETPATH system\apps\LemonTangram
 	HEADER
 	SOURCEPATH ..\gfx
 	SOURCE c24 log.bmp
@@ -135,3 +135,5 @@ AIF LemonTangram.aif ..\gfx LemonTangramaif.rss c12 Context_logo.bmp Context_log
 
 
 
+SOURCEPATH ..\source\LTUI\src
+SOURCE UI176x208.cpp

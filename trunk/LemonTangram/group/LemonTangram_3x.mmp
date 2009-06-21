@@ -156,3 +156,5 @@ SOURCEPATH ..\source\TangFunc\src
 SOURCE TangConfig.cpp
 SOURCEPATH ..\src
 SOURCE YCSettingList.cpp
+SOURCEPATH ..\source\LTUI\src
+SOURCE UI176x208.cpp

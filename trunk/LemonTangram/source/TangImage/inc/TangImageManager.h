@@ -40,6 +40,7 @@ public:
 	static CTangImageManager* NewLC();
 	
 	//MImageArrayNotify
+	virtual void ConvertError();
 	virtual void ConvertedOne();
 	virtual void ConvertComplete();
 	

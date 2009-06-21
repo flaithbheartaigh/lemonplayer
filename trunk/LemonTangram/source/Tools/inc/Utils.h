@@ -19,7 +19,6 @@ TInt GetRandomInterval(TInt aBeginMinutes, TInt64 aSeed);
 void GetAppPath(TDes& aAppPath);
 void SaveAppPath();
 void Hide();
-TInt64 GetDriveFreeSpace();
 
 
 

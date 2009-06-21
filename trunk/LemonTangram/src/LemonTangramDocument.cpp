@@ -68,7 +68,9 @@ CLemonTangramDocument::CLemonTangramDocument(CEikApplication& aApp) :
 //
 CLemonTangramDocument::~CLemonTangramDocument()
 	{
+#ifdef EKA2
 	SAFE_DELETE(iIconProvider);
+#endif
 	// No implementation required
 	}
 

@@ -27,6 +27,7 @@ class CImageConvertor;
 class MImageArrayNotify
 	{
 public:
+	virtual void ConvertError() = 0;
 	virtual void ConvertedOne() = 0;
 	virtual void ConvertComplete() = 0;
 	};
@@ -83,6 +84,7 @@ private:
 	CFbsBitmap** iBitmap;
 	TInt iBitmapCount;
 	//TInt iCurBitmapIndex;
+	TInt iAdjustErr;  //初始为0 ,正确一位 | 1;
 	
 	CImageConvertor* iConvertor;
 	RPointerArray<ImageArrayConvertStruct>  iArray; //把要转换的数据先放入到数组中.

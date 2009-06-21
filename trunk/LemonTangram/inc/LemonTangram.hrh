@@ -10,7 +10,11 @@
 #ifndef __LEMONTANGRAM_HRH__
 #define __LEMONTANGRAM_HRH__
 
+#ifdef EKA2
 #define _UID3 0xEAE107BA
+#else
+#define _UID3 0x1AE107BA
+#endif
 //#define HELPFILE_UID 0xEAE107BB
 #define HELPFILE_UID 0x20001D8E
 
