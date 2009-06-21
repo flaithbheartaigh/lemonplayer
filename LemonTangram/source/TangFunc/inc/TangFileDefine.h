@@ -11,7 +11,7 @@
 
 _LIT(KFileTangImageDefault,"tangvect.xml");
 
-_LIT(KFileTangram,"c:\\mytangram.xml");
+_LIT(KFileTangram,"mytangram.xml");
 //_LIT(KFileTangramImage,"c:\\tangvect.xml");
 _LIT(KSaveProcessFile,"process.xml");
 //_LIT(KSaveScreenFile,"screen.jpg");
@@ -24,5 +24,7 @@ _LIT(KEmptyText, "None");
 _LIT(KEmptyFolder, "c:\\");
 
 _LIT(KXmlFormat,".xml");
+
+_LIT(KTangMbmFile,"LemonTangram.mbm");
 
 #endif /* TANGFILEDEFINE_H_ */

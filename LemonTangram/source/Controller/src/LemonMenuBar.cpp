@@ -15,6 +15,7 @@
 #include "MacroUtil.h"
 #include <LemonTangram.mbg>
 #include "LMSvgUtil.h"
+#include "TangFileDefine.h"
 
 //_LIT(KFileMbm,"z:\\resource\\apps\\LemonTangram.mbm");
 
@@ -62,9 +63,16 @@ void CLemonMenuBar::ConstructL()
 	iOptionText[EOptionRightActive].Append(text4->Des());
 	CleanupStack::PopAndDestroy(text4);
 	
-	iFrame = LMSvgUtil::GetImageFromResourceL(EMbmLemontangramBottom);
+#ifdef EKA2	
+	iFrame = LMSvgUtil::GetImageFromResourceL(EMbmLemontangramBottomsvg);
 	MUIMgr* uiMgr = STATIC_CAST(CLemonTangramAppUi*,CEikonEnv::Static()->AppUi())->GetUIMgr();
 	LMSvgUtil::SetIconSize(iFrame, uiMgr->BottomBarSize());
+#else
+	TFileName path;
+	CompleteWithAppPath(path);
+	path.Append(KTangMbmFile);
+	iFrame = CEikonEnv::Static()->CreateBitmapL( path,EMbmLemontangramBottom);
+#endif
 	//iFrame = CEikonEnv::Static()->CreateBitmapL(KFileMbm,EMbmLemontangramBottomsvg);
 	}
 

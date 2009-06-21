@@ -28,6 +28,7 @@
 #include "TangFileDefine.h"
 #include "Configuration.h"
 #include "ConfigDefine.h"
+#include "bautils.h"
 // ================= MEMBER FUNCTIONS =======================
 
 // ---------------------------------------------------------
@@ -265,8 +266,14 @@ TKeyResponse CLemonTangramContainer::StateKey(const TKeyEvent& aKeyEvent,
 void CLemonTangramContainer::StateLogoInit()
 	{
 	iLogoState = 0;
+#ifdef EKA2
 	iLogo = LMSvgUtil::GetImageFromResourceL(EMbmLemontangramLog);
-	//iLogo = CEikonEnv::Static()->CreateBitmapL(KFileMbm,EMbmLemontangramLog);
+#else
+	TFileName path;
+	CompleteWithAppPath(path);
+	path.Append(KTangMbmFile);
+	iLogo = CEikonEnv::Static()->CreateBitmapL(path,EMbmLemontangramLog);
+#endif
 	}
 
 void CLemonTangramContainer::StateLogoLoop()
@@ -303,6 +310,12 @@ void CLemonTangramContainer::StateInitInit()
 	config->Get(KCfgSkinChoose,img);
 	delete config;
 	
+	if (!BaflUtils::FileExists(CCoeEnv::Static()->FsSession(),img))
+		{
+		img.Zero();
+		GetAppPath(img);
+		img.Append(KFileTangImageDefault);
+		}
 	iManager->LoadImageFromFileL(img);
 	}
 void CLemonTangramContainer::StateInitLoop()
@@ -311,7 +324,10 @@ void CLemonTangramContainer::StateInitLoop()
 	
 	if (iManager->GetConvertDown())
 		{
-		iManager->LoadImageDataFileL(KFileTangram);
+		TFileName path;
+		GetAppPath(path);
+		path.Append(KFileTangram);
+		iManager->LoadImageDataFileL(path);
 		iGameState = EGameStateMain;
 		StateMainInit();
 		}
@@ -347,7 +363,6 @@ void CLemonTangramContainer::StateMainInit()
 	CleanupStack::PopAndDestroy(textResource);
 	
 	iMenu->LoadMenu(file);
-	
 	}
 void CLemonTangramContainer::StateMainLoop()
 	{}

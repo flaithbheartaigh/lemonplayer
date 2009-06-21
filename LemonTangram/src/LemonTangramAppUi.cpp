@@ -44,7 +44,7 @@ void CLemonTangramAppUi::ConstructL()
 	// Initialise app UI with standard value.
 	BaseConstructL(CAknAppUi::EAknEnableSkin);
 	
-	TRect rect = ClientRect() ;
+	TRect rect = ApplicationRect() ;
 	ChangeUIMgr(rect.Width(),rect.Height());
 	
 	// Create view object
@@ -170,8 +170,10 @@ void CLemonTangramAppUi::ChangeUIMgr(TInt aWidth,TInt aHeight)
 		iUIMgr = UIFactory::CreateUIMgr(EUIType416x352);
 	else if ( aWidth==208 && aHeight==208 )
 		iUIMgr = UIFactory::CreateUIMgr(EUIType208x208);
-	else	
+	else if ( aWidth==176 && aHeight==208)
 		iUIMgr = UIFactory::CreateUIMgr(EUIType176x208);
+	else	
+		iUIMgr = UIFactory::CreateUIMgr(EUIType240x320);
 	}
 
 MUIMgr* CLemonTangramAppUi::GetUIMgr()

@@ -284,14 +284,14 @@ void CImageConvertor::DecodeFromFileL(const TDesC &aSourceFileName,
 	{
 	SAFE_DELETE(iImgDecoder);
 
-	//	iImgDecoder = CImageDecoder::FileNewL(iFileSystem, aSourceFileName);
-	TRAPD(err,iImgDecoder =
-			CImageDecoder::FileNewL(CCoeEnv::Static()->FsSession(), aSourceFileName));
+	iImgDecoder = CImageDecoder::FileNewL(iFileSystem, aSourceFileName);
+//	TRAPD(err,iImgDecoder =
+//			CImageDecoder::FileNewL(CEikonEnv::Static()->FsSession(), aSourceFileName));
 
-	if (err != KErrNone)
-		{
-		return;
-		}
+//	if (err != KErrNone)
+//		{
+//		return;
+//		}
 //	RETURN_ERROR(err);
 
 	TFrameInfo frameInfo = iImgDecoder->FrameInfo();

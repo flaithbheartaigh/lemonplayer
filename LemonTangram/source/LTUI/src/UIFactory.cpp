@@ -2,6 +2,7 @@
 #include "UI240x320.h"
 #include "UI320x240.h"
 #include "UI320x240orig.h"
+#include "UI176x208.h"
 
 #include "MacroUtil.h"
 UIFactory::UIFactory()
@@ -27,6 +28,9 @@ MUIMgr* UIFactory::CreateUIMgr(TUIType aType)
 			break;
 		case EUIType320x240orig:
 			ui = new (ELeave) CUI320x240orig;
+			break;
+		case EUIType176x208:
+			ui = new (ELeave) CUI176x208;
 			break;
 		default:
 			ui = new (ELeave) CUI240x320;

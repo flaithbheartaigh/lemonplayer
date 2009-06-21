@@ -19,6 +19,7 @@
 #include "CommonUtils.h"
 
 CImageArrayReader::CImageArrayReader()
+:iAdjustErr(0)
 	{
 	// No implementation required
 	}
@@ -72,6 +73,7 @@ void CImageArrayReader::LoadDataFromFile(const TDesC& aFileName)
 		CleanupClosePushL(file);
 		//²Ù×÷
 		TBuf8<512> strBuffer;
+		iAdjustErr = 0;
 
 		file.Read(strBuffer);
 		while (strBuffer.Length() != 0)
@@ -84,7 +86,15 @@ void CImageArrayReader::LoadDataFromFile(const TDesC& aFileName)
 		}
 	CleanupStack::PopAndDestroy(2);
 
-	ConvertImage();
+	if (iAdjustErr == 0x11)
+		{
+		ConvertImage();		
+		}
+	else
+		{
+		if (iNotify)
+			iNotify->ConvertError();
+		}
 	}
 
 void CImageArrayReader::OnImageConvertedL(CFbsBitmap& /*aBitmap*/)
@@ -150,6 +160,7 @@ TInt CImageArrayReader::ConvertNameToNumber(const TDesC& aName)
 
 void CImageArrayReader::ParseImage(const RArray<TAttribute>& aAttributes)
 	{
+	iAdjustErr |= 0x01;
 	for (TInt i = 0; i < aAttributes.Count(); i++)
 		{
 		HBufC *attrName = aAttributes[i].iName.iLocalName.AllocLC();
@@ -165,6 +176,7 @@ void CImageArrayReader::ParseImage(const RArray<TAttribute>& aAttributes)
 	}
 void CImageArrayReader::ParseImg(const RArray<TAttribute>& aAttributes)
 	{
+	iAdjustErr |= 0x10;
 	pImageArrayConvertStruct item = new (ELeave)ImageArrayConvertStruct;
 	for (TInt i = 0; i < aAttributes.Count(); i++)
 		{

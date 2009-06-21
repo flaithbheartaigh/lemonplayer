@@ -12,8 +12,9 @@
 
 // INCLUDES
 #include <akndoc.h>
+#ifdef EKA2
 #include "IconFileProvider.h"
-
+#endif
 // FORWARD DECLARATIONS
 class CLemonTangramAppUi;
 class CEikApplication;
@@ -85,14 +86,15 @@ private:
 	 * @param aApp Application creating this document.
 	 */
 	CLemonTangramDocument(CEikApplication& aApp);
-	
+#ifdef EKA2
 public:
 	CIconFileProvider* GetIconFileProvider() {return iIconProvider;};
 	void SetIconFileProvider(CIconFileProvider* aIconProvider) {iIconProvider = aIconProvider;};
 
+
 private:
 	CIconFileProvider* iIconProvider;
-
+#endif
 	};
 
 #endif // __LEMONTANGRAMDOCUMENT_h__
