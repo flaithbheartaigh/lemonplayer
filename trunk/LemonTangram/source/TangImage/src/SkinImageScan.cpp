@@ -11,6 +11,7 @@
 #include "SkinImageScan.h"
 #include <f32file.h>
 #include <coemain.h>
+#include <bautils.h>
 
 CSkinImageScan::CSkinImageScan()
 	{
@@ -86,6 +87,8 @@ void CSkinImageScan::ScanFolder(const TDes& aFolder)
 
 void CSkinImageScan::ScanFolder(const TDes& aFolder, const TDesC& aFilter)
 	{
+	iSkins.ResetAndDestroy();
+
 	CDirScan* ds = CDirScan::NewLC(CCoeEnv::Static()->FsSession());
 	TRAPD(err,ds->SetScanDataL(aFolder,KEntryAttDir,ESortByName|EAscending,CDirScan::EScanDownTree))
 
@@ -99,13 +102,15 @@ void CSkinImageScan::ScanFolder(const TDes& aFolder, const TDesC& aFilter)
 	TFileName fullname;
 	TFileName shortname;
 
-	TRAPD(errNext,ds->NextL(c))
-	if(errNext != KErrNone)
+	if (!BaflUtils::PathExists(CCoeEnv::Static()->FsSession(),aFolder))
+		return;
+	
+	TRAP(err,ds->NextL(c))
+	if(err != KErrNone)
 		{
 		return;
 		}
-
-	iSkins.ResetAndDestroy();
+	
 	TInt index = 0;
 	for (TInt i=0; i<c->Count(); i++)
 		{
@@ -113,10 +118,10 @@ void CSkinImageScan::ScanFolder(const TDes& aFolder, const TDesC& aFilter)
 
 		fullname.Copy(ds->FullPath());
 		fullname.Append(e.iName);
-		
+	
 		shortname.Copy(e.iName);
 		shortname.LowerCase();
-
+		
 		if (!e.IsDir() && shortname.Find(aFilter)!= KErrNotFound)
 			{
 			pSkinImageStruct item = new SkinImageStruct;

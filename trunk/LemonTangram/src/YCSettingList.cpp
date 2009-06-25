@@ -30,6 +30,7 @@
 #include "Configuration.h"
 #include "Utils.h"
 #include "QueryDlgUtil.h"
+#include "MacroUtil.h"
 
 // ============================ MEMBER FUNCTIONS ===============================
 
@@ -39,7 +40,7 @@
 // ---------------------------------------------------------------------------
 //
 CYCSettingList::CYCSettingList()
-:iScaner(NULL)
+:iScaner(NULL),iConfig(NULL)
 	{
 	}
 
@@ -51,7 +52,8 @@ CYCSettingList::CYCSettingList()
 CYCSettingList::~CYCSettingList()
 	{
 	SaveL();
-	delete iScaner;
+	SAFE_DELETE(iScaner);
+	SAFE_DELETE(iConfig);
 	}
 
 // ---------------------------------------------------------------------------
@@ -87,20 +89,20 @@ CAknSettingItem* CYCSettingList::CreateSettingItemL(TInt aSettingId)
 	{
 	CAknSettingItem* settingItem= NULL;
 
-	switch (aSettingId)
-		{
-		case ELTSettingSkinFolder:
-			settingItem = CreateSkinFolderItem(aSettingId);
-			break;
-		case ELTSettingSkinChosse:
-			settingItem = CreateSkinChooseItem(aSettingId);
-			break;
-		case ELTSettingSaveFolder:
-			settingItem = CreateSaveFolderItem(aSettingId);
-			break;
-		default:
-			break;
-		}
+//	switch (aSettingId)
+//		{
+//		case ELTSettingSkinFolder:
+//			settingItem = CreateSkinFolderItem(aSettingId);
+//			break;
+//		case ELTSettingSkinChosse:
+//			settingItem = CreateSkinChooseItem(aSettingId);
+//			break;
+//		case ELTSettingSaveFolder:
+//			settingItem = CreateSaveFolderItem(aSettingId);
+//			break;
+//		default:
+//			break;
+// 		}
 
 	return settingItem;
 	}
@@ -217,9 +219,14 @@ void CYCSettingList::LoadConfigL()
 
 	iConfig = CConfiguration::NewL(setup);
 
-	iConfig->Get(KCfgSkinFolder, iSkinFolder);
-	iConfig->Get(KCfgSkinChoose, iFileSkinChoose);
-	iConfig->Get(KCfgSaveFolder, iSaveFolder);
+	if(!iConfig->Get(KCfgSkinFolder, iSkinFolder))	
+		iSkinFolder.Copy(KCfgDefaultSkinFolder);
+
+	if (!iConfig->Get(KCfgSkinChoose, iFileSkinChoose))
+		iFileSkinChoose.Zero();
+
+	if(!iConfig->Get(KCfgSaveFolder, iSaveFolder))
+		iSaveFolder.Copy(KCfgDefaultSaveFolder);
 
 	iSkinFolderOld.Copy(iSkinFolder);
 	iSaveFolderOld.Copy(iSaveFolder);
@@ -245,6 +252,15 @@ void CYCSettingList::AdjustSkinChoose()
 			}
 		}	
 	}
+void CYCSettingList::ResetSkinFolderItem()
+{
+	CAknTextSettingItem* item = (CAknTextSettingItem*)(this->SettingItemArray()->At(ELTSettingSkinFolder));
+}
+
+void CYCSettingList::ResetSaveFolderItem()
+{
+	CAknTextSettingItem* item = (CAknTextSettingItem*)(this->SettingItemArray()->At(ELTSettingSaveFolder));
+}
 
 void CYCSettingList::ResetSkinChooseItem()
 	{
@@ -358,7 +374,6 @@ void CYCSettingList::ModifySaveFolderItem()
 	if (AdjustFolder(iSaveFolder) == EFalse)
 		{
 		iSaveFolder.Copy(iSaveFolderOld);
-		return;
 		}	
 	}
 

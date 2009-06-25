@@ -107,7 +107,7 @@ CFbsBitGc& CTangImageSave::CreateBufferBitmapL()
 	{
 		CleanupStack::PopAndDestroy(iDoubleBufferBmp);
 		iDoubleBufferBmp =NULL;
-		return;
+		return *iDoubleBufferGc;;
 	}
 	// 创建离屏位图设备。
 	iDoubleBufferDevice = CFbsBitmapDevice::NewL(iDoubleBufferBmp);	
@@ -118,7 +118,7 @@ CFbsBitGc& CTangImageSave::CreateBufferBitmapL()
 		CleanupStack::PopAndDestroy(2);
 		iDoubleBufferDevice =NULL;
 		iDoubleBufferBmp =NULL;
-		return;
+		return *iDoubleBufferGc;;
 	}	
 	iDoubleBufferGc->SetBrushColor(KRgbWhite);
 	iDoubleBufferGc->SetBrushStyle(CGraphicsContext::ENullBrush);

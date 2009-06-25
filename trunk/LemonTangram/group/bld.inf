@@ -18,7 +18,7 @@ gnumakefile icons_scalable_dc.mk
 gnumakefile LemonTangrame_Image.mk
 LemonTangram_3x.mmp
 #else
+gnumakefile ..\help\build_help_2x.mk
 LemonTangram_2x.mmp
 #endif
-
 

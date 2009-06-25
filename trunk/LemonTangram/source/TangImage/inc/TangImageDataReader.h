@@ -47,7 +47,7 @@ private:
 
 private:
 	CImageElement** iElements;
-//	CImageRotator** iRotator;
+	TInt iAdjust;
 	};
 
 #endif // TANGIMAGEDATAREADER_H

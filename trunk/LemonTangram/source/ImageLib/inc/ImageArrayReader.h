@@ -58,7 +58,7 @@ public:
 	virtual void EndElement(const TQualified& aName);
 
 public:
-	void LoadDataFromFile(const TDesC& aFileName);
+	void LoadDataFromFileL(const TDesC& aFileName);
 	
 	//	void SetBitmap(TInt index,CFbsBitmap*& aBitmap);
 	

@@ -35,11 +35,11 @@ private:
 	void ConstructL(const TDesC& aConfigFilePath);
 	
 public:
-	TBool GetSkinFolder(TDes& aDes);
-	TBool SetSkinFolder(const TDesC& aDes);
+//	TBool GetSkinFolder(TDes& aDes);
+//	TBool SetSkinFolder(const TDesC& aDes);
 	
-	TBool GetSaveFolder(TDes& aDes);
-	TBool SetSaveFolder(const TDesC& aDes);
+//	TBool GetSaveFolder(TDes& aDes);
+//	TBool SetSaveFolder(const TDesC& aDes);
 	
 	TBool SaveL();
 	

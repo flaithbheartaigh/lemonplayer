@@ -27,11 +27,14 @@
 #include "Configuration.h"
 #include "ConfigDefine.h"
 #include <BAUTILS.H>
+#include "TangErrDefine.h"
+#include "LemonTangramAppUi.h"
 
 
 CTangImageManager::CTangImageManager() :
 	iConverted(0), iConvertDown(0), iSelectedState(ESelectedStateChoose),
-	iDataArray(NULL),iScreenSave(NULL),iBitmapArray(NULL)
+	iDataArray(NULL),iScreenSave(NULL),iBitmapArray(NULL),
+	iBitmapFocus(NULL),iElements(NULL)
 	{
 	// No implementation required
 	}
@@ -70,15 +73,17 @@ void CTangImageManager::ConstructL()
 		iElements[i] = CImageElement::NewL();
 	
 	iBitmapFocus = (CFbsBitmap**)malloc(sizeof(CFbsBitmap*) * EBitmapFocusTotal);
+	for (TInt j=0; j<EBitmapFocusTotal; j++)
+		iBitmapFocus[j] = NULL;
 	}
 
 void CTangImageManager::ConvertError()
 	{
 	//¶ÁÆ¬×ª»»´íÎó£¬¶ÁÈ¡Ä¬ÈÏ
-	TFileName img;
-	GetAppPath(img);
-	img.Append(KFileTangImageDefault);
-	LoadImageFromFileL(img);
+//	TFileName img;
+//	GetAppPath(img);
+//	img.Append(KFileTangImageDefault);
+//	LoadImageFromFileL(img);
 	}
 
 void CTangImageManager::ConvertedOne()
@@ -117,14 +122,45 @@ void CTangImageManager::ConvertComplete()
 
 void CTangImageManager::LoadImageFromFileL(const TDesC& aFileName)
 	{
+
 	if (!iBitmapArray)
 		{
-		iBitmapArray = CImageArrayReader::NewL();
+		iBitmapArray = CImageArrayReader::NewL();		
 		iBitmapArray->SetNotify(this);
 		}
-
-	iBitmapArray->LoadDataFromFile(aFileName);
+	
+	if (aFileName.Compare(KNullDesC) != 0 && 
+		BaflUtils::FileExists(CCoeEnv::Static()->FsSession(),aFileName)) 
+		{		
+			LoadImageXmlByFileL(aFileName);
+		}
+		else
+		{
+			LoadImageXmlDefaultL();
+		}
 	}
+
+void CTangImageManager::LoadImageXmlDefaultL()
+{
+	TFileName file;
+	GetAppPath(file);
+	file.Append(KFileTangImageDefault);
+
+	iBitmapArray->LoadDataFromFileL(file);
+}
+
+void CTangImageManager::LoadImageXmlByFileL(const TDesC& aFileName)
+{
+	TFileName file;
+	GetAppPath(file);
+	file.Append(KFileTangImageDefault);
+
+	TRAPD(err,iBitmapArray->LoadDataFromFileL(aFileName))
+	if (err != KErrNone) {
+		LTERRFUN(ETLWarnLoadPicFileNextDefault,ETLErrWarning);
+		LoadImageXmlDefaultL();
+	}
+}
 
 void CTangImageManager::LoadImageDataFileL(const TDesC& aFileName)
 	{
@@ -139,14 +175,9 @@ void CTangImageManager::Draw(CBitmapContext& aGc)
 	for(TInt i=0; i<iLayer.Count(); i++)
 		{
 		TInt index = iLayer[i];
-		if (iElements[index])
+		if (iElements && index<7 && iElements[index])
 			iElements[index]->Draw(aGc);
 		}
-//	for (TInt i=0; i<EImageNumber; i++)
-//		{
-//		if (iElements[i])
-//			iElements[i]->Draw(aGc);
-//		}
 	
 	CImageElement* element = iElements[iSelectedIndex];
 	TInt x = element->GetPositionX();
@@ -337,7 +368,7 @@ void CTangImageManager::Rotate(TInt aIndex, TInt aDegree)
 	delete rotator;
 	}
 
-void CTangImageManager::SaveProcess()
+void CTangImageManager::SaveProcessL()
 	{
 	if (ShowConfirmationQueryL(R_TEXT_DLG_CONFIRM_SAVE_PROGRESS))
 		{
@@ -356,7 +387,7 @@ void CTangImageManager::SaveProcess()
 		}
 	}
 
-void CTangImageManager::ResetProcess()
+void CTangImageManager::ResetProcessL()
 	{
 	if (ShowConfirmationQueryL(R_TEXT_DLG_CONFIRM_RESET_PROGRESS))
 		{
@@ -371,7 +402,7 @@ void CTangImageManager::ResetProcess()
 		}
 	}
 
-void CTangImageManager::OpenProcess()
+void CTangImageManager::OpenProcessL()
 	{
 	if (ShowConfirmationQueryL(R_TEXT_DLG_CONFIRM_OPEN_PROGRESS))
 		{
@@ -386,7 +417,7 @@ void CTangImageManager::OpenProcess()
 		}
 	}
 
-void CTangImageManager::SaveScreen()
+void CTangImageManager::SaveScreenL()
 	{
 	TBuf<KMaxName> name;
 	name.Copy(KSaveScreenDefault);

@@ -56,8 +56,10 @@ void CImageArrayReader::ConstructL()
 	iConvertor->SetListener(this);
 	}
 
-void CImageArrayReader::LoadDataFromFile(const TDesC& aFileName)
+void CImageArrayReader::LoadDataFromFileL(const TDesC& aFileName)
 	{
+	iArray.ResetAndDestroy();
+
 	CDefaultDeclHandler *decl = new (ELeave)CDefaultDeclHandler;
 	CleanupStack::PushL(decl);
 
@@ -67,6 +69,8 @@ void CImageArrayReader::LoadDataFromFile(const TDesC& aFileName)
 
 	RFile file;
 	TInt err = file.Open(CCoeEnv::Static()->FsSession(), aFileName, EFileRead);
+
+	User::LeaveIfError(err);
 
 	if (KErrNone == err)
 		{
@@ -86,15 +90,23 @@ void CImageArrayReader::LoadDataFromFile(const TDesC& aFileName)
 		}
 	CleanupStack::PopAndDestroy(2);
 
-	if (iAdjustErr == 0x11)
+	//打开文件错误
+	User::LeaveIfError(err);
+
+	if (iAdjustErr != 0x11)
 		{
-		ConvertImage();		
+		//格式不正确 没有两个元素
+		User::Leave(KErrNotSupported);
 		}
-	else
+
+	if (iArray.Count() != iBitmapCount)
 		{
-		if (iNotify)
-			iNotify->ConvertError();
+		//格式不正确 元素个数不符合
+		User::Leave(KErrNotSupported);
 		}
+	
+	ConvertImage();	
+	
 	}
 
 void CImageArrayReader::OnImageConvertedL(CFbsBitmap& /*aBitmap*/)

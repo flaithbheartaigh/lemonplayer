@@ -29,6 +29,7 @@
 #include "Configuration.h"
 #include "ConfigDefine.h"
 #include "bautils.h"
+#include "TangErrDefine.h"
 // ================= MEMBER FUNCTIONS =======================
 
 // ---------------------------------------------------------
@@ -50,21 +51,19 @@ void CLemonTangramContainer::ConstructL(const TRect& aRect)
 	
 	iGameState = EGameStateLogo;
 	StateLogoInit();
+
 	SetTimerTick(1000000);
 	StartTimer();
 	
 	CreateWindowL();
-	
 	}
 
 // Destructor
 CLemonTangramContainer::~CLemonTangramContainer()
 	{
-//	delete iManager;
 	SAFE_DELETE(iLogo);
 	
-	SAFE_DELETE(iMenu);
-	
+	SAFE_DELETE(iMenu);	
 	SAFE_DELETE(iManager);
 	
 	SAFE_DELETE(iDoubleBufferGc);
@@ -125,10 +124,6 @@ void CLemonTangramContainer::Draw(const TRect& /*aRect*/) const
 		{	//title
 			gc.BitBlt(TPoint(0,0),	iDoubleBufferBmp);
 		}
-	
-	
-	
-	//iManager->Draw(gc);
 	}
 
 // ---------------------------------------------------------
@@ -146,20 +141,8 @@ TKeyResponse CLemonTangramContainer::OfferKeyEventL(const TKeyEvent& aKeyEvent,
 		TEventCode aType)
 	{	
 	return StateKey(aKeyEvent,aType);
-//	switch(aType)
-//		{
-//		case EEventKey:
-//			switch (aKeyEvent.iCode)
-//				{
-//					case EKeyDevice3://ok
-//						iManager->Rotate(6,30);
-//						return EKeyWasConsumed;
-//					break;
-//				}
-//		break;
-//		}
-//	return EKeyWasNotConsumed;	
 	}
+
 void CLemonTangramContainer::CreateDoubleBufferBitmapL()
 {
 	SAFE_DELETE(iDoubleBufferGc);
@@ -201,8 +184,11 @@ TBool CLemonTangramContainer::Tick()
 
 void CLemonTangramContainer::Update()
 	{	
-	StateDisplay(*iDoubleBufferGc);
-	DrawNow();
+	if (iDoubleBufferGc) 
+		{
+			StateDisplay(*iDoubleBufferGc);
+			DrawNow();
+		}
 	}
 
 void CLemonTangramContainer::HandleCommandL(TInt /*aCommand*/)
@@ -220,6 +206,7 @@ void CLemonTangramContainer::StateLoop()
 			StateInitLoop();
 			break;
 		case EGameStateMain:
+			StateMainLoop();
 			break;
 		default:
 			break;
@@ -245,6 +232,42 @@ void CLemonTangramContainer::StateDisplay(CFbsBitGc& gc)
 			break;
 		}	
 	}
+
+void CLemonTangramContainer::StateChange(TGameState aState)
+{
+	switch (iGameState)
+		{
+		case EGameStateLogo:
+			StateLogoRelease();
+			break;
+		case EGameStateInit:
+			StateInitRelease();
+			break;
+		case EGameStateMain:
+			StateMainRelease();
+			break;
+		default:
+			break;
+		}
+
+	iGameState = aState;
+
+	switch (iGameState)
+		{
+		case EGameStateLogo:
+			StateLogoInit();
+			break;
+		case EGameStateInit:
+			StateInitInit();
+			break;
+		case EGameStateMain:
+			StateMainInit();
+			break;
+		default:
+			break;
+		}
+}
+
 TKeyResponse CLemonTangramContainer::StateKey(const TKeyEvent& aKeyEvent,
 		TEventCode aType)
 	{
@@ -276,12 +299,15 @@ void CLemonTangramContainer::StateLogoInit()
 #endif
 	}
 
+void CLemonTangramContainer::StateLogoRelease()
+{
+}
+
 void CLemonTangramContainer::StateLogoLoop()
 	{
 	if (iLogoState++ > 0)
 		{
-		iGameState = EGameStateInit;
-		StateInitInit();
+		StateChange(EGameStateInit);
 		StopTimer();
 		SetTimerTick(100000);
 		StartTimer();
@@ -300,24 +326,15 @@ void CLemonTangramContainer::StateLogoDisplay(CFbsBitGc& gc)
 
 void CLemonTangramContainer::StateInitInit()
 	{
-	iManager = CTangImageManager::NewL();
-	
-	TFileName setup;
-	GetAppPath(setup);
-	setup.Append(KSetupSaveFile);
-	CConfiguration* config = CConfiguration::NewL(setup);
-	TFileName img;
-	config->Get(KCfgSkinChoose,img);
-	delete config;
-	
-	if (!BaflUtils::FileExists(CCoeEnv::Static()->FsSession(),img))
-		{
-		img.Zero();
-		GetAppPath(img);
-		img.Append(KFileTangImageDefault);
-		}
-	iManager->LoadImageFromFileL(img);
+	InitManager();
+	InitMenu();
 	}
+
+void CLemonTangramContainer::StateInitRelease()
+{
+	SAFE_DELETE(iLogo);
+}
+
 void CLemonTangramContainer::StateInitLoop()
 	{
 	iLoadState = iManager->GetConvertedNum();
@@ -327,9 +344,11 @@ void CLemonTangramContainer::StateInitLoop()
 		TFileName path;
 		GetAppPath(path);
 		path.Append(KFileTangram);
-		iManager->LoadImageDataFileL(path);
-		iGameState = EGameStateMain;
-		StateMainInit();
+
+		TRAPD(err,iManager->LoadImageDataFileL(path))
+		LTERR(err,ETLErrLoadPicDataXml,ETLErrSerious)
+
+		StateChange(EGameStateMain);
 		}
 	}
 void CLemonTangramContainer::StateInitDisplay(CFbsBitGc& gc)
@@ -339,31 +358,18 @@ void CLemonTangramContainer::StateInitDisplay(CFbsBitGc& gc)
 		int x = (iWidth-iLogo->SizeInPixels().iWidth) >> 1;
 		int y = (iHeight-iLogo->SizeInPixels().iHeight)>> 1;
 		gc.BitBlt(TPoint(x,y),iLogo);
-		
-		gc.SetPenStyle( CGraphicsContext::ESolidPen );
-		gc.SetPenColor(KRgbRed);	
-		gc.SetBrushStyle( CGraphicsContext::ESolidBrush );
-		gc.SetBrushColor( KRgbGray );
-		gc.UseFont(CEikonEnv::Static()->LegendFont());
-		TBuf<10> text;
-		text.AppendNum(iLoadState);
-		gc.DrawText(text,TPoint(100,100));
-		gc.DiscardFont();
 		}	
 	}
 
 void CLemonTangramContainer::StateMainInit()
 	{
-	iMenu = CLemonMenu::NewL(this);
-	
-	TFileName file;
-	GetAppPath(file);
-	HBufC* textResource = StringLoader::LoadLC(R_RES_MAIN_MENU);
-	file.Append(textResource->Des());
-	CleanupStack::PopAndDestroy(textResource);
-	
-	iMenu->LoadMenu(file);
 	}
+
+void CLemonTangramContainer::StateMainRelease()
+{
+	SAFE_DELETE(iMenu);
+	SAFE_DELETE(iManager);
+}
 void CLemonTangramContainer::StateMainLoop()
 	{}
 void CLemonTangramContainer::StateMainDisplay(CFbsBitGc& gc)
@@ -384,23 +390,22 @@ TKeyResponse CLemonTangramContainer::StateMainKey(const TKeyEvent& aKeyEvent,
 
 void CLemonTangramContainer::HandMenuCommand(TInt aCommandId)
 	{
+	TInt err;
 	switch (aCommandId)
 		{
 		case ECommandSaveProcess:
-			iManager->SaveProcess();
+			SaveProcess();
 			break;
 		case ECommandReset:
-			iManager->ResetProcess();
+			ResetProcess();
 			break;
 		case ECommandOpenProcess:
-			iManager->OpenProcess();
+			OpenProcess();
 			break;
 		case ECommandSnapshot:
-			iManager->SaveScreen();
+			SaveScreen();
 			break;
 		case ECommandSetting:
-			STATIC_CAST(CLemonTangramAppUi*,iEikonEnv->AppUi())->ActivateLocalViewL(TUid::Uid(ESettingView));
-			break;
 		case ECommandHelp:
 		case ECommandExit:
 			STATIC_CAST(CLemonTangramAppUi*,iEikonEnv->AppUi())->HandleCommandL(aCommandId);
@@ -410,4 +415,71 @@ void CLemonTangramContainer::HandMenuCommand(TInt aCommandId)
 			break;
 		}
 	}
+
+void CLemonTangramContainer::InitManager()
+{
+	TRAPD(err,iManager = CTangImageManager::NewL())
+
+	LTERR(err,ETLErrLoadPicture,ETLErrSerious);
+	
+	TFileName setup;
+	GetAppPath(setup);
+	setup.Append(KSetupSaveFile);
+	CConfiguration* config; 
+	TRAP(err,config = CConfiguration::NewL(setup))
+	if (err == KErrNone)
+	{
+		TFileName img;
+		config->Get(KCfgSkinChoose,img);
+		delete config;
+	
+		TRAP(err,iManager->LoadImageFromFileL(img))
+	}
+	else 
+	{
+		//配置文件丢失 读取默认
+		LTERRFUN(ETLWarnConfigLost,ETLErrWarning);
+		err == KErrNone;
+		TRAP(err,iManager->LoadImageFromFileL(KNullDesC))
+	}
+
+	LTERR(err,ETLErrLoadPicFileXml,ETLErrSerious);
+}
+
+void CLemonTangramContainer::InitMenu()
+{
+	TRAPD(err,iMenu = CLemonMenu::NewL(this))
+	LTERR(err,ETLErrLoadMenu,ETLErrSerious)
+	
+	TFileName file;
+	GetAppPath(file);
+	HBufC* textResource = StringLoader::LoadLC(R_RES_MAIN_MENU);
+	file.Append(textResource->Des());
+	CleanupStack::PopAndDestroy(textResource);
+
+	TRAP(err,iMenu->LoadMenuL(file))
+	LTERR(err,ETLErrLoadMenu,ETLErrSerious)
+}
+
+
+void CLemonTangramContainer::SaveProcess()
+{
+	TRAPD(err,iManager->SaveProcessL())
+	LTERR(err,ETLWarnSaveProcess,ETLErrWarning);
+}
+void CLemonTangramContainer::ResetProcess()
+{
+	TRAPD(err,iManager->ResetProcessL())
+	LTERR(err,ETLWarnResetProcess,ETLErrWarning);
+}
+void CLemonTangramContainer::OpenProcess()
+{
+	TRAPD(err,iManager->OpenProcessL())
+	LTERR(err,ETLWarnOpenProcess,ETLErrWarning);
+}
+void CLemonTangramContainer::SaveScreen()
+{
+	TRAPD(err,iManager->SaveScreenL())
+	LTERR(err,ETLWarnSaveScreen,ETLErrWarning);
+}
 // End of File  

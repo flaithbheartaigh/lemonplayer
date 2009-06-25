@@ -26,10 +26,11 @@ int TangElementUtil::FindNearestHori(CImageElement** aElements,TInt aIndex,
 			
 			if (temp > 0)
 				{
-				temp2 = aElements[i]->GetPositionY() - aElements[aIndex]->GetPositionY();
-				if (temp2<0)
-					temp2 = -temp2;
-				temp3 = temp * MAJOR_VALUE + temp2 * NEXT_VALUE;
+//				temp2 = aElements[i]->GetPositionY() - aElements[aIndex]->GetPositionY();
+//				if (temp2<0)
+//					temp2 = -temp2;
+//				temp3 = temp * MAJOR_VALUE + temp2 * NEXT_VALUE;
+				temp3 = temp;
 				if (temp3 < offset)
 					{
 					offset = temp3;
@@ -63,10 +64,11 @@ int TangElementUtil::FindNearestVert(CImageElement** aElements,TInt aIndex,TImag
 			
 			if (temp > 0)
 				{
-				temp2 = aElements[i]->GetPositionX() - aElements[aIndex]->GetPositionX();
-				if (temp2<0)
-					temp2 = -temp2;
-				temp3 = temp * MAJOR_VALUE + temp2 * NEXT_VALUE;
+//				temp2 = aElements[i]->GetPositionX() - aElements[aIndex]->GetPositionX();
+//				if (temp2<0)
+//					temp2 = -temp2;
+//				temp3 = temp * MAJOR_VALUE + temp2 * NEXT_VALUE;
+				temp3 = temp;
 				if (temp3 < offset)
 					{
 					offset = temp3;

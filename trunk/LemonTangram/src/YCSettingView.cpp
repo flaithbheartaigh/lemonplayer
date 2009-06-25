@@ -20,6 +20,8 @@
 #include <LemonTangram.rsg>
 //#include "YCSettingContainer.h"
 #include "YCSettingList.h"
+#include "LemonTangramAppUi.h"
+#include "TangErrDefine.h"
 
 // ============================ MEMBER FUNCTIONS ===============================
 
@@ -84,6 +86,9 @@ void CYCSettingView::HandleCommandL( TInt aCommand )
     {
     switch( aCommand )
         {
+		case EListboxCmdChange:
+			iContainer->EditItemL(0, ETrue);
+			break;
         default:
             AppUi()->HandleCommandL(aCommand);  
             break;
@@ -99,16 +104,25 @@ void CYCSettingView::DoActivateL( const TVwsViewId& /*aPrevViewId*/,
                       TUid /*aCustomMessageId*/,
                       const TDesC8& /*aCustomMessage*/ )
     {    
-    iContainer = CYCSettingList::NewL();
+    TRAPD(err,iContainer = CYCSettingList::NewL())
     
-    iContainer->SetMopParent( this );
-    iContainer->ConstructFromResourceL( R_LISTBOX_SETTING_ITEM_LIST );
-    iContainer->LoadListL();
-    AppUi()->AddToStackL( *this, iContainer );
+	if(err == KErrNone)
+	{
+		iContainer->SetMopParent( this );
+		iContainer->ConstructFromResourceL( R_LISTBOX_SETTING_ITEM_LIST );
+		TRAP(err,iContainer->LoadListL())
+		LTERR(err,ETLWarnSettingList,ETLErrWarning)
+	
+		AppUi()->AddToStackL( *this, iContainer );
     
-    iContainer->MakeVisible( ETrue );
-    iContainer->SetRect( ClientRect() );
-    iContainer->ActivateL();
+		iContainer->MakeVisible( ETrue );
+		iContainer->SetRect( ClientRect() );
+		iContainer->ActivateL();
+	}
+	else
+	{
+		LTERRFUN(ETLWarnSettingInit,ETLErrWarning)
+	}
 	
 //	iAppView = new (ELeave) CYCSettingContainer;
 //	iAppView->SetMopParent(this);

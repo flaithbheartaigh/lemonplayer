@@ -50,79 +50,79 @@ void CCommonUtils::ShowApplication()
 // Òþ²ØÓ¦ÓÃ³ÌÐò
 void CCommonUtils::HideApplication()
 {
-	RWsSession aWsSession = CEikonEnv::Static()->WsSession();
-	TApaTask aTask(aWsSession);
-	TInt aId = CEikonEnv::Static()->RootWin().Identifier();
-	aTask.SetWgId(aId);
-	if (aWsSession.GetFocusWindowGroup() == aId)
-	{
-		aTask.SendToBackground();
-	}
+//	RWsSession aWsSession = CEikonEnv::Static()->WsSession();
+//	TApaTask aTask(aWsSession);
+//	TInt aId = CEikonEnv::Static()->RootWin().Identifier();
+//	aTask.SetWgId(aId);
+//	if (aWsSession.GetFocusWindowGroup() == aId)
+//	{
+//		aTask.SendToBackground();
+// 	}
 }
 
 TThreadId CCommonUtils::StartBroswerApp(const TDesC& aUrl)
 {
 	TThreadId id(0);
-	if(aUrl.Length() <= 0)
-		return id;
-
-	const TInt KBrowserUid1 = 0x1020724D;
-	const TInt KBrowserUid2 = 0x10008D39;
-
-	RApaLsSession appArcSession;
-	User::LeaveIfError(appArcSession.Connect()); // connect to AppArc server
-
-	HBufC* param = HBufC::NewLC( aUrl.Length() + 8 );
-	param->Des().Format( _L( "4 %S" ),&aUrl );
-
-	// Wap Browser's constants UId
-	TUid browserId( TUid::Uid( KBrowserUid1 ) );
-
-	TApaAppInfo appInfo;
-	if( appArcSession.GetAppInfo( appInfo, browserId ) != KErrNone )
-	{
-		browserId = TUid::Uid( KBrowserUid2 );
-	}
-
-	TApaTaskList taskList( CEikonEnv::Static()->WsSession() );
-	TApaTask task = taskList.FindApp( browserId );
-	if ( task.Exists() )
-	{
-		HBufC8* param8 = HBufC8::NewLC( param->Length() * 4 );
-		param8->Des().Append( *param );
-		task.SendMessage( TUid::Uid( 0 ), *param8 ); // Uid is not used
-		CleanupStack::PopAndDestroy(); // param8
-	}
-	else
-	{
-		appArcSession.StartDocument( *param, browserId, id );
-		//	appArcSession.Close();
-
-		//	User::After(2*1000*1000);
-
-		//	TApaTask task = taskList.FindApp( uid );
-
-		//	if ( task.Exists() )
-		//	{
-		//		task.SendMessage( TUid::Uid(0), *pHtsUrl8 ); // UID is not used
-		//	}
-	}
-
-	appArcSession.Close();
-	CleanupStack::PopAndDestroy(); // param
+//	if(aUrl.Length() <= 0)
+//		return id;
+//
+//	const TInt KBrowserUid1 = 0x1020724D;
+//	const TInt KBrowserUid2 = 0x10008D39;
+//
+//	RApaLsSession appArcSession;
+//	User::LeaveIfError(appArcSession.Connect()); // connect to AppArc server
+//
+//	HBufC* param = HBufC::NewLC( aUrl.Length() + 8 );
+//	param->Des().Format( _L( "4 %S" ),&aUrl );
+//
+//	// Wap Browser's constants UId
+//	TUid browserId( TUid::Uid( KBrowserUid1 ) );
+//
+//	TApaAppInfo appInfo;
+//	if( appArcSession.GetAppInfo( appInfo, browserId ) != KErrNone )
+//	{
+//		browserId = TUid::Uid( KBrowserUid2 );
+//	}
+//
+//	TApaTaskList taskList( CEikonEnv::Static()->WsSession() );
+//	TApaTask task = taskList.FindApp( browserId );
+//	if ( task.Exists() )
+//	{
+//		HBufC8* param8 = HBufC8::NewLC( param->Length() * 4 );
+//		param8->Des().Append( *param );
+//		task.SendMessage( TUid::Uid( 0 ), *param8 ); // Uid is not used
+//		CleanupStack::PopAndDestroy(); // param8
+//	}
+//	else
+//	{
+//		appArcSession.StartDocument( *param, browserId, id );
+//		//	appArcSession.Close();
+//
+//		//	User::After(2*1000*1000);
+//
+//		//	TApaTask task = taskList.FindApp( uid );
+//
+//		//	if ( task.Exists() )
+//		//	{
+//		//		task.SendMessage( TUid::Uid(0), *pHtsUrl8 ); // UID is not used
+//		//	}
+//	}
+//
+//	appArcSession.Close();
+//	CleanupStack::PopAndDestroy(); // param
 	return id;
 }
 
 void CCommonUtils::CloseApp(const TUid& aUid )
 {
-	TApaTaskList taskList( CEikonEnv::Static()->WsSession() );
-	TApaTask task = taskList.FindApp( aUid );
-
-	if ( task.Exists() )
-	{
-		//task.EndTask();	
-		task.KillTask();
-	}
+//	TApaTaskList taskList( CEikonEnv::Static()->WsSession() );
+//	TApaTask task = taskList.FindApp( aUid );
+//
+//	if ( task.Exists() )
+//	{
+//		//task.EndTask();	
+//		task.KillTask();
+//	}
 }
 
 
@@ -327,18 +327,5 @@ TInt CCommonUtils::Rand(TInt aMax,TInt aMin)
 	return random;
 	}
 //
-
-
-//**********************************************//
-UITools::~UITools()
-	{}
-UITools::UITools()
-	{}
-void UITools::Alter(const TDesC& aText)
-	{
-	CAknInformationNote* informationNote;
-	informationNote = new ( ELeave ) CAknInformationNote;				
-	informationNote->ExecuteLD(aText);
-	}
 
 

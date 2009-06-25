@@ -4,7 +4,7 @@
 #include <AknGlobalNote.h> 
 #include <aknnotewrappers.h> 
 
-TBool ShowConfirmationQueryL( const TInt aTextResourceId )
+TBool ShowConfirmationQueryL( const TInt& aTextResourceId )
     {
     HBufC* prompt = StringLoader::LoadLC( aTextResourceId );
 
@@ -17,7 +17,7 @@ TBool ShowConfirmationQueryL( const TInt aTextResourceId )
     return retCode;
     }
 
-TInt StartWaitingDlg(const TInt aTextResourceId)
+TInt StartWaitingDlg(const TInt& aTextResourceId)
 	{
 	HBufC* prompt = StringLoader::LoadLC( aTextResourceId );
 	
@@ -29,7 +29,7 @@ TInt StartWaitingDlg(const TInt aTextResourceId)
 	return noteId;
 	}
 
-void EndWaitingDlg(const TInt aDlgId)
+void EndWaitingDlg(const TInt& aDlgId)
 	{
 	CAknGlobalNote * note = CAknGlobalNote::NewL();   
 	CleanupStack::PushL( note );   
@@ -37,7 +37,7 @@ void EndWaitingDlg(const TInt aDlgId)
 	CleanupStack::PopAndDestroy();
 	}
 
-void ShowInfomationDlgL(const TInt aTextResourceId)
+void ShowInfomationDlgL(const TInt& aTextResourceId)
 	{
 	HBufC* prompt = StringLoader::LoadLC( aTextResourceId );
 	CAknInformationNote* iInfoNote = new (ELeave) CAknInformationNote;
@@ -45,7 +45,7 @@ void ShowInfomationDlgL(const TInt aTextResourceId)
 	CleanupStack::PopAndDestroy();
 	}
 
-TBool ShowInputDlgL(const TInt aTextResourceId,TDes& aText)
+TBool ShowInputDlgL(const TInt& aTextResourceId,TDes& aText)
 	{
 	HBufC* prompt = StringLoader::LoadLC( aTextResourceId );
 	CAknTextQueryDialog* dlg = CAknTextQueryDialog::NewL( aText );
@@ -57,3 +57,26 @@ TBool ShowInputDlgL(const TInt aTextResourceId,TDes& aText)
 	CleanupStack::PopAndDestroy(); //prompt
 	return retCode;
 	}
+
+//TBool ShowModalInfoDlgL(const TInt& aTextResourceId)
+//{
+//    HBufC* prompt = StringLoader::LoadLC( aTextResourceId );
+//
+//    CEikonEnv::Static()->InfoWinL(_L("note:"), prompt->Des());  //任意使用
+//
+//    CleanupStack::PopAndDestroy(); //prompt
+//
+//    return ETrue;
+// }
+
+TBool ShowModalInfoDlgL(const TInt& aTextHeaderId,const TInt& aTextResourceId)
+{
+	HBufC* header = StringLoader::LoadLC( aTextHeaderId );
+    HBufC* prompt = StringLoader::LoadLC( aTextResourceId );
+
+    CEikonEnv::Static()->InfoWinL(header->Des(), prompt->Des());  //任意使用
+
+    CleanupStack::PopAndDestroy(2); //prompt
+
+    return ETrue;
+}

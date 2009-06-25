@@ -68,25 +68,36 @@ private:
 	
 	void StateLoop();
 	void StateDisplay(CFbsBitGc& gc);
+	void StateChange(TGameState aState);
 	TKeyResponse StateKey(const TKeyEvent& aKeyEvent,TEventCode aType);
 	
 	void StateLogoInit();
 	void StateLogoLoop();
 	void StateLogoDisplay(CFbsBitGc& gc);
+	void StateLogoRelease();
 
 	void StateInitInit();
 	void StateInitLoop();
 	void StateInitDisplay(CFbsBitGc& gc);
+	void StateInitRelease();
 	
 	void StateMainInit();
 	void StateMainLoop();
 	TKeyResponse StateMainKey(const TKeyEvent& aKeyEvent,TEventCode aType);
 	void StateMainDisplay(CFbsBitGc& gc);
+	void StateMainRelease();
+
+	void InitManager();
+	void InitMenu();
+
+	void SaveProcess();
+	void ResetProcess();
+	void OpenProcess();
+	void SaveScreen();
 public:
 	void HandleCommandL(TInt aCommand);
 	
 private:
-	CTangImageManager* iManager;
 	TGameState iGameState;
 	
 	TInt iLogoState;
@@ -100,6 +111,7 @@ private:
 	CFbsBitmapDevice*   	iDoubleBufferDevice;	// 位图缓冲关联的device,owned,
 	CFbsBitGc*  			iDoubleBufferGc;		// 位图缓冲绘制环境,owned
 	
+	CTangImageManager* iManager;
 	CLemonMenu* iMenu;
 	};
 
