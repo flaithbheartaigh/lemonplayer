@@ -41,23 +41,23 @@ void CTangConfig::ConstructL(const TDesC& aConfigFilePath)
 	iConfig = CConfiguration::NewL(aConfigFilePath);
 	}
 
-TBool CTangConfig::GetSkinFolder(TDes& aDes)
-	{
-	return iConfig->Get(KCfgSkinFolder,aDes);
-	}
-TBool CTangConfig::SetSkinFolder(const TDesC& aDes)
-	{
-	return iConfig->Set(KCfgSkinFolder,aDes);
-	}
-
-TBool CTangConfig::GetSaveFolder(TDes& aDes)
-	{
-	return iConfig->Get(KCfgSaveFolder,aDes);
-	}
-TBool CTangConfig::SetSaveFolder(const TDesC& aDes)
-	{
-	return iConfig->Set(KCfgSaveFolder,aDes);
-	}
+//TBool CTangConfig::GetSkinFolder(TDes& aDes)
+//	{
+//	return iConfig->Get(KCfgSkinFolder,aDes);
+//	}
+//TBool CTangConfig::SetSkinFolder(const TDesC& aDes)
+//	{
+//	return iConfig->Set(KCfgSkinFolder,aDes);
+//	}
+//
+//TBool CTangConfig::GetSaveFolder(TDes& aDes)
+//	{
+//	return iConfig->Get(KCfgSaveFolder,aDes);
+//	}
+//TBool CTangConfig::SetSaveFolder(const TDesC& aDes)
+//	{
+//	return iConfig->Set(KCfgSaveFolder,aDes);
+//	}
 
 TBool CTangConfig::SaveL()
 	{

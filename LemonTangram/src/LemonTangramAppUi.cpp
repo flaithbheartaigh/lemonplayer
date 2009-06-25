@@ -27,6 +27,8 @@
 #include "MacroUtil.h"
 #include "YCSettingView.h"
 #include "QueryDlgUtil.h"
+#include "bautils.h"
+#include "TangFileDefine.h"
 
 const TUid KUidHelpFile = { HELPFILE_UID };
 
@@ -43,6 +45,8 @@ void CLemonTangramAppUi::ConstructL()
 	{
 	// Initialise app UI with standard value.
 	BaseConstructL(CAknAppUi::EAknEnableSkin);
+	
+	GlobleInit();
 	
 	TRect rect = ApplicationRect() ;
 	ChangeUIMgr(rect.Width(),rect.Height());
@@ -112,8 +116,11 @@ void CLemonTangramAppUi::HandleCommandL(TInt aCommand)
 			dlg->RunLD();
 			}
 			break;
+		case ECommandSetting:
+			ActivateLocalViewL(TUid::Uid(ESettingView));
+			break;
 		case EListboxCmdBack:
-			STATIC_CAST(CLemonTangramAppUi*,iEikonEnv->AppUi())->ActivateLocalViewL(TUid::Uid(ELemonViewMain));
+			ActivateLocalViewL(TUid::Uid(ELemonViewMain));
 			break;
 		default:
 			//Panic(ELemonTangramUi);
@@ -179,7 +186,65 @@ void CLemonTangramAppUi::ChangeUIMgr(TInt aWidth,TInt aHeight)
 MUIMgr* CLemonTangramAppUi::GetUIMgr()
 	{
 	if (iUIMgr == NULL)
-		ChangeUIMgr(176,208);
+		ChangeUIMgr(240,320);
 	return iUIMgr;
+	}
+
+void CLemonTangramAppUi::LTError(const TTLErrInfo& aInfo,const TTLErrState& aState)
+{
+	switch(aInfo) {
+	case ETLErrLoadPicture:
+		ShowModalInfoDlgL(R_TEXT_DLG_ERROR,R_TEXT_DLG_ERR_LOAD_PIC);
+		break;
+	case ETLErrLoadPicFileXml:
+		ShowModalInfoDlgL(R_TEXT_DLG_ERROR,R_TEXT_DLG_ERR_LOAD_PIC_FILE_XML);
+		break;
+	case ETLErrLoadPicDataXml:
+		ShowModalInfoDlgL(R_TEXT_DLG_ERROR,R_TEXT_DLG_ERR_LOAD_PIC_DATA_XML);
+		break;
+	case ETLErrLoadMenu:
+		ShowModalInfoDlgL(R_TEXT_DLG_ERROR,R_TEXT_DLG_ERR_LOAD_MENU);
+		break;
+	case ETLWarnConfigLost:
+		ShowInfomationDlgL(R_TEXT_DLG_WARN_CONFIG_LOST);
+		break;
+	case ETLWarnLoadPicFileNextDefault:
+		ShowInfomationDlgL(R_TEXT_DLG_WARN_LOAD_PIC_FILE_NEXT_DEFAULT);
+		break;
+	case ETLWarnSettingInit:
+		ShowInfomationDlgL(R_TEXT_DLG_WARN_SETTING_INIT);
+		break;
+	case ETLWarnSettingList:
+		ShowInfomationDlgL(R_TEXT_DLG_WARN_SETTING_LIST);
+		break;
+	case ETLWarnSaveProcess:
+		ShowInfomationDlgL(R_TEXT_DLG_WARN_FUNC_SAVE_PROCESS);
+		break;
+	case ETLWarnResetProcess:
+		ShowInfomationDlgL(R_TEXT_DLG_WARN_FUNC_RESET_PROCESS);
+		break;
+	case ETLWarnOpenProcess:
+		ShowInfomationDlgL(R_TEXT_DLG_WARN_FUNC_OPEN_PROCESS);
+		break;
+	case ETLWarnSaveScreen:
+		ShowInfomationDlgL(R_TEXT_DLG_WARN_FUNC_SAVE_SCREEN);
+		break;
+	default:
+		break;
+	}
+
+	switch(aState) {
+	case ETLErrSerious:
+		Exit();
+		break;
+	default:
+		break;
+	}
+}
+
+void CLemonTangramAppUi::GlobleInit()
+	{
+	BaflUtils::EnsurePathExistsL(CCoeEnv::Static()->FsSession(),KCfgDefaultSkinFolder);
+	BaflUtils::EnsurePathExistsL(CCoeEnv::Static()->FsSession(),KCfgDefaultSaveFolder);
 	}
 // End of File

@@ -72,13 +72,6 @@ class CCommonUtils
 		CCommonUtils();
 };
 
-class UITools
-	{
-public:
-	static void Alter(const TDesC& aText);
-private:
-	~UITools();
-	UITools();
-	};
+
 
 #endif // COMMONUTILS_H

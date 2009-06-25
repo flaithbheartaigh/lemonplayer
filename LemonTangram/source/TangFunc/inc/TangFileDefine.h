@@ -12,13 +12,11 @@
 _LIT(KFileTangImageDefault,"tangvect.xml");
 
 _LIT(KFileTangram,"mytangram.xml");
-//_LIT(KFileTangramImage,"c:\\tangvect.xml");
 _LIT(KSaveProcessFile,"process.xml");
-//_LIT(KSaveScreenFile,"screen.jpg");
 _LIT(KSaveScreenDefault,"snapshot");
 _LIT(KSaveScreenFormat,".jpg");
 
-_LIT(KDefaultScanFoloder,"c:\\tangram\\xml\\");
+//_LIT(KDefaultScanFoloder,"c:\\tangram\\xml\\");
 
 _LIT(KEmptyText, "None");
 _LIT(KEmptyFolder, "c:\\");
@@ -26,5 +24,16 @@ _LIT(KEmptyFolder, "c:\\");
 _LIT(KXmlFormat,".xml");
 
 _LIT(KTangMbmFile,"LemonTangram.mbm");
+
+_LIT(KSetupSaveFile,"setup.ini");
+
+_LIT(KCfgSkinFolder,"skinfolder");
+_LIT(KCfgSkinChoose,"skinchoose");
+_LIT(KCfgSaveFolder,"savefolder");
+
+_LIT(KCfgDefaultSkinFolder,"c:\\tangram\\xml\\");
+_LIT(KCfgDefaultSkinChoose,"");
+_LIT(KCfgDefaultSaveFolder,"c:\\tangram\\snapshot\\");
+
 
 #endif /* TANGFILEDEFINE_H_ */

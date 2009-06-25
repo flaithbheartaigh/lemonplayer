@@ -56,10 +56,10 @@ public:
 	TInt GetConvertedNum(){return iConverted;};
 	TInt GetConvertDown(){return iConvertDown;};
 	
-	void SaveProcess();
-	void ResetProcess();
-	void OpenProcess();
-	void SaveScreen();
+	void SaveProcessL();
+	void ResetProcessL();
+	void OpenProcessL();
+	void SaveScreenL();
 
 private:
 	CTangImageManager();
@@ -69,6 +69,9 @@ private:
 	TKeyResponse KeyMove(const TKeyEvent& aKeyEvent,TEventCode aType);
 	
 	void ChangeLayer();
+
+	void LoadImageXmlDefaultL();
+	void LoadImageXmlByFileL(const TDesC& aFileName);
 	
 	enum TSelectedState
 		{

@@ -57,4 +57,22 @@ rls_string qtn_dlg_input_folder_error	"Folder eidt error"
 rls_string qtn_dlg_overwrite_file		"File exist,overwrite"
 
 rls_string qtn_dlg_exit_confirm		"Please save the progress,confirm exit"
+
+rls_string qtn_dlg_error		"Error:"
+
+rls_string qtn_dlg_err_load_pic		"Load picture error,exit"
+rls_string qtn_dlg_err_load_pic_file_xml "Load picture file error,exit"
+rls_string qtn_dlg_err_load_pic_data_xml "Load picture data error,exit"
+rls_string qtn_dlg_err_load_menu	"Load menu error,exit"
+
+rls_string qtn_dlg_warn_config_lost	"Congfig file lost,ready default"
+rls_string qtn_dlg_warn_load_pic_file_next_default "Load picture file error,load default"
+
+rls_string qtn_dlg_warn_setting_init	"Init setting error"
+rls_string qtn_dlg_warn_setting_list	"Init setting item error"
+
+rls_string qtn_dlg_warn_func_save_process	"Save process error"
+rls_string qtn_dlg_warn_func_reset_process	"Reset process error"
+rls_string qtn_dlg_warn_func_open_process	"Open process error"
+rls_string qtn_dlg_warn_func_save_screen	"Snapshot error"
 // End of File

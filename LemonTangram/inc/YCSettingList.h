@@ -79,6 +79,9 @@ private:
 	
 	void AdjustSkinChoose();
 	void ResetSkinChooseItem();
+	void ResetSkinFolderItem();
+	void ResetSaveFolderItem();
+
 	
 	void BeforeEditItem(TInt aIndex);
 	void ModifyItemL(TInt aIndex);

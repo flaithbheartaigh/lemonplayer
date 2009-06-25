@@ -52,6 +52,7 @@ SOURCEPATH ..\source\LTUI\src
 SOURCE UI240x320.cpp 
 SOURCE UI320x240.cpp 
 SOURCE UI320x240orig.cpp 
+SOURCE UI176x208.cpp
 SOURCE UIFactory.cpp
 
 SOURCEPATH ..\source\Tools\src
@@ -144,17 +145,3 @@ SOURCEPATH      ..\help
 DOCUMENT        LemonTangram.rtf
 DOCUMENT        LemonTangram.cshlp
 DOCUMENT        Custom.xml
-SOURCEPATH ..\source\TangImage\src
-SOURCE SkinImageScan.cpp
-SOURCEPATH ..\src
-SOURCE YCSettingContainer.cpp
-SOURCEPATH ..\source\ImageLib\src
-SOURCE IconFileProvider.cpp LMSvgUtil.cpp
-SOURCEPATH ..\source\Controller\src
-SOURCE QueryDlgUtil.cpp
-SOURCEPATH ..\source\TangFunc\src
-SOURCE TangConfig.cpp
-SOURCEPATH ..\src
-SOURCE YCSettingList.cpp
-SOURCEPATH ..\source\LTUI\src
-SOURCE UI176x208.cpp

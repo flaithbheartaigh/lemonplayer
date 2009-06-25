@@ -14,6 +14,7 @@
 #include <aknViewAppUi.h>//<aknappui.h>
 #include "UIMgr.h"
 #include "UIFactory.h"
+#include "TangErrDefine.h"
 
 // FORWARD DECLARATIONS
 class CLemonTangramAppView;
@@ -39,6 +40,8 @@ public:
 	MUIMgr* GetUIMgr();
 	void ChangeUIMgr(TInt aWidth,TInt aHeight);
 
+	void LTError(const TTLErrInfo& aInfo,const TTLErrState& aState);
+
 public:
 	// Functions from base classes
 	void HandleCommandL(TInt aCommand);
@@ -46,6 +49,8 @@ public:
 private:
 	void HandleStatusPaneSizeChange();
 	CArrayFix<TCoeHelpContext>* HelpContextL() const;
+	
+	void GlobleInit();
 
 private:
 	// Data

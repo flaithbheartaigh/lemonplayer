@@ -11,6 +11,5 @@
 
 
 _LIT(KGeneral_Information,"General_Information"); //The help
-_LIT(KContextApplication,"ContextApplication"); //The Application
 
 #endif

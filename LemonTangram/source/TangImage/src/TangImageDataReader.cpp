@@ -18,7 +18,7 @@
 #include "DefaultDeclHandler.h"
 
 CTangImageDataReader::CTangImageDataReader(CImageElement** aElements)
-:iElements(aElements)
+:iElements(aElements),iAdjust(0)
 	{
 	// No implementation required
 	}
@@ -50,7 +50,8 @@ void CTangImageDataReader::ConstructL()
 void CTangImageDataReader::LoadImageDataFileL(const TDesC& aFileName)
 	{
 //	iRotator = (CImageRotator**)malloc(sizeof(CImageRotator*)*7);
-	
+	iAdjust = 0;
+
 	CDefaultDeclHandler *decl = new (ELeave)CDefaultDeclHandler;
 	CleanupStack::PushL(decl);
 
@@ -77,6 +78,13 @@ void CTangImageDataReader::LoadImageDataFileL(const TDesC& aFileName)
 		CleanupStack::PopAndDestroy(1);
 		}
 	CleanupStack::PopAndDestroy(2);	
+
+	//文件打开错误
+	User::LeaveIfError(err);
+
+	//文件格式错误,不足7个元素
+	if (iAdjust != 7) 
+		User::Leave(KErrNotSupported);
 	}
 
 //CDefaultDocHandler
@@ -119,6 +127,8 @@ TInt CTangImageDataReader::ConvertNameToNumber(const TDesC& aName)
 
 void CTangImageDataReader::ParseImg(const RArray<TAttribute>& aAttributes)
 	{
+	iAdjust++;
+
 	TInt x,y,degree,index;
 	index = -1;
 	for (TInt i = 0; i < aAttributes.Count(); i++)
@@ -156,4 +166,7 @@ void CTangImageDataReader::ParseImg(const RArray<TAttribute>& aAttributes)
 		iElements[index]->SetOffsetY(rotator->GetOffsetY());
 		delete rotator;
 		}
+	else
+		User::Leave(KErrNotSupported);
+	
 	}

@@ -60,7 +60,7 @@ void CLemonMenu::HideMenu()
 	iMenuActive = EFalse;
 	}
 
-void CLemonMenu::LoadMenu(const TDesC& aFileName)
+void CLemonMenu::LoadMenuL(const TDesC& aFileName)
 	{
 	CDefaultDeclHandler *decl = new (ELeave)CDefaultDeclHandler;
 	CleanupStack::PushL(decl);
@@ -88,7 +88,10 @@ void CLemonMenu::LoadMenu(const TDesC& aFileName)
 		CleanupStack::PopAndDestroy(1);
 		}
 	CleanupStack::PopAndDestroy(2);	
+	
+	User::LeaveIfError(err);
 	}
+
 void CLemonMenu::Draw(CFbsBitGc& gc)
 	{
 	iMenuBar->Draw(gc,iMenuActive);

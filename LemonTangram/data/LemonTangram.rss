@@ -316,4 +316,22 @@ RESOURCE TBUF r_text_dlg_input_folder_error 	{ buf=qtn_dlg_input_folder_error; }
 RESOURCE TBUF r_text_dlg_overwrite_file 		{ buf=qtn_dlg_overwrite_file; }
 
 RESOURCE TBUF r_text_dlg_exit_confirm			{ buf=qtn_dlg_exit_confirm; }
+
+RESOURCE TBUF r_text_dlg_error					{ buf=qtn_dlg_error; }
+
+RESOURCE TBUF r_text_dlg_err_load_pic			{ buf=qtn_dlg_err_load_pic; }
+RESOURCE TBUF r_text_dlg_err_load_pic_file_xml	{ buf=qtn_dlg_err_load_pic_file_xml; }
+RESOURCE TBUF r_text_dlg_err_load_pic_data_xml	{ buf=qtn_dlg_err_load_pic_data_xml; }
+RESOURCE TBUF r_text_dlg_err_load_menu			{ buf=qtn_dlg_err_load_menu; }
+
+RESOURCE TBUF r_text_dlg_warn_config_lost		{ buf=qtn_dlg_warn_config_lost; }
+RESOURCE TBUF r_text_dlg_warn_load_pic_file_next_default	{ buf=qtn_dlg_warn_load_pic_file_next_default; }
+
+RESOURCE TBUF r_text_dlg_warn_setting_init		{ buf=qtn_dlg_warn_setting_init; }
+RESOURCE TBUF r_text_dlg_warn_setting_list		{ buf=qtn_dlg_warn_setting_list; }
+
+RESOURCE TBUF r_text_dlg_warn_func_save_process		{ buf=qtn_dlg_warn_func_save_process; }
+RESOURCE TBUF r_text_dlg_warn_func_reset_process	{ buf=qtn_dlg_warn_func_reset_process; }
+RESOURCE TBUF r_text_dlg_warn_func_open_process		{ buf=qtn_dlg_warn_func_open_process; }
+RESOURCE TBUF r_text_dlg_warn_func_save_screen		{ buf=qtn_dlg_warn_func_save_screen; }
 // End of File
