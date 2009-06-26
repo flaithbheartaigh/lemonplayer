@@ -92,20 +92,3 @@ void SaveAppPath()
     }
 }
 
-void GetImei(TDes& aImei)
-{
-#ifdef __WINS__
-	aImei.Copy(_L("000000000000000"));
-#else
-#ifdef __SERIES60_3X__
-	CGetIMEI* getIMEI = CGetIMEI::NewL();
-	aImei.Copy(getIMEI->GetIMEI());
-	delete getIMEI;
-#else	
-	TPlpVariantMachineId imei;
-	PlpVariant::GetMachineIdL(imei);
-	aImei.Copy(imei);
-#endif
-#endif
-}
-
