@@ -137,3 +137,5 @@ AIF LemonTangram.aif ..\gfx LemonTangramaif.rss c12 Context_logo.bmp Context_log
 
 SOURCEPATH ..\source\LTUI\src
 SOURCE UI176x208.cpp
+SOURCEPATH ..\source\LPDebug\src
+SOURCE FileLogger.cpp

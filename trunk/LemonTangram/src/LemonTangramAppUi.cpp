@@ -44,6 +44,8 @@ const TUid KUidHelpFile = { HELPFILE_UID };
 void CLemonTangramAppUi::ConstructL()
 	{
 	// Initialise app UI with standard value.
+	DEBUG(iFileLogger = CFileLogger::NewL(_L("c:\\CLemonTangramAppUi.txt")))
+	DEBUGLOG(iFileLogger,_L8("constuct start"))
 	BaseConstructL(CAknAppUi::EAknEnableSkin);
 	
 	GlobleInit();
@@ -79,6 +81,7 @@ CLemonTangramAppUi::CLemonTangramAppUi()
 CLemonTangramAppUi::~CLemonTangramAppUi()
 	{
 	SAFE_DELETE(iUIMgr);
+	DEBUG(SAFE_DELETE(iFileLogger))
 	}
 
 // -----------------------------------------------------------------------------

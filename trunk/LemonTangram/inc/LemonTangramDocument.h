@@ -15,6 +15,7 @@
 #ifdef EKA2
 #include "IconFileProvider.h"
 #endif
+//#include "LPDebug.h"
 // FORWARD DECLARATIONS
 class CLemonTangramAppUi;
 class CEikApplication;
@@ -94,6 +95,7 @@ public:
 
 private:
 	CIconFileProvider* iIconProvider;
+	//DEBUG(CFileLogger* iFileLogger)
 #endif
 	};
 
