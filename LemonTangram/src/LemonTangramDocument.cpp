@@ -47,6 +47,7 @@ CLemonTangramDocument* CLemonTangramDocument::NewLC(CEikApplication& aApp)
 //
 void CLemonTangramDocument::ConstructL()
 	{
+	//DEBUG(iFileLogger = CFileLogger::NewL(_L("c:\\CLemonTangramDocument.txt")))
 	// No implementation required
 	}
 
@@ -71,6 +72,7 @@ CLemonTangramDocument::~CLemonTangramDocument()
 #ifdef EKA2
 	SAFE_DELETE(iIconProvider);
 #endif
+	//DEBUG(SAFE_DELETE(iFileLogger))
 	// No implementation required
 	}
 

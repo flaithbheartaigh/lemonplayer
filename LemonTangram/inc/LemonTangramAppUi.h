@@ -15,6 +15,7 @@
 #include "UIMgr.h"
 #include "UIFactory.h"
 #include "TangErrDefine.h"
+#include "LPDebug.h"
 
 // FORWARD DECLARATIONS
 class CLemonTangramAppView;
@@ -58,7 +59,7 @@ private:
 	CYCSettingView *iSettingView;
 	MUIMgr* iUIMgr;
 	
-
+	DEBUG(CFileLogger* iFileLogger;)
 	};
 
 #endif // __LEMONTANGRAMAPPUI_h__

@@ -95,6 +95,7 @@ USERINCLUDE    ..\source\Framework\inc
 USERINCLUDE    ..\source\Controller\inc 
 USERINCLUDE    ..\source\LTUI\inc 
 USERINCLUDE    ..\source\TangFunc\inc
+USERINCLUDE    ..\source\LPDebug\inc
 
 SYSTEMINCLUDE	 \epoc32\include
 SYSTEMINCLUDE	 \epoc32\include\libc
@@ -127,7 +128,6 @@ LANG 01 31 SC
 
 VENDORID	  	  0
 SECUREID		  0xEAE107BA
-CAPABILITY	  	  ReadUserData
 
 #ifdef ENABLE_ABIV2_MODE
 DEBUGGABLE
@@ -145,3 +145,5 @@ SOURCEPATH      ..\help
 DOCUMENT        LemonTangram.rtf
 DOCUMENT        LemonTangram.cshlp
 DOCUMENT        Custom.xml
+SOURCEPATH ..\source\LPDebug\src
+SOURCE FileLogger.cpp
