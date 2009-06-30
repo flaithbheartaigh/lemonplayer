@@ -33,15 +33,15 @@ public:
 	static CImageRotator* NewL(CFbsBitmap *aSrcBitmap, 
 			CFbsBitmap*& aDestBitmap,
 			CFbsBitmap*& aMaskBitmap,
-			TInt aDegree, TRgb aBackColor);
+			TInt aDegree, TRgb aBackColor, TBool aFilp = EFalse);
 	static CImageRotator* NewLC(CFbsBitmap *aSrcBitmap, 
 			CFbsBitmap*& aDestBitmap, 
 			CFbsBitmap*& aMaskBitmap,
-			TInt aDegree, TRgb aBackColor);
+			TInt aDegree, TRgb aBackColor, TBool aFilp = EFalse);
 	CImageRotator(CFbsBitmap *aSrcBitmap, 
 			CFbsBitmap*& aDestBitmap, 
 			CFbsBitmap*& aMaskBitmap, 
-			TInt aDegree, TRgb aBackColor);
+			TInt aDegree, TRgb aBackColor,TBool aFilp);
 
 	void SetRetatePos(TInt aRotatePosX, TInt aRotatePosY);
 	void SetRetateCenter();
@@ -87,6 +87,8 @@ private:
 	TInt iRotatePosY;
 	
 	CTransparentBitmap *iTransparent;
+
+	TInt iFlip;
 
 	};
 

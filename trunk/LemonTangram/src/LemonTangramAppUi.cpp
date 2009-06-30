@@ -184,6 +184,13 @@ void CLemonTangramAppUi::ChangeUIMgr(TInt aWidth,TInt aHeight)
 		iUIMgr = UIFactory::CreateUIMgr(EUIType176x208);
 	else	
 		iUIMgr = UIFactory::CreateUIMgr(EUIType240x320);
+
+	//×´Ì¬À¸¸ß¶È
+	MEikAppUiFactory *f = CEikonEnv::Static()->AppUiFactory(); 
+	CEikStatusPane *status = f->StatusPane();
+	TInt statusHeight = 0;
+	TRAPD(err,statusHeight = status->PaneRectL(TUid::Uid(EEikStatusPaneUidSignal)).Height())
+	iUIMgr->SetStatusPaneHeight(statusHeight);
 	}
 
 MUIMgr* CLemonTangramAppUi::GetUIMgr()

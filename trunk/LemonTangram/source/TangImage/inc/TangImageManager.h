@@ -52,6 +52,7 @@ public:
 	void Draw(CBitmapContext& aGc);
 	TKeyResponse OfferKeyEventL(const TKeyEvent& aKeyEvent,TEventCode aType);
 	void Rotate(TInt aIndex,TInt aDegree);
+	void Flip(TInt aIndex);
 	
 	TInt GetConvertedNum(){return iConverted;};
 	TInt GetConvertDown(){return iConvertDown;};
@@ -67,11 +68,17 @@ private:
 	
 	TKeyResponse KeyChoose(const TKeyEvent& aKeyEvent,TEventCode aType);
 	TKeyResponse KeyMove(const TKeyEvent& aKeyEvent,TEventCode aType);
+	TKeyResponse KeyScroll(const TKeyEvent& aKeyEvent);
 	
 	void ChangeLayer();
 
 	void LoadImageXmlDefaultL();
 	void LoadImageXmlByFileL(const TDesC& aFileName);
+
+	TInt OffsetAccel(/*EImageElementState aDirection*/);
+	void ResetAccel();
+	TInt OffsetDegreeAccel();
+	void ResetDegreeAccel();
 	
 	enum TSelectedState
 		{
@@ -104,6 +111,12 @@ private:
 	RArray<TInt> iLayer;
 	
 	TInt iWaitDlgId;
+
+	TInt iAcceleration;
+	TInt iDegreeAcceleration;
+
+	TInt iScrollX;
+	TInt iScrollY;
 	
 	};
 

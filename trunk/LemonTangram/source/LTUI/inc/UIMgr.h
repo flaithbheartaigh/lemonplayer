@@ -83,6 +83,8 @@ public:
 	
 	//绘制区域 用于下载管理器的重绘.
 	virtual TSize DrawableSize() = 0;
+
+	void SetStatusPaneHeight(const TInt& aHeight) {iStatusPaneHeight = aHeight;};
 protected:
 	TInt iFontSize;
 	TInt iFontHeight;	
@@ -91,6 +93,8 @@ protected:
 	TInt iSysFontHeight;
 	TInt iScreenWidth;
 	TInt iScreenHeight;
+
+	TInt iStatusPaneHeight;  //状态栏高度
 	
 	
 	};

@@ -121,6 +121,10 @@ void CTangImageDataWriter::GenerateElementsData()
 		temp.Zero();
 		temp.AppendNum(i);
 		pXmlGenerator->SetAttributeL(KImageDataAttrIndex, temp); // index
+
+		temp.Zero();
+		temp.AppendNum(element->GetFlip());
+		pXmlGenerator->SetAttributeL(KImageDataAttrFlip, temp); // index
 		
 		pXmlGenerator->EndElementL(); // </img>
 		}

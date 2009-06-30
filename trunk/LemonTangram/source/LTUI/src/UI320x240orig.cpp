@@ -37,18 +37,18 @@ TPoint CUI320x240orig::BottomBarPos()
 	//320-16-1 = 303
 	//320-240 = 80
 //	return TPoint(0, 223);
-	return TPoint(0, iScreenHeight-iSysFontHeight-4);
+	return TPoint(0, iScreenHeight-iSysFontHeight-4-iStatusPaneHeight);
 	}
 
 TPoint CUI320x240orig::BottomLeftOption()
 	{
-	return TPoint(0,238);
+	return TPoint(0,238-iStatusPaneHeight);
 	}
 
 TPoint CUI320x240orig::BottomRightOption()
 	{
 //	return TPoint(296,238);
-	return TPoint(iScreenWidth-iSysFont->WidthZeroInPixels()*4-7,238);
+	return TPoint(iScreenWidth-iSysFont->WidthZeroInPixels()*4-7,238-iStatusPaneHeight);
 	}
 
 TRect CUI320x240orig::BottomState() 
