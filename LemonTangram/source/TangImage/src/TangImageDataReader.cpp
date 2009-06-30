@@ -131,6 +131,7 @@ void CTangImageDataReader::ParseImg(const RArray<TAttribute>& aAttributes)
 
 	TInt x,y,degree,index;
 	index = -1;
+	TBool flip = EFalse;
 	for (TInt i = 0; i < aAttributes.Count(); i++)
 		{
 		HBufC *attrName = aAttributes[i].iName.iLocalName.AllocLC();
@@ -152,16 +153,21 @@ void CTangImageDataReader::ParseImg(const RArray<TAttribute>& aAttributes)
 			{
 			degree = CCommonUtils::StrToInt(attrValue->Des());
 			}
+		if (attrName->Compare(KImageDataAttrFlip) == 0)
+			{
+			flip = CCommonUtils::StrToInt(attrValue->Des());
+			}
 		CleanupStack::PopAndDestroy(2);
 		}
 	if (index > -1 && index < 7)
 		{
 		iElements[index]->SetPointion(x,y);
 		iElements[index]->SetDegree(degree);
+		iElements[index]->SetFlip(flip);
 		CImageRotator* rotator = CImageRotator::NewL(iElements[index]->GetBitmapLoad(), 
 				iElements[index]->GetBitmapRotateAdd(),
 				iElements[index]->GetBitmapMaskAdd(),
-				degree, KRgbMagenta);
+				degree, KRgbMagenta,flip);
 		iElements[index]->SetOffsetX(rotator->GetOffsetX());
 		iElements[index]->SetOffsetY(rotator->GetOffsetY());
 		delete rotator;

@@ -27,10 +27,14 @@ enum TImageMoveDirection
 	EMoveWest
 	};
 
+static const TInt TANGRAM_ELEMENT_MAX_ACCELERATION = 12;
+static const TInt TANGRAM_ELEMENT_MOVE = 2;
 static const TInt TANGRAM_ELEMENT_MOVE_X = 2;
 static const TInt TANGRAM_ELEMENT_MOVE_Y = 2;
+static const TInt TANGRAM_ELEMENT_OFFSET_ROTATOE_ACCELERATION = 5;
+static const TInt TANGRAM_ELEMENT_MAX_ROTATOE_ACCELERATION = 20;
 static const TInt TANGRAM_ELEMENT_ROTATOE_DEGREE = 5;
 
-
+static const TInt TANGRAM_SCROLL_MOVE = 5; 
 
 #endif 	//_TANGIMAGEDEFINE_H_

@@ -8,6 +8,7 @@ _LIT(KImageDataAttrX,		"x");
 _LIT(KImageDataAttrY,		"y");
 _LIT(KImageDataAttrDegree,	"degree");
 _LIT(KImageDataAttrIndex,	"index");
+_LIT(KImageDataAttrFlip,	"flip");
 
 enum TImageDataTag
 	{

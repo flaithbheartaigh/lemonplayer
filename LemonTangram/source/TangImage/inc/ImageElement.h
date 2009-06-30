@@ -66,8 +66,12 @@ public:
 	
 	void SetSelected(TBool aSelected){iSelected = aSelected;};
 	TBool GetSelected(){return iSelected;};
+
+	void SetFlip(TBool aFlip) {iFlip = aFlip;};
+	TBool GetFlip() const {return iFlip;};
 	
 	void Draw(CBitmapContext& aGc);
+	void Draw(CBitmapContext& aGc,TInt aScrollX,TInt aScrollY);
 
 public:
 	CImageElement();
@@ -85,6 +89,7 @@ private:
 	TInt iDegree;
 	TInt iIndex;
 	TBool iSelected;
+	TBool iFlip;
 
 	};
 

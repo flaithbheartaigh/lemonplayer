@@ -19,9 +19,9 @@
 CImageRotator::CImageRotator(CFbsBitmap *aSrcBitmap, 
 		CFbsBitmap*& aDestBitmap, 
 		CFbsBitmap*& aMaskBitmap,
-		TInt aDegree, TRgb aBackColor) :
+		TInt aDegree, TRgb aBackColor, TBool aFilp) :
 	iSrcBitmap(aSrcBitmap), iDestBitmap(aDestBitmap), iMaskBitmap(aMaskBitmap),
-	iDegree(aDegree), iBackColor(aBackColor)
+	iDegree(aDegree), iBackColor(aBackColor), iFlip(aFilp)
 	{
 	// No implementation required
 	}
@@ -34,9 +34,9 @@ CImageRotator::~CImageRotator()
 CImageRotator* CImageRotator::NewLC(CFbsBitmap *aSrcBitmap, 
 		CFbsBitmap*& aDestBitmap, 
 		CFbsBitmap*& aMaskBitmap,
-		TInt aDegree, TRgb aBackColor)
+		TInt aDegree, TRgb aBackColor, TBool aFilp)
 	{
-	CImageRotator* self = new (ELeave)CImageRotator(aSrcBitmap,aDestBitmap,aMaskBitmap,aDegree, aBackColor);
+	CImageRotator* self = new (ELeave)CImageRotator(aSrcBitmap,aDestBitmap,aMaskBitmap,aDegree, aBackColor, aFilp);
 	CleanupStack::PushL(self);
 	self->ConstructL();
 	return self;
@@ -45,9 +45,9 @@ CImageRotator* CImageRotator::NewLC(CFbsBitmap *aSrcBitmap,
 CImageRotator* CImageRotator::NewL(CFbsBitmap *aSrcBitmap, 
 		CFbsBitmap*& aDestBitmap, 
 		CFbsBitmap*& aMaskBitmap,
-		TInt aDegree, TRgb aBackColor)
+		TInt aDegree, TRgb aBackColor, TBool aFilp)
 	{
-	CImageRotator* self=CImageRotator::NewLC(aSrcBitmap, aDestBitmap,aMaskBitmap, aDegree, aBackColor);
+	CImageRotator* self=CImageRotator::NewLC(aSrcBitmap, aDestBitmap,aMaskBitmap, aDegree, aBackColor, aFilp);
 	CleanupStack::Pop(); // self;
 	return self;
 	}
@@ -141,6 +141,9 @@ void CImageRotator::CopyPixel()
 			TInt srcy = (TInt)(y*cosine - x*sine);
 			TInt destx = x+iDx;
 			TInt desty = y+iDy;
+			if (iFlip) {
+				desty = iSize.iHeight - desty;
+			}
 
 			if (srcx>=width || srcx<0 || srcy>=height || srcy<0)
 				{

@@ -34,7 +34,8 @@
 CTangImageManager::CTangImageManager() :
 	iConverted(0), iConvertDown(0), iSelectedState(ESelectedStateChoose),
 	iDataArray(NULL),iScreenSave(NULL),iBitmapArray(NULL),
-	iBitmapFocus(NULL),iElements(NULL)
+	iBitmapFocus(NULL),iElements(NULL),iAcceleration(0),
+	iScrollX(0),iScrollY(0)
 	{
 	// No implementation required
 	}
@@ -176,12 +177,15 @@ void CTangImageManager::Draw(CBitmapContext& aGc)
 		{
 		TInt index = iLayer[i];
 		if (iElements && index<7 && iElements[index])
-			iElements[index]->Draw(aGc);
+			//iElements[index]->Draw(aGc);
+			iElements[index]->Draw(aGc,iScrollX,iScrollY);
 		}
 	
 	CImageElement* element = iElements[iSelectedIndex];
 	TInt x = element->GetPositionX();
 	TInt y = element->GetPositionY();
+	x += iScrollX;
+	y += iScrollY;
 	if (iSelectedState == ESelectedStateChoose)
 		{
 		x -= (iBitmapFocus[EBitmapFocus]->SizeInPixels().iWidth >> 1);
@@ -283,6 +287,9 @@ TKeyResponse CTangImageManager::KeyChoose(const TKeyEvent& aKeyEvent,
 					break;
 				}
 			break;
+			case EEventKey:
+				return KeyScroll(aKeyEvent);
+				break;
 		}
 	return EKeyWasNotConsumed;
 	}
@@ -301,41 +308,64 @@ TKeyResponse CTangImageManager::KeyMove(const TKeyEvent& aKeyEvent,
 				{
 				case '2'://up
 				case EKeyUpArrow://
-					y -= TANGRAM_ELEMENT_MOVE_Y;
+					y -= OffsetAccel();
 					iElements[iSelectedIndex]->SetPointion(x,y);
 					return EKeyWasConsumed;					
 					break;
 				case '8'://down
 				case EKeyDownArrow://ok
-					y += TANGRAM_ELEMENT_MOVE_Y;
+					y += OffsetAccel();
 					iElements[iSelectedIndex]->SetPointion(x,y);
 					return EKeyWasConsumed;					
 					break;
 				case '4'://left
 				case EKeyLeftArrow://ok
-					x -= TANGRAM_ELEMENT_MOVE_X;
+					x -= OffsetAccel();
 					iElements[iSelectedIndex]->SetPointion(x,y);
 					return EKeyWasConsumed;
 					break;
 				case '6'://right
 				case EKeyRightArrow://ok
-					x += TANGRAM_ELEMENT_MOVE_Y;
+					x += OffsetAccel();
 					iElements[iSelectedIndex]->SetPointion(x,y);
 					return EKeyWasConsumed;
 					break;		
 				case '*':
-					Rotate(iSelectedIndex,TANGRAM_ELEMENT_ROTATOE_DEGREE);
+					Rotate(iSelectedIndex,OffsetDegreeAccel());
 					return EKeyWasConsumed;
 					break;
 				case '#':
-					Rotate(iSelectedIndex,-TANGRAM_ELEMENT_ROTATOE_DEGREE);
+					Rotate(iSelectedIndex,-OffsetDegreeAccel());
 					return EKeyWasConsumed;
+					break;
+				default:
+					return KeyScroll(aKeyEvent);
 					break;
 				}
 			break;
 		case EEventKeyUp:
 			switch (aKeyEvent.iScanCode)
 				{
+				case '2'://up
+				case EKeyUpArrow://
+				case '8'://down
+				case EKeyDownArrow://ok
+				case '4'://left
+				case EKeyLeftArrow://ok
+				case '6'://right
+				case EKeyRightArrow://ok
+					ResetAccel();
+					return EKeyWasConsumed;
+					break;
+				case '*':
+				case '#':
+					ResetDegreeAccel();
+					return EKeyWasConsumed;
+					break;
+				case '0':
+					Flip(iSelectedIndex);
+					return EKeyWasConsumed;
+					break;
 				case '5':
 				case EStdKeyDevice3:
 					iSelectedState = ESelectedStateChoose;
@@ -347,6 +377,58 @@ TKeyResponse CTangImageManager::KeyMove(const TKeyEvent& aKeyEvent,
 	return EKeyWasNotConsumed;
 	}
 
+TKeyResponse CTangImageManager::KeyScroll(const TKeyEvent& aKeyEvent)
+{
+	switch (aKeyEvent.iScanCode)
+	{
+	case '3':
+		//if (iScrollX > 0) 
+			iScrollX -= TANGRAM_SCROLL_MOVE;
+		return EKeyWasConsumed;
+		break;
+	case '1':
+		iScrollX += TANGRAM_SCROLL_MOVE;
+		return EKeyWasConsumed;
+		break;
+	case '9':
+		//if (iScrollY > 0) 
+			iScrollY -= TANGRAM_SCROLL_MOVE;
+		return EKeyWasConsumed;
+		break;
+	case '7':
+		iScrollY += TANGRAM_SCROLL_MOVE;
+		return EKeyWasConsumed;
+		break;
+	}
+	return EKeyWasNotConsumed;
+}
+
+TInt CTangImageManager::OffsetAccel(/*EImageElementState aDirection*/)
+{
+	if (iAcceleration < TANGRAM_ELEMENT_MAX_ACCELERATION) {
+		iAcceleration++;
+	}
+	return TANGRAM_ELEMENT_MOVE + iAcceleration;
+}
+
+void CTangImageManager::ResetAccel()
+{
+	iAcceleration = 0;
+}
+
+TInt CTangImageManager::OffsetDegreeAccel(/*EImageElementState aDirection*/)
+{
+	if (iDegreeAcceleration < TANGRAM_ELEMENT_MAX_ROTATOE_ACCELERATION) {
+		iDegreeAcceleration += TANGRAM_ELEMENT_OFFSET_ROTATOE_ACCELERATION;
+	}
+	return iDegreeAcceleration;
+}
+
+void CTangImageManager::ResetDegreeAccel()
+{
+	iDegreeAcceleration = 0;
+}
+
 void CTangImageManager::Rotate(TInt aIndex, TInt aDegree)
 	{
 	CImageElement* element = iElements[aIndex];
@@ -354,17 +436,41 @@ void CTangImageManager::Rotate(TInt aIndex, TInt aDegree)
 	CFbsBitmap* mask = element->GetBitmapMask();
 	int degree = element->GetDegree();
 	degree += aDegree;
+	TBool flip = element->GetFlip();
 
 	SAFE_DELETE(rota);
 	SAFE_DELETE(mask);
 
 	element->SetDegree(degree);
 
+	if (flip) {
+		degree = -degree;
+	}
 	CImageRotator* rotator = CImageRotator::NewL(element->GetBitmapLoad(),
 			element->GetBitmapRotateAdd(), element->GetBitmapMaskAdd(), degree, 
-			KRgbMagenta);
+			KRgbMagenta,flip);
 	element->SetOffsetX(rotator->GetOffsetX());
 	element->SetOffsetY(rotator->GetOffsetY());
+	delete rotator;
+	}
+
+void CTangImageManager::Flip(TInt aIndex)
+	{
+	CImageElement* element = iElements[aIndex];
+	CFbsBitmap* rota = element->GetBitmapRotate();
+	CFbsBitmap* mask = element->GetBitmapMask();
+	int degree = element->GetDegree();
+	TBool flip = element->GetFlip();
+	flip = !flip;
+	element->SetFlip(flip);
+
+	SAFE_DELETE(rota);
+	SAFE_DELETE(mask);
+
+	CImageRotator* rotator = CImageRotator::NewL(element->GetBitmapLoad(),
+			element->GetBitmapRotateAdd(), element->GetBitmapMaskAdd(), degree, 
+			KRgbMagenta,flip);
+	
 	delete rotator;
 	}
 

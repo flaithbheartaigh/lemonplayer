@@ -86,6 +86,7 @@ USERINCLUDE    ..\source\Framework\inc
 USERINCLUDE    ..\source\Controller\inc 
 USERINCLUDE    ..\source\LTUI\inc 
 USERINCLUDE    ..\source\TangFunc\inc
+USERINCLUDE    ..\source\LPDEBUG\inc
 
 SYSTEMINCLUDE	 \epoc32\include
 SYSTEMINCLUDE	 \epoc32\include\libc

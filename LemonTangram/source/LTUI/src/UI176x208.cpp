@@ -16,7 +16,7 @@
 const TInt KMenuWidth = 73;
 const TInt KDLMenuWidth = 100;
 
-const TInt KSoftStateHeight = 44;
+//const TInt KSoftStateHeight = 44;
 
 CUI176x208::CUI176x208()
 	{
@@ -36,17 +36,17 @@ CUI176x208::~CUI176x208()
 TPoint CUI176x208::BottomBarPos()
 	{
 	//320-16-1 = 303
-	return TPoint(0, 192-KSoftStateHeight);
+	return TPoint(0, 192-iStatusPaneHeight);
 	}
 
 TPoint CUI176x208::BottomLeftOption()
 	{
-	return TPoint(2,206-KSoftStateHeight);
+	return TPoint(2,206-iStatusPaneHeight);
 	}
 
 TPoint CUI176x208::BottomRightOption()
 	{
-	return TPoint(150,206-KSoftStateHeight);
+	return TPoint(150,206-iStatusPaneHeight);
 	}
 
 TRect CUI176x208::BottomState() 
