@@ -22,7 +22,6 @@ CUI320x240orig::CUI320x240orig()
 	iFont = LatinBold16();
 	iSysFont = LatinBold16();
 	iFontHeight = iFont->HeightInPixels();
-	iFontHeightOffset = 0;
 	iSysFontHeight = iSysFont->HeightInPixels();
 	iScreenWidth = 320;
 	iScreenHeight = 240;
@@ -51,32 +50,6 @@ TPoint CUI320x240orig::BottomRightOption()
 	return TPoint(iScreenWidth-iSysFont->WidthZeroInPixels()*4-7,238-iStatusPaneHeight);
 	}
 
-TRect CUI320x240orig::BottomState() 
-	{
-	TInt top = iScreenHeight-iSysFontHeight-4;
-	TInt height = iSysFontHeight+4;
-	//	(320-140)/2
-	TInt left = 90;
-	TInt width = 140;
-	return TRect(left,top,left+width,top+height);
-//	return TRect(30,223,148,239);
-	}
-
-TPoint CUI320x240orig::BottomTextEnd() 
-	{
-	return TPoint(115,238);
-	}
-
-TPoint CUI320x240orig::BottomTextReceive() 
-	{
-	return TPoint(190,239);
-	}
-
-TPoint CUI320x240orig::BottomTextConnect() 
-	{
-	return TPoint(105,238);
-	}
-
 TPoint CUI320x240orig::MainMenuPos()
 	{
 	//iScreenHeight-40
@@ -100,34 +73,6 @@ TInt CUI320x240orig::SubMenuWidth()
 TInt CUI320x240orig::MainMenuItemHeight()
 	{
 	return 20;
-	}
-
-TPoint CUI320x240orig::BMMenuPos()
-	{
-	TInt height = iScreenHeight-BMMenuSize().iHeight-BottomBarSize().iHeight;
-	return TPoint(0,height); 
-	}
-TSize CUI320x240orig::BMMenuSize()
-	{
-	TInt height = (iSysFontHeight+5);
-	height *= KBookmarkMenuItemNum;
-	return TSize(KMenuWidth,height);
-	}
-	
-TPoint CUI320x240orig::DLMenuPos()
-	{
-	TInt height = iScreenHeight-DLMenuSize().iHeight-BottomBarSize().iHeight;
-	return TPoint(0,height); 
-	}
-TSize CUI320x240orig::DLMenuSize()
-	{
-	TInt height = (iSysFontHeight+5);
-	height *= KDownloaderMenuItemNum;
-	return TSize(KDLMenuWidth,height);
-	}
-TInt CUI320x240orig::DLSubMenuWidth()
-	{
-	return 140;
 	}
 
 //工具条长度
@@ -172,37 +117,16 @@ TBool CUI320x240orig::ChangeFontSize(const TInt aSize)
 		{
 		case KFontSizeSmall:
 			iFont = LatinPlain12();
-			iFontHeightOffset = 0;
 			break;
 		case KFontSizeMiddle:
 			iFont = LatinBold16();
-			iFontHeightOffset = 0;
 			break;
 		case KFontSizeBig:
 			iFont = CEikonEnv::Static()->NormalFont();
-			iFontHeightOffset = 1;
 			break;
 		}
 	iFontHeight = iFont->HeightInPixels();
 	return ETrue;
-	}
-
-TSize CUI320x240orig::DownloadItemRest()
-	{
-	return TSize(iScreenWidth,14+iSysFontHeight);
-//	return TSize(iScreenWidth,26);
-	}
-TSize CUI320x240orig::DownloadItemRun()
-	{
-	return TSize(iScreenWidth,27+iSysFontHeight);
-//	return TSize(iScreenWidth,39);
-	}
-
-TRect CUI320x240orig::IMEIconPos()
-	{
-	TInt x = iScreenWidth - 52;
-	return TRect(TPoint(x,4),TSize(48,12));
-	//return TPoint(x,y);
 	}
 
 TSize CUI320x240orig::DrawableSize()

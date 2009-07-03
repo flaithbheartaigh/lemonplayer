@@ -22,10 +22,11 @@ CUI240x320::CUI240x320()
 	iFont = LatinBold16();
 	iSysFont = LatinBold16();
 	iFontHeight = iFont->HeightInPixels();
-	iFontHeightOffset = 0;
 	iSysFontHeight = iSysFont->HeightInPixels();
 	iScreenWidth = 240;
 	iScreenHeight = 320;
+	iBottomBarHeight = iSysFontHeight+4;
+	iMenuItemHeight = iSysFontHeight+5;
 	}
 
 CUI240x320::~CUI240x320()
@@ -35,7 +36,7 @@ CUI240x320::~CUI240x320()
 TPoint CUI240x320::BottomBarPos()
 	{
 	//320-字体-4-1 = 303
-	return TPoint(0, iScreenHeight-iSysFontHeight-4 - iStatusPaneHeight);
+	return TPoint(0, iScreenHeight- iBottomBarHeight - iStatusPaneHeight);
 //	return TPoint(0, 300);
 	}
 
@@ -51,46 +52,17 @@ TPoint CUI240x320::BottomRightOption()
 //	return TPoint(204,318);
 	}
 
-TRect CUI240x320::BottomState() 
-	{
-	//(30,303
-	TInt top = iScreenHeight-iSysFontHeight-4;
-	TInt height = iSysFontHeight+4;
-//	(240-118)/2
-	TInt left = 50;
-	TInt width = 140;
-	return TRect(left,top,left+width,top+height);
-	}
-
-TPoint CUI240x320::BottomTextEnd() 
-	{
-	TInt width = 25;
-	return TPoint(75,318);
-	}
-
-TPoint CUI240x320::BottomTextReceive() 
-	{
-	return TPoint(150,319);
-	}
-
-TPoint CUI240x320::BottomTextConnect() 
-	{
-	return TPoint(65,318);
-	}
-
 TPoint CUI240x320::MainMenuPos()
 	{
-	TInt height = 251-MainMenuItemHeight()*KMainMenuItemNum ;
+	TInt height = iScreenHeight- iBottomBarHeight - iStatusPaneHeight-iMenuItemHeight*KMainMenuItemNum ;
 	return TPoint(0,height); 
 	}
 
 TSize CUI240x320::MainMenuSize() 
 	{
 	//180 102 = 78
-	TInt height = (iSysFontHeight+5);
-	height *= KMainMenuItemNum;
+	TInt height = iMenuItemHeight*KMainMenuItemNum;
 	return TSize(KMenuWidth,height);
-//	return TSize(63,147);
 	}
 
 TInt CUI240x320::SubMenuWidth()
@@ -100,49 +72,18 @@ TInt CUI240x320::SubMenuWidth()
 
 TInt CUI240x320::MainMenuItemHeight()
 	{
-	return 20;
-	}
-
-TPoint CUI240x320::BMMenuPos()
-	{
-	TInt x = 0;
-	TInt height = iScreenHeight-BMMenuSize().iHeight-BottomBarSize().iHeight;
-	return TPoint(x,height); 
-	}
-TSize CUI240x320::BMMenuSize()
-	{
-	TInt height = (iSysFontHeight+5);
-	height *= KBookmarkMenuItemNum;
-	return TSize(KMenuWidth,height);
-	}
-	
-TPoint CUI240x320::DLMenuPos()
-	{
-	TInt x = 0;
-	TInt height = iScreenHeight-DLMenuSize().iHeight-BottomBarSize().iHeight;
-	return TPoint(x,height); 
-	}
-TSize CUI240x320::DLMenuSize()
-	{
-	TInt height = (iSysFontHeight+5);
-	height *= KDownloaderMenuItemNum;
-	return TSize(KDLMenuWidth,height);
-	}
-TInt CUI240x320::DLSubMenuWidth()
-	{
-	return 140;
+	return iMenuItemHeight;
 	}
 
 //工具条长度
 TSize CUI240x320::TitleBarSize()
 	{
 	return TSize(iScreenWidth,iSysFontHeight+4);
-//	return TSize(240,20);
 	}
+
 TSize CUI240x320::BottomBarSize()
 	{
 	return TSize(iScreenWidth,iSysFontHeight+4);
-//	return TSize(240,20);
 	}
 
 TRect CUI240x320::TitleIconSize()
@@ -154,6 +95,7 @@ TPoint CUI240x320::TitleTextPos()
 	{
 	return TPoint(30,iSysFontHeight+2);
 	}
+
 TPoint CUI240x320::TitleTimePos()
 	{
 	//240-7*5
@@ -176,38 +118,20 @@ TBool CUI240x320::ChangeFontSize(const TInt aSize)
 		{
 		case KFontSizeSmall:
 			iFont = LatinPlain12();
-			iFontHeightOffset = 0;
 			break;
 		case KFontSizeMiddle:
 			iFont = LatinBold16();
-			iFontHeightOffset = 0;
 			break;
 		case KFontSizeBig:
 			iFont = CEikonEnv::Static()->NormalFont();
-			iFontHeightOffset = 1;
 			break;
 		}
 	iFontHeight = iFont->HeightInPixels();
 	return ETrue;
 	}
 
-TSize CUI240x320::DownloadItemRest()
-	{
-	return TSize(iScreenWidth,14+iSysFontHeight);
-	}
-TSize CUI240x320::DownloadItemRun()
-	{
-	return TSize(iScreenWidth,27+iSysFontHeight);
-	}
-
-TRect CUI240x320::IMEIconPos()
-	{
-	TInt x = iScreenWidth - 52;
-	return TRect(TPoint(x,4),TSize(48,12));
-	//return TPoint(x,4);
-	}
-
 TSize CUI240x320::DrawableSize()
 	{
-	return TSize(240,293);
+	TInt height = iScreenHeight - iStatusPaneHeight - iBottomBarHeight;  //-状态栏 -菜单栏
+	return TSize(iScreenWidth,height);
 	}

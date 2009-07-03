@@ -35,11 +35,6 @@ public:
 	virtual TPoint BottomLeftOption() ;
 	virtual TPoint BottomRightOption() ;
 	
-	virtual TRect BottomState() ;
-	virtual TPoint BottomTextEnd() ;
-	virtual TPoint BottomTextReceive() ;
-	virtual TPoint BottomTextConnect() ;
-	
 	//工具条长度
 	virtual TSize TitleBarSize();
 	virtual TSize BottomBarSize();
@@ -55,19 +50,7 @@ public:
 	virtual TInt SubMenuWidth(); 
 	virtual TInt MainMenuItemHeight();
 	
-	virtual TPoint BMMenuPos() ;
-	virtual TSize BMMenuSize() ;
-		
-	virtual TPoint DLMenuPos() ;
-	virtual TSize DLMenuSize() ;
-	virtual TInt DLSubMenuWidth() ;
-	
 	virtual TBool ChangeFontSize(const TInt aSize);
-	
-	virtual TSize DownloadItemRest();
-	virtual TSize DownloadItemRun();
-	
-	virtual TRect IMEIconPos();
 	
 	virtual TSize DrawableSize();
 	};

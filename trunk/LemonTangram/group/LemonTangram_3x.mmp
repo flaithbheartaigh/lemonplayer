@@ -68,6 +68,7 @@ SOURCE TangImageDataReader.cpp
 SOURCE TangElementUtil.cpp
 SOURCE ImageElement.cpp 
 SOURCE TangImageManager.cpp
+SOURCE AlphaBackground.cpp
 
 SOURCEPATH ..\source\TangFunc\src
 SOURCE TangConfig.cpp
