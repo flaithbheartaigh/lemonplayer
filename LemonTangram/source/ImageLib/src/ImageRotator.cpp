@@ -126,8 +126,6 @@ void CImageRotator::CopyPixel()
 	{
 	TInt width = iSrcBitmap->SizeInPixels().iWidth;
 	TInt height = iSrcBitmap->SizeInPixels().iHeight;
-	TUint16* src = (TUint16*)iSrcBitmap->DataAddress();
-	TUint16* dest = (TUint16*)iDestBitmap->DataAddress();
 
 	sine = -sine;
 	TBitmapUtil orig_util(iSrcBitmap);

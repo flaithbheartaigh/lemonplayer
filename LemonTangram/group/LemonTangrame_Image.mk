@@ -54,6 +54,8 @@ RESOURCE :
 	mifconv $(ICONTARGETFILENAME_PRIVATE) /h$(HEADERFILENAME_PRIVATE) \
 	/c16 ..\gfx\log.bmp \
 	/c16 ..\gfx\bottomsvg.svg \
+	/1 ..\gfx\texture.bmp \
+	/c24 ..\gfx\background.bmp \
 
 	mifconv $(ICONTARGETFILENAME) \
 		/c32 ..\gfx\LTIcon.svg

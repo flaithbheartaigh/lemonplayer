@@ -1,4 +1,4 @@
-; Installation file for LemonTangram application
+Ôªø; Installation file for LemonTangram application
 ;
 ; This is an auto-generated PKG file by Carbide.
 ; This file uses variables specific to Carbide builds that will not work
@@ -10,7 +10,7 @@
 &EN,ZH
 
 ; standard SIS file header
-#{"LemonTangram","ƒ˚√ ∆ﬂ«…∞Â"},(0xEAE107BA),1,0,0
+#{"LemonTangram","Êü†Ê™¨‰∏ÉÂ∑ßÊùø"},(0xEAE107BA),1,0,0
 
 ;Localised Vendor name
 %{"Vendor-EN","Vendor-ZH"}
@@ -25,7 +25,10 @@
 ;You should change the source paths to match that of your environment
 ;<source> <destination>
 "C:\S60\devices\S60_3rd_FP2_SDK\Epoc32\release\gcce\urel\LemonTangram.exe"		-"!:\sys\bin\LemonTangram.exe"
-"C:\S60\devices\S60_3rd_FP2_SDK\Epoc32\data\z\resource\apps\LemonTangram.rsc"		-"!:\resource\apps\LemonTangram.rsc"
+{
+"C:\S60\devices\S60_3rd_FP2_SDK\Epoc32\data\z\resource\apps\LemonTangram.rsc"
+"C:\S60\devices\S60_3rd_FP2_SDK\Epoc32\data\z\resource\apps\LemonTangram.r31"
+} -"!:\resource\apps\LemonTangram.rsc"
 "C:\S60\devices\S60_3rd_FP2_SDK\Epoc32\data\z\private\10003a3f\apps\LemonTangram_reg.rsc"	-"!:\private\10003a3f\import\apps\LemonTangram_reg.rsc"
 "C:\S60\devices\S60_3rd_FP2_SDK\Epoc32\data\z\resource\apps\LemonTangram_aif.mif" -"!:\resource\apps\LemonTangram_aif.mif"
 "..\help\LemonTangram.hlp"							 -"!:\resource\help\LemonTangram.hlp"

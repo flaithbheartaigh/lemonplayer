@@ -24,6 +24,7 @@
 class CImageElement;
 class CTangImageDataReader;
 class CTangImageSave;
+class CAlphaBackground;
 
 /**
  *  CTangImageManager
@@ -117,6 +118,8 @@ private:
 
 	TInt iScrollX;
 	TInt iScrollY;
+
+	CAlphaBackground* iBackground;
 	
 	};
 

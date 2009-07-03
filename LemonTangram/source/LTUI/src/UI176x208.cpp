@@ -49,26 +49,6 @@ TPoint CUI176x208::BottomRightOption()
 	return TPoint(150,206-iStatusPaneHeight);
 	}
 
-TRect CUI176x208::BottomState() 
-	{
-	return TRect(30,191,148,207);
-	}
-
-TPoint CUI176x208::BottomTextEnd() 
-	{
-	return TPoint(55,205);
-	}
-
-TPoint CUI176x208::BottomTextReceive() 
-	{
-	return TPoint(110,207);
-	}
-
-TPoint CUI176x208::BottomTextConnect() 
-	{
-	return TPoint(45,205);
-	}
-
 TPoint CUI176x208::MainMenuPos()
 	{
 	//208-44-20-
@@ -92,37 +72,6 @@ TInt CUI176x208::SubMenuWidth()
 TInt CUI176x208::MainMenuItemHeight()
 	{
 	return 20;
-	}
-
-TPoint CUI176x208::BMMenuPos()
-	{
-	TInt x = 0;
-	TInt height = iScreenHeight-BMMenuSize().iHeight-BottomBarSize().iHeight;
-	return TPoint(x,height); 
-	}
-TSize CUI176x208::BMMenuSize()
-	{
-	TInt height = (iSysFontHeight+5);
-	height *= KBookmarkMenuItemNum;
-	return TSize(KMenuWidth,height);
-	}
-	
-TPoint CUI176x208::DLMenuPos()
-	{
-	TInt x = 0;
-	TInt height = iScreenHeight-DLMenuSize().iHeight-BottomBarSize().iHeight;
-	return TPoint(x,height); 
-	}
-TSize CUI176x208::DLMenuSize()
-	{
-	TInt height = (iSysFontHeight+5);
-	height *= KDownloaderMenuItemNum;
-	return TSize(KDLMenuWidth,height);
-	}
-
-TInt CUI176x208::DLSubMenuWidth()
-	{
-	return 104;
 	}
 
 //工具条长度
@@ -175,23 +124,8 @@ TBool CUI176x208::ChangeFontSize(const TInt aSize)
 	return ETrue;
 	}
 
-TSize CUI176x208::DownloadItemRest()
-	{
-	return TSize(iScreenWidth,26);
-	}
-TSize CUI176x208::DownloadItemRun()
-	{
-	return TSize(iScreenWidth,35);
-	}
-
-TRect CUI176x208::IMEIconPos()
-	{
-	TInt x = iScreenWidth - 52;
-	return TRect(TPoint(x,2),TSize(48,12));
-	//return TPoint(130,0);
-	}
-
 TSize CUI176x208::DrawableSize()
 	{
-	return TSize(176,208);
+	TInt height = iScreenHeight - iStatusPaneHeight - 16;  //-状态栏 -菜单栏
+	return TSize(iScreenWidth,height);
 	}

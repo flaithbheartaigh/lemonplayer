@@ -7,11 +7,17 @@
  Description : CTangImageManager implementation
  ============================================================================
  */
+#include <stdlib.h>
+#include <eikenv.h>
+#include <BAUTILS.H>
 
 #include "TangImageManager.h"
+
+#include <LemonTangram.mbg>
+#include <LemonTangram.rsg>
+
 #include "ImageElement.h"
 #include "MacroUtil.h"
-#include <stdlib.h>
 #include "TangImageDataReader.h"
 #include "TangImageDataWriter.h"
 #include "ImageRotator.h"
@@ -19,29 +25,26 @@
 #include "Utils.h"
 #include "TangImageSave.h"
 #include "QueryDlgUtil.h"
-
-#include <LemonTangram.mbg>
-#include <eikenv.h>
-#include <LemonTangram.rsg>
 #include "TangFileDefine.h"
 #include "Configuration.h"
 #include "ConfigDefine.h"
-#include <BAUTILS.H>
 #include "TangErrDefine.h"
 #include "LemonTangramAppUi.h"
+#include "AlphaBackground.h"
 
 
 CTangImageManager::CTangImageManager() :
 	iConverted(0), iConvertDown(0), iSelectedState(ESelectedStateChoose),
 	iDataArray(NULL),iScreenSave(NULL),iBitmapArray(NULL),
 	iBitmapFocus(NULL),iElements(NULL),iAcceleration(0),
-	iScrollX(0),iScrollY(0)
+	iScrollX(0),iScrollY(0),iBackground(NULL)
 	{
 	// No implementation required
 	}
 
 CTangImageManager::~CTangImageManager()
 	{
+	SAFE_DELETE(iBackground);
 	SAFE_DELETE(iScreenSave);
 	SAFE_DELETE(iDataArray);
 	SAFE_DELETE(iBitmapArray);
@@ -76,6 +79,9 @@ void CTangImageManager::ConstructL()
 	iBitmapFocus = (CFbsBitmap**)malloc(sizeof(CFbsBitmap*) * EBitmapFocusTotal);
 	for (TInt j=0; j<EBitmapFocusTotal; j++)
 		iBitmapFocus[j] = NULL;
+
+	TSize size = STATIC_CAST(CLemonTangramAppUi*,CEikonEnv::Static()->AppUi())->GetUIMgr()->DrawableSize();
+	iBackground = CAlphaBackground::NewL(size);
 	}
 
 void CTangImageManager::ConvertError()
@@ -172,7 +178,10 @@ void CTangImageManager::LoadImageDataFileL(const TDesC& aFileName)
 
 void CTangImageManager::Draw(CBitmapContext& aGc)
 	{
+	if (iBackground)
+		iBackground->Draw(aGc);
 	//EImageNumber
+	/*
 	for(TInt i=0; i<iLayer.Count(); i++)
 		{
 		TInt index = iLayer[i];
@@ -180,6 +189,7 @@ void CTangImageManager::Draw(CBitmapContext& aGc)
 			//iElements[index]->Draw(aGc);
 			iElements[index]->Draw(aGc,iScrollX,iScrollY);
 		}
+		*/
 	
 	CImageElement* element = iElements[iSelectedIndex];
 	TInt x = element->GetPositionX();
