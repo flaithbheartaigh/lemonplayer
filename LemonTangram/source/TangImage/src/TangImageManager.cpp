@@ -181,7 +181,7 @@ void CTangImageManager::Draw(CBitmapContext& aGc)
 	if (iBackground)
 		iBackground->Draw(aGc);
 	//EImageNumber
-	/*
+	
 	for(TInt i=0; i<iLayer.Count(); i++)
 		{
 		TInt index = iLayer[i];
@@ -189,7 +189,7 @@ void CTangImageManager::Draw(CBitmapContext& aGc)
 			//iElements[index]->Draw(aGc);
 			iElements[index]->Draw(aGc,iScrollX,iScrollY);
 		}
-		*/
+		
 	
 	CImageElement* element = iElements[iSelectedIndex];
 	TInt x = element->GetPositionX();
