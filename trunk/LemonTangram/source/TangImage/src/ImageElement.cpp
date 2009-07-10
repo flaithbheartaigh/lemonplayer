@@ -88,4 +88,6 @@ void CImageElement::SetDegree(TInt aDegree)
 	iDegree = aDegree;
 	if (iDegree > 360)
 		iDegree -= 360;
-	};
+	else if(iDegree < 0)
+		iDegree += 360;
+	}
