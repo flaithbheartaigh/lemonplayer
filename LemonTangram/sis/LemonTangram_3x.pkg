@@ -10,10 +10,10 @@
 &EN,ZH
 
 ; standard SIS file header
-#{"LemonTangram","柠檬七巧板"},(0xEAE107BA),1,0,0
+#{"LemonTangram","易查七巧板"},(0xEAE107BA),1,0,0
 
 ;Localised Vendor name
-%{"Vendor-EN","Vendor-ZH"}
+%{"Vendor-EN","Yicha"}
 
 ;Unique Vendor name
 :"Vendor"
