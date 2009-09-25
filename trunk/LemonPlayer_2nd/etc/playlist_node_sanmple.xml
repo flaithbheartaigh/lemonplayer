@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<playlist>
+	<node name="" text="" event="" />
+	
+	<tree name="">
+		<parent name="" />
+		<children name="" />
+	</tree>
+	
+	<!-- name,索引; text,要显示的文字; parent,父节点名字; event,触发事件;-->
+	<!--children name,子节点名字-->
+	
+</playlist>

@@ -1,0 +1,7 @@
+2008-11-20
+序号 TInt,
+名称 TBufC,
+属性,TInt,
+子树索引,RArray<TInt>
+父索引,TInt 
+

@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<playlist>
+	<node name="root" text="root" event="" />
+	<node name="default" text="default" event="open_default" />
+	<node name="favorite" text="favorite" event="open_favorite" />
+	<node name="library" text="library" event="open_library" />
+	<node name="history" text="history" event="open_history" />
+	<node name="back" text="back" event="go_back" />
+	<node name="folder" text="folder" event="open_folder" />
+	<node name="ablum" text="ablum" event="open_ablum" />
+	<node name="genre" text="genre" event="open_genre" />
+	<node name="artist" text="artist" event="open_artist" />
+	
+	<tree name="root">
+		<parent name="root" />
+		<children name="default" />
+		<children name="favorite" />
+		<children name="library" />
+		<children name="history" />
+	</tree>
+	<tree name="library">
+		<parent name="root" />
+		<children name="back" />
+		<children name="folder" />
+		<children name="ablum" />
+		<children name="genre" />
+		<children name="artist" />
+	</tree>
+</playlist>
