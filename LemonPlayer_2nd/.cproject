@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?fileVersion 4.0.0?>
+
+<cproject>
+<storageModule buildFromInf="true" buildingTestComps="true" cleanLevel="0" concurrentBuildJobs="4" defaultMMPChangedAction="0" infBuildComponents="" infFileLocation="group\bld.inf" macrosFile="" manageDependencies="true" moduleId="com.nokia.carbide.cdt.builder.carbideCPPBuilder" overrideWorkspaceSettings="false" promptForMMPChangedAction="true" useConcurrentBuilding="true" useIncrementalBuilder="false" useMMPMacros="true"/>
+<storageModule moduleId="org.eclipse.cdt.core.settings">
+<cconfiguration id="Emulator Debug (WINSCW) [S60_2nd_FP2_CW]">
+<storageModule buildSystemId="com.nokia.carbide.cdt.builder.CarbideConfigurationDataProvider" id="Emulator Debug (WINSCW) [S60_2nd_FP2_CW]" moduleId="org.eclipse.cdt.core.settings" name="Emulator Debug (WINSCW) [S60_2nd_FP2_CW]">
+<externalSettings/>
+<extensions>
+<extension id="org.eclipse.cdt.core.PE" point="org.eclipse.cdt.core.BinaryParser"/>
+<extension id="org.eclipse.cdt.core.ELF" point="org.eclipse.cdt.core.BinaryParser"/>
+<extension id="com.nokia.cdt.debug.cw.symbian.SymbianE32" point="org.eclipse.cdt.core.BinaryParser"/>
+<extension id="com.nokia.carbide.cdt.builder.MakeDefErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+<extension id="com.nokia.carbide.cdt.builder.GCCErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+<extension id="com.nokia.carbide.cdt.builder.MWLDErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+<extension id="com.nokia.carbide.cdt.builder.CarbideMakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+<extension id="com.nokia.carbide.cdt.builder.RCOMPErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+<extension id="com.nokia.carbide.cdt.builder.MakmakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+</extensions>
+</storageModule>
+<storageModule moduleId="CarbideConfigurationDataProvider">
+<ENV_VAR_DATA_ID/>
+<ARGUMENTS_DATA_ID/>
+</storageModule>
+<storageModule filesCache="C:\Work\LemonPlayer_2nd\group\bld.inf;C:\Work\LemonPlayer_2nd\group\LemonPlayer.mmp;" includesCache="C:/Work/LemonPlayer_2nd/group[LOCAL];C:/Work/LemonPlayer_2nd/inc[LOCAL];C:/Work/LemonPlayer_2nd/Source/LPSound/inc[LOCAL];C:/Work/LemonPlayer_2nd/Source/LPPlaylist/inc[LOCAL];C:/Work/LemonPlayer_2nd/Source/LPDebug/inc[LOCAL];C:/Work/LemonPlayer_2nd/Source/LPView/inc[LOCAL];C:/Work/LemonPlayer_2nd/Source/LPUI/inc[LOCAL];C:/Work/LemonPlayer_2nd/Source/Tools/inc[LOCAL];C:/Work/LemonPlayer_2nd/Source/UIInterfaceECom[LOCAL];C:/Work/LemonPlayer_2nd/Source/CustomControl/inc[LOCAL];C:/Work/LemonPlayer_2nd/Source/Framework/inc[LOCAL];C:/Work/LemonPlayer_2nd/Source/AnimationEffect/inc[LOCAL];C:/Work/LemonPlayer_2nd/Source/LPTask/inc[LOCAL];C:/Work/LemonPlayer_2nd/Source/ImageLib/inc[LOCAL];C:/Work/LemonPlayer_2nd/Source/XmlLib/inc[LOCAL];C:/Work/LemonPlayer_2nd/Source/LPAnimation/inc[LOCAL];C:/Work/LemonPlayer_2nd/Source/LPData/inc[LOCAL];C:/Work/LemonPlayer_2nd/Source/LPTool/inc[LOCAL];C:/Work/LemonPlayer_2nd/group;C:/Symbian/8.0a/S60_2nd_FP2_CW/Epoc32/include;C:/Symbian/8.0a/S60_2nd_FP2_CW/Epoc32/include/libc;C:/Symbian/8.0a/S60_2nd_FP2_CW/Epoc32/include/ecom;C:/Symbian/8.0a/S60_2nd_FP2_CW/Epoc32/thirdinc;" macrosCache="__WINSCW__;__SYMBIAN32__;_UNICODE;_DEBUG;__DLL__;__WINS__;__CW32__;" moduleId="configDataCache" sourcesCache="/LemonPlayer/Source;/LemonPlayer/aif;/LemonPlayer/data;/LemonPlayer/group;/LemonPlayer/inc;/LemonPlayer/src;" timestampCache="1233889272234" useMmpMacrosCache="true"/>
+<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
+<storageModule moduleId="org.eclipse.cdt.core.language.mapping"/>
+</cconfiguration>
+</storageModule>
+</cproject>

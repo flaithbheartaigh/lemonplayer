@@ -1,0 +1,32 @@
+/**
+* 
+* @brief Project specification file for ECom Interface Collection dll
+*
+* Copyright (c) EMCC Software Ltd 2003
+* @version 1.0
+*/
+
+TARGET 0116C9D7.dll
+TARGETTYPE ECOMIIC
+
+// ECom Dll recognition UID followed by the unique UID for this dll
+UID 0x10009D8D 0x101FDA60
+
+SOURCEPATH	.
+SOURCE		main.cpp
+SOURCE		proxy.cpp
+
+SOURCEPATH 	..\LPView\src
+SOURCE UIList.cpp UIMain.cpp
+
+USERINCLUDE 	. ..\UIInterfaceECom ..\LPView\inc ..\LPUI\inc ..\Tools\inc
+SYSTEMINCLUDE 	\epoc32\include 
+SYSTEMINCLUDE 	\epoc32\include\ecom
+
+SOURCEPATH .
+RESOURCE 0116C9D7.rss
+
+LIBRARY euser.lib ECom.lib efsrv.lib
+
+
+

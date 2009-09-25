@@ -1,0 +1,29 @@
+08.11.03:
+1 增加Tools/MarcoUtil.h,
+  功能:安全删除宏
+2 增加虚类Tools/MFileOperate
+  功能:1 规范文件操作 2错误处理的观察者模式
+  
+08.11.05
+1 数据库管理模板
+TInt CreateDb(const TFileName& aNewBookFile);
+TInt OpenDb(const TFileName& aExistingBookFile);
+
+TInt RemoveDb(const TFileName& aExistingBookFile);
+
+AddElementL();
+AddElementsL();
+
+RemoveAllElements();
+RemoveElementBy...L();
+RemoveElementsBy...L();
+
+GetAllElementsL();
+GetElementBy...L()
+GetElementsBy...L()
+
+ModifyElementBy...L();
+ModifyElementsBy...L();
+
+09.02.04
+必须为多视图结构,因为有设置界面.
