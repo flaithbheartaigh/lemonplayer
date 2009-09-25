@@ -4,6 +4,52 @@
 #include <AknGlobalNote.h> 
 #include <aknnotewrappers.h> 
 
+/**********
+ * 
+ * RESOURCE DIALOG r_confirmation_query
+    {
+    flags = EGeneralQueryFlags;
+    buttons = R_AVKON_SOFTKEYS_YES_NO;
+    items =
+        {
+        DLG_LINE
+            {
+            type = EAknCtQuery;
+            id = EGeneralQuery;
+            control = AVKON_CONFIRMATION_QUERY
+                {
+                layout = EConfirmationQueryLayout;
+                label = STRING_r_contacts_con_label_text;
+                };
+            }
+        };
+    }
+
+RESOURCE DIALOG r_dialog_input
+    {
+    flags = EGeneralQueryFlags;
+    buttons = R_AVKON_SOFTKEYS_OK_CANCEL;
+    items =
+        {
+        DLG_LINE
+            {
+            type = EAknCtQuery;
+            id = EGeneralQuery;
+            control = AVKON_DATA_QUERY
+                {
+                layout = EDataLayout;
+                label = qtn_dialog_url;
+                control = EDWIN
+                    {
+                    maxlength = 40;
+                    };
+                };
+            }
+        };
+    }
+ * 
+ */
+
 TBool ShowConfirmationQueryL( const TInt& aTextResourceId )
     {
     HBufC* prompt = StringLoader::LoadLC( aTextResourceId );
