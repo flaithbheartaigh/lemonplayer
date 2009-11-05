@@ -107,7 +107,7 @@ RESOURCE TBUF r_about_dialog_text 		{ buf=qtn_about_dialog_text; }
 //
 // ---------------------------------------------------------------------------- 
 //
-//#ifdef EKA2
+#ifdef EKA2
 RESOURCE LOCALISABLE_APP_INFO r_localisable_app_info
 	{
 	short_caption = qtn_caption_string;
@@ -120,7 +120,7 @@ RESOURCE LOCALISABLE_APP_INFO r_localisable_app_info
 		icon_file = "\\resource\\apps\\LemonTangram_aif.mif";
 		};
 	}
-//#endif
+#endif
 
 //setting view
 // -----------------------------------------------------------------------------

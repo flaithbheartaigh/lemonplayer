@@ -10,13 +10,13 @@
 &EN,ZH
 
 ; standard SIS file header
-#{"LemonTangram","易查七巧板"},(0xEAE107BA),1,0,0
+#{"CloverTangram","三叶草七巧板"},(0xEAE107BA),1,0,0
 
 ;Localised Vendor name
-%{"Vendor-EN","Yicha"}
+%{"iCloverSoft","iCloverSoft"}
 
 ;Unique Vendor name
-:"Vendor"
+:"iCloverSoft"
 
 ;Supports Series 60 v 3.0
 [0x101F7961], 0, 0, 0, {"Series60ProductID","Series60ProductID"}
@@ -24,18 +24,18 @@
 ;Files to install
 ;You should change the source paths to match that of your environment
 ;<source> <destination>
-"C:\S60\devices\S60_3rd_FP2_SDK\Epoc32\release\gcce\urel\LemonTangram.exe"		-"!:\sys\bin\LemonTangram.exe"
+"C:\S60\devices\S60_3rd_FP2_SDK_v1.1\Epoc32\release\gcce\urel\LemonTangram.exe"		-"!:\sys\bin\LemonTangram.exe"
 {
-"C:\S60\devices\S60_3rd_FP2_SDK\Epoc32\data\z\resource\apps\LemonTangram.rsc"
-"C:\S60\devices\S60_3rd_FP2_SDK\Epoc32\data\z\resource\apps\LemonTangram.r31"
+"C:\S60\devices\S60_3rd_FP2_SDK_v1.1\Epoc32\data\z\resource\apps\LemonTangram.rsc"
+"C:\S60\devices\S60_3rd_FP2_SDK_v1.1\Epoc32\data\z\resource\apps\LemonTangram.r31"
 } -"!:\resource\apps\LemonTangram.rsc"
-"C:\S60\devices\S60_3rd_FP2_SDK\Epoc32\data\z\private\10003a3f\apps\LemonTangram_reg.rsc"	-"!:\private\10003a3f\import\apps\LemonTangram_reg.rsc"
-"C:\S60\devices\S60_3rd_FP2_SDK\Epoc32\data\z\resource\apps\LemonTangram_aif.mif" -"!:\resource\apps\LemonTangram_aif.mif"
+"C:\S60\devices\S60_3rd_FP2_SDK_v1.1\Epoc32\data\z\private\10003a3f\apps\LemonTangram_reg.rsc"	-"!:\private\10003a3f\import\apps\LemonTangram_reg.rsc"
+"C:\S60\devices\S60_3rd_FP2_SDK_v1.1\Epoc32\data\z\resource\apps\LemonTangram_aif.mif" -"!:\resource\apps\LemonTangram_aif.mif"
 "..\help\LemonTangram.hlp"							 -"!:\resource\help\LemonTangram.hlp"
-"C:\S60\devices\S60_3rd_FP2_SDK\epoc32\release\winscw\udeb\z\private\EAE107BA\lemontangram.mbm" -"!:\private\EAE107BA\lemontangram.mbm"
-"C:\S60\devices\S60_3rd_FP2_SDK\epoc32\release\winscw\udeb\z\private\EAE107BA\lemontangram.mif" -"!:\private\EAE107BA\lemontangram.mif"
+"C:\S60\devices\S60_3rd_FP2_SDK_v1.1\epoc32\release\winscw\udeb\z\private\EAE107BA\lemontangram.mbm" -"!:\private\EAE107BA\lemontangram.mbm"
+"C:\S60\devices\S60_3rd_FP2_SDK_v1.1\epoc32\release\winscw\udeb\z\private\EAE107BA\lemontangram.mif" -"!:\private\EAE107BA\lemontangram.mif"
 
-"C:\S60\devices\S60_3rd_FP2_SDK\epoc32\release\gcce\urel\SyExpat.dll"					-"!:\sys\bin\SyExpat.dll"
+"C:\S60\devices\S60_3rd_FP2_SDK_v1.1\epoc32\release\gcce\urel\SyExpat.dll"					-"!:\sys\bin\SyExpat.dll"
 
 ; Add any installation notes if applicable
 ;"LemonTangram.txt"		-"!:\private\EAE107BA\LemonTangram.txt"
