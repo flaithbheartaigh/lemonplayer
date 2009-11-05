@@ -1,8 +1,0 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<ui>
-<control name="play"  img="C:\lemonplayer\play.png"  x="10" y="10"></control>
-<control name="pause" img="C:\lemonplayer\pause.png" x="10" y="10"></control>
-<control name="stop"  img="C:\lemonplayer\stop.png"  x="50" y="10"></control>
-<control name="volumeitem"  img="C:\lemonplayer\volumeitem.png"  x="10" y="100"></control>
-<control name="volumeslip"  img="C:\lemonplayer\volumeslip.png"  x="24" y="104" slip="0,6"></control>
-</ui>

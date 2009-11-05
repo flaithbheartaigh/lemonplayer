@@ -1,7 +1,0 @@
-symbian不能Full duplex audio 
-
-语音处理的时候录音和播放同时进行不行吗
-http://discussion.forum.nokia.com/forum/showthread.php?t=100445
-
-S60 Platform: Full-Duplex Audio Example v2.0
-http://www.forum.nokia.com/info/sw.nokia.com/id/8b3a6ed3-e833-4f7c-aee1-4c773196f894/S60_Platform_Full-Duplex_Audio_Example_v2_0_en.zip.html
