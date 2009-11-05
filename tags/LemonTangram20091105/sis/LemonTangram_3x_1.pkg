@@ -1,0 +1,56 @@
+; Installation file for LemonTangram application
+;
+; This is an auto-generated PKG file by Carbide.
+; This file uses variables specific to Carbide builds that will not work
+; on command-line builds. If you want to use this generated PKG file from the
+; command-line tools you will need to modify the variables with the appropriate
+; values: $(EPOCROOT), $(PLATFORM), $(TARGET)
+;
+;Language - standard language definitions
+&EN,ZH
+
+; standard SIS file header
+#{"LemonTangram","ÄûÃÊÆßÇÉ°å"},(0xEAE107BA),1,0,0
+
+;Localised Vendor name
+%{"Vendor-EN","Vendor-ZH"}
+
+;Unique Vendor name
+:"Vendor"
+
+;Supports Series 60 v 3.0
+[0x101F7961], 0, 0, 0, {"Series60ProductID","Series60ProductID"}
+
+;Files to install
+;You should change the source paths to match that of your environment
+;<source> <destination>
+"C:\S60\devices\S60_3rd_FP2_SDK_v1.1\Epoc32\release\gcce\urel\LemonTangram.exe"		-"!:\sys\bin\LemonTangram.exe"
+"C:\S60\devices\S60_3rd_FP2_SDK_v1.1\Epoc32\data\z\resource\apps\LemonTangram.rsc"		-"!:\resource\apps\LemonTangram.rsc"
+"C:\S60\devices\S60_3rd_FP2_SDK_v1.1\Epoc32\data\z\private\10003a3f\apps\LemonTangram_reg.rsc"	-"!:\private\10003a3f\import\apps\LemonTangram_reg.rsc"
+"C:\S60\devices\S60_3rd_FP2_SDK_v1.1\Epoc32\data\z\resource\apps\LemonTangram_aif.mif" -"!:\resource\apps\LemonTangram_aif.mif"
+"..\help\LemonTangram.hlp"							 -"!:\resource\help\LemonTangram.hlp"
+"C:\S60\devices\S60_3rd_FP2_SDK_v1.1\epoc32\release\winscw\udeb\z\private\EAE107BA\lemontangram.mbm" -"!:\private\EAE107BA\lemontangram.mbm"
+"C:\S60\devices\S60_3rd_FP2_SDK_v1.1\epoc32\release\winscw\udeb\z\private\EAE107BA\lemontangram.mif" -"!:\private\EAE107BA\lemontangram.mif"
+
+"C:\S60\devices\S60_3rd_FP2_SDK_v1.1\epoc32\release\gcce\urel\SyExpat.dll"					-"!:\sys\bin\SyExpat.dll"
+
+; Add any installation notes if applicable
+;"LemonTangram.txt"		-"!:\private\EAE107BA\LemonTangram.txt"
+
+;required for application to be covered by backup/restore facility 
+"..\sis\backup_registration.xml"		-"!:\private\EAE107BA\backup_registration.xml"
+
+"..\resource\mytangram.xml"		-"!:\private\EAE107BA\mytangram.xml"
+"..\resource\setup.ini"				-"!:\private\EAE107BA\setup.ini"
+"..\resource\tangvect.xml"		-"!:\private\EAE107BA\tangvect.xml"
+"..\resource\tangmenu.en.xml"	-"!:\private\EAE107BA\tangmenu.en.xml"
+"..\resource\tangmenu.zh.xml"	-"!:\private\EAE107BA\tangmenu.zh.xml"
+"..\resource\tangramvect\bigtriangle1.bmp" 	-"c:\tangramvect\bigtriangle1.bmp"
+"..\resource\tangramvect\bigtriangle2.bmp" 	-"c:\tangramvect\bigtriangle2.bmp"
+"..\resource\tangramvect\midtriangle.bmp" 	-"c:\tangramvect\midtriangle.bmp"
+"..\resource\tangramvect\smalltriangle1.bmp" -"c:\tangramvect\smalltriangle1.bmp"
+"..\resource\tangramvect\smalltriangle2.bmp" -"c:\tangramvect\smalltriangle2.bmp"
+"..\resource\tangramvect\rect.bmp" 					-"c:\tangramvect\rect.bmp"
+"..\resource\tangramvect\square.bmp" 				-"c:\tangramvect\square.bmp"
+"..\resource\tangramvect\active.jpg" 				-"c:\tangramvect\active.jpg"
+"..\resource\tangramvect\focus.jpg" 				-"c:\tangramvect\focus.jpg"

@@ -1,0 +1,79 @@
+﻿/*
+============================================================================
+ Name		: LemonTangram.rls
+ Author	  : zengcity
+ Copyright   : Your copyright notice
+ Description : This is a localisation file for LemonTangram
+				A .rls file is the one and only place where the logical
+				strings to be localised are defined. 
+============================================================================
+*/
+
+//  LOCALISATION STRINGS
+CHARACTER_SET UTF8
+
+// Caption string for app.
+rls_string qtn_caption_string "三叶草七巧板"
+rls_string qtn_app_short_caption_string "三叶草七巧板"
+
+rls_string qtn_loc_resource_file_1 "\\resource\\apps\\LemonTangram_0xEAE107BA"
+
+rls_string qtn_about_dialog_text "LemonTangram Version 1.0.0\n\nAuthor: zengcity\n\nSupport: support@mycompany.com\n\n(c) Your copyright notice"
+
+rls_string qtn_res_main_menu "tangmenu.zh.xml"
+
+rls_string qtn_text_default "默认"
+
+rls_string qtn_setting_title "设置"
+
+rls_string qtn_setting_skin_folder "皮肤文件夹"
+rls_string qtn_setting_skin_choose "选择皮肤"
+rls_string qtn_setting_save_folder "保存截图文件夹"
+
+rls_string qtn_setting_option	"选项"
+rls_string qtn_setting_change 	"修改"
+rls_string qtn_setting_back		"返回"
+
+rls_string qtn_option_left_active  "选择"
+rls_string qtn_option_right_active "返回"
+rls_string qtn_option_left_hide 	"选项"
+rls_string qtn_option_right_hide 	"退出"
+
+rls_string qtn_dlg_confirm_save_progress 	"保存进度会覆盖上次进度,是否继续"
+rls_string qtn_dlg_save_progress 			"保存进度"
+rls_string qtn_dlg_save_progress_success	"保存进度成功"
+
+rls_string qtn_dlg_confirm_open_progress 	"打开进度会覆盖当前进度,请注意保持,是否继续"
+rls_string qtn_dlg_open_progress 			"打开进度"
+
+rls_string qtn_dlg_confirm_reset_progress 	"重置会覆盖当前进度,请注意保存,是否继续"
+rls_string qtn_dlg_reset_progress 	"重置"
+
+rls_string qtn_dlg_save_screen_input_name 	"输入保存图像名称"
+rls_string qtn_dlg_save_screen 				"保存图像"
+rls_string qtn_dlg_save_screen_success 		"保存图像成功"
+
+rls_string qtn_dlg_input_folder_error	"文件夹输入错误"
+
+rls_string qtn_dlg_overwrite_file		"文件已存在,是否覆盖"
+
+rls_string qtn_dlg_exit_confirm		"请注意保存进度,确定要离开程序么"
+
+rls_string qtn_dlg_error		"错误:"
+
+rls_string qtn_dlg_err_load_pic		"读取图片错误,退出程序"
+rls_string qtn_dlg_err_load_pic_file_xml "读取图片文件错误,退出程序"
+rls_string qtn_dlg_err_load_pic_data_xml "读取图片数据错误,退出程序"
+rls_string qtn_dlg_err_load_menu	"读取菜单错误,退出程序"
+
+rls_string qtn_dlg_warn_config_lost	"配置文件丢失,读取默认"
+rls_string qtn_dlg_warn_load_pic_file_next_default "读取图片文件错误,读取默认"
+
+rls_string qtn_dlg_warn_setting_init	"设置初始化错误"
+rls_string qtn_dlg_warn_setting_list	"设置初始化创建条目错误"
+
+rls_string qtn_dlg_warn_func_save_process	"保存进度错误"
+rls_string qtn_dlg_warn_func_reset_process	"重置进度错误"
+rls_string qtn_dlg_warn_func_open_process	"打开进度错误"
+rls_string qtn_dlg_warn_func_save_screen	"屏幕截图错误"
+// End of File
