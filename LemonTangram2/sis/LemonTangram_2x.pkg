@@ -1,0 +1,37 @@
+; Installation file for LemonTangram application
+;
+; This is an auto-generated PKG file by Carbide.
+; This file uses variables specific to Carbide builds that will not work
+; on command-line builds. If you want to use this generated PKG file from the
+; command-line tools you will need to modify the variables with the appropriate
+; values: $(EPOCROOT), $(PLATFORM), $(TARGET)
+;
+;Language - standard language definitions
+&EN,ZH
+
+; standard SIS file header
+#{"LemonTangram","ÄûÃÊÆßÇÉ°å"},(0x1AE107BA),1,0,0
+
+;Localised Vendor name
+%{"Vendor-EN","Vendor-ZH"}
+
+;Unique Vendor name
+:"Vendor"
+
+;Supports Series 60 v 3.0
+[0x101F7961], 0, 0, 0, {"Series60ProductID","Series60ProductID"}
+
+;Files to install
+;You should change the source paths to match that of your environment
+;<source> <destination>
+"$(EPOCROOT)Epoc32\release\$(PLATFORM)\$(TARGET)\LemonTangram_0xEAE107BA.exe"		-"!:\sys\bin\LemonTangram_0xEAE107BA.exe"
+"$(EPOCROOT)Epoc32\data\z\resource\apps\LemonTangram_0xEAE107BA.rsc"		-"!:\resource\apps\LemonTangram_0xEAE107BA.rsc"
+"$(EPOCROOT)Epoc32\data\z\private\10003a3f\apps\LemonTangram_0xEAE107BA_reg.rsc"	-"!:\private\10003a3f\import\apps\LemonTangram_0xEAE107BA_reg.rsc"
+"$(EPOCROOT)Epoc32\data\z\resource\apps\LemonTangram_0xEAE107BA.mif" -"!:\resource\apps\LemonTangram_0xEAE107BA.mif"
+"..\help\LemonTangram_0xEAE107BA.hlp"							 -"!:\resource\help\LemonTangram_0xEAE107BA.hlp"
+
+; Add any installation notes if applicable
+;"LemonTangram.txt"		-"!:\private\EAE107BA\LemonTangram.txt"
+
+;required for application to be covered by backup/restore facility 
+"..\sis\backup_registration.xml"		-"!:\private\EAE107BA\backup_registration.xml"

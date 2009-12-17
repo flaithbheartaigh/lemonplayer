@@ -1,0 +1,24 @@
+/*
+============================================================================
+ Name		: bld.inf
+ Author	  : zengcity
+ Copyright   : Your copyright notice
+ Description : This file provides the information required for building the
+				whole of a LemonTangram.
+============================================================================
+*/
+
+
+
+PRJ_MMPFILES
+
+#ifdef EKA2
+gnumakefile ..\help\build_help.mk
+//gnumakefile icons_scalable_dc.mk
+gnumakefile LemonTangrame_Image.mk
+LemonTangram_3x.mmp
+#else
+gnumakefile ..\help\build_help_2x.mk
+LemonTangram_2x.mmp
+#endif
+

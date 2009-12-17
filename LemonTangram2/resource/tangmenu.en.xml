@@ -1,0 +1,11 @@
+<menudata>
+<menu parent="-1">
+<item text="Save" id="100" command="100"></item>
+<item text="Reset" command="200"></item> 
+<item text="Open" command="300"></item> 
+<item text="Snapshot" command="400"></item> 
+<item text="Setting" command="500"></item> 
+<item text="Help" command="600"></item> 
+<item text="Exit" command="700"></item> 
+</menu>
+</menudata>
