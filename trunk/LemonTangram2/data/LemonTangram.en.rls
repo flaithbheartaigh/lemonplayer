@@ -1,0 +1,78 @@
+/*
+============================================================================
+ Name		: LemonTangram.rls
+ Author	  : zengcity
+ Copyright   : Your copyright notice
+ Description : This is a localisation file for LemonTangram
+				A .rls file is the one and only place where the logical
+				strings to be localised are defined. 
+============================================================================
+*/
+
+//  LOCALISATION STRINGS
+
+// Caption string for app.
+rls_string qtn_caption_string "CloverTangram"
+rls_string qtn_app_short_caption_string "CloverTangram"
+
+rls_string qtn_loc_resource_file_1 "\\resource\\apps\\LemonTangram"
+
+rls_string qtn_about_dialog_text "LemonTangram Version 1.0.0\n\nAuthor: zengcity\n\nSupport: support@mycompany.com\n\n(c) Your copyright notice"
+
+rls_string qtn_res_main_menu "tangmenu.en.xml"
+
+rls_string qtn_text_default "Default"
+
+rls_string qtn_setting_title "Setting"
+
+rls_string qtn_setting_skin_folder "Skin Folder"
+rls_string qtn_setting_skin_choose "Skin Choose"
+rls_string qtn_setting_save_folder "Save Foloder"
+
+rls_string qtn_setting_option	"Option"
+rls_string qtn_setting_change 	"Change"
+rls_string qtn_setting_back		"Back"
+
+rls_string qtn_option_left_active  "Choose"
+rls_string qtn_option_right_active "Cancel"
+rls_string qtn_option_left_hide 	"Option"
+rls_string qtn_option_right_hide 	"Exit"
+
+rls_string qtn_dlg_confirm_save_progress	"Save Progress will overwrite last progress,continue"
+rls_string qtn_dlg_save_progress			"Save Progress"
+rls_string qtn_dlg_save_progress_success	"Save Progress Success"
+
+rls_string qtn_dlg_confirm_open_progress	"Open Progress will overwrite current progress,continue"
+rls_string qtn_dlg_open_progress			"Open Progress"
+
+rls_string qtn_dlg_confirm_reset_progress	"Reset will overwrite current progress,continue"
+rls_string qtn_dlg_reset_progress			"Reset"
+
+rls_string qtn_dlg_save_screen_input_name 	"input snapshot name"
+rls_string qtn_dlg_save_screen 				"snapshot"
+rls_string qtn_dlg_save_screen_success 		"snapshot success"
+
+rls_string qtn_dlg_input_folder_error	"Folder eidt error"
+
+rls_string qtn_dlg_overwrite_file		"File exist,overwrite"
+
+rls_string qtn_dlg_exit_confirm		"Please save the progress,confirm exit"
+
+rls_string qtn_dlg_error		"Error:"
+
+rls_string qtn_dlg_err_load_pic		"Load picture error,exit"
+rls_string qtn_dlg_err_load_pic_file_xml "Load picture file error,exit"
+rls_string qtn_dlg_err_load_pic_data_xml "Load picture data error,exit"
+rls_string qtn_dlg_err_load_menu	"Load menu error,exit"
+
+rls_string qtn_dlg_warn_config_lost	"Congfig file lost,ready default"
+rls_string qtn_dlg_warn_load_pic_file_next_default "Load picture file error,load default"
+
+rls_string qtn_dlg_warn_setting_init	"Init setting error"
+rls_string qtn_dlg_warn_setting_list	"Init setting item error"
+
+rls_string qtn_dlg_warn_func_save_process	"Save process error"
+rls_string qtn_dlg_warn_func_reset_process	"Reset process error"
+rls_string qtn_dlg_warn_func_open_process	"Open process error"
+rls_string qtn_dlg_warn_func_save_screen	"Snapshot error"
+// End of File

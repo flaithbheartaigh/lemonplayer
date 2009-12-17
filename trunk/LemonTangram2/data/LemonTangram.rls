@@ -1,0 +1,18 @@
+/*
+============================================================================
+ Name		: LemonTangram.rls
+ Author	  : zengcity
+ Copyright   : Your copyright notice
+ Description : This is a localisation file for LemonTangram
+				A .rls file is the one and only place where the logical
+				strings to be localised are defined. 
+============================================================================
+*/
+#ifdef LANGUAGE_SC
+#include "LemonTangram.en.rls"   // default U.K. English
+#elif defined LANGUAGE_01
+#include "LemonTangram.en.rls"   // U.K. English
+#elif defined LANGUAGE_31
+#include "LemonTangram.zh.rls"   // PRC Chinese
+#endif
+// End of File
