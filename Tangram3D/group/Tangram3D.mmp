@@ -1,0 +1,68 @@
+/*
+============================================================================
+ Name		: Tangram3D.mmp
+ Author	  : 
+ Copyright   : Your copyright notice
+ Description : This is the project specification file for Tangram3D.
+============================================================================
+*/
+
+
+TARGET			Tangram3D_0xE5FE764F.exe
+TARGETTYPE		exe
+UID		  0x100039CE 0xE5FE764F
+
+SOURCEPATH		..\src
+SOURCE			Tangram3D.cpp
+SOURCE			Tangram3DApplication.cpp
+SOURCE			Tangram3DAppView.cpp
+SOURCE			Tangram3DAppUi.cpp
+SOURCE			Tangram3DDocument.cpp
+
+SOURCEPATH		..\data
+
+START RESOURCE	Tangram3D.rss
+HEADER
+TARGET Tangram3D_0xE5FE764F
+TARGETPATH resource\apps
+END //RESOURCE
+
+START RESOURCE	Tangram3D_reg.rss
+TARGET Tangram3D_0xE5FE764F_reg
+TARGETPATH 	  \private\10003a3f\apps
+END //RESOURCE
+
+
+
+USERINCLUDE	   ..\inc
+USERINCLUDE    ..\help
+USERINCLUDE	   ..\utils
+
+SYSTEMINCLUDE	 \epoc32\include
+
+LIBRARY		   euser.lib
+LIBRARY		   apparc.lib
+LIBRARY		   cone.lib
+LIBRARY		   eikcore.lib
+LIBRARY		   avkon.lib
+LIBRARY		   commonengine.lib
+LIBRARY		   efsrv.lib 
+LIBRARY		   estor.lib
+LIBRARY        aknnotify.lib
+LIBRARY        hlplch.lib libgles_cm.lib ws32.lib imageconversion.lib fbscli.lib
+ 
+
+LANG SC
+
+VENDORID	  	  0
+SECUREID		  0xE5FE764F
+CAPABILITY	  	  ReadUserData
+
+#ifdef ENABLE_ABIV2_MODE
+DEBUGGABLE_UDEBONLY
+#endif
+// End of File
+SOURCEPATH ..\src
+SOURCE LT3DEngine.cpp
+SOURCEPATH ..\Utils
+SOURCE Glutils.cpp Mathutils.cpp Textureutils.cpp Utils3d.cpp

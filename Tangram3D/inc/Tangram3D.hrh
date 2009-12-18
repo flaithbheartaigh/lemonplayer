@@ -1,0 +1,24 @@
+/*
+ ============================================================================
+ Name		: Tangram3D.hrh
+ Author	  : 
+ Copyright   : Your copyright notice
+ Description : This file contains declarations for constants of Tangram3D.
+ The file can be included in C++ or resource file.
+ ============================================================================
+ */
+#ifndef __TANGRAM3D_HRH__
+#define __TANGRAM3D_HRH__
+
+#define _UID3 0xE5FE764F
+
+// Tangram3D enumerate command codes
+enum TTangram3DIds
+	{
+	ECommand1 = 0x6001, // start value must not be 0
+	ECommand2,
+	EHelp,
+	EAbout
+	};
+
+#endif // __TANGRAM3D_HRH__
