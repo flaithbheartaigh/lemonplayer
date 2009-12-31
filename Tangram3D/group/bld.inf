@@ -14,7 +14,7 @@ WINSCW ARMV5 GCCE
 
 PRJ_EXPORTS
 ..\inc\ogles.jpg       ..\release\wins\udeb\z\private\E5FE764F\ogles.jpg
-..\inc\ogles.jpg       ..\release\winscw\udeb\z\private\E5FE764F\ogles.jpg
+..\inc\Star.bmp       ..\release\winscw\udeb\z\private\E5FE764F\Star.bmp
 
 PRJ_MMPFILES
 

@@ -28,6 +28,9 @@
 "$(EPOCROOT)Epoc32\data\z\resource\apps\Tangram3D_0xE5FE764F.rsc"		-"!:\resource\apps\Tangram3D_0xE5FE764F.rsc"
 "$(EPOCROOT)Epoc32\data\z\private\10003a3f\apps\Tangram3D_0xE5FE764F_reg.rsc"	-"!:\private\10003a3f\import\apps\Tangram3D_0xE5FE764F_reg.rsc"
 "$(EPOCROOT)Epoc32\data\z\resource\apps\Tangram3D_0xE5FE764F.mif" -"!:\resource\apps\Tangram3D_0xE5FE764F.mif"
+"..\inc\ogles.jpg"                                                -"!:\private\E5FE764F\ogles.jpg"
+"..\inc\Star.bmp"                                                -"!:\private\E5FE764F\Star.bmp"
+
 "..\help\Tangram3D_0xE5FE764F.hlp"							 -"!:\resource\help\Tangram3D_0xE5FE764F.hlp"
 
 ; Add any installation notes if applicable

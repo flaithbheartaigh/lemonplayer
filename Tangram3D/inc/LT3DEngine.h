@@ -76,9 +76,28 @@ public:
 	void SetRedererState();
 	void Render();
 	
+	void Up();
+	void Down();
+	void Left();
+	void Right();
+	void Change();
+	void RotateClockwise();
+	void RotateAnticlockwise();
+	
+    void ToggleLighting( void );
+    void ToggleLamp( void );
+    void ToggleSpot( void );
+	
 public:
 	GLint iCameraDistance;
-	GLint iRotate;
+	GLint iRotate[7];
+	GLint iTranslateX;
+	GLint iTranslateY;
+	GLint iTranslate[7][2];
+	
+	TBool iLightingEnabled;
+	TBool iLampEnabled;
+    TBool iSpotEnabled;
 	
 private:
 	CCoeControl* iParentControl;
@@ -93,6 +112,12 @@ private:
 	
 	CTextureManager * iTextureManager;
 	TTexture iOpenGLES;
+	TTexture iStar;
+	
+	TBool iShow[7];
+	TInt iShowIndex;
+	
+	TBool iIsActive;
 	};
 
 #endif // LT3DENGINE_H

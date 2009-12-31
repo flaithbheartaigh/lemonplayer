@@ -107,9 +107,14 @@ void CTangram3DAppView::Draw(const TRect& /*aRect*/) const
 	gc.SetPenStyle(CGraphicsContext::ESolidPen);
 	gc.SetPenColor(KRgbRed);
 	gc.UseFont(CEikonEnv::Static()->LegendFont());
-	TBuf<16> number;
-	number.AppendNum(iEngine->iCameraDistance);
-	gc.DrawText(number, TPoint(30, 30));
+	_LIT(KInfo1,"Trans x:%d y:%d,Rotate %d");
+	_LIT(KInfo2,"Light:%d Lamp:%d Spot:%d");
+	TBuf<64> number;
+	//number.Format(KInfo1,iEngine->iTranslateX,iEngine->iTranslateY,iEngine->iRotate);
+	//gc.DrawText(number, TPoint(30, 30));
+	
+	number.Format(KInfo2,iEngine->iLightingEnabled,iEngine->iLampEnabled,iEngine->iSpotEnabled);
+	gc.DrawText(number, TPoint(30, 50));
 	}
 
 // -----------------------------------------------------------------------------
@@ -154,22 +159,46 @@ TKeyResponse CTangram3DAppView::OfferKeyEventL(const TKeyEvent& aKeyEvent,
 			switch (aKeyEvent.iCode)
 				{
 				case EKeyUpArrow:
-					iEngine->iCameraDistance++;
+					iEngine->Up();
 					break;
 				case EKeyDownArrow:
-					iEngine->iCameraDistance--;
+					iEngine->Down();
 					break;
 				case EKeyLeftArrow:
-					iEngine->iCameraDistance +=10;
+					iEngine->Left();
 					break;
 				case EKeyRightArrow:
-					iEngine->iCameraDistance -=10;
+					iEngine->Right();
+					break;
+				case EKeyDevice3:
+					iEngine->Change();
 					break;
 				case '4':
-					iEngine->iRotate -= 10;
+					iEngine->iTranslateX--;
 					break;
 				case '6':
-					iEngine->iRotate += 10;
+					iEngine->iTranslateX++;
+					break;
+				case '2':
+					iEngine->iTranslateY++;
+					break;
+				case '8':
+					iEngine->iTranslateY--;
+					break;
+				case '7':
+					iEngine->RotateClockwise();
+					break;
+				case '9':
+					iEngine->RotateAnticlockwise();
+					break;
+				case '*':
+					iEngine->ToggleLighting();
+					break;
+				case '0':
+					iEngine->ToggleLamp();
+					break;
+				case '#':
+					iEngine->ToggleSpot();
 					break;
 				}
 			break;
