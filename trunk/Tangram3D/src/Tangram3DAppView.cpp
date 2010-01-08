@@ -115,6 +115,13 @@ void CTangram3DAppView::Draw(const TRect& /*aRect*/) const
 	
 	number.Format(KInfo2,iEngine->iLightingEnabled,iEngine->iLampEnabled,iEngine->iSpotEnabled);
 	gc.DrawText(number, TPoint(30, 50));
+	
+	gc.SetBrushStyle(CGraphicsContext::ENullBrush);
+	
+	TRect rect;
+	rect.SetSize(TSize(200,200));
+	rect.Move(((Rect().Width() - 200)>>1),((Rect().Height() - 200 )>>1));
+	gc.DrawRect(rect);
 	}
 
 // -----------------------------------------------------------------------------

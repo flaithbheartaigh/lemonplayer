@@ -764,4 +764,24 @@ void CLT3DEngine::ToggleSpot( void )
         iSpotEnabled = ETrue;
         glEnable( GL_LIGHT1 );
         }
+    /*
+    GLint viewport[4];
+    GLdouble modelview[16];
+    GLdouble projection[16];
+    GLfloat winX,winY,winZ;
+    GLdouble object_x,object_y,object_z;
+    int mouse_x,mouse_y;
+    char str[80];
+    
+    glInitNames();
+    
+    glGetDoublev(GL_MODELVIEW_MATRIX, modelview);
+    	            glGetDoublev(GL_PROJECTION_MATRIX, projection);
+    	            glGetIntegerv(GL_VIEWPORT, viewport);
+    				winX=(float)mouse_x;
+    				winY=(float)viewport[3]-(float)mouse_y;
+    				//glReadBuffer(GL_BACK);
+    				glReadPixels(mouse_x,int(winY),1,1,GL_DEPTH_COMPONENT,GL_FLOAT,&winZ);
+    				gluUnProject((GLdouble)winX,(GLdouble)winY,(GLdouble)winZ,modelview,projection,viewport,&object_x,&object_y,&object_z);
+    				*/
     }
