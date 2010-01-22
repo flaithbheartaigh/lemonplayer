@@ -9,6 +9,7 @@
  */
 
 #include "LT3DEngine.h"
+#include "Particles.h"
 
 // MACROS
 #define FRUSTUM_LEFT   -1.f     //left vertical clipping plane
@@ -37,8 +38,10 @@ CLT3DEngine::CLT3DEngine(CCoeControl* aParentControl, RWindow* aParentWindow) :
 	}
 
 CLT3DEngine::~CLT3DEngine()
-	{
+	{	
 	delete iTextureManager;
+//	delete iParticles;
+	
 
 	eglMakeCurrent(iEglDisplay, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT );
 	eglDestroySurface(iEglDisplay, iEglSurface);
@@ -137,6 +140,7 @@ void CLT3DEngine::ConstructL()
 	/* Make the context current. Binds to the current rendering thread and surface. Use the same surface for both drawing and reading */
 	eglMakeCurrent(iEglDisplay, iEglSurface, iEglSurface, iEglContext);
 
+//	iParticles = CParticles::NewL();
 	iTextureManager = CTextureManager::NewL(iScreenWidth, iScreenHeight,
 			FRUSTUM_TOP, FRUSTUM_BOTTOM, FRUSTUM_RIGHT, FRUSTUM_LEFT,
 			FRUSTUM_NEAR, this);
@@ -146,16 +150,16 @@ void CLT3DEngine::ConstructL()
 
 static const GLbyte verticesTangram[10 * 3] =
 	{
-			-4,			4,			1,
-			4,			4,			1,
-			2,			2,			1,
-			0,			0,			1,
-			4,			0,			1,
-			-2,			-2,			1,
-			2,			-2,			1,
-			-4,			-4,			1,
-			0,			-4,			1,
-			4,			-4,			1,
+			-4,			4,			
+			4,			4,			
+			2,			2,			
+			0,			0,			
+			4,			0,			
+			-2,			-2,			
+			2,			-2,			
+			-4,			-4,			
+			0,			-4,			
+			4,			-4,			
 
 	};
 
@@ -256,46 +260,6 @@ static const GLbyte normals[24 * 3] =
 #define MATERIAL_MAX 1
 #define LIGHT_MAX    1
 
-#define MATERIALCOLOR(r, g, b, a)     \
-       (GLfloat)(r * MATERIAL_MAX),   \
-       (GLfloat)(g * MATERIAL_MAX),   \
-       (GLfloat)(b * MATERIAL_MAX),   \
-       (GLfloat)(a * MATERIAL_MAX)
-
-#define LIGHTCOLOR(r, g, b, a)        \
-       (GLfloat)(r * LIGHT_MAX),      \
-       (GLfloat)(g * LIGHT_MAX),      \
-       (GLfloat)(b * LIGHT_MAX),      \
-       (GLfloat)(a * LIGHT_MAX)
-
-/** Materials for the duck object. */
-static const GLfloat objDiffuseDuck[4]  = { MATERIALCOLOR(0.8, 0.8, 0.2, 1.0) };
-static const GLfloat objAmbientDuck[4]  = { MATERIALCOLOR(0.8, 0.8, 0.2, 1.0) };
-static const GLfloat objSpecularDuck[4] = { MATERIALCOLOR(1.0, 1.0, 1.0, 1.0) };
-static const GLfloat objEmissionDuck[4] = { MATERIALCOLOR(0.0, 0.0, 0.0, 1.0) };
-
-/* Global ambient light. */
-//static const GLfloat globalAmbient[4]   = { LIGHTCOLOR(0.0, 0.0, 0.0, 1.0) };
-static const GLfloat globalAmbient[4]   = { LIGHTCOLOR(0.0, 0.0, 0.0, 1.0) };
-
-/* Lamp parameters. */
-static const GLfloat lightDiffuseLamp[4]   = { LIGHTCOLOR(0.7, 0.7, 0.7, 1.0) };
-static const GLfloat lightAmbientLamp[4]   = { LIGHTCOLOR(0.3, 0.3, 0.3, 1.0) };
-//static const GLfloat lightAmbientLamp[4]   = { LIGHTCOLOR(0.0, 0.0, 0.0, 1.0) };
-static const GLfloat lightPositionLamp[4]  = { 0, 10, 10, 0 };
-//static const GLfloat lightPositionLamp[4]  = { 0, 0, 10, 0 };
-
-//static const GLfloat lightDiffuseLamp[4]   = { LIGHTCOLOR(1.0, 1.0, 1.0, 1.0) };
-//static const GLfloat lightAmbientLamp[4]   = { LIGHTCOLOR(1.0, 1.0, 1.0, 1.0) };
-//static const GLfloat lightPositionLamp[4]  = { 0, 10, 10, 0 };
-
-/* Spotlight parameters. */
-static const GLfloat lightDiffuseSpot[4]   = { LIGHTCOLOR(0.0, 0.0, 0.0, 1.0) };
-static const GLfloat lightAmbientSpot[4]   = { LIGHTCOLOR(0.0, 0.0, 0.0, 1.0) };
-static const GLfloat lightSpecularSpot[4]  = { LIGHTCOLOR(0.0, 0.0, 3.0, 1.0) };
-static const GLfloat lightPositionSpot[4]  = {  0, -10, -1, 0 };
-static const GLfloat lightDirectionSpot[4] = {  0,  10,  1, 1 };
-
 static const GLint offsetTangram[7][2] = { {0,2},{-2,0},{1,0},{-2,-3},{3,-3},{0,-2},{3,1},};
 
 void CLT3DEngine::SetRedererState()
@@ -307,19 +271,23 @@ void CLT3DEngine::SetRedererState()
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	GLfloat aspectRatio = (GLfloat) (iScreenWidth) / (GLfloat) (iScreenHeight);
-	glFrustumf(FRUSTUM_LEFT * aspectRatio, FRUSTUM_RIGHT * aspectRatio,
-			FRUSTUM_BOTTOM, FRUSTUM_TOP,
-			FRUSTUM_NEAR, FRUSTUM_FAR );
+//	glFrustumf(FRUSTUM_LEFT * aspectRatio, FRUSTUM_RIGHT * aspectRatio,
+//			FRUSTUM_BOTTOM, FRUSTUM_TOP,
+//			FRUSTUM_NEAR, FRUSTUM_FAR );
+	
+	GLint width,height;
+	width = iScreenWidth  >> 1;
+	height = iScreenHeight >> 1;
+	glOrthof((float)-width, (float) width, (float)-height, (float) height, -1, 1); // set the same size as viewport
+	
 	glMatrixMode(GL_MODELVIEW);
 
 	// Set the screen background color.
 	glClearColor(0.f, 0.f, 0.f, 1.f);
 
 	// Enable back face culling.
-	glEnable(GL_CULL_FACE);
+//	glEnable(GL_CULL_FACE);
 	glEnable(GL_TEXTURE_2D);
-	glEnable( GL_LIGHTING   );
-	//     glEnable( GL_NORMALIZE  );
 
 	glMatrixMode(GL_TEXTURE);
 	glLoadIdentity();
@@ -332,41 +300,10 @@ void CLT3DEngine::SetRedererState()
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 	//     glEnableClientState( GL_NORMAL_ARRAY        );
-
-    // Set up global ambient light.
-    glLightModelfv( GL_LIGHT_MODEL_AMBIENT, globalAmbient );
-
-    // Set up lamp.
-    glEnable( GL_LIGHT0 );
-    glLightfv(  GL_LIGHT0, GL_DIFFUSE,  lightDiffuseLamp  );
-    glLightfv(  GL_LIGHT0, GL_AMBIENT,  lightAmbientLamp  );
-    glLightfv(  GL_LIGHT0, GL_SPECULAR, lightDiffuseLamp  );
-    glLightfv(  GL_LIGHT0, GL_POSITION, lightPositionLamp );
-
-    // Set up spot.  Initially spot is disabled.
-//    glLightfv(  GL_LIGHT1, GL_DIFFUSE,  lightDiffuseSpot  );
-//    glLightfv(  GL_LIGHT1, GL_AMBIENT,  lightAmbientSpot  );
-//    glLightfv(  GL_LIGHT1, GL_SPECULAR, lightSpecularSpot );
-//    glLightfv(  GL_LIGHT1, GL_POSITION, lightPositionSpot );
-//	
-//    glLightf(   GL_LIGHT1, GL_CONSTANT_ATTENUATION,  1.5  );
-//    glLightf(   GL_LIGHT1, GL_LINEAR_ATTENUATION,    0.5  );
-//    glLightf(   GL_LIGHT1, GL_QUADRATIC_ATTENUATION, 0.5  );
-//
-//    glLightf(   GL_LIGHT1, GL_SPOT_CUTOFF,   17.0                );
-//    glLightf(   GL_LIGHT1, GL_SPOT_EXPONENT,  2.0                );
-//    glLightfv(  GL_LIGHT1, GL_SPOT_DIRECTION, lightDirectionSpot );
-    
-    // Set duck material
-//    glMaterialfv(   GL_FRONT_AND_BACK, GL_DIFFUSE,  objDiffuseDuck      );
-//    glMaterialfv(   GL_FRONT_AND_BACK, GL_AMBIENT,  objAmbientDuck      );
-//    glMaterialfv(   GL_FRONT_AND_BACK, GL_SPECULAR, objSpecularDuck     );
-//    glMaterialfv(   GL_FRONT_AND_BACK, GL_EMISSION, objEmissionDuck     );
-//    glMaterialx( GL_FRONT_AND_BACK, GL_SHININESS,   10 << 16         );
 	    
 	// Set array pointers.
-	glVertexPointer(3, GL_BYTE, 0, verticesTangram);
-	glTexCoordPointer(2, GL_BYTE, 0, nokTexCoordsTangram);
+//	glVertexPointer(2, GL_BYTE, 0, verticesTangram);
+//	glTexCoordPointer(2, GL_BYTE, 0, nokTexCoordsTangram);
 	//     glNormalPointer(   GL_BYTE, 0, normals         );
 
 	// Enable color arrays.
@@ -380,17 +317,18 @@ void CLT3DEngine::SetRedererState()
 	glShadeModel(GL_SMOOTH);
 
 	glBlendFunc(GL_ONE, GL_ONE );
-
-    iLightingEnabled = ETrue;          // Lighting is enabled
-    iLampEnabled     = ETrue;          // Lamp is enabled
-    iSpotEnabled     = EFalse;         // Spot is disabled
     
 	// Do not use perspective correction
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_FASTEST );
+	
+//	iParticles->Init();
 	_LIT(KOGLESTexture, "ogles.jpg");
 	iTextureManager->RequestToLoad(KOGLESTexture, &iOpenGLES);
-	_LIT(KStar, "Star.bmp");
-	iTextureManager->RequestToLoad(KStar, &iStar);
+//	_LIT(KStar, "Star.bmp");
+//	iTextureManager->RequestToLoad(KStar, &iStar);
+//	_LIT(KParticle, "Particle.jpg");
+//	iTextureManager->RequestToLoad(KParticle, &iTextureParticle);
+//	iParticles->InitTexture(iTextureManager);
 	iTextureManager->DoLoadL();
 	}
 
@@ -399,52 +337,29 @@ void CLT3DEngine::Render()
 	TInt aFrame = 0;
 	//	   const GLint cameraDistance = 100;
 
-	GLfloat no_mat[4] = { 0.0, 0.0, 0.0, 1.0 };
-	GLfloat mat_ambient[] = { 0.7, 0.7, 0.7, 1.0 };
-	GLfloat mat_ambient_color[] = { 0.8, 0.8, 0.2, 1.0 };
-	GLfloat mat_diffuse[] = { 0.1, 0.5, 0.8, 1.0 };
-	GLfloat mat_specular[] = { 1.0, 1.0, 1.0, 1.0 };
-	GLfloat no_shininess[] = { 0.0 };
-	GLfloat low_shininess[] = { 5.0 };
-	GLfloat high_shininess[] = { 100.0 };
-	GLfloat mat_emission[] = {0.3, 0.2, 0.2, 0.0};
-
 	glClear(GL_COLOR_BUFFER_BIT);
+	
+	glVertexPointer(2, GL_BYTE, 0, verticesTangram);
+	glTexCoordPointer(2, GL_BYTE, 0, nokTexCoordsTangram);
 
 	/* Animate and draw box */
-//	glLoadIdentity();
-//	glTranslatex(0, 0, iCameraDistance << 16);
-	//	    glTranslatex( 0 , 0 , -cameraDistance << 16 );
-	//	glRotatex(0, iRotate << 16, 0, 0);
-	//	    glRotatex( iCameraDistance << 15,    0   , 1 << 16,    0    );
-	//	    glRotatex( iCameraDistance << 14,    0   ,    0   , 1 << 16 );
-	//	    
-	//	    glScalef( 15.f, 15.f, 15.f  );
-
-	//	    glDrawElements( GL_TRIANGLES, 8 * 3, GL_UNSIGNED_BYTE, triangles3 );
-	//	    glDrawElements( GL_TRIANGLES, 1 * 3, GL_UNSIGNED_BYTE, indices );	
-	//	    glBindTexture(  GL_TEXTURE_2D, iOpenGLES.iID );
-	//	    glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
-	//	    glDrawElements( GL_TRIANGLES, 8 * 3, GL_UNSIGNED_BYTE, triangles3 );
-	//	    glDrawElements( GL_TRIANGLES, 2 * 3, GL_UNSIGNED_BYTE, triangles2 );
-
-	//	glTranslatex(0.f, 1.f, 0.f);
+	glColor4f(1.0f,1.0f,1.0f,1.0f);
 	if (ETrue)
 		{
 		glPushMatrix();
-		glTranslatex(0, 0, iCameraDistance << 16);
-//		glMaterialfv(GL_FRONT, GL_AMBIENT, no_mat);
-//		glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
-//		glMaterialfv(GL_FRONT, GL_SPECULAR, no_mat);
-//		glMaterialfv(GL_FRONT, GL_SHININESS, no_shininess);
-//		glMaterialfv(GL_FRONT, GL_EMISSION, no_mat);
+//		glTranslatex(0, 0, iCameraDistance << 16);
+		
+		glRotatex(iRotate[0] << 16, 0, 0, 1 << 16);
+		
+		glScalex(25 << 16, 25<<16 ,1 << 16);
 		
 		glTranslatex(iTranslate[0][0] << 16, 0, 0);
-		glTranslatex(0, iTranslate[0][1] << 16, 0);
+		glTranslatex(0, iTranslate[0][1] << 16, 0);		
 		
-		glTranslatex(0, 2<<16, 0);
-		glRotatex(iRotate[0] << 16, 0, 0, 1 << 16);
-		glTranslatex(0, -2<<16, 0);
+//		glTranslatex(0, 2<<16, 0);
+//		glRotatex(iRotate[0] << 16, 0, 0, 1 << 16);
+//		glTranslatex(0, -2<<16, 0);
+		
 		//		glRotatex(0,iRotate<<16,0,0);
 		//		glRotatex(0,0,iRotate<<16,0);
 
@@ -457,13 +372,8 @@ void CLT3DEngine::Render()
 	if (ETrue)
 		{
 		glPushMatrix();
-		glTranslatex(0, 0, iCameraDistance << 16);
-		glMaterialfv(GL_FRONT, GL_AMBIENT, no_mat);
-		glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
-		glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
-		glMaterialfv(GL_FRONT, GL_SHININESS, low_shininess);
-		glMaterialfv(GL_FRONT, GL_EMISSION, no_mat);
-
+//		glTranslatex(0, 0, iCameraDistance << 16);
+		glScalex(25 << 16, 25<<16 ,1 << 16);
 				
 		glTranslatex(iTranslate[1][0] << 16, 0, 0);
 		glTranslatex(0, iTranslate[1][1] << 16, 0);
@@ -481,14 +391,10 @@ void CLT3DEngine::Render()
 	if (ETrue)
 		{
 		glPushMatrix();
-		glTranslatex(0, 0, iCameraDistance << 16);
-		glMaterialfv(GL_FRONT, GL_AMBIENT, no_mat);
-		glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
-		glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
-		glMaterialfv(GL_FRONT, GL_SHININESS, high_shininess);
-		glMaterialfv(GL_FRONT, GL_EMISSION, no_mat);
+//		glTranslatex(0, 0, iCameraDistance << 16);
 
-				
+		glScalex(25 << 16, 25<<16 ,1 << 16);
+		
 		glTranslatex(iTranslate[2][0] << 16, 0, 0);
 		glTranslatex(0, iTranslate[2][1] << 16, 0);
 		
@@ -505,14 +411,10 @@ void CLT3DEngine::Render()
 	if (ETrue)
 		{
 		glPushMatrix();
-				glTranslatex(0, 0, iCameraDistance << 16);
-				glMaterialfv(GL_FRONT, GL_AMBIENT, no_mat);
-				glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
-				glMaterialfv(GL_FRONT, GL_SPECULAR, no_mat);
-				glMaterialfv(GL_FRONT, GL_SHININESS, no_shininess);
-				glMaterialfv(GL_FRONT, GL_EMISSION, mat_emission);
+//		glTranslatex(0, 0, iCameraDistance << 16);
 
-				
+		glScalex(25 << 16, 25<<16 ,1 << 16);
+		
 		glTranslatex(iTranslate[3][0] << 16, 0, 0);
 		glTranslatex(0, iTranslate[3][1] << 16, 0);
 		
@@ -529,14 +431,10 @@ void CLT3DEngine::Render()
 	if (ETrue)
 		{
 		glPushMatrix();
-				glTranslatex(0, 0, iCameraDistance << 16);
-				glMaterialfv(GL_FRONT, GL_AMBIENT, mat_ambient);
-				glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
-				glMaterialfv(GL_FRONT, GL_SPECULAR, no_mat);
-				glMaterialfv(GL_FRONT, GL_SHININESS, no_shininess);
-				glMaterialfv(GL_FRONT, GL_EMISSION, no_mat);
+//		glTranslatex(0, 0, iCameraDistance << 16);
 
-				
+		glScalex(25 << 16, 25<<16 ,1 << 16);
+		
 		glTranslatex(iTranslate[4][0] << 16, 0, 0);
 		glTranslatex(0, iTranslate[4][1] << 16, 0);
 		
@@ -553,13 +451,10 @@ void CLT3DEngine::Render()
 	if (ETrue)
 		{
 		glPushMatrix();
-				glTranslatex(0, 0, iCameraDistance << 16);
-				glMaterialfv(GL_FRONT, GL_AMBIENT, mat_ambient);
-				glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
-				glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
-				glMaterialfv(GL_FRONT, GL_SHININESS, low_shininess);
-				glMaterialfv(GL_FRONT, GL_EMISSION, no_mat);
+//		glTranslatex(0, 0, iCameraDistance << 16);
 
+		glScalex(25 << 16, 25<<16 ,1 << 16);
+		
 		glTranslatex(iTranslate[5][0] << 16, 0, 0);
 		glTranslatex(0, iTranslate[5][1] << 16, 0);
 		
@@ -576,14 +471,10 @@ void CLT3DEngine::Render()
 	if (ETrue)
 		{
 		glPushMatrix();
-				glTranslatex(0, 0, iCameraDistance << 16);
-//				glMaterialfv(GL_FRONT, GL_AMBIENT, mat_ambient);
-//				glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
-//				glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
-//				glMaterialfv(GL_FRONT, GL_SHININESS, high_shininess);
-//				glMaterialfv(GL_FRONT, GL_EMISSION, no_mat);
+//		glTranslatex(0, 0, iCameraDistance << 16);
 
-				
+		glScalex(25 << 16, 25<<16 ,1 << 16);
+		
 		glTranslatex(iTranslate[6][0] << 16, 0, 0);
 		glTranslatex(0, iTranslate[6][1] << 16, 0);
 		
@@ -600,25 +491,19 @@ void CLT3DEngine::Render()
 	if (ETrue)
 		{
 		glPushMatrix();
-		glTranslatex(0, 0, iCameraDistance*16 << 16);
-		//glTranslatex(0, 0, iCameraDistance << 16);
-		glMaterialfv(GL_FRONT, GL_AMBIENT, mat_ambient);
-		glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
-		glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
-		glMaterialfv(GL_FRONT, GL_SHININESS, low_shininess);
-		glMaterialfv(GL_FRONT, GL_EMISSION, no_mat);
-	
-		//glTranslatex(iTranslateX << 16, 0, 0);
-		//glTranslatex(0, iTranslateY << 16, 0);
+		glTranslatex(0, 0, iCameraDistance*16 << 16);		
 		
 		glTranslatex((centerTangram[iShowIndex][0]+iTranslate[iShowIndex][0])*16 << 16, 
 				(centerTangram[iShowIndex][1]+iTranslate[iShowIndex][1])*16<<16, 0);
 		
-		glBindTexture(  GL_TEXTURE_2D, iStar.iID );
-		glDrawElements(GL_TRIANGLES, 2 * 3, GL_UNSIGNED_BYTE, STActiveRect);
+//		glBindTexture(  GL_TEXTURE_2D, iStar.iID );
+//		glDrawElements(GL_TRIANGLES, 2 * 3, GL_UNSIGNED_BYTE, STActiveRect);
 		
 		glPopMatrix();
 		}
+	
+//	if (iParticles)
+//		iParticles->Render();
 	
 	eglSwapBuffers(iEglDisplay, iEglSurface);
 
@@ -711,77 +596,3 @@ void CLT3DEngine::RotateAnticlockwise()
 		iRotate[iShowIndex] -= 5;
 		}
 	}
-
-void CLT3DEngine::ToggleLighting( void )
-    {
-    if ( iLightingEnabled)
-        {
-        iLightingEnabled = EFalse;
-        glDisable( GL_LIGHTING );
-        }
-    else
-        {
-        iLightingEnabled = ETrue;
-        glEnable( GL_LIGHTING );
-        }
-    }
-
-
-// -----------------------------------------------------------------------------
-// CSimpleLight::ToggleLamp
-// Enable/Disable lamp from the application menu.
-// -----------------------------------------------------------------------------
-//
-void CLT3DEngine::ToggleLamp( void )
-    {
-    if ( iLampEnabled )
-        {
-        iLampEnabled = EFalse;
-        glDisable( GL_LIGHT0 );
-        }
-    else
-        {
-        iLampEnabled = ETrue;
-        glEnable( GL_LIGHT0 );
-        }
-    }
-
-
-// -----------------------------------------------------------------------------
-// CSimpleLight::ToggleSpot
-// Enable/Disable spot from the application menu.
-// -----------------------------------------------------------------------------
-//
-void CLT3DEngine::ToggleSpot( void )
-    {
-    if ( iSpotEnabled )
-        {
-        iSpotEnabled = EFalse;
-        glDisable( GL_LIGHT1 );
-        }
-    else
-        {
-        iSpotEnabled = ETrue;
-        glEnable( GL_LIGHT1 );
-        }
-    /*
-    GLint viewport[4];
-    GLdouble modelview[16];
-    GLdouble projection[16];
-    GLfloat winX,winY,winZ;
-    GLdouble object_x,object_y,object_z;
-    int mouse_x,mouse_y;
-    char str[80];
-    
-    glInitNames();
-    
-    glGetDoublev(GL_MODELVIEW_MATRIX, modelview);
-    	            glGetDoublev(GL_PROJECTION_MATRIX, projection);
-    	            glGetIntegerv(GL_VIEWPORT, viewport);
-    				winX=(float)mouse_x;
-    				winY=(float)viewport[3]-(float)mouse_y;
-    				//glReadBuffer(GL_BACK);
-    				glReadPixels(mouse_x,int(winY),1,1,GL_DEPTH_COMPONENT,GL_FLOAT,&winZ);
-    				gluUnProject((GLdouble)winX,(GLdouble)winY,(GLdouble)winZ,modelview,projection,viewport,&object_x,&object_y,&object_z);
-    				*/
-    }

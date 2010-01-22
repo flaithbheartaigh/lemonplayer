@@ -66,3 +66,5 @@ SOURCEPATH ..\src
 SOURCE LT3DEngine.cpp
 SOURCEPATH ..\Utils
 SOURCE Glutils.cpp Mathutils.cpp Textureutils.cpp Utils3d.cpp
+SOURCEPATH ..\src
+SOURCE Particles.cpp

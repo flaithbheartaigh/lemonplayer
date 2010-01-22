@@ -112,9 +112,7 @@ void CTangram3DAppView::Draw(const TRect& /*aRect*/) const
 	TBuf<64> number;
 	//number.Format(KInfo1,iEngine->iTranslateX,iEngine->iTranslateY,iEngine->iRotate);
 	//gc.DrawText(number, TPoint(30, 30));
-	
-	number.Format(KInfo2,iEngine->iLightingEnabled,iEngine->iLampEnabled,iEngine->iSpotEnabled);
-	gc.DrawText(number, TPoint(30, 50));
+
 	
 	gc.SetBrushStyle(CGraphicsContext::ENullBrush);
 	
@@ -197,16 +195,7 @@ TKeyResponse CTangram3DAppView::OfferKeyEventL(const TKeyEvent& aKeyEvent,
 					break;
 				case '9':
 					iEngine->RotateAnticlockwise();
-					break;
-				case '*':
-					iEngine->ToggleLighting();
-					break;
-				case '0':
-					iEngine->ToggleLamp();
-					break;
-				case '#':
-					iEngine->ToggleSpot();
-					break;
+					break;				
 				}
 			break;
 		}
