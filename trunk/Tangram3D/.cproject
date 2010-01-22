@@ -22,12 +22,11 @@
 </extensions>
 </storageModule>
 <storageModule moduleId="CarbideConfigurationDataProvider">
-
 <ENV_VAR_DATA_ID/>
 <ARGUMENTS_DATA_ID ABLDFREEZEARGSSTORAGE="-r"/>
 <ROM_BUILDER_DATA_ID ROMBUILDWORKINGDIRECTORYSTORAGE="C:\"/>
 </storageModule>
-<storageModule filesCache="C:\work\Tangram3D\group\bld.inf;C:\work\Tangram3D\group\Tangram3D.mmp;" includesCache="C:/work/Tangram3D/inc[LOCAL];C:/work/Tangram3D/help[LOCAL];C:/work/Tangram3D/Utils[LOCAL];C:/S60/devices/S60_3rd_FP2_SDK_v1.1/epoc32/include;" macrosCache="__EXE__;__WINSCW__;__SUPPORT_CPP_EXCEPTIONS__;__SYMBIAN32__;__S60_3X__;_UNICODE;__SERIES60_3X__;_DEBUG;__S60_32__;__WINS__;__CW32__;" moduleId="configDataCache" sourcesCache="/Tangram3D/Utils;/Tangram3D/data;/Tangram3D/help;/Tangram3D/inc;/Tangram3D/src;" timestampCache="1261726683468" useMmpMacrosCache="true"/>
+<storageModule filesCache="C:\work\Tangram3D\group\bld.inf;C:\work\Tangram3D\group\Tangram3D.mmp;" includesCache="C:/work/Tangram3D/inc[LOCAL];C:/work/Tangram3D/help[LOCAL];C:/work/Tangram3D/Utils[LOCAL];C:/S60/devices/S60_3rd_FP2_SDK_v1.1/epoc32/include;" macrosCache="__EXE__;__WINSCW__;__SUPPORT_CPP_EXCEPTIONS__;__SYMBIAN32__;__S60_3X__;_UNICODE;__SERIES60_3X__;_DEBUG;__S60_32__;__WINS__;__CW32__;" moduleId="configDataCache" sourcesCache="/Tangram3D/Utils;/Tangram3D/data;/Tangram3D/help;/Tangram3D/inc;/Tangram3D/src;data;Utils;help;" timestampCache="1264149750015" useMmpMacrosCache="true"/>
 <storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
 <storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
 <storageModule moduleId="org.eclipse.cdt.core.language.mapping"/>
@@ -51,13 +50,12 @@
 <storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
 <storageModule moduleId="org.eclipse.cdt.core.language.mapping"/>
 <storageModule moduleId="CarbideConfigurationDataProvider">
-
 <SIS_BUILDER_DATA_ID CREATESTUBSTORAGE="false" ENABLEDSTORAGE="true" PARTIALUPGRADESTORAGE="false" PKGFILESTORAGE="sis\Tangram3D_S60_3_X_v_1_0_0.pkg" SIGNINGTYPESTORAGE="1"/>
 <ENV_VAR_DATA_ID/>
 <ARGUMENTS_DATA_ID ABLDFREEZEARGSSTORAGE="-r"/>
 <ROM_BUILDER_DATA_ID ROMBUILDWORKINGDIRECTORYSTORAGE="C:\"/>
 </storageModule>
-<storageModule filesCache="C:\work\Tangram3D\group\bld.inf;C:\work\Tangram3D\group\Tangram3D.mmp;" includesCache="C:/work/Tangram3D/inc[LOCAL];C:/work/Tangram3D/help[LOCAL];C:/work/Tangram3D/Utils[LOCAL];C:/S60/devices/S60_3rd_FP2_SDK_v1.1/epoc32/include;" macrosCache="__GENERIC_MARM__;__EXE__;__SYMBIAN32__;__SUPPORT_CPP_EXCEPTIONS__;__EPOC32__;__EABI__;__GCCE__;NDEBUG;__MARM__;_UNICODE;__S60_3X__;__SERIES60_3X__;__MARM_ARMV5__;__S60_32__;" moduleId="configDataCache" sourcesCache="/Tangram3D/Utils;/Tangram3D/data;/Tangram3D/help;/Tangram3D/inc;/Tangram3D/src;" timestampCache="1261726683468" useMmpMacrosCache="true"/>
+<storageModule filesCache="C:\work\Tangram3D\group\bld.inf;C:\work\Tangram3D\group\Tangram3D.mmp;" includesCache="C:/work/Tangram3D/inc[LOCAL];C:/work/Tangram3D/help[LOCAL];C:/work/Tangram3D/Utils[LOCAL];C:/S60/devices/S60_3rd_FP2_SDK_v1.1/epoc32/include;" macrosCache="__GENERIC_MARM__;__EXE__;__SYMBIAN32__;__SUPPORT_CPP_EXCEPTIONS__;__EPOC32__;__EABI__;__GCCE__;NDEBUG;__MARM__;_UNICODE;__S60_3X__;__SERIES60_3X__;__MARM_ARMV5__;__S60_32__;" moduleId="configDataCache" sourcesCache="/Tangram3D/Utils;/Tangram3D/data;/Tangram3D/help;/Tangram3D/inc;/Tangram3D/src;help;Utils;data;" timestampCache="1264149750031" useMmpMacrosCache="true"/>
 <storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
 </cconfiguration>
 </storageModule>

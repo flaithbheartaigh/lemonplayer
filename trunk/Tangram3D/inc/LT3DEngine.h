@@ -24,7 +24,7 @@
 
 
 // CLASS DECLARATION
-
+class CParticles;
 /**
  *  CLT3DEngine
  * 
@@ -84,20 +84,12 @@ public:
 	void RotateClockwise();
 	void RotateAnticlockwise();
 	
-    void ToggleLighting( void );
-    void ToggleLamp( void );
-    void ToggleSpot( void );
-	
 public:
 	GLint iCameraDistance;
 	GLint iRotate[7];
 	GLint iTranslateX;
 	GLint iTranslateY;
 	GLint iTranslate[7][2];
-	
-	TBool iLightingEnabled;
-	TBool iLampEnabled;
-    TBool iSpotEnabled;
 	
 private:
 	CCoeControl* iParentControl;
@@ -113,11 +105,14 @@ private:
 	CTextureManager * iTextureManager;
 	TTexture iOpenGLES;
 	TTexture iStar;
+	TTexture iTextureParticle;
 	
 	TBool iShow[7];
 	TInt iShowIndex;
 	
 	TBool iIsActive;
+	
+//	CParticles* iParticles;
 	};
 
 #endif // LT3DENGINE_H
