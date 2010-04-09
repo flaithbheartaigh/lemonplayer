@@ -1,0 +1,7 @@
+ 
+/* This file has been generated, DO NOT MODIFY. */
+enum TMifThemechange
+	{
+	EMbmThemechangeQgn_menu_themechange = 16384,
+	EMbmThemechangeLastElement
+	};

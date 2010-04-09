@@ -1,0 +1,21 @@
+/*
+============================================================================
+ Name		: ThemeChange.rls
+ Author	  : zengcity
+ Copyright   : Your copyright notice
+ Description : This is a localisation file for ThemeChange
+			   A .rls file is the one and only place where the logical
+			   strings to be localised are defined. 
+============================================================================
+*/
+
+//  LOCALISATION STRINGS
+#ifdef LANGUAGE_SC
+#include "ThemeChange_31.rls"   // PRC Chinese
+#elif defined LANGUAGE_01
+#include "ThemeChange_01.rls"   // U.K. English
+#elif defined LANGUAGE_31
+#include "ThemeChange_31.rls"   // PRC Chinese
+#endif
+
+// End of File

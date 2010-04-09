@@ -1,0 +1,40 @@
+; Installation file for ThemeChange application
+;
+; This is an auto-generated PKG file by Carbide.
+; This file uses variables specific to Carbide builds that will not work
+; on command-line builds. If you want to use this generated PKG file from the
+; command-line tools you will need to modify the variables with the appropriate
+; values: $(EPOCROOT), $(PLATFORM), $(TARGET)
+;
+;Languages
+&EN
+;
+; UID is the app's UID
+;
+#{"ThemeChange"},(0xE8EE38C1),1,0,0
+;
+;Localised Vendor name
+%{"Vendor-EN"}
+;Unique Vendor name
+:"Vendor"
+;Supports Series 60 v 3.0
+[0x101F7961], 0, 0, 0, {"Series60ProductID"}
+;
+; Files to install
+; The PKG file has been set up with a default SDK root.
+; Symbols set up for the source location are Carbide.c++ specific symbols
+"$(EPOCROOT)Epoc32\release\$(PLATFORM)\$(TARGET)\ThemeChange_0xE8EE38C1.exe"	-"!:\sys\bin\ThemeChange_0xE8EE38C1.exe"
+"$(EPOCROOT)Epoc32\data\z\resource\apps\ThemeChange_0xE8EE38C1.rsc"				-"!:\resource\apps\ThemeChange_0xE8EE38C1.rsc"
+"$(EPOCROOT)Epoc32\data\z\private\10003a3f\apps\ThemeChange_0xE8EE38C1_reg.rsc"	-"!:\private\10003a3f\import\apps\ThemeChange_0xE8EE38C1_reg.rsc"
+"$(EPOCROOT)Epoc32\data\z\resource\apps\ThemeChange_0xE8EE38C1.mif" 			-"!:\resource\apps\ThemeChange_0xE8EE38C1.mif"
+"..\ThemeChange\resource\help_en.txt" 									-"!:\private\E8EE38C1\help_en.txt"
+"..\ThemeChange\resource\help_zh.txt" 									-"!:\private\E8EE38C1\help_zh.txt"
+"..\ThemeChange\resource\about_en.txt"	 								-"!:\private\E8EE38C1\about_en.txt"
+"..\ThemeChange\resource\about_zh.txt" 									-"!:\private\E8EE38C1\about_zh.txt"
+"config.ini"															-"C:\data\ThemeChanger\config.ini", FN
+
+"$(EPOCROOT)Epoc32\release\$(PLATFORM)\$(TARGET)\ThemeBackground.exe"		  -"!:\sys\bin\ThemeBackground.exe"
+
+"$(EPOCROOT)Epoc32\Data\z\resource\apps\E0685F74.rsc"	-"c:\private\101f875a\import\[E0685F74].rsc"
+"$(EPOCROOT)Epoc32\release\$(PLATFORM)\$(TARGET)\ThemeAutoStart.exe"		  -"!:\sys\bin\ThemeAutoStart.exe"
+

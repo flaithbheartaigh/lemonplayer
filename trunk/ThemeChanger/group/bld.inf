@@ -1,0 +1,28 @@
+/*
+* ==============================================================================
+*  Name        : bld.inf
+*  Part of     : CSSync
+*  Interface   :
+*  Description :
+*  Version     :
+*
+*  Copyright (c) 2004 - 2006 Nokia Corporation.
+*  This material, including documentation and any related
+*  computer programs, is protected by copyright controlled by
+*  Nokia Corporation.
+* ==============================================================================
+*/
+
+PRJ_EXPORTS
+..\ThemeChange\resource\about_en.txt 			..\winscw\c\private\E8EE38C1\about_en.txt
+..\ThemeChange\resource\about_zh.txt 			..\winscw\c\private\E8EE38C1\about_zh.txt
+..\ThemeChange\resource\help_en.txt 			..\winscw\c\private\E8EE38C1\help_en.txt
+..\ThemeChange\resource\help_zh.txt 			..\winscw\c\private\E8EE38C1\help_zh.txt
+
+PRJ_MMPFILES
+gnumakefile ..\ThemeChange\group\icons_scalable_dc.mk
+
+..\ThemeChange\group\ThemeChange.mmp
+..\ThemeBackground\group\ThemeBackground.mmp
+..\ThemeAutoStart\group\ThemeAutoStart.mmp
+
