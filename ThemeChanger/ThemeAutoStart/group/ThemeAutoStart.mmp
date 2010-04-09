@@ -1,0 +1,33 @@
+/*
+============================================================================
+ Name		: ThemeAutoStart.mmp
+ Author	  : zengcity
+ Copyright   : Your copyright notice
+ Description : This is the project specification file for ThemeAutoStart.
+============================================================================
+*/
+
+TARGET		  ThemeAutoStart.exe
+TARGETTYPE	  exe
+UID			 0 0xE0685F74
+
+USERINCLUDE	 ..\inc
+USERINCLUDE ..\..\CommonSource\inc
+SYSTEMINCLUDE   \epoc32\include
+
+SOURCEPATH	  ..\src
+SOURCE		  ThemeAutoStart.cpp
+
+SOURCEPATH        ..\data
+START RESOURCE E0685F74.rss
+    HEADER
+    TARGETPATH \resource\apps
+END
+
+LIBRARY		 euser.lib eikcore.lib efsrv.lib cone.lib apgrfx.lib apparc.lib 
+
+#ifdef ENABLE_ABIV2_MODE
+DEBUGGABLE_UDEBONLY
+#endif
+SOURCEPATH ..\..\CommonSource\src
+SOURCE Configuration.cpp

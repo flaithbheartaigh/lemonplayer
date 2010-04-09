@@ -1,0 +1,46 @@
+CHARACTER_SET UTF8
+
+#define qtn_caption_string "ThemeChange"
+
+rls_string qtn_help 	"帮助"
+rls_string qtn_about 	"关于"
+rls_string qtn_exit 	"退出"
+rls_string qtn_settings "设置"
+rls_string qtn_options 	"选项"
+rls_string qtn_ok 		"确定"
+rls_string qtn_back 	"返回"
+rls_string qtn_change	"更改"
+rls_string qtn_open		"打开"
+rls_string qtn_close	"关闭"
+rls_string qtn_remove	"删除"
+rls_string qtn_choose 	"设定"
+rls_string qtn_null 	""
+
+rls_string qtn_active 		"启动"
+rls_string qtn_inactive		"停止"
+
+rls_string qtn_theme_current 	"当前主题"
+rls_string qtn_theme_service 	"主题变换功能"
+
+rls_string qtn_loc_resource_file_1 "\\resource\\apps\\ThemeChange_0xE8EE38C1"
+
+rls_string qtn_about_dialog_title "About"
+
+rls_string qtn_help_file 	"help_zh.txt"
+rls_string qtn_about_file 	"about_zh.txt"
+
+rls_string qtn_dlg_exit_confirm		"确定要离开程序么"
+
+rls_string qtn_setting_frequency_title	"更换频率"
+rls_string qtn_setting_autostart_title	"开机启动"
+
+rls_string qtn_confirm_save_config	"配置已修改,保存并继续"
+
+rls_string qtn_text_frequency_one_hour		"1小时"
+rls_string qtn_text_frequency_eight_hours	"8 小时"
+rls_string qtn_text_frequency_one_day		"1天"
+rls_string qtn_text_frequency_three_days	"3天"
+rls_string qtn_text_frequency_one_week		"1周"
+
+rls_string qtn_text_yes			"是"
+rls_string qtn_text_no			"否"
