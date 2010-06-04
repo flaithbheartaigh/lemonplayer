@@ -1,0 +1,27 @@
+/*
+============================================================================
+ Name		: SimulateMessage.rss
+ Author	  : zengcity
+ Copyright   : Your copyright notice
+ Description : This file contains the application registration resource.
+============================================================================
+*/
+
+#include "SimulateMessage.hrh"
+#include "SimulateMessage.rls"
+#include <appinfo.rh>
+#include <SimulateMessage_0xE70CE849.rsg>
+
+UID2 KUidAppRegistrationResourceFile
+UID3 _UID3
+
+RESOURCE APP_REGISTRATION_INFO
+	{
+	app_file="SimulateMessage_0xE70CE849";
+	localisable_resource_file =  qtn_loc_resource_file_1;
+	localisable_resource_id = R_LOCALISABLE_APP_INFO;
+
+	embeddability=KAppNotEmbeddable;
+	newfile=KAppDoesNotSupportNewFile;
+	}
+

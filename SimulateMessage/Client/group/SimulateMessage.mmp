@@ -1,0 +1,86 @@
+/*
+============================================================================
+ Name		: SimulateMessage.mmp
+ Author	  : zengcity
+ Copyright   : Your copyright notice
+ Description : This is the project specification file for SimulateMessage.
+============================================================================
+*/
+
+TARGET  SimulateMessage_0xE70CE849.exe
+TARGETTYPE  exe
+UID  0x100039CE 0xE70CE849 
+
+TARGETPATH \system\apps\SimulateMessage
+
+SOURCEPATH ..\src
+SOURCE 	SimulateMessage.cpp
+SOURCE  SimulateMessageApplication.cpp 
+SOURCE  SimulateMessageDocument.cpp
+SOURCE  SimulateMessageAppUi.cpp
+SOURCE  SimulateMessageAppContainer.cpp
+SOURCE  SimulateMessageAppView.cpp
+
+SOURCEPATH ..\data
+
+START RESOURCE	SimulateMessage.rss
+HEADER
+TARGET SimulateMessage_0xE70CE849.rsc
+TARGETPATH resource\apps
+END //RESOURCE
+
+START RESOURCE	SimulateMessage_reg.rss
+TARGET SimulateMessage_0xE70CE849_reg.rsc
+TARGETPATH 	  \private\10003a3f\apps
+END //RESOURCE
+
+USERINCLUDE ..\inc
+USERINCLUDE ..\Source\Debug\inc
+USERINCLUDE ..\Source\ImageLib\inc
+USERINCLUDE ..\Source\Model\inc
+USERINCLUDE ..\Source\MsgEditor\inc
+USERINCLUDE ..\Source\SMS\inc
+USERINCLUDE ..\Source\Tools\inc
+USERINCLUDE ..\Source\Views\inc 
+USERINCLUDE ..\..\Common\inc
+
+SYSTEMINCLUDE	 \epoc32\include
+
+LIBRARY		   euser.lib apparc.lib cone.lib eikcore.lib avkon.lib
+LIBRARY		   commonengine.lib efsrv.lib estor.lib
+LIBRARY        aknnotify.lib gdi.lib aknicon.lib eikcdlg.lib eikctl.lib eikcoctl.lib form.lib pbkview.lib pbkeng.lib 
+LIBRARY         ws32.lib
+LIBRARY         bafl.lib
+LIBRARY         field.lib
+LIBRARY         etext.lib
+LIBRARY         egul.lib
+LIBRARY         aknskins.lib
+LIBRARY         commonui.lib
+LIBRARY         fepbase.lib flogger.lib uiklaf.lib fbscli.lib
+
+LANG	 SC
+
+VENDORID	  	  0
+SECUREID		  0xE70CE849
+CAPABILITY	  	  ReadDeviceData ReadUserData WriteDeviceData WriteUserData 
+
+SOURCEPATH ..\source\Tools\src
+SOURCE CommonUtils.cpp Configuration.cpp QueryDlgUtil.cpp Utils.cpp timeouttimer.cpp
+SOURCEPATH ..\source\SMS\src
+SOURCE Datagram.cpp KCContactEntry.cpp LoadContactEngine.cpp LoadMessageEngine.cpp SMSDatagramService.cpp SMSSendRecv.cpp smsdatagramreceiver.cpp smsdatagramsender.cpp
+SOURCEPATH ..\source\Views\src
+SOURCE LoadDraftContainer.cpp LoadDraftView.cpp MainScreenContainer.cpp MainScreenView.cpp SettingContainer.cpp SettingView.cpp HelpContainer.cpp HelpView.cpp
+SOURCEPATH ..\source\Model\src
+SOURCE SHModel.cpp UIManager.cpp
+SOURCEPATH ..\source\Views\src
+SOURCE SettingList.cpp
+SOURCEPATH ..\source\ImageLib\src
+SOURCE IconFileProvider.cpp LMSvgUtil.cpp
+SOURCEPATH ..\source\Views\src
+SOURCE LogoContainer.cpp LogoView.cpp
+SOURCEPATH ..\..\Common\src
+SOURCE SimMsgServerSession.cpp
+SOURCEPATH ..\source\Views\src
+SOURCE EditorAppView.cpp
+SOURCEPATH ..\source\MsgEditor\src
+SOURCE MsgAddressControl.cpp MsgAddressControlEditor.cpp MsgAddressControlEditorField.cpp MsgBaseControl.cpp MsgBody.cpp MsgBodyControl.cpp MsgBodyControlEditor.cpp MsgCaptionedHighlight.cpp MsgControlArray.cpp MsgDataTimeControl.cpp MsgDummyHeaderCleaner.cpp MsgEditorCommon.cpp MsgEditorCustomDraw.cpp MsgEditorKeyCatcher.cpp MsgEditorView.cpp MsgExpandableControl.cpp MsgExpandableControlEditor.cpp MsgExpandableTextEditorControl.cpp MsgFormComponent.cpp MsgHeader.cpp MsgRecipientItem.cpp UniBaseHeader.cpp UniEditorEnum.cpp msgchecknames.cpp uniaddresshandler.cpp unieditorheader.cpp

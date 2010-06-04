@@ -1,0 +1,36 @@
+
+/* This file has been generated, DO NOT MODIFY. */
+enum TMifMsgeditor
+	{
+	EMbmMsgeditorQgn_prop_unknown = 16384,
+	EMbmMsgeditorQgn_prop_unknown_mask = 16385,
+	EMbmMsgeditorQgn_prop_folder_sms_tab1 = 16386,
+	EMbmMsgeditorQgn_prop_folder_sms_tab1_mask = 16387,
+	EMbmMsgeditorQgn_prop_folder_message_tab1 = 16388,
+	EMbmMsgeditorQgn_prop_folder_message_tab1_mask = 16389,
+	EMbmMsgeditorQgn_prop_folder_message_attach_tab1 = 16390,
+	EMbmMsgeditorQgn_prop_folder_message_attach_tab1_mask = 16391,
+	EMbmMsgeditorQgn_prop_drm_exp_forbid_super = 16392,
+	EMbmMsgeditorQgn_prop_drm_exp_forbid_super_mask = 16393,
+	EMbmMsgeditorQgn_prop_drm_rights_exp_super = 16394,
+	EMbmMsgeditorQgn_prop_drm_rights_exp_super_mask = 16395,
+	EMbmMsgeditorQgn_prop_drm_send_forbid_super = 16396,
+	EMbmMsgeditorQgn_prop_drm_send_forbid_super_mask = 16397,
+	EMbmMsgeditorQgn_prop_drm_rights_valid_super = 16398,
+	EMbmMsgeditorQgn_prop_drm_rights_valid_super_mask = 16399,
+	EMbmMsgeditorQgn_graf_line_message_horizontal = 16400,
+	EMbmMsgeditorQgn_graf_line_message_horizontal_mask = 16401,
+	EMbmMsgeditorQgn_indi_mce_attach = 16402,
+	EMbmMsgeditorQgn_indi_mce_attach_mask = 16403,
+	EMbmMsgeditorQgn_indi_mce_priority_low = 16404,
+	EMbmMsgeditorQgn_indi_mce_priority_low_mask = 16405,
+	EMbmMsgeditorQgn_indi_mce_priority_high = 16406,
+	EMbmMsgeditorQgn_indi_mce_priority_high_mask = 16407,
+	EMbmMsgeditorQgn_indi_msg_list_tab1 = 16408,
+	EMbmMsgeditorQgn_indi_msg_list_tab1_mask = 16409,
+	EMbmMsgeditorQgn_indi_navi_arrow_left = 16410,
+	EMbmMsgeditorQgn_indi_navi_arrow_left_mask = 16411,
+	EMbmMsgeditorQgn_indi_navi_arrow_right = 16412,
+	EMbmMsgeditorQgn_indi_navi_arrow_right_mask = 16413,
+	EMbmMsgeditorLastElement
+	};

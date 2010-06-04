@@ -1,0 +1,39 @@
+/*
+* ==============================================================================
+*  Name        : cssyncserver.mmp
+*  Part of     : CSSync
+*  Interface   :
+*  Description :
+*  Version     :
+*
+*  Copyright (c) 2006 Nokia Corporation.
+*  This material, including documentation and any related
+*  computer programs, is protected by copyright controlled by
+*  Nokia Corporation.
+* ==============================================================================
+*/
+
+TARGET            SimulateMessageServer.exe
+TARGETTYPE        exe
+UID               0x0 0xEF4ABCDC
+EPOCSTACKSIZE     0x5000
+
+SOURCEPATH        ..\src
+SOURCE            SimulateMessageSession.cpp
+SOURCE            SimulateMessageServer.cpp
+
+SOURCEPATH 		..\..\Client\source\Tools\src
+SOURCE 			CommonUtils.cpp Utils.cpp
+
+USERINCLUDE       ..\inc
+USERINCLUDE       ..\..\Common\inc
+USERINCLUDE       ..\..\Client\source\Tools\inc
+SYSTEMINCLUDE     \epoc32\include
+
+LIBRARY           euser.lib cone.lib efsrv.lib charconv.lib
+
+VENDORID          0
+
+CAPABILITY        none
+
+// End of File
