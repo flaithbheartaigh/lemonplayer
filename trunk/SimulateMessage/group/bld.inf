@@ -1,0 +1,22 @@
+/*
+============================================================================
+ Name		: bld.inf
+ Author	  : zengcity
+ Copyright   : Your copyright notice
+ Description : This file provides the information required for building the
+				whole of a SimulateMessage.
+============================================================================
+*/
+PRJ_EXPORTS
+..\Client\resource\about_zh.txt 		..\winscw\c\private\E70CE849\about_zh.txt
+..\Client\resource\help_zh.txt 			..\winscw\c\private\E70CE849\help_zh.txt
+
+PRJ_PLATFORMS
+WINSCW ARMV5 GCCE
+
+PRJ_MMPFILES
+gnumakefile ..\Client\group\SimulatMessage_Image.mk
+gnumakefile ..\Client\group\icons_scalable_dc.mk
+..\Server\group\SimulateMessageServer.mmp
+..\Client\group\SimulateMessage.mmp
+

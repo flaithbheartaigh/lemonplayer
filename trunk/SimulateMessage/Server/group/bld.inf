@@ -1,0 +1,19 @@
+/*
+* ==============================================================================
+*  Name        : bld.inf
+*  Part of     : CSSync
+*  Interface   :
+*  Description :
+*  Version     :
+*
+*  Copyright (c) 2006 Nokia Corporation.
+*  This material, including documentation and any related
+*  computer programs, is protected by copyright controlled by
+*  Nokia Corporation.
+* ==============================================================================
+*/
+
+PRJ_MMPFILES
+
+SimulateMessageserver.mmp
+

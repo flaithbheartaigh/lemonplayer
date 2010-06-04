@@ -1,0 +1,48 @@
+/*
+ ============================================================================
+ Name		: SimulateMessage.hrh
+ Author	  : zengcity
+ Copyright   : Your copyright notice
+ Description : This file contains declarations for constants of SimulateMessage.
+ The file can be included in C++ or resource file.
+ ============================================================================
+ */
+#ifndef __SIMULATEMESSAGE_HRH__
+#define __SIMULATEMESSAGE_HRH__
+
+#define _UID3 0xE70CE849
+
+// SimulateMessage enumerate command codes
+enum TSimulateMessageIds
+	{
+	ECommandCreate = 0x6001,
+	ECommandCreateNew,
+	ECommandCreateFrom,
+	ECommandManage,
+	ECommandManageEdit,
+	ECommandmanageRemove,
+	ECommandActiveServer,
+	ECommandDeactiveServer,
+	ECommandInsertContact,
+	ECommandSetting,
+	ECommandHelp,
+	ECommandAbout,
+	ECommandExit
+	// start value must not be 0
+	};
+enum TNewsPacViewIds
+	{
+	ESimulateMessageAppViewId = 0x0001,
+	ESimulateMessageLogoViewId,
+	ESimulateMessageMainScreenViewId,
+	ESimulateMessageEditViewId,
+	ESimulateMessageLoadDraftViewId,
+	ESimulateMessageSettingViewId,
+	ESimulateMessageHelpViewId
+	};
+
+enum TListboxSettingPageIds
+    {
+    EListboxSettingAutoStart
+    };
+#endif // __SIMULATEMESSAGE_HRH__
