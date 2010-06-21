@@ -1,13 +1,13 @@
 /*
  ============================================================================
- Name		: LoadDraftContainer.cpp
+ Name		: RemovedScreenContainer.cpp
  Author	  : zengcity
  Version	 : 1.0
  Copyright   : Your copyright notice
- Description : CLoadDraftContainer implementation
+ Description : CRemovedScreenContainer implementation
  ============================================================================
  */
-#include "LoadDraftContainer.h"
+#include "RemovedScreenContainer.h"
 
 #include <coemain.h>
 #include <apgtask.h>
@@ -17,47 +17,38 @@
 #include <AknIconArray.h> 
 #include <eikclbd.h>
 #include "SHPlatform.h"
-#include "LoadMessageEngine.h"
-#include "MacroUtil.h"
 
-CLoadDraftContainer::CLoadDraftContainer()
-:iInfoArray(NULL),iListBox(NULL)
+CRemovedScreenContainer::CRemovedScreenContainer()
 	{
 	// No implementation required
 	}
 
-CLoadDraftContainer::~CLoadDraftContainer()
+CRemovedScreenContainer::~CRemovedScreenContainer()
 	{
-	if (iInfoArray)
-		{
-		iInfoArray->ResetAndDestroy();
-		delete iInfoArray;
-		}
-	
 	if (iListBox)
 		delete iListBox;
 	}
 
-CLoadDraftContainer* CLoadDraftContainer::NewLC(const TRect& aRect)
+CRemovedScreenContainer* CRemovedScreenContainer::NewLC(const TRect& aRect)
 	{
-	CLoadDraftContainer* self = new (ELeave) CLoadDraftContainer();
+	CRemovedScreenContainer* self = new (ELeave) CRemovedScreenContainer();
 	CleanupStack::PushL(self);
 	self->ConstructL(aRect);
 	return self;
 	}
 
-CLoadDraftContainer* CLoadDraftContainer::NewL(const TRect& aRect)
+CRemovedScreenContainer* CRemovedScreenContainer::NewL(const TRect& aRect)
 	{
-	CLoadDraftContainer* self = CLoadDraftContainer::NewLC(aRect);
+	CRemovedScreenContainer* self = CRemovedScreenContainer::NewLC(aRect);
 	CleanupStack::Pop(); // self;
 	return self;
 	}
 
-void CLoadDraftContainer::ConstructL(const TRect& aRect)
+void CRemovedScreenContainer::ConstructL(const TRect& aRect)
 	{
 	CreateWindowL();
 
-	iListBox = new (ELeave) CAknDoubleGraphicStyleListBox ();
+	iListBox = new (ELeave) CAknDoubleGraphicStyleListBox();
 	iListBox->ConstructL(this,0);
 	iListBox->SetContainerWindowL(*this);
 
@@ -65,7 +56,7 @@ void CLoadDraftContainer::ConstructL(const TRect& aRect)
 	iListBox->CreateScrollBarFrameL(ETrue);
 	iListBox->ScrollBarFrame()->SetScrollBarVisibilityL(
 			CEikScrollBarFrame::EOff, CEikScrollBarFrame::EAuto);
-	
+
 	SetIconsL();
 	UpdateDisplay();
 
@@ -77,7 +68,7 @@ void CLoadDraftContainer::ConstructL(const TRect& aRect)
 // CThemeChangeContainer::CountComponentControls() const
 // ---------------------------------------------------------
 //
-TInt CLoadDraftContainer::CountComponentControls() const
+TInt CRemovedScreenContainer::CountComponentControls() const
 	{
 	TInt count(0);
 	if (iListBox)
@@ -90,7 +81,7 @@ TInt CLoadDraftContainer::CountComponentControls() const
 // CThemeChangeContainer::ComponentControl(TInt aIndex) const
 // ---------------------------------------------------------
 //
-CCoeControl* CLoadDraftContainer::ComponentControl(TInt aIndex) const
+CCoeControl* CRemovedScreenContainer::ComponentControl(TInt aIndex) const
 	{
 	switch (aIndex)
 		{
@@ -106,19 +97,19 @@ CCoeControl* CLoadDraftContainer::ComponentControl(TInt aIndex) const
 //	 CCoeControl* aControl,TCoeEvent aEventType)
 // ---------------------------------------------------------
 //
-void CLoadDraftContainer::HandleControlEventL(CCoeControl* /*aControl*/,
+void CRemovedScreenContainer::HandleControlEventL(CCoeControl* /*aControl*/,
 		TCoeEvent /*aEventType*/)
 	{
 	// TODO: Add your control event handler code here
 	}
 
 //------------------------------------------------------------------
-//CLoadDraftContainer::OfferKeyEventL(
+//CRemovedScreenContainer::OfferKeyEventL(
 // const TKeyEvent& aKeyEvent,	TEventCode aType)
 //-------------------------------------------------------------------
 //
-TKeyResponse CLoadDraftContainer::OfferKeyEventL(const TKeyEvent& aKeyEvent,
-		TEventCode aType)
+TKeyResponse CRemovedScreenContainer::OfferKeyEventL(
+		const TKeyEvent& aKeyEvent, TEventCode aType)
 	{
 	// See if we have a selection
 	TInt code = aKeyEvent.iCode;
@@ -128,24 +119,17 @@ TKeyResponse CLoadDraftContainer::OfferKeyEventL(const TKeyEvent& aKeyEvent,
 		case EKeyDownArrow:
 		case EKeyUpArrow:
 			return iListBox->OfferKeyEventL(aKeyEvent, aType);
-		case EKeyDevice3:
-			if (aType == EEventKey)
-				{
-				Selected();
-				return EKeyWasConsumed;
-				}
-			break;
 		default:
 			break;
 		}
 	return EKeyWasNotConsumed;
 	}
 // -----------------------------------------------------------------------------
-// CLoadDraftContainer::Draw()
+// CRemovedScreenContainer::Draw()
 // Draws the display.
 // -----------------------------------------------------------------------------
 //
-void CLoadDraftContainer::Draw(const TRect& /*aRect*/) const
+void CRemovedScreenContainer::Draw(const TRect& /*aRect*/) const
 	{
 	// Get the standard graphics context
 	CWindowGc& gc = SystemGc();
@@ -156,11 +140,11 @@ void CLoadDraftContainer::Draw(const TRect& /*aRect*/) const
 	}
 
 // -----------------------------------------------------------------------------
-// CLoadDraftContainer::SizeChanged()
+// CRemovedScreenContainer::SizeChanged()
 // Called by framework when the view size is changed.
 // -----------------------------------------------------------------------------
 //
-void CLoadDraftContainer::SizeChanged()
+void CRemovedScreenContainer::SizeChanged()
 	{
 	if (iListBox)
 		{
@@ -169,7 +153,36 @@ void CLoadDraftContainer::SizeChanged()
 	DrawNow();
 	}
 
-void CLoadDraftContainer::SetIconsL()
+/*
+
+ #include <avkon.mbg>
+ #include <avkonicons.hrh>
+
+ RESOURCE AKN_ICON_ARRAY r_icon_mark
+ {
+ type = EAknIconArraySimple;
+ bmpfile = AVKON_ICON_FILE;
+ icons =
+ {
+ AKN_ICON
+ {
+ iconId = EMbmAvkonQgn_prop_radiobutt_on;
+ maskId = EMbmAvkonQgn_prop_radiobutt_on_mask;
+ },
+ AKN_ICON
+ {
+ iconId = EMbmAvkonQgn_prop_radiobutt_off;
+ maskId = EMbmAvkonQgn_prop_radiobutt_off_mask;
+ },
+ AKN_ICON
+ {
+ iconId = EMbmAvkonQgn_prop_mmc_memc_large;
+ maskId = EMbmAvkonQgn_prop_mmc_memc_large_mask;
+ }            
+ };
+ }
+ */
+void CRemovedScreenContainer::SetIconsL()
 	{
 	CAknIconArray* icons = new (ELeave) CAknIconArray(2);
 	CleanupStack::PushL(icons);
@@ -178,67 +191,55 @@ void CLoadDraftContainer::SetIconsL()
 	CleanupStack::Pop(); // icons
 	}
 
-void CLoadDraftContainer::UpdateDisplay()
-	{
-	CTextListBoxModel* model = iListBox->Model();
-	CDesCArray* items = static_cast<CDesCArray*> (model->ItemTextArray());
+void CRemovedScreenContainer::UpdateDisplay()
+	{	
+	TInt total;
+	HBufC8* buffer;
+	RSimMsgDataArray* iTaskArray;
 
-	items->Reset();
-	
-	CLoadMessageEngine* engine = CLoadMessageEngine::NewL();
-	iInfoArray = new CSMSInfoListArray(4);
-#ifdef __WINS__
-	_LIT(KContent,"Hello");
-	_LIT(KNumber,"1358008000");
-	CSMSInfoList* temp = new (ELeave) CSMSInfoList;
-	temp->iContent = KContent().AllocL();
-	temp->iNumber = KNumber().AllocL();
-	temp->iMsgId = 1048584;
-	iInfoArray->Append(temp);
-//	engine->LoadSMSFromFolder(iInfoArray,0x1003);
-#else
-	engine->LoadSMSDraft(iInfoArray);
-#endif
-	
-	_LIT(KItemFormat, "0\t");
-	for(TInt i=0; i<iInfoArray->Count(); i++)
+	SHSession().QueryRemovedLength(total);
+	if (total > 0)
 		{
-		CSMSInfoList* info = (*iInfoArray)[i];
-		TPtrC content = info->iContent->Des();
-		TPtrC number = info->iNumber->Des();
-		TInt length = content.Length() + number.Length() + KItemFormat().Length() + 4;
+		iTaskArray = new RSimMsgDataArray();
+		 
+		buffer = HBufC8::NewL(total);
+		TPtr8 ptr = buffer->Des();
+		SHSession().QueryRemovedData(ptr);
+
+		CSimMsgServerSession::ParseDataBuffer(buffer, *iTaskArray);
+
+		CTextListBoxModel* model = iListBox->Model();
+		CDesCArray* items = static_cast<CDesCArray*> (model->ItemTextArray());
+
+		items->Reset();
+
+		for (TInt i = 0; i < iTaskArray->Count(); i++)
+			{
+			SimMsgData* task = (*iTaskArray)[i];
+			TPtrC number = task->iNumber->Des();
+			TBuf<32> time;
+			task->iTime.FormatL(time, KDateFormat);
+
+			TBuf<64> item;
+			item.Append(_L("0\t"));
+			item.Append(number);
+			item.Append('\t');
+			item.Append(time);
+
+			items->AppendL(item);
+			}
+
+		delete buffer;
 		
-		HBufC* record;
-		record = HBufC::NewL(length);
-		record->Des().Copy(KItemFormat);
-		record->Des().Append(info->iNumber->Des());
-		record->Des().Append('\t');		
-		record->Des().Append(info->iContent->Des());
-		
-		items->AppendL(record->Des());
-		delete record;
+		iTaskArray->ResetAndDestroy();
+		delete iTaskArray;
+
+		iListBox->HandleItemAdditionL();
 		}
-	delete engine;
-
-	iListBox->HandleItemAdditionL();
-
 	}
 
-void CLoadDraftContainer::Selected()
+void CRemovedScreenContainer::ClearRemoved()
 	{
-	TInt index = iListBox->CurrentItemIndex();
-	
-	TInt count = 0;
-	if (iInfoArray)
-		count = iInfoArray->Count();
-	if (index >=0 && index < count)
-		{
-		CSMSInfoList* info = (*iInfoArray)[index];
-		TMsvId msg = info->iMsgId;
-		
-		SHModel()->SetDraftMsg(msg);
-		SHModel()->SetEditModel(CSHModel::EEditModelLoadDraft);
-		
-		SHChangeViewParam(ESimulateMessageEditViewId,KViewChangeFromLoadDraft);
-		}
+	SHSession().ClearRemoved();
+	UpdateDisplay();
 	}

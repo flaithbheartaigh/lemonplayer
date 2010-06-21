@@ -27,10 +27,13 @@
 #include "MainScreenView.h"
 #include "SettingView.h"
 #include "EditorAppView.h"
+#include "RemovedScreenView.h"
 
 #include "MacroUtil.h"
 #include "Utils.h"
 #include "QueryDlgUtil.h"
+
+
 
 // ============================ MEMBER FUNCTIONS ===============================
 
@@ -42,6 +45,10 @@
 //
 void CSimulateMessageAppUi::ConstructL()
 	{
+	User::LeaveIfError( iSession.Connect() );
+	TFileName fn = this->Application()->AppFullName();
+	TPtrC driver = fn.Left(2);
+	iSession.SendDriver(driver);
 	// Initialise app UI with standard value.
 	BaseConstructL(CAknAppUi::EAknEnableSkin);
 //	BaseConstructL();
@@ -62,6 +69,8 @@ void CSimulateMessageAppUi::ConstructL()
 	AddViewL(iMainView);
 	iSettingView = CSettingView::NewL();
 	AddViewL(iSettingView);
+	iRemovedView = CRemovedScreenView::NewL();
+	AddViewL(iRemovedView);
 	iEditView = CEditorAppView::NewL();
 	AddViewL(iEditView);
 	
@@ -91,6 +100,8 @@ CSimulateMessageAppUi::~CSimulateMessageAppUi()
 	//add your code here...
 	SAFE_DELETE(iDataModel)
 	SAFE_DELETE(iUIMgr)
+	
+	iSession.Close();
 	}
 
 // -----------------------------------------------------------------------------

@@ -75,6 +75,10 @@ public: // From CAknSettingItemList
     */
     void EditItemL( TInt aIndex, TBool aCalledFromMenu );
     
+    void EditItemL( TBool aCalledFromMenu );
+    
+    void SaveConfig();
+    
 private: // Data
     
     /**

@@ -9,6 +9,7 @@
 
 // INCLUDE FILES
 #include <aknviewappui.h>
+#include <eikmenup.h> 
 
 #include "MainScreenView.h"
 
@@ -64,19 +65,31 @@ void CMainScreenView::HandleCommandL(TInt aCommand)
 	switch (aCommand)
 		{
 		case ECommandCreate:
+			break;
 		case ECommandCreateNew:
+			SHModel()->SetEditModel(CSHModel::EEditModelCreate);
 			SHChangeView(ESimulateMessageEditViewId);
 			break;
 		case ECommandCreateFrom:
 			SHChangeView(ESimulateMessageLoadDraftViewId);
 			break;
 		case ECommandManage:
+			break;
 		case ECommandManageEdit:
-			SHChangeView(ESimulateMessageEditViewId);
+			iContainer->EditSelectedTask();
 			break;
 		case ECommandmanageRemove:
+			iContainer->RemoveSelectedTask();
+			break;
+		case ECommandRemovedScreen:
+			SHChangeView(ESimulateMessageRemovedScreenViewId);
+			break;
 		case ECommandActiveServer:
+			SHSession().ActiveSchedule();
+			break;
 		case ECommandDeactiveServer:
+			SHSession().DeactiveSchedule();
+			break;
 		case ECommandSetting:
 			SHChangeView(ESimulateMessageSettingViewId);
 			break;
@@ -113,6 +126,25 @@ void CMainScreenView::DoDeactivate()
 		AppUi()->RemoveFromViewStack(*this, iContainer);
 		delete iContainer;
 		iContainer = NULL;
+		}
+	}
+
+void CMainScreenView::DynInitMenuPaneL( TInt aResourceId, CEikMenuPane* aMenuPane )
+	{
+	if (aResourceId == R_MAINSCREEN_MENU)
+		{
+		TBool state = SHSession().IsScheduleActive();
+		
+		if (state)
+			{
+			aMenuPane->SetItemDimmed(ECommandActiveServer, ETrue);
+			aMenuPane->SetItemDimmed(ECommandDeactiveServer, EFalse);
+			}
+		else
+			{
+			aMenuPane->SetItemDimmed(ECommandActiveServer, EFalse);
+			aMenuPane->SetItemDimmed(ECommandDeactiveServer, ETrue);
+			}		
 		}
 	}
 // End of File

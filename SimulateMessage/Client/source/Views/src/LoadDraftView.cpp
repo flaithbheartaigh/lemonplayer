@@ -13,8 +13,7 @@
 #include "LoadDraftView.h"
 
 //copy from SimulateMessageAppView.cpp
-#include "SimulateMessage.hrh"
-#include <SimulateMessage_0xE70CE849.rsg>
+#include "SHPlatform.h"
 
 // ============================ MEMBER FUNCTIONS ===============================
 CLoadDraftView::CLoadDraftView()
@@ -64,6 +63,12 @@ void CLoadDraftView::HandleCommandL(TInt aCommand)
 	{
 	switch (aCommand)
 		{
+		case EAknSoftkeyOk:
+			iContainer->Selected();
+			break;
+		case EAknSoftkeyBack:
+			SHChangeView(ESimulateMessageMainScreenViewId);
+			break;
 		default:
 			AppUi()->HandleCommandL(aCommand);
 		}
@@ -77,8 +82,8 @@ void CLoadDraftView::HandleStatusPaneSizeChange()
 /**
  * 
  * */
-void CLoadDraftView::DoActivateL(const TVwsViewId& aPrevViewId,
-		TUid aCustomMessageId, const TDesC8& aCustomMessage)
+void CLoadDraftView::DoActivateL(const TVwsViewId& /*aPrevViewId*/,
+		TUid /*aCustomMessageId*/, const TDesC8& /*aCustomMessage*/)
 	{
 	if (iContainer == NULL)
 		{

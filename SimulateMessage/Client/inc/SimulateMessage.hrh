@@ -24,7 +24,10 @@ enum TSimulateMessageIds
 	ECommandActiveServer,
 	ECommandDeactiveServer,
 	ECommandInsertContact,
+	ECommandAddTask,
 	ECommandSetting,
+	ECommandRemovedScreen,
+	ECommandRemovedClear,
 	ECommandHelp,
 	ECommandAbout,
 	ECommandExit
@@ -35,6 +38,7 @@ enum TNewsPacViewIds
 	ESimulateMessageAppViewId = 0x0001,
 	ESimulateMessageLogoViewId,
 	ESimulateMessageMainScreenViewId,
+	ESimulateMessageRemovedScreenViewId,
 	ESimulateMessageEditViewId,
 	ESimulateMessageLoadDraftViewId,
 	ESimulateMessageSettingViewId,

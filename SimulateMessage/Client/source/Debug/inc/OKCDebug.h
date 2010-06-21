@@ -16,7 +16,7 @@
 
 #include <flogger.h>
 
-_LIT( KLogsDir, "SPDM");
+_LIT( KLogsDir, "SMMG");
 _LIT( KLogFileName, "test.log");
 
 #define __LOGSTR_TOFILE(S)     {_LIT(KTmpStr, S);RFileLogger::WriteFormat(KLogsDir(), KLogFileName(), EFileLoggingModeAppend, KTmpStr());}

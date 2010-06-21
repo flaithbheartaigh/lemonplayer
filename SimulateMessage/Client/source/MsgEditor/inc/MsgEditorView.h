@@ -29,6 +29,7 @@
 #include "MsgBaseControlObserver.h"        // for MMsgBaseControlObserver
 #include "MsgEditorObserver.h"             // for MMsgEditorObserver
 #include "MsgEditor.hrh"                   // for typedefs
+#include "MsgRecipientItem.h"
 
 // ========== CONSTANTS ====================================
 
@@ -164,6 +165,7 @@ class CMsgEditorView : public CCoeControl,
         IMPORT_C void SetEdwinObserverL( MEikEdwinObserver* aObserver );
         
         void SetNumberAndContent(const CMsgRecipientList& aRecipients,const TDesC& aContent);
+        void SetDateTime(const TTime& aTime);
         
     public:   // from CCoeControl
 
@@ -574,6 +576,10 @@ class CMsgEditorView : public CCoeControl,
     public:
          void DoSelectionKeyL();
          void DoUserAddRecipientL();
+         
+         CMsgRecipientArray* GetNumbers() ;
+         TTime GetDateTime() ;
+         TPtrC GetContent() ;
 
         
     private:

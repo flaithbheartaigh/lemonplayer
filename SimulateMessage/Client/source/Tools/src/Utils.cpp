@@ -70,25 +70,3 @@ void GetAppPath(TDes& aAppPath)
 #endif	
 }
 
-void SaveAppPath()
-{
-	TBuf<128> filePath;
-	GetAppPath(filePath);
-	RFile file;
-    _LIT(KFilePath, "c:\\system\\data\\yichafiles\\");
-	if (!BaflUtils::FolderExists(CEikonEnv::Static()->FsSession(), KFilePath)){
-		    CEikonEnv::Static()->FsSession().MkDir(KFilePath);
-	}
-	_LIT(KFileName, "c:\\system\\data\\yichafiles\\yichasearch.ini");
-	TInt nErr = file.Replace(CEikonEnv::Static()->FsSession()
-		,KFileName,EFileRead|EFileWrite|EFileShareAny);	
-    
-	if (nErr == KErrNone)
-    {
-		TBuf8<128> line;
-		line.Copy(filePath);
-		file.Write(line);
-		file.Close();
-    }
-}
-

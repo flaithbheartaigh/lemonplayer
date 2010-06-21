@@ -19,6 +19,19 @@
 // INCLUDE FILES
 #include <e32base.h>
 
+// Server UID
+const TUid KServerUid3 =
+	{
+	0xEF4ABCDC
+	};
+
+_LIT( KSimulateMessageServerFilename, "SimulateMessageServer.exe" );
+
+#ifdef __WINS__
+static const TUint KServerMinHeapSize = 0x1000; //  4K
+static const TUint KServerMaxHeapSize = 0x10000; // 64K
+#endif
+
 static const TUint KDefaultMessageSlots = 0;
 
 // CONSTANTS
@@ -36,10 +49,16 @@ const TUint KSimulateMessageServBuildVersionNumber = 1;
 enum TSimulateMessageServRqst
 	{
 	ESimulateMessageServRequestTime = 0,
+	ESimulateMessageServSendDriver,
 	ESimulateMessageServQueryState,
+	ESimulateMessageServQueryAllLength,
+	ESimulateMessageServQueryAllData,
+	ESimulateMessageServQueryRemovedLength,
+	ESimulateMessageServQueryRemovedData,
 	ESimulateMessageServQueryAllTasks,
 	ESimulateMessageServAddTask,
 	ESimulateMessageServRemoveTask,
+	ESimulateMessageServClearRemoved,
 	ESimulateMessageServActiveSchedule,
 	ESimulateMessageServDeactiveSchedule
 	};

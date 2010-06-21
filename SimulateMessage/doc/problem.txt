@@ -1,0 +1,14 @@
+1.控制台使用CEikonEnv.
+原因:
+是存在CActiveScheduler::Install(scheduler);的原因.
+解决:
+不在控制台使用CEikonEnv...
+因为是创建短信的CRichText的时候,不NewL,而是使用已存在的对象.
+
+2.控制台程序路径.
+原因:
+使用RFs.PrivatePath(iPath)在模拟器上运行正常,在真机上没有driver.
+解决:
+让客户端传递给服务器端一个driver信息.
+
+

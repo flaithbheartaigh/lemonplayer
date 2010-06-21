@@ -1,27 +1,27 @@
 /*
  ============================================================================
- Name		: SettingView.cpp
+ Name		: RemovedScreenView.cpp
  Author	  : zengcity
  Copyright   : Your copyright notice
- Description : CSettingView implementation
+ Description : CRemovedScreenView implementation
  ============================================================================
  */
 
 // INCLUDE FILES
 #include <aknviewappui.h>
 
-#include "SettingView.h"
+#include "RemovedScreenView.h"
 
 #include "SHPlatform.h"
 
 // ============================ MEMBER FUNCTIONS ===============================
-CSettingView::CSettingView()
+CRemovedScreenView::CRemovedScreenView()
 	{
 	// No implementation required
 	iContainer = NULL;
 	}
 
-CSettingView::~CSettingView()
+CRemovedScreenView::~CRemovedScreenView()
 	{
 	DoDeactivate();
 
@@ -29,53 +29,49 @@ CSettingView::~CSettingView()
 
 	}
 
-CSettingView* CSettingView::NewLC()
+CRemovedScreenView* CRemovedScreenView::NewLC()
 	{
-	CSettingView* self = new (ELeave) CSettingView();
+	CRemovedScreenView* self = new (ELeave) CRemovedScreenView();
 	CleanupStack::PushL(self);
 	self->ConstructL();
 	return self;
 	}
 
-CSettingView* CSettingView::NewL()
+CRemovedScreenView* CRemovedScreenView::NewL()
 	{
-	CSettingView* self = CSettingView::NewLC();
+	CRemovedScreenView* self = CRemovedScreenView::NewLC();
 	CleanupStack::Pop(); // self;
 	return self;
 	}
 
-void CSettingView::ConstructL()
+void CRemovedScreenView::ConstructL()
 	{
-	BaseConstructL(R_VIEW_SETTING);
+	BaseConstructL(R_VIEW_REMOVEDSCREEN);
 
 	//add your code here...
-
 	}
 /**
  * 
  * */
-TUid CSettingView::Id() const
+TUid CRemovedScreenView::Id() const
 	{
-	return TUid::Uid(ESimulateMessageSettingViewId);
+	return TUid::Uid(ESimulateMessageRemovedScreenViewId);
 	}
-void CSettingView::HandleCommandL(TInt aCommand)
+void CRemovedScreenView::HandleCommandL(TInt aCommand)
 	{
 	switch (aCommand)
 		{
-		case EAknSoftkeyOk:
-			if (iContainer)
-				iContainer->EditItemL(ETrue);
-			break;
 		case EAknSoftkeyBack:
-			if (iContainer)
-				iContainer->SaveConfig();
 			SHChangeView(ESimulateMessageMainScreenViewId);
+			break;
+		case ECommandRemovedClear:
+			iContainer->ClearRemoved();
 			break;
 		default:
 			AppUi()->HandleCommandL(aCommand);
 		}
 	}
-void CSettingView::HandleStatusPaneSizeChange()
+void CRemovedScreenView::HandleStatusPaneSizeChange()
 	{
 	if (iContainer != NULL)
 		iContainer->SetRect(ClientRect());
@@ -84,27 +80,20 @@ void CSettingView::HandleStatusPaneSizeChange()
 /**
  * 
  * */
-void CSettingView::DoActivateL(const TVwsViewId& aPrevViewId,
+void CRemovedScreenView::DoActivateL(const TVwsViewId& aPrevViewId,
 		TUid aCustomMessageId, const TDesC8& aCustomMessage)
 	{
 	if (iContainer == NULL)
 		{
-//		iContainer = CSettingContainer::NewL(ClientRect());
-		
-		iContainer = CSettingList::NewL();
+		iContainer = CRemovedScreenContainer::NewL(ClientRect());
 		iContainer->SetMopParent(this);
-		iContainer->ConstructFromResourceL( R_LISTBOX_SETTING_ITEM_LIST );
 		AppUi()->AddToStackL(*this, iContainer);
-		
-	    iContainer->MakeVisible( ETrue );
-	    iContainer->SetRect( ClientRect() );
-	    iContainer->ActivateL();
 
 		//add your init code ...
 
 		}
 	}
-void CSettingView::DoDeactivate()
+void CRemovedScreenView::DoDeactivate()
 	{
 	if (iContainer != NULL)
 		{

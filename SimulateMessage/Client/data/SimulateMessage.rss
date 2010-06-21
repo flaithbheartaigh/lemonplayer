@@ -56,14 +56,13 @@ RESOURCE AVKON_VIEW r_view_mainscreen
 
 RESOURCE AVKON_VIEW r_view_loaddraft
 	{
-	cba = R_AVKON_SOFTKEYS_OPTIONS_BACK;
-	menubar = r_menubar;
+	cba = R_AVKON_SOFTKEYS_OK_BACK;
+	//menubar = r_menubar;
 	}
 
 RESOURCE AVKON_VIEW r_view_setting
 	{
-	cba = R_AVKON_SOFTKEYS_OPTIONS_BACK;
-	menubar = r_menubar;
+	cba = r_cba_change_back;
 	}
 
 RESOURCE AVKON_VIEW r_view_app
@@ -76,6 +75,12 @@ RESOURCE AVKON_VIEW r_view_editor
 	{
 	cba = R_AVKON_SOFTKEYS_OPTIONS_BACK;
 	menubar = r_menubar_editor;
+	}
+
+RESOURCE AVKON_VIEW r_view_removedscreen
+	{
+	cba = R_AVKON_SOFTKEYS_OPTIONS_BACK;
+	menubar = r_menubar_removed;
 	}
 // -----------------------------------------------------------------------------
 //
@@ -151,6 +156,11 @@ RESOURCE MENU_PANE r_mainscreen_menu
 			command = ECommandManage;
 			txt = rls_manage;
 			cascade = r_mainscreen_submenu_manage;
+			},
+		MENU_ITEM
+			{
+			command = ECommandRemovedScreen;
+			txt = rls_active_removed_screen;
 			},
 		MENU_ITEM
 			{
@@ -252,10 +262,48 @@ RESOURCE MENU_PANE r_menu_editor
 			{
 			command = ECommandInsertContact;
 			txt = rls_insert_contact;
+			},
+		MENU_ITEM
+			{
+			command = ECommandAddTask;
+			txt = qtn_save;
 			}
 		};
 	}
 
+// -----------------------------------------------------------------------------
+//
+//   r_menubar
+//   Main menubar
+//
+// -----------------------------------------------------------------------------
+//
+RESOURCE MENU_BAR r_menubar_removed
+	{
+	titles =
+		{
+		MENU_TITLE {menu_pane = r_menu_removed;}
+		};
+	}
+
+// -----------------------------------------------------------------------------
+//
+//   r_menu
+//   Menu for "Options"
+//
+// -----------------------------------------------------------------------------
+//
+RESOURCE MENU_PANE r_menu_removed
+	{
+	items =
+		{
+		MENU_ITEM
+			{
+			command = ECommandRemovedClear;
+			txt = qtn_clear;
+			}
+		};
+	}
 // -----------------------------------------------------------------------------
 //
 // About dialog resource.
@@ -322,8 +370,8 @@ RESOURCE AKN_ICON_ARRAY r_icon_mark
 		{
 		AKN_ICON
 			{
-			iconId = EMbmAvkonQgn_prop_radiobutt_on;
-			maskId = EMbmAvkonQgn_prop_radiobutt_on_mask;
+			iconId = EMbmAvkonQgn_stat_message;
+			maskId = EMbmAvkonQgn_stat_message_blank;
 			},
 		AKN_ICON
 			{
@@ -437,6 +485,8 @@ RESOURCE MSG_EDITOR_ADDRESS_CONTROL r_unieditor_datetime
     numeric_keymap          = EAknEditorStandardNumberModeKeymap;
     avkon_flags             = EAknEditorFlagNoT9 | EAknEditorFlagUseSCTNumericCharmap;
     }
+
+RESOURCE TBUF r_note_recipient_null 			{ buf = qtn_help_file;}
 
 #include "SHRss.inl"
 // End of File

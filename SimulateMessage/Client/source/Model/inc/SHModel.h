@@ -14,6 +14,8 @@
 // INCLUDES
 #include <e32std.h>
 #include <e32base.h>
+#include <msvstd.h>
+#include "SimMsgStruct.h"
 
 // CLASS DECLARATION
 
@@ -24,6 +26,12 @@
 class CSHModel : public CBase
 	{
 public:
+	enum TEditModel
+		{
+		EEditModelCreate,
+		EEditModelLoadDraft,
+		EEditmodelModify
+		};
 	// Constructors and destructor
 
 	/**
@@ -52,7 +60,21 @@ private:
 	 * EPOC default constructor for performing 2nd stage construction
 	 */
 	void ConstructL();
-
+	
+public:
+	void SetEditModel(TEditModel aModel) {iEditModel = aModel;};
+	TInt GetEditModel() const {return iEditModel;};
+	
+	void SetEditMessage(SimMsgData* aMsg);
+	SimMsgData* GetEditMessage() const {return iEditMessage;};
+	
+	void SetDraftMsg(TMsvId aMsg) {iDraftMsg = aMsg;};
+	TMsvId GetDraftMsg() {return iDraftMsg;};
+	
+private:
+	TEditModel iEditModel;
+	SimMsgData* iEditMessage;
+	TMsvId	iDraftMsg;
 	};
 
 #endif // SHMODEL_H

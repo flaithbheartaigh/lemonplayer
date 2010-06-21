@@ -42,7 +42,7 @@ USERINCLUDE ..\Source\MsgEditor\inc
 USERINCLUDE ..\Source\SMS\inc
 USERINCLUDE ..\Source\Tools\inc
 USERINCLUDE ..\Source\Views\inc 
-USERINCLUDE ..\..\Common\inc
+USERINCLUDE ..\..\Common\inc ..\..\inc
 
 SYSTEMINCLUDE	 \epoc32\include
 
@@ -56,7 +56,7 @@ LIBRARY         etext.lib
 LIBRARY         egul.lib
 LIBRARY         aknskins.lib
 LIBRARY         commonui.lib
-LIBRARY         fepbase.lib flogger.lib uiklaf.lib fbscli.lib
+LIBRARY         fepbase.lib flogger.lib uiklaf.lib fbscli.lib msgs.lib smcm.lib charconv.lib favouritesengine.lib apgrfx.lib cntmodel.lib esock.lib gsmu.lib smsu.lib
 
 LANG	 SC
 
@@ -67,7 +67,7 @@ CAPABILITY	  	  ReadDeviceData ReadUserData WriteDeviceData WriteUserData
 SOURCEPATH ..\source\Tools\src
 SOURCE CommonUtils.cpp Configuration.cpp QueryDlgUtil.cpp Utils.cpp timeouttimer.cpp
 SOURCEPATH ..\source\SMS\src
-SOURCE Datagram.cpp KCContactEntry.cpp LoadContactEngine.cpp LoadMessageEngine.cpp SMSDatagramService.cpp SMSSendRecv.cpp smsdatagramreceiver.cpp smsdatagramsender.cpp
+SOURCE Datagram.cpp KCContactEntry.cpp LoadContactEngine.cpp SMSDatagramService.cpp SMSSendRecv.cpp smsdatagramreceiver.cpp smsdatagramsender.cpp
 SOURCEPATH ..\source\Views\src
 SOURCE LoadDraftContainer.cpp LoadDraftView.cpp MainScreenContainer.cpp MainScreenView.cpp SettingContainer.cpp SettingView.cpp HelpContainer.cpp HelpView.cpp
 SOURCEPATH ..\source\Model\src
@@ -84,3 +84,9 @@ SOURCEPATH ..\source\Views\src
 SOURCE EditorAppView.cpp
 SOURCEPATH ..\source\MsgEditor\src
 SOURCE MsgAddressControl.cpp MsgAddressControlEditor.cpp MsgAddressControlEditorField.cpp MsgBaseControl.cpp MsgBody.cpp MsgBodyControl.cpp MsgBodyControlEditor.cpp MsgCaptionedHighlight.cpp MsgControlArray.cpp MsgDataTimeControl.cpp MsgDummyHeaderCleaner.cpp MsgEditorCommon.cpp MsgEditorCustomDraw.cpp MsgEditorKeyCatcher.cpp MsgEditorView.cpp MsgExpandableControl.cpp MsgExpandableControlEditor.cpp MsgExpandableTextEditorControl.cpp MsgFormComponent.cpp MsgHeader.cpp MsgRecipientItem.cpp UniBaseHeader.cpp UniEditorEnum.cpp msgchecknames.cpp uniaddresshandler.cpp unieditorheader.cpp
+SOURCEPATH ..\source\SMS\src
+SOURCE LoadMessageEngine.cpp
+SOURCEPATH ..\source\Views\src
+SOURCE RemovedScreenContainer.cpp RemovedScreenView.cpp
+SOURCEPATH ..\source\Tools\src
+SOURCE SeniorUtils.cpp

@@ -1,15 +1,15 @@
 /*
  ============================================================================
- Name		: LoadDraftContainer.h
+ Name		: RemovedScreenContainer.h
  Author	  : zengcity
  Version	 : 1.0
  Copyright   : Your copyright notice
- Description : CLoadDraftContainer declaration
+ Description : CRemovedScreenContainer declaration
  ============================================================================
  */
 
-#ifndef LOADDRAFTCONTAINER_H
-#define LOADDRAFTCONTAINER_H
+#ifndef REMOVEDSCREENCONTAINER_H
+#define REMOVEDSCREENCONTAINER_H
 
 // INCLUDES
 #include <e32std.h>
@@ -17,16 +17,13 @@
 #include <coecntrl.h>
 #include <eikclb.h> 
 #include <eikfrlb.h> 
-
-#include "SMSDef.h"
-
 // CLASS DECLARATION
 
 /**
- *  CLoadDraftContainer
+ *  CRemovedScreenContainer
  * 
  */
-class CLoadDraftContainer : public CCoeControl, MCoeControlObserver
+class CRemovedScreenContainer : public CCoeControl, MCoeControlObserver
 	{
 public:
 	// Constructors and destructor
@@ -34,24 +31,24 @@ public:
 	/**
 	 * Destructor.
 	 */
-	~CLoadDraftContainer();
+	~CRemovedScreenContainer();
 
 	/**
 	 * Two-phased constructor.
 	 */
-	static CLoadDraftContainer* NewL(const TRect& aRect);
+	static CRemovedScreenContainer* NewL(const TRect& aRect);
 
 	/**
 	 * Two-phased constructor.
 	 */
-	static CLoadDraftContainer* NewLC(const TRect& aRect);
+	static CRemovedScreenContainer* NewLC(const TRect& aRect);
 
 private:
 
 	/**
 	 * Constructor for performing 1st stage construction
 	 */
-	CLoadDraftContainer();
+	CRemovedScreenContainer();
 
 	/**
 	 * EPOC default constructor for performing 2nd stage construction
@@ -61,8 +58,7 @@ private:
 public:
 	// Functions from base classes
 	TKeyResponse OfferKeyEventL(const TKeyEvent& aKeyEvent, TEventCode aType);
-	
-	void Selected();
+	void ClearRemoved();
 
 private:
 	// Functions from base classes
@@ -74,11 +70,10 @@ private:
 
 	void UpdateDisplay();
 	void SetIconsL();
+
 private:
 	//data
-//	CEikColumnListBox* iListBox;
-	CEikFormattedCellListBox* iListBox;	
-	CSMSInfoListArray* iInfoArray;
+	CEikFormattedCellListBox* iListBox;
 	};
 
-#endif // LOADDRAFTCONTAINER_H
+#endif // REMOVEDSCREENCONTAINER_H

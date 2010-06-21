@@ -5,7 +5,6 @@
 // INCLUDE FILES 
 #include "LoadMessageEngine.h"
 
-
 // SYSTEM FILES
 #include <f32file.h>        // TParsePtrC
 #include <mtclreg.h>        // CClientMtmRegistry
@@ -21,11 +20,12 @@
 #include <badesca.h>
 #include <StringLoader.h> 
 
-
 const TUid KUidMsgTypeDraft =
 	{
 	0x102072D6
 	};
+
+const TMsvId KDrafts = KMsvDraftEntryId;
 
 CLoadMessageEngine* CLoadMessageEngine::NewL()
 	{
@@ -37,14 +37,15 @@ CLoadMessageEngine* CLoadMessageEngine::NewL()
 	}
 
 CLoadMessageEngine::CLoadMessageEngine() :
-	CActive(EPriorityStandard),iNumContact(NULL)
+//	CActive(EPriorityStandard), 
+	iNumContact(NULL)
 	{
 	}
 
 void CLoadMessageEngine::ConstructL()
 	{
 	//	User::LeaveIfError(iTimeWaster.CreateLocal());
-	CActiveScheduler::Add(this);
+//	CActiveScheduler::Add(this);
 
 	// Represents a channel of communication between a client thread
 	// (Client-side MTM, User Interface MTM, or message client application)
@@ -69,8 +70,8 @@ void CLoadMessageEngine::CreateMtmClientL()
 
 CLoadMessageEngine::~CLoadMessageEngine()
 	{
-	Cancel();
-	
+//	Cancel();
+
 	delete iNumContact;
 
 	delete iSmsMtm;
@@ -104,11 +105,10 @@ void CLoadMessageEngine::RunL()
 	{
 	}
 
-
 TPtrC CLoadMessageEngine::CreateMsgContact(const TDesC& aNumber)
 	{
 	delete iNumContact;
-	
+
 	CContactDatabase * iContactDB;
 	TBuf<60> dbFile;
 	TInt err;
@@ -116,25 +116,25 @@ TPtrC CLoadMessageEngine::CreateMsgContact(const TDesC& aNumber)
 	//gets default contact database file
 	CContactDatabase::GetDefaultNameL(dbFile);
 		//opens default contact database file
-	TRAP(err, iContactDB= CContactDatabase::OpenL(dbFile))
+		TRAP(err, iContactDB= CContactDatabase::OpenL(dbFile))
 	User::LeaveIfError(err);
-	
+
 	CleanupStack::PushL(iContactDB);
 
 	//create iterarot for contact_db
 	TContactIter iContactIiterator(*iContactDB);
-	TContactItemId contact_id;
+//	TContactItemId contact_id;
 	TBuf<100> mobile(0), name(0);
 	_LIT(KName,"%S%S");
 
-	CContactItemFieldDef* fields = new (ELeave)CContactItemFieldDef();
+	CContactItemFieldDef* fields = new (ELeave) CContactItemFieldDef();
 	CleanupStack::PushL(fields);
 	fields->AppendL(KUidContactFieldVCardMapCELL);
 	fields->AppendL(KUidContactFieldVCardMapTEL);
-	CContactIdArray* array = iContactDB->FindLC(aNumber,fields);
+	CContactIdArray* array = iContactDB->FindLC(aNumber, fields);
 	if (array->Count() > 0)
 		{
-		TContactItemId contact_id = (*array)[0];		
+		TContactItemId contact_id = (*array)[0];
 
 		TBuf<64> name(0);
 		_LIT(KName,"%S%S");
@@ -188,7 +188,7 @@ void CLoadMessageEngine::CreateNewMessageL(const TDesC& aAddr,
 	iSmsMtm->SwitchCurrentEntryL(KMsvGlobalInBoxIndexEntryId); //test!
 
 	TMsvEntry newIndexEntry;
-//	newIndexEntry.iDate.HomeTime();
+	//	newIndexEntry.iDate.HomeTime();
 	newIndexEntry.iDate.UniversalTime();
 	// 短信还未创建完成
 	newIndexEntry.SetInPreparation(ETrue);
@@ -218,13 +218,34 @@ void CLoadMessageEngine::CreateNewMessageL(const TDesC& aAddr,
 	/*--------------------------------------------
 	 // 重写 header
 	 //------------------------------------------*/
-	CRichText* richText = CRichText::NewL(
-			CEikonEnv::Static()->SystemParaFormatLayerL(),
-			CEikonEnv::Static()->SystemCharFormatLayerL());
-	CleanupStack::PushL(richText);
-	richText->InsertL(0, aContent);
+//	CEikonEnv* coe = CEikonEnv::Static();
+//#ifdef __WINS__
+////	CEikonEnv* coe = CEikonEnv::Static();
+//	CEikonEnv* coe = new CEikonEnv;    
+//	TRAPD(err, coe->ConstructL());   
+////	__ASSERT_ALWAYS(!err, User::Panic(_L("EXECTRL"), err));
+//#else
+//	CEikonEnv* coe = new CEikonEnv;    
+//	TRAPD(err, coe->ConstructL());   
+//	__ASSERT_ALWAYS(!err, User::Panic(_L("EXECTRL"), err));
+//#endif
+	
 
-	CSmsHeader* mySmsHeader = CSmsHeader::NewL(CSmsPDU::ESmsDeliver, *richText);
+//	CRichText* richText = CRichText::NewL(
+//			coe->SystemParaFormatLayerL(),
+//			coe->SystemCharFormatLayerL());
+//	CleanupStack::PushL(richText);
+//	richText->InsertL(0, aContent);
+	
+	CRichText& body = iSmsMtm->Body();
+	body.Reset();
+	body.InsertL(0, aContent);
+		//提交保存
+	iSmsMtm->SaveMessageL();
+
+
+//	CSmsHeader* mySmsHeader = CSmsHeader::NewL(CSmsPDU::ESmsDeliver, *richText);
+	CSmsHeader* mySmsHeader = CSmsHeader::NewL(CSmsPDU::ESmsDeliver, body);
 	CleanupStack::PushL(mySmsHeader);
 
 	CMsvEntry* tmpEntry = iSession->GetEntryL(newIndexEntry.Id());
@@ -235,7 +256,7 @@ void CLoadMessageEngine::CreateNewMessageL(const TDesC& aAddr,
 
 		CMsvStore* store = tmpEntry->EditStoreL();
 		CleanupStack::PushL(store);
-		
+
 		//以下是取得当前手机设置的时差
 		TLocale locale;
 		TTimeIntervalSeconds universalTimeOffset(locale.UniversalTimeOffset());
@@ -246,14 +267,14 @@ void CLoadMessageEngine::CreateNewMessageL(const TDesC& aAddr,
 		// 设置短信的创建时间，在msventry里面设置的无效
 		CSmsDeliver& deliver = mySmsHeader->Deliver();
 		TTime nowTime;
-//		nowTime.HomeTime();
+		//		nowTime.HomeTime();
 		nowTime.UniversalTime();
-		
-		deliver.SetServiceCenterTimeStamp(nowTime,numQuarterHours);
-//		deliver.SetServiceCenterTimeStamp(nowTime);
+
+		deliver.SetServiceCenterTimeStamp(nowTime, numQuarterHours);
+		//		deliver.SetServiceCenterTimeStamp(nowTime);
 
 		mySmsHeader->StoreL(*store);
-		store->StoreBodyTextL(*richText);
+//		store->StoreBodyTextL(*richText);
 
 		store->CommitL();
 		CleanupStack::PopAndDestroy(store);
@@ -270,15 +291,149 @@ void CLoadMessageEngine::CreateNewMessageL(const TDesC& aAddr,
 	//
 
 	iSmsMtm->Entry().ChangeL(tttEntry);
-	CleanupStack::PopAndDestroy(3, richText); // tmpEntry, mySmsHeader, richText
 
-	//delete iSmsMtm;
-	//iSmsMtm = NULL;
-	//delete iMtmRegistry;
-	//iMtmRegistry = NULL;
-	//delete iMsvSession;
-	//iMsvSession = NULL;
+	CleanupStack::PopAndDestroy(2); // tmpEntry, mySmsHeader
 
 	return;
 	}
 
+void CLoadMessageEngine::LoadSMSDraft(CSMSInfoListArray* aArray)
+	{
+	TMsvId folder;
+	folder = KDrafts;
+	CMsvEntrySelection* iContactEntries = new (ELeave) CMsvEntrySelection;
+	CMsvEntryFilter * filter = CMsvEntryFilter::NewLC();
+	filter->SetMtm(KUidMsgTypeSMS);
+	iSession->GetChildIdsL(folder, *filter, *iContactEntries);
+	CleanupStack::PopAndDestroy(filter);
+
+	for (TInt iCurContactIndex = 0; iCurContactIndex < iContactEntries->Count(); iCurContactIndex++)
+		{
+
+		TMsvId msg = (*iContactEntries)[iCurContactIndex++];
+
+		CMsvEntry* centry = iSession->GetEntryL(msg);
+		const TMsvEntry& tentry = centry->Entry();
+
+		CSMSInfoList* info = new (ELeave) CSMSInfoList;
+		info->iNumber = tentry.iDescription.AllocL();
+		info->iContent = tentry.iDetails.AllocL();
+		info->iMsgId = msg;
+
+		aArray->Append(info);
+
+		delete centry;
+		}
+
+		SAFE_DELETE(iContactEntries)
+
+	}
+
+void CLoadMessageEngine::LoadSMSFromFolder(CSMSInfoListArray* aArray,
+		TMsvId aFolder)
+	{
+	CMsvEntrySelection* iContactEntries = new (ELeave) CMsvEntrySelection;
+	CMsvEntryFilter * filter = CMsvEntryFilter::NewLC();
+	filter->SetMtm(KUidMsgTypeSMS);
+	iSession->GetChildIdsL(aFolder, *filter, *iContactEntries);
+	CleanupStack::PopAndDestroy(filter);
+
+	for (TInt iCurContactIndex = 0; iCurContactIndex < iContactEntries->Count(); iCurContactIndex++)
+		{
+
+		TMsvId msg = (*iContactEntries)[iCurContactIndex++];
+
+		CMsvEntry* centry = iSession->GetEntryL(msg);
+		const TMsvEntry& tentry = centry->Entry();
+
+		CSMSInfoList* info = new (ELeave) CSMSInfoList;
+		info->iNumber = tentry.iDescription.AllocL();
+		info->iContent = tentry.iDetails.AllocL();
+		info->iMsgId = msg;
+
+		aArray->Append(info);
+
+		delete centry;
+		}
+
+		SAFE_DELETE(iContactEntries)
+	}
+
+//HBufC* CLoadMessageEngine::ReadMessage(TMsvId aEntryID)
+//	{
+//	HBufC* SMSContent = NULL;
+//
+//	iSmsMtm->SwitchCurrentEntryL(aEntryID);
+//	CMsvEntry* entry = iSession->GetEntryL(aEntryID);
+//	CleanupStack::PushL(entry);
+//	CMsvStore* inboxStore; /* Skip loop if fail in obtains the message store */
+//	TRAPD(r, inboxStore = entry->ReadStoreL());
+//	if (KErrNone != r)
+//		{
+//		CleanupStack::PopAndDestroy(entry);
+//		return SMSContent;
+//		}
+//	CleanupStack::PushL(inboxStore);
+//	if (inboxStore->HasBodyTextL())
+//		{
+//		iSmsMtm->LoadMessageL();
+//
+//		CRichText& richText = iSmsMtm->Body();
+//		inboxStore->RestoreBodyTextL(richText);
+//		const TInt length = richText.DocumentLength(); /* Gives you actual content(Body) of SMS */
+//		SMSContent = HBufC::NewL(length);
+//		SMSContent->Des().Copy(richText.Read(0, length));
+//		richText.Reset();
+//		}
+//
+//	CleanupStack::PopAndDestroy(2);
+//
+//	return SMSContent;
+//	}
+
+CSMSDraftInfo* CLoadMessageEngine::ReadMessage(TMsvId aEntryID)
+	{
+	CSMSDraftInfo* msg = new (ELeave) CSMSDraftInfo;
+
+	iSmsMtm->SwitchCurrentEntryL(aEntryID);
+	CMsvEntry* entry = iSession->GetEntryL(aEntryID);
+	CleanupStack::PushL(entry);
+	CMsvStore* inboxStore; /* Skip loop if fail in obtains the message store */
+	TRAPD(r, inboxStore = entry->ReadStoreL());
+	if (KErrNone != r)
+		{
+		CleanupStack::PopAndDestroy(entry);
+		return NULL;
+		}
+	CleanupStack::PushL(inboxStore);
+	if (inboxStore->HasBodyTextL())
+		{
+		iSmsMtm->LoadMessageL();
+		CSmsHeader& header = iSmsMtm->SmsHeader(); /* This will give you actual phone number irrespective of the name of contact*/
+
+		const CArrayPtrFlat<CSmsNumber>& numbers = header.Recipients();
+		TInt count = numbers.Count();
+		msg->iNumbers = new CDesCArrayFlat(2);
+		msg->iNames = new CDesCArrayFlat(2);
+		for (TInt i = 0; i < count; i++)
+			{
+			const CSmsNumber* num = numbers[i];
+			TPtrC address = num->Address();
+			TPtrC name = num->Name();
+			
+			msg->iNumbers->AppendL(address);
+			msg->iNames->AppendL(name);
+			}
+
+		CRichText& richText = iSmsMtm->Body();
+		inboxStore->RestoreBodyTextL(richText);
+		const TInt length = richText.DocumentLength(); /* Gives you actual content(Body) of SMS */
+		msg->iContent = HBufC::NewL(length);
+		msg->iContent->Des().Copy(richText.Read(0, length));
+		richText.Reset();
+		}
+
+	CleanupStack::PopAndDestroy(2);
+
+	return msg;
+	}

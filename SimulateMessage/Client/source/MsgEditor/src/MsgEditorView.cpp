@@ -3069,10 +3069,10 @@ void CMsgEditorView::ShowScrollPopupInfoTextL( CAknDoubleSpanScrollBar* aScrollB
 //        iScrollPopText = StringLoader::LoadL( R_QTN_MSG_PAGE_NUMBER_POPUP, iCoeEnv );
 //        }
     
-    TBuf<KMsgMaximumScrollPartLength> buffer;
-    StringLoader::Format( buffer, *iScrollPopText, KErrNotFound, aPartNumber );
-
-    aScrollBar->SetScrollPopupInfoTextL( buffer );
+//    TBuf<KMsgMaximumScrollPartLength> buffer;
+//    StringLoader::Format( buffer, *iScrollPopText, KErrNotFound, aPartNumber );
+//
+//    aScrollBar->SetScrollPopupInfoTextL( buffer );
     }
 
 // ---------------------------------------------------------
@@ -3299,5 +3299,29 @@ void CMsgEditorView::SetNumberAndContent(const CMsgRecipientList& aRecipients,co
 	
 	CMsgBodyControl* content = static_cast<CMsgBodyControl*>(ControlById(EMsgComponentIdBody));
 	content->InsertTextL(aContent);
+	}
+
+void CMsgEditorView::SetDateTime(const TTime& aTime)
+	{
+	CMsgDataTimeControl* time = static_cast<CMsgDataTimeControl*>(ControlById(EMsgComponentIdDateTime));
+	time->SetDateTime(aTime);
+	}
+
+CMsgRecipientArray* CMsgEditorView::GetNumbers()
+	{
+	CMsgAddressControl* address = static_cast<CMsgAddressControl*>(ControlById(EMsgComponentIdTo));
+	return address->GetRecipientsL();
+	}
+
+TTime CMsgEditorView::GetDateTime()
+	{
+	CMsgDataTimeControl * time = static_cast<CMsgDataTimeControl*>(ControlById(EMsgComponentIdDateTime));
+	return time->GetDateTime();
+	}
+
+TPtrC CMsgEditorView::GetContent()
+	{
+	CMsgBodyControl* content = static_cast<CMsgBodyControl*>(ControlById(EMsgComponentIdBody));
+	return content->Editor().Text()->Read(0);
 	}
 // End of File

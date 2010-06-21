@@ -13,17 +13,12 @@
 #include <charconv.h>
 #include <utf.h> 
 #include <mtmuibas.h>
-
 #include <eikenv.h>
 #include <w32std.h>
-#include <apgtask.h>
-#include <apgcli.h>
 #include <Uri16.h>
 #include <Uri8.h>
 #include <aknnotewrappers.h> 
 #include <e32math.h>
-#include <favouritessession.h> 		//RFavouritesSession
-#include <favouritesdb.h> 			//RFavouritesDb
 
 //#include "kiwiApp.h"
 #include "CommonUtils.h"
@@ -37,48 +32,6 @@ CCommonUtils::~CCommonUtils()
 	{
 	}
 
-// 将应用程序带到前台
-void CCommonUtils::ShowApplication()
-	{
-	//RWsSession aWsSession = CEikonEnv::Static()->WsSession();
-	//TApaTaskList taskList(aWsSession);
-	//TApaTask aTask = taskList.FindApp(KUidkiwi);
-	//aTask.BringToForeground();
-	}
-
-// 隐藏应用程序
-void CCommonUtils::HideApplication()
-	{
-	//	RWsSession aWsSession = CEikonEnv::Static()->WsSession();
-	//	TApaTask aTask(aWsSession);
-	//	TInt aId = CEikonEnv::Static()->RootWin().Identifier();
-	//	aTask.SetWgId(aId);
-	//	if (aWsSession.GetFocusWindowGroup() == aId)
-	//	{
-	//		aTask.SendToBackground();
-	// 	}
-	}
-
-TBool CCommonUtils::IsDirectoryExists(const TDesC &aDirName)
-	{
-	CDir *dirList = NULL;
-	RFs &aFs = CEikonEnv::Static()->FsSession();
-
-	TInt err = aFs.GetDir(aDirName, KEntryAttMaskSupported, ESortByName,
-			dirList);
-
-	delete dirList;
-	dirList = NULL;
-
-	if (err == KErrPathNotFound)
-		{
-		return EFalse;
-		}
-	else
-		{
-		return ETrue;
-		}
-	}
 
 TBool CCommonUtils::HexToDec(const TDesC& aHexDes, TInt& aDec)
 	{
@@ -352,116 +305,89 @@ TBool CCommonUtils::IsPointInRect(TPoint aPoint, TRect rect)
 //	}
 //
 
-TThreadId CCommonUtils::StartBroswerApp(const TDesC& aUrl)
+#define FOMART_FILL_TO_TOW(a,b) if (a < 10) b.AppendNum(0);
+
+void CCommonUtils::TimeFormat(const TTime& aTime,TDes& aDes)
 	{
-	TThreadId id(0);
-	if (aUrl.Length() <= 0)
-		return id;
-
-	const TInt KBrowserUid1 = 0x1020724D;
-	const TInt KBrowserUid2 = 0x10008D39;
-
-	RApaLsSession appArcSession;
-	User::LeaveIfError(appArcSession.Connect()); // connect to AppArc server
-
-	HBufC* param = HBufC::NewLC(aUrl.Length() + 8);
-	param->Des().Format(_L( "4 %S" ), &aUrl);
-
-	// Wap Browser's constants UId
-	TUid browserId(TUid::Uid(KBrowserUid1));
-
-	TApaAppInfo appInfo;
-	if (appArcSession.GetAppInfo(appInfo, browserId) != KErrNone)
-		{
-		browserId = TUid::Uid(KBrowserUid2);
-		}
-
-	TApaTaskList taskList(CEikonEnv::Static()->WsSession());
-	TApaTask task = taskList.FindApp(browserId);
-	if (task.Exists())
-		{
-		HBufC8* param8 = HBufC8::NewLC(param->Length() * 4);
-		param8->Des().Append(*param);
-		task.SendMessage(TUid::Uid(0), *param8); // Uid is not used
-		CleanupStack::PopAndDestroy(); // param8
-		}
-	else
-		{
-		appArcSession.StartDocument(*param, browserId, id);
-		//	appArcSession.Close();
-
-		//	User::After(2*1000*1000);
-
-		//	TApaTask task = taskList.FindApp( uid );
-
-		//	if ( task.Exists() )
-		//	{
-		//		task.SendMessage( TUid::Uid(0), *pHtsUrl8 ); // UID is not used
-		//	}
-		}
-
-	appArcSession.Close();
-	CleanupStack::PopAndDestroy(); // param
-	return id;
+	TDateTime time = aTime.DateTime();
+	TInt year,month,day,hour,minute,secend;
+	year = time.Year() ;
+	month = time.Month() + 1;
+	day = time.Day() + 1;
+	hour = time.Hour() ;
+	minute = time.Minute() ;
+	secend = time.Second() ;
+	aDes.AppendNum(year);
+	FOMART_FILL_TO_TOW(month,aDes)
+	aDes.AppendNum(month);
+	FOMART_FILL_TO_TOW(day,aDes)
+	aDes.AppendNum(day);
+	aDes.Append(':');
+	FOMART_FILL_TO_TOW(hour,aDes)
+	aDes.AppendNum(hour);
+	FOMART_FILL_TO_TOW(minute,aDes)
+	aDes.AppendNum(minute);
+	FOMART_FILL_TO_TOW(secend,aDes)
+	aDes.AppendNum(secend);	
 	}
 
-void CCommonUtils::AddBookmark(const TDesC& aUrl, const TDesC& aName)
+void CCommonUtils::TimeFormatWithoutOffset(const TTime& aTime,TDes& aDes)
 	{
-	RFavouritesSession iSession;
-	User::LeaveIfError(iSession.Connect());
-	CleanupClosePushL(iSession);
-
-	RFavouritesDb db;
-	// KBrowserBookmarks is picked up from the header
-	User::LeaveIfError(db.Open(iSession, KBrowserBookmarks));
-	CleanupClosePushL(db);
-
-	CFavouritesItem* item = CFavouritesItem::NewLC();
-	item->SetNameL(aName);
-	item->SetParentFolder(KFavouritesRootUid);
-	item->SetType(CFavouritesItem::EItem);
-	item->SetUrlL(aUrl);
-
-	User::LeaveIfError(db.Add(*item, ETrue));
-
-	CleanupStack::PopAndDestroy(3, &iSession); // db, item	
+	TDateTime time = aTime.DateTime();
+	TInt year,month,day,hour,minute,secend;
+	year = time.Year() ;
+	month = time.Month() ;
+	day = time.Day() ;
+	hour = time.Hour() ;
+	minute = time.Minute() ;
+	secend = time.Second() ;
+	aDes.AppendNum(year);
+	FOMART_FILL_TO_TOW(month,aDes)
+	aDes.AppendNum(month);
+	FOMART_FILL_TO_TOW(day,aDes)
+	aDes.AppendNum(day);
+	aDes.Append(':');
+	FOMART_FILL_TO_TOW(hour,aDes)
+	aDes.AppendNum(hour);
+	FOMART_FILL_TO_TOW(minute,aDes)
+	aDes.AppendNum(minute);
+	FOMART_FILL_TO_TOW(secend,aDes)
+	aDes.AppendNum(secend);	
 	}
 
-void CCommonUtils::GetSofts(CDesCArray* aArray)
+void CCommonUtils::TimeSet(const TDesC& aDes,TTime& aTime)
 	{
-	TInt num = 0;
-	RApaLsSession ls;
+	TTime time;
+	time.Set(aDes);
+	TDateTime date;
+	date = time.DateTime();
+	TDateTime param;
+	param.SetYear(date.Year());
+	param.SetMonth((TMonth)(date.Month() - 1));
+	param.SetDay(date.Day() - 1);
+	param.SetHour(date.Hour() );
+	param.SetMinute(date.Minute() );
+	param.SetSecond(date.Second() );
+	
+	aTime = TTime(param);
+	}
 
-	User::LeaveIfError(ls.Connect());
-	CleanupClosePushL(ls);
-
-	User::LeaveIfError(ls.GetAllApps());
-	//	User::LeaveIfError(ls.GetEmbeddableApps());  
-
-	ls.AppCount(num);
-
-	TInt errCode(KErrNone);
-	TApaAppInfo appInfo;
-	while (!errCode)
-		{
-		errCode = ls.GetNextApp(appInfo);
-
-		if (appInfo.iFullName.Length())
-			{
-			TBuf<1> driver;
-			driver.Copy(appInfo.iFullName.Left(1));
-			driver.UpperCase();
-			if (driver.Compare(_L("Z")))
-				{
-
-				if (appInfo.iFullName.Right(8).CompareF(_L(".fakeapp")))
-					{
-					if (aArray)
-						aArray->AppendL(appInfo.iCaption);
-					}
-				}
-			}
-		}
-	CleanupStack::PopAndDestroy();	
+TTime CCommonUtils::TimeCreate(const TTime& aTime,const TInt& aOffsetMinutes)
+	{
+	TDateTime date = aTime.DateTime();
+	
+	TDateTime param;
+	param.SetYear(date.Year());
+	param.SetMonth(date.Month());
+	param.SetDay(date.Day());
+	param.SetHour(date.Hour() );
+	param.SetMinute(date.Minute() );
+	param.SetSecond(0);
+	param.SetMicroSecond(0);	
+	
+	TInt64 ms = TTime(param).Int64();
+	ms += ((TInt64)aOffsetMinutes)*((TInt64)60000000);
+	
+	return TTime(ms);
 	}
 

@@ -29,6 +29,8 @@ rls_string rls_deactive_server	"关闭后台运行"
 
 rls_string rls_insert_contact 	"插入联系人"
 
+rls_string rls_active_removed_screen	"查看过期任务"
+
 
 #include "SHRls.inl"
 // End of File

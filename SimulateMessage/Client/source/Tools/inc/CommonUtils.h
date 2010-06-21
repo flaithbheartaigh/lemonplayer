@@ -23,23 +23,7 @@
 */
 class CCommonUtils
 {
-	public: // Constructors and destructor
-		// 将应用程序带到前台
-		static void ShowApplication();
-		// 隐藏应用程序
-		static void HideApplication();
-
-		// 检查目录是否存在
-		static TBool IsDirectoryExists(const TDesC &aDirName);
-		
-		//打开浏览器
-		static TThreadId StartBroswerApp(const TDesC& aUrl);
-		
-		//获取已安装软件列表
-		static void GetSofts(CDesCArray* aArray);
-		
-		//添加书签
-		static void AddBookmark(const TDesC& aUrl,const TDesC& aName);
+	public: // Constructors and destructor		
 		
 		static TBool HexToDec(const TDesC& aHexDes,TInt& aDec);
 		static TBool HexToDec(const TDesC8& aHexDes,TInt& aDec);
@@ -66,8 +50,7 @@ class CCommonUtils
 		static HBufC16* ConvertToUnicodeFromGBK(const TText8* aStr);
 		
 		//base64编码
-		static HBufC8* UrlEncodeL(const TDesC8& aUrl);
-		
+		static HBufC8* UrlEncodeL(const TDesC8& aUrl);		
 		
 		static HBufC8* ConvertDesTo8(const TDesC& aStr);
 		
@@ -77,6 +60,13 @@ class CCommonUtils
 		static TBool IsPointInRect(TInt x,TInt y,TRect rect);
 		static TBool IsPointInRect(TPoint aPoint,TRect rect);
 		
+		//YYYYMMDD:HHTTSS格式
+		static void TimeFormat(const TTime& aTime,TDes& aDes);
+		static void TimeFormatWithoutOffset(const TTime& aTime,TDes& aDes);
+		static void TimeSet(const TDesC& aDes,TTime& aTime);
+		
+		//根据aTime创建一个间隔为aOffsetMinutes分钟的新时间,忽略秒数(秒数为0)
+		static TTime TimeCreate(const TTime& aTime,const TInt& aOffsetMinutes);
 //		static HBufC* AutoWrapText(const TDesC& aText,const CFont* aFont,TInt aWidth);
 
 	private:
