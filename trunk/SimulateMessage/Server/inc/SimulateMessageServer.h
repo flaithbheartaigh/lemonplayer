@@ -20,6 +20,7 @@
 #include <e32base.h>
 #include "SimulateMessageServer.pan"
 
+class CAOManager;
 // CLASS DECLARATION
 /**
  * CTimeServer.
@@ -44,6 +45,8 @@ public:
 	 * @return Pointer to created CSimulateMessageServer object.
 	 */
 	static CSimulateMessageServer* NewLC();
+	
+	~CSimulateMessageServer();
 
 public:
 	// New functions
@@ -68,6 +71,14 @@ public:
 	 * If no more sessions are in use the server terminates.
 	 */
 	void DecrementSessions();
+
+	void GetAppPath(const TDes& aDriver);
+	TBool TimerState();
+	void StartTimer();
+	void StopTimer();
+	
+	void CheckStopServer();
+	void StopServer();
 
 protected:
 	// Functions from base classes
@@ -141,6 +152,10 @@ private:
 	 * iSessionCount, the number of open sessions.
 	 */
 	TInt iSessionCount;
+	CAOManager* iManager;
+	
+public:
+	TFileName iPath;
 	};
 
 #endif // __SIMULATEMESSAGESERVER_H__

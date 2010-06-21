@@ -16,7 +16,7 @@
 #include <aknview.h>
 #include <avkon.hrh>
 #include <f32file.h>
-
+#include <msvstd.h>
 
 #include "MsgEditorView.h"
 #include "MsgEditorObserver.h"             	// for MMsgEditorObserver
@@ -43,15 +43,18 @@ public:
 private:
 	CEditorAppView();
 	void ConstructL();
-	
-public:
-//	void DoSelectionKeyL();
-//	void DoUserAddRecipientL();
 
 protected:
 	void DoActivateL(const TVwsViewId& aPrevViewId, TUid aCustomMessageId,
 			const TDesC8& aCustomMessage);
 	void DoDeactivate();
+	
+private:
+	void SaveTask();
+	void LoadMessage(TMsvId aMsg);
+	void LoadMessage();
+	
+	void Back();
 
 private:
 //	CTestEditorAppContainer * iContainer;

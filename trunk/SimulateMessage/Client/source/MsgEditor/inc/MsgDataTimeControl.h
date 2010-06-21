@@ -36,6 +36,8 @@ public:
 	TKeyResponse OfferKeyEventL(const TKeyEvent& aKeyEvent, TEventCode aType);
 	
 	void ConstructFromResourceL( TInt aResourceId );
+	TTime GetDateTime() ;
+	void SetDateTime(const TTime& aTime);
 
 protected:
 	// from CCoeControl

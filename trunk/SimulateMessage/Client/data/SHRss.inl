@@ -99,6 +99,7 @@ RESOURCE TIME_AND_DATE_EDITOR r_editor_time_and_date
 	{
 	minTimeAndDate = TIME_AND_DATE
 		{
+		second = 0;
 		minute = 0;
 		hour = 0;
 		day = 0;
@@ -107,7 +108,7 @@ RESOURCE TIME_AND_DATE_EDITOR r_editor_time_and_date
 		};
 	maxTimeAndDate = TIME_AND_DATE
 		{
-		//second = 59;
+		second = 59;
 		minute = 59;
 		hour = 23;
 		day = 30;
@@ -115,6 +116,7 @@ RESOURCE TIME_AND_DATE_EDITOR r_editor_time_and_date
 		year = 2099;
 		};
 	interveningtext = " ";
+	flags = EEikTimeWithoutSecondsField;
 	}
 
 

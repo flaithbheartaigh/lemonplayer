@@ -16,7 +16,7 @@
 #include <aknlists.h> 
 #include <AknIconArray.h> 
 #include <eikclbd.h>
-#include <SimulateMessage_0xE70CE849.rsg>
+#include "SHPlatform.h"
 
 CMainScreenContainer::CMainScreenContainer()
 	{
@@ -27,6 +27,12 @@ CMainScreenContainer::~CMainScreenContainer()
 	{
 	if (iListBox)
 		delete iListBox;
+
+	if (iTaskArray)
+		{
+		iTaskArray->ResetAndDestroy();
+		delete iTaskArray;
+		}
 	}
 
 CMainScreenContainer* CMainScreenContainer::NewLC(const TRect& aRect)
@@ -48,8 +54,10 @@ void CMainScreenContainer::ConstructL(const TRect& aRect)
 	{
 	CreateWindowL();
 
-	iListBox = new (ELeave) CAknSingleGraphicStyleListBox();
-	iListBox->ConstructL(this);
+	iTaskArray = new RSimMsgDataArray();
+
+	iListBox = new (ELeave) CAknDoubleGraphicStyleListBox();
+	iListBox->ConstructL(this, 0);
 	iListBox->SetContainerWindowL(*this);
 
 	// Creates scrollbar.
@@ -191,22 +199,79 @@ void CMainScreenContainer::SetIconsL()
 	CleanupStack::Pop(); // icons
 	}
 
+//const TInt MAX_TASK_DATA_BUFFER_SIZE = 1024;
+
 void CMainScreenContainer::UpdateDisplay()
 	{
+	TInt total;
+	HBufC8* buffer;
 
-	CTextListBoxModel* model = iListBox->Model();
-	CDesCArray* items = static_cast<CDesCArray*> (model->ItemTextArray());
-
-	items->Reset();
-	_LIT(KItemFormat, "0\tItem");
-
-	for (TInt i = 0; i < 10; i++)
+	SHSession().QueryAllLength(total);
+	if (total > 0)
 		{
-		TBuf<32> record;
-		record.Format(KItemFormat);
-		items->AppendL(record);
+		buffer = HBufC8::NewL(total);
+		TPtr8 ptr = buffer->Des();
+		SHSession().QueryAllData(ptr);
+
+		CSimMsgServerSession::ParseDataBuffer(buffer, *iTaskArray);
+
+		CTextListBoxModel* model = iListBox->Model();
+		CDesCArray* items = static_cast<CDesCArray*> (model->ItemTextArray());
+
+		items->Reset();
+
+		for (TInt i = 0; i < iTaskArray->Count(); i++)
+			{
+			SimMsgData* task = (*iTaskArray)[i];
+			TPtrC number = task->iNumber->Des();
+			TBuf<32> time;
+			task->iTime.FormatL(time, KDateFormat);
+
+			TBuf<64> item;
+			item.Append(_L("0\t"));
+			item.Append(number);
+			item.Append('\t');
+			item.Append(time);
+
+			items->AppendL(item);
+			}
+
+		delete buffer;
+
+		iListBox->HandleItemAdditionL();
 		}
+	}
 
-	iListBox->HandleItemAdditionL();
+void CMainScreenContainer::RemoveSelectedTask()
+	{
+	TInt index = iListBox->CurrentItemIndex();
+	
+	if (index >=0 )
+		{
+		SimMsgData* task = (*iTaskArray)[index];
+		SHSession().RemoveTask(*task);
+	
+		CTextListBoxModel* model = iListBox->Model();
+		CDesCArray* items = static_cast<CDesCArray*> (model->ItemTextArray());
+	
+		items->Delete(index);
+	
+		iListBox->HandleItemAdditionL();
+		}
+	}
 
+void CMainScreenContainer::EditSelectedTask()
+	{
+	TInt index = iListBox->CurrentItemIndex();
+	
+	if (index >= 0)
+		{
+		SimMsgData* task = (*iTaskArray)[index];
+		SHSession().RemoveTask(*task);
+	
+		SHModel()->SetEditMessage(task);
+		SHModel()->SetEditModel(CSHModel::EEditmodelModify);
+	
+		SHChangeViewParam(ESimulateMessageEditViewId, KViewChangeFromModify);
+		}
 	}

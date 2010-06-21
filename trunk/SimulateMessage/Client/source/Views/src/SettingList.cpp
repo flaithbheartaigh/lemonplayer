@@ -75,3 +75,16 @@ void CSettingList::EditItemL( TInt aIndex, TBool aCalledFromMenu )
   ( *SettingItemArray() )[aIndex]->StoreL();    
     
     }
+
+void CSettingList::EditItemL( TBool aCalledFromMenu )
+	{
+    TInt currentItem = ((CAknSettingItemList*)this)->ListBox()->View()->CurrentItemIndex();
+    CAknSettingItemList::EditItemL( currentItem, aCalledFromMenu );
+  ( *SettingItemArray() )[currentItem]->UpdateListBoxTextL();
+  ( *SettingItemArray() )[currentItem]->StoreL();    
+	}
+
+void CSettingList::SaveConfig()
+	{
+	
+	}

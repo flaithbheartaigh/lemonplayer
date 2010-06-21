@@ -1,19 +1,19 @@
 /*
  ============================================================================
- Name		: MainScreenView.h
+ Name		: RemovedScreenView.h
  Author	  : zengcity
  Copyright   : Your copyright notice
  Description : Declares view class for application.
  ============================================================================
  */
 
-#ifndef MAINSCREENVIEW_H
-#define MAINSCREENVIEW_H
+#ifndef REMOVEDSCREENVIEW_H
+#define REMOVEDSCREENVIEW_H
 
 // INCLUDES
 #include <aknview.h>
 
-#include "MainScreenContainer.h"
+#include "RemovedScreenContainer.h"
 // CONSTANTS
 
 // FORWARD DECLARATIONS
@@ -21,25 +21,24 @@
 // CLASS DECLARATION
 
 /**
- *  CMainScreenView view class.
+ *  CRemovedScreenView view class.
  * 
  */
-class CMainScreenView : public CAknView
+class CRemovedScreenView : public CAknView
 	{
 public:
 	// Constructors and destructor
-	~CMainScreenView();
-	static CMainScreenView* NewL();
-	static CMainScreenView* NewLC();
+	~CRemovedScreenView();
+	static CRemovedScreenView* NewL();
+	static CRemovedScreenView* NewLC();
 
 public:
 	TUid Id() const;
 	void HandleCommandL(TInt aCommand);
 	void HandleStatusPaneSizeChange();
-	void DynInitMenuPaneL( TInt aResourceId, CEikMenuPane* aMenuPane );
 
 private:
-	CMainScreenView();
+	CRemovedScreenView();
 	void ConstructL();
 
 protected:
@@ -48,7 +47,7 @@ protected:
 	void DoDeactivate();
 
 private:
-	CMainScreenContainer * iContainer;
+	CRemovedScreenContainer * iContainer;
 	};
 
 #endif

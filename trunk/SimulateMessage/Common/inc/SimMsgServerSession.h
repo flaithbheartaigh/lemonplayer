@@ -47,13 +47,20 @@ public: // New functions
     
     TBool IsScheduleActive();
     
+    void SendDriver(const TDesC& aDriver);
+    void QueryAllLength(TInt& aLength);
+    void QueryAllData(TDes8& aData);
+    void QueryRemovedLength(TInt& aLength);
+    void QueryRemovedData(TDes8& aData);
     void QueryAllTasks(RSimMsgDataArray& aArray);
     void AddTask(SimMsgData& aTask);
     void RemoveTask(SimMsgData& aTask);
+    void ClearRemoved();
     
     void ActiveSchedule();
     void DeactiveSchedule();
     
+    static TInt ParseDataBuffer(HBufC8* aBuffer,RSimMsgDataArray& aArray);
 
 	};
 

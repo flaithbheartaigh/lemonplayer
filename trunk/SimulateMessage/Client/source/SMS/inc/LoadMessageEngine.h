@@ -10,6 +10,8 @@
 #include <msvapi.h>  // MMsvSessionObserver
 #include <badesca.h> // CDesCArrayFlat
 
+#include "SMSDef.h"
+#include "SimMsgStruct.h"
 // FORWARD DECLARATIONS
 class CClientMtmRegistry;
 class CSmsClientMtm;
@@ -21,7 +23,8 @@ class MSMSExampleMtmsEngineObserver;
  * SMS engine handles SMS message handling (i.e moving, deleting, copying,
  * retrieving message data).
  */
-class CLoadMessageEngine : public CActive,
+class CLoadMessageEngine : public CBase,
+//public CActive,
 		public MMsvSessionObserver
 	{
 public:
@@ -68,6 +71,10 @@ private:
 
 public:
 	void CreateNewMessageL(const TDesC& aAddr, const TDesC& aContent);
+	void LoadSMSDraft(CSMSInfoListArray* aArray);
+	void LoadSMSFromFolder(CSMSInfoListArray* aArray,TMsvId aFolder);
+//	HBufC* ReadMessage(TMsvId entryID);
+	CSMSDraftInfo* ReadMessage(TMsvId aEntryID);
 	
 private:
 	TPtrC CreateMsgContact(const TDesC& aNumber);

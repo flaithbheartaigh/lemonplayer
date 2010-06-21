@@ -16,6 +16,7 @@
 
 #include "SHModel.h"
 #include "UIManager.h"
+#include "SimMsgServerSession.h"
 
 // FORWARD DECLARATIONS
 class CSimulateMessageAppView;
@@ -25,6 +26,8 @@ class CLoadDraftView;
 class CMainScreenView;
 class CSettingView;
 class CEditorAppView;
+class CRemovedScreenView;
+
 // CLASS DECLARATION
 /**
  * CSimulateMessageAppUi application UI class.
@@ -48,6 +51,7 @@ private:
 public:
 	CSHModel* GetModel() {return iDataModel;};
 	CUIManager* GetUI() {return iUIMgr;};
+	CSimMsgServerSession& GetSession() {return iSession;}; 
 
 private:
 	// Data
@@ -56,12 +60,13 @@ private:
 	CHelpView* 		iHelpView;
 	CLoadDraftView* iDraftView;
 	CMainScreenView* iMainView;
+	CRemovedScreenView* iRemovedView;
 	CSettingView*	iSettingView;
 	CEditorAppView*	iEditView;
 	
 	CSHModel* iDataModel;
 	CUIManager* iUIMgr;
-
+	CSimMsgServerSession iSession;
 	};
 
 #endif // __SIMULATEMESSAGEAPPUI_h__

@@ -12,6 +12,7 @@
 #include <aknsutils.h> 
 #include <BARSREAD.H>
 #include "SHPlatform.h"
+#include "CommonUtils.h"
 
 CMsgDataTimeControl::CMsgDataTimeControl(
 		MMsgBaseControlObserver& aBaseControlObserver) :
@@ -34,8 +35,7 @@ void CMsgDataTimeControl::ConstructFromResourceL(TInt aResourceId)
 	TResourceReader reader;
 	// Create editor
 	iTimeAndDateEditor = new (ELeave) CEikTimeAndDateEditor;
-//	iTimeAndDateEditor = new (ELeave) CEikTimeEditor;
-//	iTimeAndDateEditor->SetContainerWindowL(*this);
+
 	iEikonEnv->CreateResourceReaderLC(reader, R_EDITOR_TIME_AND_DATE);
 	iTimeAndDateEditor->ConstructFromResourceL(reader);
 	CleanupStack::PopAndDestroy(); // reader internal state
@@ -51,14 +51,12 @@ void CMsgDataTimeControl::ConstructFromResourceL(TInt aResourceId)
 	iTimeAndDateEditor->SetFont(iCaptionLayout.Font());
 	
 	iTimeAndDateEditor->ActivateL();
-//	iTimeAndDateEditor->DrawNow();
-//	iTimeAndDateEditor->SetSuppressBackgroundDrawing(EFalse);
 
-	iTimeAndDateEditor->SetTimeAndDate(TTime(TDateTime(2000, EJanuary, 0, 0, 0,
-			0, 0)));
+	TTime time;
+	time.HomeTime();
+	//1·ÖÖÓºó
+	iTimeAndDateEditor->SetTimeAndDate(CCommonUtils::TimeCreate(time,1));
 	
-//	iEikonEnv->EikAppUi()->AddToStackL(
-//			iTimeAndDateEditor);
 	}
 
 TKeyResponse CMsgDataTimeControl::OfferKeyEventL(const TKeyEvent& aKeyEvent,
@@ -228,3 +226,14 @@ void CMsgDataTimeControl::Draw(const TRect& /*aRect*/) const
 	//	gc.SetBrushColor(KRgbGray);
 	//	gc.DrawRect(iTimeAndDateEditor->Rect());
 	}
+
+TTime CMsgDataTimeControl::GetDateTime()
+	{
+	return iTimeAndDateEditor->TimeAndDate();
+	}
+
+void CMsgDataTimeControl::SetDateTime(const TTime& aTime)
+	{
+	iTimeAndDateEditor->SetTimeAndDate(aTime);
+	}
+

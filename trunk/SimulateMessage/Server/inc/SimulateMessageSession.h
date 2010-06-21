@@ -29,6 +29,9 @@ class CSimulateMessageServer;
  * CSimulateMessageServerSession.
  *  An instance of class CSimulateMessageServerSession is created for each client.
  */
+
+;
+
 class CSimulateMessageServerSession : public CSession2
 	{
 public:
@@ -103,13 +106,22 @@ private:
 	 */
 	void RequestTimeL(const RMessage2& aMessage);
 	
+	void SendDriver(const RMessage2& aMessage);
+	void QueryState(const RMessage2& aMessage);
+	void QueryAllLength(const RMessage2& aMessage);
+	void QueryAllData(const RMessage2& aMessage);
+	void QueryRemovedLength(const RMessage2& aMessage);
+	void QueryRemovedData(const RMessage2& aMessage);
 	void QueryAllTasks(const RMessage2& aMessage);
 	void AddTask(const RMessage2& aMessage);
 	void RemoveTask(const RMessage2& aMessage);
+	TInt ClearRemoved();
 	
 	TInt QueryAllTasks(RSimMsgDataArray& aArray);
-	TInt AddTask(const SimMsgData& aTask);
+	TInt AddTask(SimMsgData* aTask);
 	TInt RemoveTask(const SimMsgData& aTask);
+	
+	void AddTaskToArray(SimMsgData* aTask,RSimMsgDataArray& aArray);
 	
 	TInt ReadDataFromFile(RSimMsgDataArray& aArray);
 	TInt WriteDataToFile(const RSimMsgDataArray& aArray);
@@ -126,6 +138,7 @@ private:
 	 * iServer, reference to the server.
 	 */
 	CSimulateMessageServer& iServer;
+	
 	};
 
 #endif // ___SIMULATEMESSAGESESSION_H__

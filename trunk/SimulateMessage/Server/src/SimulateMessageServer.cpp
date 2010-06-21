@@ -17,18 +17,22 @@
 #include <eikstart.h>
 #include <e32svr.h>
 #include <e32math.h>
+#include<aknutils.h>
 
 #include "SimulateMessageServer.h"
 #include "ClientServerCommon.h"
 #include "SimulateMessageSession.h"
+#include "AOManager.h"
 
 // ========================= MEMBER FUNCTIONS ==================================
+
 
 // -----------------------------------------------------------------------------
 // CSimulateMessageServer::NewL()
 // Two-phased constructor.
 // -----------------------------------------------------------------------------
 //
+
 CSimulateMessageServer* CSimulateMessageServer::NewL()
 	{
 	CSimulateMessageServer* timeServer = CSimulateMessageServer::NewLC();
@@ -57,7 +61,8 @@ CSimulateMessageServer* CSimulateMessageServer::NewLC()
 //
 void CSimulateMessageServer::ConstructL()
 	{
-	StartL(KSimulateMessageServerName);
+	StartL(KSimulateMessageServerName);	
+	iManager = CAOManager::NewL(*this);
 	}
 
 // -----------------------------------------------------------------------------
@@ -66,9 +71,14 @@ void CSimulateMessageServer::ConstructL()
 // -----------------------------------------------------------------------------
 //
 CSimulateMessageServer::CSimulateMessageServer(TInt aPriority) :
-	CServer2(aPriority)
+	CServer2(aPriority),iManager(NULL),iSessionCount(0)
 	{
 	// Implementation not required
+	}
+
+CSimulateMessageServer::~CSimulateMessageServer()
+	{
+	delete iManager;
 	}
 
 // -----------------------------------------------------------------------------
@@ -113,7 +123,10 @@ void CSimulateMessageServer::DecrementSessions()
 	iSessionCount--;
 	if (iSessionCount <= 0)
 		{
-		CActiveScheduler::Stop();
+		if (!iManager->IsActive())
+			{
+			StopServer();
+			}
 		}
 	}
 
@@ -195,6 +208,51 @@ void CSimulateMessageServer::ThreadFunctionL()
 	CActiveScheduler::Start();
 
 	CleanupStack::PopAndDestroy(2, activeScheduler); //Anonymous CSimulateMessageServer
+	}
+
+void CSimulateMessageServer::GetAppPath(const TDes& aDriver)
+	{
+#if defined ( EKA2 )
+	
+	RFs rfs;
+	User::LeaveIfError(rfs.Connect());
+	
+	rfs.PrivatePath(iPath);
+	iPath.Insert(0, aDriver);
+	
+	rfs.Close();
+#else
+    CompleteWithAppPath(iPath);
+#endif
+#ifdef __WINS__
+	iPath[0] = 'c';
+#endif		
+	}
+
+TBool CSimulateMessageServer::TimerState()
+	{
+	return iManager->IsActive();
+	}
+void CSimulateMessageServer::StartTimer()
+	{
+	iManager->StartL(1000);
+	}
+void CSimulateMessageServer::StopTimer()
+	{
+	if (iManager->IsActive())
+		iManager->Cancel();
+	}
+
+void CSimulateMessageServer::CheckStopServer()
+	{
+	if (iSessionCount == 0)
+		StopServer();
+	}
+
+void CSimulateMessageServer::StopServer()
+	{
+	StopTimer();
+	CActiveScheduler::Stop();
 	}
 
 // -----------------------------------------------------------------------------

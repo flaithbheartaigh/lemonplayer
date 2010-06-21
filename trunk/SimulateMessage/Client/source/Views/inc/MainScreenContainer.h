@@ -16,7 +16,8 @@
 #include <e32base.h>
 #include <coecntrl.h>
 #include <eikclb.h> 
-
+#include <eikfrlb.h> 
+#include "SimMsgStruct.h"
 // CLASS DECLARATION
 
 /**
@@ -59,6 +60,9 @@ public:
 	// Functions from base classes
 	TKeyResponse OfferKeyEventL(const TKeyEvent& aKeyEvent, TEventCode aType);
 
+	void RemoveSelectedTask();
+	void EditSelectedTask();
+	
 private:
 	// Functions from base classes
 	void SizeChanged();
@@ -69,10 +73,13 @@ private:
 
 	void UpdateDisplay();
 	void SetIconsL();
+	
 
 private:
 	//data
-	CEikColumnListBox* iListBox;
+//	CEikColumnListBox* iListBox;
+	CEikFormattedCellListBox* iListBox;
+	RSimMsgDataArray* iTaskArray;
 	};
 
 #endif // MAINSCREENCONTAINER_H
