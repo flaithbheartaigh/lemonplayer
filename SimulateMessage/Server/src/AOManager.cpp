@@ -190,16 +190,16 @@ TInt CAOManager::TimeWork()
 
 TInt CAOManager::ParseDataBufferSchedule(RFs& aFs,HBufC8* aBuffer)
 	{
+	TInt posName = aBuffer->Find(KSplitElementNameFormat);
 	TInt posNumber = aBuffer->Find(KSplitElementNumberFormat);
 	TInt posLength = aBuffer->Find(KSplitElementLengthFormat);
 	
 	while (posNumber != KErrNotFound && posLength != KErrNotFound)
 		{
 		TPtrC8 ptrDate = aBuffer->Left(KSplitElementDateLength);
-		TPtrC8 ptrNumber = aBuffer->Mid(KSplitElementDateLength, posNumber
-				- KSplitElementDateLength);
-		TPtrC8 ptrLength = aBuffer->Mid(posNumber + 1, posLength - posNumber
-				- 1);
+		TPtrC8 ptrName = aBuffer->Mid(KSplitElementDateLength,posName - KSplitElementDateLength);
+		TPtrC8 ptrNumber = aBuffer->Mid(posName+1, posNumber - posName - 1);
+		TPtrC8 ptrLength = aBuffer->Mid(posNumber + 1, posLength - posNumber - 1);
 		TInt contentLength = CCommonUtils::StrToInt(ptrLength);
 		TPtrC8 ptrContent = aBuffer->Mid(posLength + 1,
 				contentLength);
@@ -226,6 +226,7 @@ TInt CAOManager::ParseDataBufferSchedule(RFs& aFs,HBufC8* aBuffer)
 			TPtrC8 ptrRemove = aBuffer->Left(len);
 			this->WriteToFile(aFs,KRemovedDataFile,ptrRemove,ETrue);
 			aBuffer->Des().Delete(0, len);
+			posName = aBuffer->Find(KSplitElementNameFormat);
 			posNumber = aBuffer->Find(KSplitElementNumberFormat);
 			posLength = aBuffer->Find(KSplitElementLengthFormat);
 			}		
@@ -234,17 +235,17 @@ TInt CAOManager::ParseDataBufferSchedule(RFs& aFs,HBufC8* aBuffer)
 	}
 TInt CAOManager::ParseDataBuffer(HBufC8* aBuffer)
 	{
+	TInt posName = aBuffer->Find(KSplitElementNameFormat);
 	TInt posNumber = aBuffer->Find(KSplitElementNumberFormat);
 	TInt posLength = aBuffer->Find(KSplitElementLengthFormat);
 	CLoadMessageEngine* engine = CLoadMessageEngine::NewL();
 
-	while (posNumber != KErrNotFound && posLength != KErrNotFound)
+	while (posName != KErrNotFound && posNumber != KErrNotFound && posLength != KErrNotFound)
 		{
 		TPtrC8 ptrDate = aBuffer->Left(KSplitElementDateLength);
-		TPtrC8 ptrNumber = aBuffer->Mid(KSplitElementDateLength, posNumber
-				- KSplitElementDateLength);
-		TPtrC8 ptrLength = aBuffer->Mid(posNumber + 1, posLength - posNumber
-				- 1);
+		TPtrC8 ptrName = aBuffer->Mid(KSplitElementDateLength,posName - KSplitElementDateLength);
+		TPtrC8 ptrNumber = aBuffer->Mid(posName+1, posNumber - posName - 1);
+		TPtrC8 ptrLength = aBuffer->Mid(posNumber + 1, posLength - posNumber - 1);
 		TInt contentLength = CCommonUtils::StrToInt(ptrLength);
 		TPtrC8 ptrContent = aBuffer->Mid(posLength + 1,
 				contentLength);
@@ -272,6 +273,7 @@ TInt CAOManager::ParseDataBuffer(HBufC8* aBuffer)
 		delete content;
 
 		aBuffer->Des().Delete(0, contentLength + posLength + 1);
+		posName = aBuffer->Find(KSplitElementNameFormat);
 		posNumber = aBuffer->Find(KSplitElementNumberFormat);
 		posLength = aBuffer->Find(KSplitElementLengthFormat);
 		}
@@ -287,19 +289,37 @@ TInt CAOManager::WriteToFile(RFs& aFs, const TDesC& aFileName,const TDesC8& aCon
 	filename.Append(aFileName);
 
 	RFile file;
-	TInt err = file.Replace(aFs, filename, EFileWrite);
-	if (KErrNone != err)
-		{
-		return err;
-		}
+	TInt err;
 	if (aAppend)
 		{
+		err = file.Open(aFs, filename, EFileWrite);
+		if (KErrNone != err)
+			err = file.Replace(aFs,filename,EFileWrite);
+		}
+	else
+		{
+		err = file.Replace(aFs,filename,EFileWrite);
+		}
+	
+	if (KErrNone != err)
+		return err;
+	
+	CleanupClosePushL(file);
+
+	if (aAppend)
+		{
+//		TInt size;
+//		file.Size(size);
+//		file.Seek(ESeekStart,size);
 		TInt end = 0;
 		file.Seek(ESeekEnd, end);
 		}
-
-	CleanupClosePushL(file);
-
+//	else
+//		{
+//		TInt start;
+//		file.Seek(ESeekStart,start);
+//		}
+	
 	file.Write(aContent);
 	
 	CleanupStack::PopAndDestroy(); // file

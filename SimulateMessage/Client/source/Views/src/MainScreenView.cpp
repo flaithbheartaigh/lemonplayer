@@ -107,7 +107,7 @@ void CMainScreenView::HandleStatusPaneSizeChange()
  * 
  * */
 void CMainScreenView::DoActivateL(const TVwsViewId& aPrevViewId,
-		TUid /*aCustomMessageId*/, const TDesC8& /*aCustomMessage*/)
+		TUid /*aCustomMessageId*/, const TDesC8& aCustomMessage)
 	{
 	if (iContainer == NULL)
 		{
@@ -116,7 +116,11 @@ void CMainScreenView::DoActivateL(const TVwsViewId& aPrevViewId,
 		AppUi()->AddToStackL(*this, iContainer);
 
 		//add your init code ...
-
+		if ( aCustomMessage.Length() > 0)
+			if (aCustomMessage.Compare(KViewChangeParamReboot) == 0)
+				{
+				SHSession().RebootSchedule();
+				}
 		}
 	}
 void CMainScreenView::DoDeactivate()

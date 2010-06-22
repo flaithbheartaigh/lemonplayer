@@ -19,11 +19,15 @@ _LIT(KDataFile,"data.txt");
 _LIT(KRemovedDataFile,"rdata.txt");
 _LIT(KDateFormat,"%Y%M%D%1%/1%2%/1%3 %H:%T");
 _LIT8(KSplitItemFormat,"\n");
+_LIT8(KSplitElementNameFormat,"^");
 _LIT8(KSplitElementNumberFormat,"#");
 _LIT8(KSplitElementLengthFormat,"@");
 
 const TInt KSplitElementDateLength = 15; //时间固定长度15位
 
+const TInt KMessageBriefLength = 30;	//信息简介 30
+
+_LIT(KListItemFormat,"0\t%S - %S\t%S");
 //数据结构
 typedef struct _SimMsgData
 	{

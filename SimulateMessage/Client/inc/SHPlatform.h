@@ -17,6 +17,7 @@
 
 _LIT8(KViewChangeFromLoadDraft,"draft");
 _LIT8(KViewChangeFromModify,"modify");
+_LIT8(KViewChangeParamReboot,"reboot");
 
 inline void SHChangeView(TInt aView)
 	{

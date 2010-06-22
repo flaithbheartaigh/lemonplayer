@@ -151,19 +151,23 @@ void CSimMsgServerSession::DeactiveSchedule()
 	{
 	SendReceive( ESimulateMessageServDeactiveSchedule);
 	}
+void CSimMsgServerSession::RebootSchedule()
+	{
+	SendReceive( ESimulateMessageServScheduleReboot);
+	}
 
 TInt CSimMsgServerSession::ParseDataBuffer(HBufC8* aBuffer,
 		RSimMsgDataArray& aArray)
 	{
+	TInt posName = aBuffer->Find(KSplitElementNameFormat);
 	TInt posNumber = aBuffer->Find(KSplitElementNumberFormat);
 	TInt posLength = aBuffer->Find(KSplitElementLengthFormat);
-	while (posNumber != KErrNotFound && posLength != KErrNotFound)
+	while (posName != KErrNotFound && posNumber != KErrNotFound && posLength != KErrNotFound)
 		{
 		TPtrC8 ptrDate = aBuffer->Left(KSplitElementDateLength);
-		TPtrC8 ptrNumber = aBuffer->Mid(KSplitElementDateLength, posNumber
-				- KSplitElementDateLength);
-		TPtrC8 ptrLength = aBuffer->Mid(posNumber + 1, posLength - posNumber
-				- 1);
+		TPtrC8 ptrName = aBuffer->Mid(KSplitElementDateLength,posName - KSplitElementDateLength);
+		TPtrC8 ptrNumber = aBuffer->Mid(posName+1, posNumber - posName - 1);
+		TPtrC8 ptrLength = aBuffer->Mid(posNumber + 1, posLength - posNumber - 1);		
 		TInt contentLength = CCommonUtils::StrToInt(ptrLength);
 		TPtrC8 ptrContent = aBuffer->Mid(posLength + 1,
 				contentLength);
@@ -175,6 +179,7 @@ TInt CSimMsgServerSession::ParseDataBuffer(HBufC8* aBuffer,
 
 		CCommonUtils::TimeSet(strDate,task->iTime);
 //		task->iTime.Set(strDate);
+		task->iName = CCommonUtils::ConvertToUnicodeFromUTF8(ptrName);
 		task->iNumber = HBufC::NewL(ptrNumber.Length());
 		task->iNumber->Des().Copy(ptrNumber);
 		task->iContent = CCommonUtils::ConvertToUnicodeFromUTF8(ptrContent);
@@ -182,6 +187,7 @@ TInt CSimMsgServerSession::ParseDataBuffer(HBufC8* aBuffer,
 		aArray.Append(task);
 
 		aBuffer->Des().Delete(0, contentLength + posLength + 1);
+		posName = aBuffer->Find(KSplitElementNameFormat);
 		posNumber = aBuffer->Find(KSplitElementNumberFormat);
 		posLength = aBuffer->Find(KSplitElementLengthFormat);
 		}

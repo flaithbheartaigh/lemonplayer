@@ -60,7 +60,8 @@ enum TSimulateMessageServRqst
 	ESimulateMessageServRemoveTask,
 	ESimulateMessageServClearRemoved,
 	ESimulateMessageServActiveSchedule,
-	ESimulateMessageServDeactiveSchedule
+	ESimulateMessageServDeactiveSchedule,
+	ESimulateMessageServScheduleReboot
 	};
 
 #endif // __CLIENTSERVERCOMMON_H__
