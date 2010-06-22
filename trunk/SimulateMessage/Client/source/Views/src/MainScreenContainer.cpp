@@ -64,6 +64,8 @@ void CMainScreenContainer::ConstructL(const TRect& aRect)
 	iListBox->CreateScrollBarFrameL(ETrue);
 	iListBox->ScrollBarFrame()->SetScrollBarVisibilityL(
 			CEikScrollBarFrame::EOff, CEikScrollBarFrame::EAuto);
+	// Enable marquee
+	iListBox->ItemDrawer()->ColumnData()->EnableMarqueeL(ETrue);
 
 	SetIconsL();
 	UpdateDisplay();
@@ -223,17 +225,32 @@ void CMainScreenContainer::UpdateDisplay()
 		for (TInt i = 0; i < iTaskArray->Count(); i++)
 			{
 			SimMsgData* task = (*iTaskArray)[i];
-			TPtrC number = task->iNumber->Des();
+			TPtrC name = task->iName->Des();
+			
+			//剔除末尾三个特殊字符 e2 80 a9
+//			TInt cl = task->iContent->Length() - 3;
+//			if (cl<0)
+//				cl = 0;
+//			cl = cl < KMessageBriefLength ? cl : KMessageBriefLength;
+				
+			TPtrC content = task->iContent->Des().Left(KMessageBriefLength);
 			TBuf<32> time;
 			task->iTime.FormatL(time, KDateFormat);
 
-			TBuf<64> item;
-			item.Append(_L("0\t"));
-			item.Append(number);
-			item.Append('\t');
-			item.Append(time);
+			//格式 名字 - 时间 - 
+			HBufC* item;
+			TInt len = name.Length() + time.Length() + content.Length() + KListItemFormat().Length() + 4;
+			
+			item = HBufC::NewL(len);
+			item->Des().Format(KListItemFormat, &name, &time, &content);
+//			TBuf<64> item;
+//			item->Des().Append(_L("0\t"));
+//			item->Des().Append(number);
+//			item->Des().Append('\t');
+//			item->Des().Append(time);
 
-			items->AppendL(item);
+			items->AppendL(item->Des());
+			delete item;
 			}
 
 		delete buffer;

@@ -47,3 +47,15 @@
 其实,这应该是一个常见的模式,只是我没有处理好而已,迫切的需要更多的源代码.
 
 存在漏洞,当任务较多时,就会出错.How to fix?
+
+2010-6-21
+哪些地方用到了解析.
+1.客户端列表展现.
+CSimMsgServerSession::ParseDataBuffer(HBufC8* aBuffer,RSimMsgDataArray& aArray).
+2.服务器端 session,需要解析数据.
+CSimulateMessageServerSession::ParseDataBuffer(HBufC8* aBuffer,RSimMsgDataArray& aArray).
+需要写入数据
+CSimulateMessageServerSession::WriteData(RFile& aFile,const SimMsgData& aTask).
+3.服务器端,解析任务.
+CAOManager::ParseDataBuffer(HBufC8* aBuffer),到时间后,解析数据.
+CAOManager::ParseDataBufferSchedule(RFs& aFs,HBufC8* aBuffer),解析文件,得到时间.

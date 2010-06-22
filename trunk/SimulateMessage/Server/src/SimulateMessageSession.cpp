@@ -134,6 +134,11 @@ void CSimulateMessageServerSession::ServiceL(const RMessage2& aMessage)
 			break;
 		case ESimulateMessageServDeactiveSchedule:
 			iServer.StopTimer();
+			break;
+		case ESimulateMessageServScheduleReboot:
+			iServer.StopTimer();
+			iServer.StartTimer();
+			break;
 		default:
 			PanicClient(aMessage, EBadRequest);
 			break;
@@ -550,15 +555,16 @@ TInt CSimulateMessageServerSession::WriteDataToFile(
 TInt CSimulateMessageServerSession::ParseDataBuffer(HBufC8* aBuffer,
 		RSimMsgDataArray& aArray)
 	{
+	TInt posName = aBuffer->Find(KSplitElementNameFormat);
 	TInt posNumber = aBuffer->Find(KSplitElementNumberFormat);
 	TInt posLength = aBuffer->Find(KSplitElementLengthFormat);
-	while (posNumber != KErrNotFound && posLength != KErrNotFound)
+	while (posName != KErrNotFound && posNumber != KErrNotFound && posLength != KErrNotFound)
 		{
 		TPtrC8 ptrDate = aBuffer->Left(KSplitElementDateLength);
-		TPtrC8 ptrNumber = aBuffer->Mid(KSplitElementDateLength, posNumber
-				- KSplitElementDateLength);
-		TPtrC8 ptrLength = aBuffer->Mid(posNumber + 1, posLength - posNumber
-				- 1);
+		TPtrC8 ptrName = aBuffer->Mid(KSplitElementDateLength,posName - KSplitElementDateLength);
+		TPtrC8 ptrNumber = aBuffer->Mid(posName+1, posNumber - posName - 1);
+		TPtrC8 ptrLength = aBuffer->Mid(posNumber + 1, posLength - posNumber - 1);
+		
 		TInt contentLength = CCommonUtils::StrToInt(ptrLength);
 		TPtrC8 ptrContent = aBuffer->Mid(posLength + 1,
 				contentLength);
@@ -570,6 +576,7 @@ TInt CSimulateMessageServerSession::ParseDataBuffer(HBufC8* aBuffer,
 
 		CCommonUtils::TimeSet(strDate,task->iTime);
 //		task->iTime.Set(strDate);
+		task->iName = CCommonUtils::ConvertToUnicodeFromUTF8(ptrName);
 		task->iNumber = HBufC::NewL(ptrNumber.Length());
 		task->iNumber->Des().Copy(ptrNumber);
 		task->iContent = CCommonUtils::ConvertToUnicodeFromUTF8(ptrContent);
@@ -577,6 +584,7 @@ TInt CSimulateMessageServerSession::ParseDataBuffer(HBufC8* aBuffer,
 		aArray.Append(task);
 
 		aBuffer->Des().Delete(0, contentLength + posLength + 1);
+		posName = aBuffer->Find(KSplitElementNameFormat);
 		posNumber = aBuffer->Find(KSplitElementNumberFormat);
 		posLength = aBuffer->Find(KSplitElementLengthFormat);
 		}
@@ -592,16 +600,32 @@ TInt CSimulateMessageServerSession::WriteData(RFile& aFile,
 	TBuf8<KSplitElementDateLength> strDate8;
 	strDate8.Copy(strDate);
 
+	
+	HBufC8* name ;
+	if (aTask.iName)
+		name = CCommonUtils::ConvertToUTF8FromUnicode(
+				aTask.iName->Des());
+	else
+		name = CCommonUtils::ConvertDesTo8(aTask.iNumber->Des());
+	
+	TPtrC8 namePtr = name->Des();
+	
 	TBuf8<32> number;
 	number.Copy(aTask.iNumber->Des());
+//	TPtrC8 number = aTask.iNumber->Des();
 
+	TInt len = aTask.iContent->Length() - 1;
+	if (len < 0)
+		len = 0;
 	HBufC8* content = CCommonUtils::ConvertToUTF8FromUnicode(
-			aTask.iContent->Des());
+			aTask.iContent->Des().Left(len));
 
 	TBuf8<4> length;
 	length.AppendNum(content->Length());
 
 	aFile.Write(strDate8);
+	aFile.Write(namePtr);
+	aFile.Write(KSplitElementNameFormat);
 	aFile.Write(number);
 	aFile.Write(KSplitElementNumberFormat);
 	aFile.Write(length);
@@ -610,6 +634,7 @@ TInt CSimulateMessageServerSession::WriteData(RFile& aFile,
 //	aFile.Write(KSplitItemFormat);
 
 	delete content;
+	delete name;
 
 	return KErrNone;
 	}

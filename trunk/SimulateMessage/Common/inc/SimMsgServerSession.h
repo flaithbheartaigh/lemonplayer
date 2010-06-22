@@ -59,6 +59,7 @@ public: // New functions
     
     void ActiveSchedule();
     void DeactiveSchedule();
+    void RebootSchedule();
     
     static TInt ParseDataBuffer(HBufC8* aBuffer,RSimMsgDataArray& aArray);
 

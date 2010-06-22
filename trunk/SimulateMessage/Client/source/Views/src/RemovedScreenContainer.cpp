@@ -56,6 +56,8 @@ void CRemovedScreenContainer::ConstructL(const TRect& aRect)
 	iListBox->CreateScrollBarFrameL(ETrue);
 	iListBox->ScrollBarFrame()->SetScrollBarVisibilityL(
 			CEikScrollBarFrame::EOff, CEikScrollBarFrame::EAuto);
+	// Enable marquee
+	iListBox->ItemDrawer()->ColumnData()->EnableMarqueeL(ETrue);
 
 	SetIconsL();
 	UpdateDisplay();
@@ -197,6 +199,10 @@ void CRemovedScreenContainer::UpdateDisplay()
 	HBufC8* buffer;
 	RSimMsgDataArray* iTaskArray;
 
+	CTextListBoxModel* model = iListBox->Model();
+	CDesCArray* items = static_cast<CDesCArray*> (model->ItemTextArray());
+	items->Reset();
+			
 	SHSession().QueryRemovedLength(total);
 	if (total > 0)
 		{
@@ -208,34 +214,42 @@ void CRemovedScreenContainer::UpdateDisplay()
 
 		CSimMsgServerSession::ParseDataBuffer(buffer, *iTaskArray);
 
-		CTextListBoxModel* model = iListBox->Model();
-		CDesCArray* items = static_cast<CDesCArray*> (model->ItemTextArray());
-
-		items->Reset();
-
 		for (TInt i = 0; i < iTaskArray->Count(); i++)
 			{
 			SimMsgData* task = (*iTaskArray)[i];
-			TPtrC number = task->iNumber->Des();
+			TPtrC name = task->iName->Des();
+			
+			//ÌÞ³ýÄ©Î²Èý¸öÌØÊâ×Ö·û e2 80 a9
+//			TInt cl = task->iContent->Length() - 3;
+//			if (cl<0)
+//				cl = 0;
+//			cl = cl < KMessageBriefLength ? cl : KMessageBriefLength;
+				
+			TPtrC content = task->iContent->Des().Left(KMessageBriefLength);
 			TBuf<32> time;
 			task->iTime.FormatL(time, KDateFormat);
 
-			TBuf<64> item;
-			item.Append(_L("0\t"));
-			item.Append(number);
-			item.Append('\t');
-			item.Append(time);
+			HBufC* item;
+			TInt len = name.Length() + time.Length() + content.Length() + KListItemFormat().Length() + 4;
+			
+			item = HBufC::NewL(len);
+			item->Des().Format(KListItemFormat, &name, &time, &content);
+//			TBuf<64> item;
+//			item.Append(_L("0\t"));
+//			item.Append(number);
+//			item.Append('\t');
+//			item.Append(time);
 
-			items->AppendL(item);
+			items->AppendL(item->Des());
+			delete item;
 			}
 
 		delete buffer;
 		
 		iTaskArray->ResetAndDestroy();
-		delete iTaskArray;
-
-		iListBox->HandleItemAdditionL();
+		delete iTaskArray;		
 		}
+	iListBox->HandleItemAdditionL();
 	}
 
 void CRemovedScreenContainer::ClearRemoved()

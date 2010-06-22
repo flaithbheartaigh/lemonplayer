@@ -186,7 +186,7 @@ void CEditorAppView::SaveTask()
 		delete task;
 		}
 	
-	SHChangeView(ESimulateMessageMainScreenViewId);
+	SHChangeViewParam(ESimulateMessageMainScreenViewId,KViewChangeParamReboot);
 	}
 
 void CEditorAppView::LoadMessage(TMsvId aMsg)
