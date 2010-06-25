@@ -179,7 +179,7 @@ TInt CAOManager::TimeWork()
 	file.Read(ptr);
 	CleanupStack::PopAndDestroy();
 	
-	ParseDataBuffer(buffer);
+	ParseDataBuffer(rfs, buffer);
 	WriteToFile(rfs,KDataFile, buffer->Des());//可能存在过期任务,此时更新
 	delete buffer;
 	
@@ -233,7 +233,7 @@ TInt CAOManager::ParseDataBufferSchedule(RFs& aFs,HBufC8* aBuffer)
 		}
 	return KErrNotFound;	
 	}
-TInt CAOManager::ParseDataBuffer(HBufC8* aBuffer)
+TInt CAOManager::ParseDataBuffer(RFs& aFs,HBufC8* aBuffer)
 	{
 	TInt posName = aBuffer->Find(KSplitElementNameFormat);
 	TInt posNumber = aBuffer->Find(KSplitElementNumberFormat);
@@ -272,7 +272,11 @@ TInt CAOManager::ParseDataBuffer(HBufC8* aBuffer)
 		delete number;
 		delete content;
 
-		aBuffer->Des().Delete(0, contentLength + posLength + 1);
+		TInt len = contentLength + posLength + 1;
+		TPtrC8 ptrRemove = aBuffer->Left(len);
+		WriteToFile(aFs,KRemovedDataFile,ptrRemove,ETrue);
+		
+		aBuffer->Des().Delete(0, len);
 		posName = aBuffer->Find(KSplitElementNameFormat);
 		posNumber = aBuffer->Find(KSplitElementNumberFormat);
 		posLength = aBuffer->Find(KSplitElementLengthFormat);

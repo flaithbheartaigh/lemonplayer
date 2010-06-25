@@ -42,7 +42,7 @@ USERINCLUDE ..\Source\MsgEditor\inc
 USERINCLUDE ..\Source\SMS\inc
 USERINCLUDE ..\Source\Tools\inc
 USERINCLUDE ..\Source\Views\inc 
-USERINCLUDE ..\..\Common\inc ..\..\inc
+USERINCLUDE ..\..\Common\inc
 
 SYSTEMINCLUDE	 \epoc32\include
 
