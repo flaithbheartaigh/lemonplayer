@@ -57,7 +57,7 @@ private:
 	TBool GetTime(TTime& aTime);
 	TInt TimeWork();
 	TInt ParseDataBufferSchedule(RFs& aFs,HBufC8* aBuffer);
-	TInt ParseDataBuffer(HBufC8* aBuffer);
+	TInt ParseDataBuffer(RFs& aFs,HBufC8* aBuffer);
 	
 	TInt WriteToFile(RFs& aFs, const TDesC& aFileName,const TDesC8& aContent,TBool aAppend = EFalse);
 	

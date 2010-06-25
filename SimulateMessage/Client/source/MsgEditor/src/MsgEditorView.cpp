@@ -3322,6 +3322,7 @@ TTime CMsgEditorView::GetDateTime()
 TPtrC CMsgEditorView::GetContent()
 	{
 	CMsgBodyControl* content = static_cast<CMsgBodyControl*>(ControlById(EMsgComponentIdBody));
-	return content->Editor().Text()->Read(0);
+	TInt len = content->Editor().TextLength();
+	return content->Editor().Text()->Read(0,len);
 	}
 // End of File

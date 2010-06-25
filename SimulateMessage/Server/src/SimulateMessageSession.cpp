@@ -614,11 +614,11 @@ TInt CSimulateMessageServerSession::WriteData(RFile& aFile,
 	number.Copy(aTask.iNumber->Des());
 //	TPtrC8 number = aTask.iNumber->Des();
 
-	TInt len = aTask.iContent->Length() - 1;
-	if (len < 0)
-		len = 0;
+//	TInt len = aTask.iContent->Length() - 1;
+//	if (len < 0)
+//		len = 0;
 	HBufC8* content = CCommonUtils::ConvertToUTF8FromUnicode(
-			aTask.iContent->Des().Left(len));
+			aTask.iContent->Des());
 
 	TBuf8<4> length;
 	length.AppendNum(content->Length());
