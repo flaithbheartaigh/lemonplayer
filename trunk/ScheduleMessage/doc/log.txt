@@ -1,0 +1,61 @@
+2010-5-17
+设计.
+主界面.
+已有任务列表.
+菜单:新建,管理(修改,删除),启动/停止服务,设置,帮助,关于,退出.
+
+新建.
+自写,从草稿箱中读取.
+
+从草稿箱中读取,
+读取草稿中的列表.
+
+短信编辑页面,
+增加一个发送时间选项.
+
+设置,
+开机启动.
+
+帮助,关于.
+退出.
+
+2010-5-24
+服务器端功能.
+1.定时功能.
+2.创建短信.
+
+客户端使用:
+1.查询状态.
+2.查询所有任务.
+3.添加任务.
+4.删除任务.
+5.开启,停止服务.
+
+后台常驻使用.
+1.开启服务.
+
+2010-5-25
+数据结构:
+日期,号码,内容.
+
+2010-6-9
+先发送查询文件大小,然后查询文件字符,然后解析.
+
+遇见最大的问题,服务器客户端之间数据传递.
+当客户端要查询所有任务时候,对服务器就是一个挑战了.
+
+其实,这应该是一个常见的模式,只是我没有处理好而已,迫切的需要更多的源代码.
+
+存在漏洞,当任务较多时,就会出错.How to fix?
+
+2010-6-21
+哪些地方用到了解析.
+1.客户端列表展现.
+CSimMsgServerSession::ParseDataBuffer(HBufC8* aBuffer,RSimMsgDataArray& aArray).
+2.服务器端 session,需要解析数据.
+CSimulateMessageServerSession::ParseDataBuffer(HBufC8* aBuffer,RSimMsgDataArray& aArray).
+需要写入数据
+CSimulateMessageServerSession::WriteData(RFile& aFile,const SimMsgData& aTask).
+3.服务器端,解析任务.
+CAOManager::ParseDataBuffer(HBufC8* aBuffer),到时间后,解析数据.
+CAOManager::ParseDataBufferSchedule(RFs& aFs,HBufC8* aBuffer),解析文件,得到时间.

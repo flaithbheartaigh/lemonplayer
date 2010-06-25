@@ -1,0 +1,36 @@
+/*
+============================================================================
+ Name		: SimulateMessage.rls
+ Author	  : zengcity
+ Copyright   : Your copyright notice
+ Description : This is a localisation file for SimulateMessage
+			   A .rls file is the one and only place where the logical
+			   strings to be localised are defined. 
+============================================================================
+*/
+CHARACTER_SET UTF8
+//  LOCALISATION STRINGS
+
+// Caption string for app.
+#define qtn_caption_string "定时短信"
+
+#define qtn_loc_resource_file_1 "\\resource\\apps\\ScheduleMessage_0xE70CE84A"
+
+rls_string rls_auto_start_title	"开机自启动"
+
+rls_string rls_create			"新建任务"
+rls_string rls_create_new		"自写"
+rls_string rls_create_load		"从草稿箱中读取"
+rls_string rls_manage			"选中任务"
+rls_string rls_manage_edit		"编辑"
+rls_string rls_manage_remove	"删除"
+rls_string rls_active_server	"激活后台运行"
+rls_string rls_deactive_server	"关闭后台运行"
+
+rls_string rls_insert_contact 	"插入联系人"
+
+rls_string rls_active_removed_screen	"查看过期任务"
+
+
+#include "SHRls.inl"
+// End of File

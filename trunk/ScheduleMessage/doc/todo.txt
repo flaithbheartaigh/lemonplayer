@@ -1,0 +1,11 @@
+修改:
+1.uid.
+E70CE849->E70CE84A
+EF4ABCDC->EF4ABCDD
+2.名字.
+SimulateMessageServer.exe->ScheduleMessageServer.exe
+
+如果在发件箱创建信息,会不会自动发送呢.
+
+
+

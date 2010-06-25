@@ -1,0 +1,492 @@
+/*
+ ============================================================================
+ Name		: SimulateMessage.rss
+ Author	  : zengcity
+ Copyright   : Your copyright notice
+ Description : This file contains all the resources for the SimulateMessage.
+ ============================================================================
+ */
+
+//  RESOURCE IDENTIFIER
+NAME SIMU // 4 letter ID
+
+//  INCLUDES
+
+#include <eikon.rh>
+#include <avkon.rsg>
+#include <avkon.rh>
+#include <appinfo.rh>
+#include <avkon.mbg>
+#include <avkonicons.hrh>
+
+#include "SimulateMessage.hrh"
+#include "SimulateMessage.rls"
+
+#include "MsgEditor.rh"
+
+RESOURCE RSS_SIGNATURE	{
+	}
+
+// -----------------------------------------------------------------------------
+//
+//	Default Document Name
+//
+// -----------------------------------------------------------------------------
+//
+RESOURCE TBUF r_default_document_name
+	{
+	buf="SIMU";
+	}
+
+// -----------------------------------------------------------------------------
+//
+//	Define default menu and CBA key.
+//
+// -----------------------------------------------------------------------------
+//
+RESOURCE EIK_APP_INFO
+	{
+	}
+
+RESOURCE AVKON_VIEW r_view_mainscreen
+	{
+	cba = R_AVKON_SOFTKEYS_OPTIONS_EXIT;
+	menubar = r_mainscreen_menubar;
+	}
+
+RESOURCE AVKON_VIEW r_view_loaddraft
+	{
+	cba = R_AVKON_SOFTKEYS_OK_BACK;
+	//menubar = r_menubar;
+	}
+
+RESOURCE AVKON_VIEW r_view_setting
+	{
+	cba = r_cba_change_back;
+	}
+
+RESOURCE AVKON_VIEW r_view_app
+	{
+	cba = R_AVKON_SOFTKEYS_OPTIONS_EXIT;
+	menubar = r_menubar;
+	}
+
+RESOURCE AVKON_VIEW r_view_editor
+	{
+	cba = R_AVKON_SOFTKEYS_OPTIONS_BACK;
+	menubar = r_menubar_editor;
+	}
+
+RESOURCE AVKON_VIEW r_view_removedscreen
+	{
+	cba = R_AVKON_SOFTKEYS_OPTIONS_BACK;
+	menubar = r_menubar_removed;
+	}
+// -----------------------------------------------------------------------------
+//
+//   r_menubar
+//   Main menubar
+//
+// -----------------------------------------------------------------------------
+//
+RESOURCE MENU_BAR r_menubar
+	{
+	titles =
+		{
+		MENU_TITLE
+			{menu_pane = r_menu;}
+		};
+	}
+
+// -----------------------------------------------------------------------------
+//
+//   r_menu
+//   Menu for "Options"
+//
+// -----------------------------------------------------------------------------
+//
+RESOURCE MENU_PANE r_menu
+	{
+	items =
+		{
+		MENU_ITEM
+			{
+			command = EAknSoftkeyExit;
+			txt = qtn_exit;
+			}
+		};
+	}
+
+// -----------------------------------------------------------------------------
+//
+//   r_menubar
+//   Main menubar
+//
+// -----------------------------------------------------------------------------
+//
+RESOURCE MENU_BAR r_mainscreen_menubar
+	{
+	titles =
+		{
+		MENU_TITLE
+			{menu_pane = r_mainscreen_menu;}
+		};
+	}
+
+// -----------------------------------------------------------------------------
+//
+//   r_menu
+//   Menu for "Options"
+//
+// -----------------------------------------------------------------------------
+//
+RESOURCE MENU_PANE r_mainscreen_menu
+	{
+	items =
+		{
+		// added the new Options menu command here
+		MENU_ITEM
+			{
+			command = ECommandCreate;
+			txt = rls_create;
+			cascade = r_mainscreen_submenu_create;
+			},
+		MENU_ITEM
+			{
+			command = ECommandManage;
+			txt = rls_manage;
+			cascade = r_mainscreen_submenu_manage;
+			},
+		MENU_ITEM
+			{
+			command = ECommandRemovedScreen;
+			txt = rls_active_removed_screen;
+			},
+		MENU_ITEM
+			{
+			command = ECommandActiveServer;
+			txt = rls_active_server;
+			},
+		MENU_ITEM
+			{
+			command = ECommandDeactiveServer;
+			txt = rls_deactive_server;
+			},
+		MENU_ITEM
+			{
+			command = ECommandSetting;
+			txt = qtn_settings;
+			},
+		MENU_ITEM
+			{
+			command = ECommandHelp;
+			txt = qtn_help;
+			},
+		MENU_ITEM
+			{
+			command = ECommandAbout;
+			txt = qtn_about;
+			},
+		MENU_ITEM
+			{
+			command = EAknSoftkeyExit;
+			txt = qtn_exit;
+			}
+		};
+	}
+
+RESOURCE MENU_PANE r_mainscreen_submenu_create
+	{
+	items =
+		{
+		// added the new Options menu command here
+		MENU_ITEM
+			{
+			command = ECommandCreateNew;
+			txt = rls_create_new;
+			},
+		MENU_ITEM
+			{
+			command = ECommandCreateFrom;
+			txt = rls_create_load;
+			}
+		};
+	}
+
+RESOURCE MENU_PANE r_mainscreen_submenu_manage
+	{
+	items =
+		{
+		// added the new Options menu command here
+		MENU_ITEM
+			{
+			command = ECommandManageEdit;
+			txt = rls_manage_edit;
+			},
+		MENU_ITEM
+			{
+			command = ECommandmanageRemove;
+			txt = rls_manage_remove;
+			}
+		};
+	}
+
+// -----------------------------------------------------------------------------
+//
+//   r_menubar
+//   Main menubar
+//
+// -----------------------------------------------------------------------------
+//
+RESOURCE MENU_BAR r_menubar_editor
+	{
+	titles =
+		{
+		MENU_TITLE
+			{menu_pane = r_menu_editor;}
+		};
+	}
+
+// -----------------------------------------------------------------------------
+//
+//   r_menu
+//   Menu for "Options"
+//
+// -----------------------------------------------------------------------------
+//
+RESOURCE MENU_PANE r_menu_editor
+	{
+	items =
+		{
+		MENU_ITEM
+			{
+			command = ECommandInsertContact;
+			txt = rls_insert_contact;
+			},
+		MENU_ITEM
+			{
+			command = ECommandAddTask;
+			txt = qtn_save;
+			}
+		};
+	}
+
+// -----------------------------------------------------------------------------
+//
+//   r_menubar
+//   Main menubar
+//
+// -----------------------------------------------------------------------------
+//
+RESOURCE MENU_BAR r_menubar_removed
+	{
+	titles =
+		{
+		MENU_TITLE {menu_pane = r_menu_removed;}
+		};
+	}
+
+// -----------------------------------------------------------------------------
+//
+//   r_menu
+//   Menu for "Options"
+//
+// -----------------------------------------------------------------------------
+//
+RESOURCE MENU_PANE r_menu_removed
+	{
+	items =
+		{
+		MENU_ITEM
+			{
+			command = ECommandRemovedClear;
+			txt = qtn_clear;
+			}
+		};
+	}
+// -----------------------------------------------------------------------------
+//
+// About dialog resource.
+//
+// -----------------------------------------------------------------------------
+//
+RESOURCE DIALOG r_about_query_dialog
+	{
+	flags = EGeneralQueryFlags | EEikDialogFlagNoBorder | EEikDialogFlagNoShadow;
+	buttons = R_AVKON_SOFTKEYS_OK_EMPTY;
+	items=
+		{
+		DLG_LINE
+			{
+			type = EAknCtPopupHeadingPane;
+			id = EAknMessageQueryHeaderId;
+			itemflags = EEikDlgItemNonFocusing;
+			control = AVKON_HEADING
+				{
+				};
+			},
+		DLG_LINE
+			{
+			type = EAknCtMessageQuery;
+			id = EAknMessageQueryContentId;
+			control = AVKON_MESSAGE_QUERY
+				{
+				};
+			}
+		};
+	}
+
+// -----------------------------------------------------------------------------
+//
+// Resources for messages.
+//
+// -----------------------------------------------------------------------------
+//
+
+// ---------------------------------------------------------------------------- 
+//
+// r_localisable_app_info
+//
+// ---------------------------------------------------------------------------- 
+//
+RESOURCE LOCALISABLE_APP_INFO r_localisable_app_info
+	{
+	short_caption = qtn_caption_string;
+	caption_and_icon =
+	CAPTION_AND_ICON_INFO
+		{
+		caption = qtn_caption_string;
+
+		number_of_icons = 1;
+		icon_file = "\\resource\\apps\\ScheduleMessage_0xE70CE84A.mif";
+		};
+	}
+
+RESOURCE AKN_ICON_ARRAY r_icon_mark
+	{
+	type = EAknIconArraySimple;
+	bmpfile = AVKON_ICON_FILE;
+	icons =
+		{
+		AKN_ICON
+			{
+			iconId = EMbmAvkonQgn_stat_message;
+			maskId = EMbmAvkonQgn_stat_message_blank;
+			},
+		AKN_ICON
+			{
+			iconId = EMbmAvkonQgn_prop_radiobutt_off;
+			maskId = EMbmAvkonQgn_prop_radiobutt_off_mask;
+			},
+		AKN_ICON
+			{
+			iconId = EMbmAvkonQgn_prop_mmc_memc_large;
+			maskId = EMbmAvkonQgn_prop_mmc_memc_large_mask;
+			}
+		};
+	}
+
+// -----------------------------------------------------------------------------
+//
+// r_listbox_setting_item_list
+//
+// -----------------------------------------------------------------------------
+// 
+RESOURCE AVKON_SETTING_ITEM_LIST r_listbox_setting_item_list
+	{
+	title = qtn_settings;
+	items =
+		{
+		AVKON_SETTING_ITEM
+			{
+			identifier = EListboxSettingAutoStart;
+			setting_page_resource = r_auto_start_setting_page;
+			associated_resource = r_auto_start_popup_setting_texts;
+			name = rls_auto_start_title;
+			}
+		};
+	}
+//----------------------------------------------------------------------------
+//
+//    r_registration_gender_setting_page
+//    Gender setting label
+//
+//----------------------------------------------------------------------------
+//
+RESOURCE AVKON_SETTING_PAGE r_auto_start_setting_page
+	{
+	number= 0;
+	label= rls_auto_start_title;
+	type = EAknCtPopupSettingList;
+	}
+
+//----------------------------------------------------------------------------
+//
+//    r_registration_popup_setting_gender_texts
+//    Gender setting uses value array
+//
+//----------------------------------------------------------------------------
+//
+RESOURCE AVKON_POPUP_SETTING_TEXTS r_auto_start_popup_setting_texts
+	{
+	flags = 0;
+	setting_texts_resource = r_auto_start_texts;
+	}
+
+//----------------------------------------------------------------------------
+//
+//    r_registration_gender_texts
+//    Gender options are female and male, female is default
+//
+//----------------------------------------------------------------------------
+//
+RESOURCE ARRAY r_auto_start_texts
+	{
+	items =
+		{
+		AVKON_ENUMERATED_TEXT
+			{value=1; text = qtn_yes;},
+		AVKON_ENUMERATED_TEXT
+			{value=0; text = qtn_no;}
+		};
+	}
+
+
+// ---------------------------------------------------------
+//   
+//    r_unieditor_to - MSG_EDITOR_ADDRESS_CONTROL
+//
+// ---------------------------------------------------------
+
+RESOURCE MSG_EDITOR_ADDRESS_CONTROL r_unieditor_to
+    {
+    prompt      = "To";
+    id          = EMsgComponentIdTo;
+    distance    = 0;
+
+    default_case            = EAknEditorLowerCase;
+    allowed_case_modes      = EAknEditorAllCaseModes;
+    default_input_mode      = EAknEditorNumericInputMode;
+    allowed_input_modes     = EAknEditorTextInputMode | EAknEditorNumericInputMode;
+    numeric_keymap          = EAknEditorStandardNumberModeKeymap;
+    avkon_flags             = EAknEditorFlagNoT9 | EAknEditorFlagUseSCTNumericCharmap;
+    }
+
+RESOURCE MSG_EDITOR_ADDRESS_CONTROL r_unieditor_datetime
+    {
+    prompt      = "Date";
+    id          = EMsgComponentIdDateTime;
+    distance    = 0;
+
+    default_case            = EAknEditorLowerCase;
+    allowed_case_modes      = EAknEditorAllCaseModes;
+    default_input_mode      = EAknEditorNumericInputMode;
+    allowed_input_modes     = EAknEditorTextInputMode | EAknEditorNumericInputMode;
+    numeric_keymap          = EAknEditorStandardNumberModeKeymap;
+    avkon_flags             = EAknEditorFlagNoT9 | EAknEditorFlagUseSCTNumericCharmap;
+    }
+
+RESOURCE TBUF r_note_recipient_null 			{ buf = qtn_help_file;}
+
+#include "SHRss.inl"
+// End of File

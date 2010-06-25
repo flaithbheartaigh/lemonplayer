@@ -1,0 +1,46 @@
+/*
+* ==============================================================================
+*  Name        : cssyncserver.mmp
+*  Part of     : CSSync
+*  Interface   :
+*  Description :
+*  Version     :
+*
+*  Copyright (c) 2006 Nokia Corporation.
+*  This material, including documentation and any related
+*  computer programs, is protected by copyright controlled by
+*  Nokia Corporation.
+* ==============================================================================
+*/
+
+TARGET            ScheduleMessageServer.exe
+TARGETTYPE        exe
+UID               0x0 0xEF4ABCDD
+EPOCSTACKSIZE     0x5000
+
+SOURCEPATH        ..\src
+SOURCE            SimulateMessageSession.cpp
+SOURCE            SimulateMessageServer.cpp
+SOURCE 			  AOManager.cpp
+
+SOURCEPATH 		..\..\Client\source\Tools\src
+SOURCE 			CommonUtils.cpp
+
+SOURCEPATH 		..\..\Client\source\SMS\src
+SOURCE 			SmsSendByBoxEngine.cpp
+
+USERINCLUDE       ..\inc
+USERINCLUDE       ..\..\Common\inc
+USERINCLUDE       ..\..\Client\source\Debug\inc
+USERINCLUDE       ..\..\Client\source\SMS\inc
+USERINCLUDE       ..\..\Client\source\Tools\inc
+SYSTEMINCLUDE     \epoc32\include
+
+LIBRARY           euser.lib cone.lib efsrv.lib charconv.lib msgs.lib cntmodel.lib etext.lib gsmu.lib smcm.lib bafl.lib flogger.lib avkon.lib
+
+VENDORID          0
+
+
+// End of File
+
+CAPABILITY NetworkServices ReadDeviceData ReadUserData WriteDeviceData WriteUserData
