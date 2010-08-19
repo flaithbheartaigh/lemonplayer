@@ -1,0 +1,7 @@
+ 
+/* This file has been generated, DO NOT MODIFY. */
+enum TMifOpenglparticles
+	{
+	EMbmOpenglparticlesQgn_menu_openglparticles = 16384,
+	EMbmOpenglparticlesLastElement
+	};

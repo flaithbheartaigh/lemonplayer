@@ -1,0 +1,39 @@
+; Installation file for OpenGLParticles application
+;
+; This is an auto-generated PKG file by Carbide.
+; This file uses variables specific to Carbide builds that will not work
+; on command-line builds. If you want to use this generated PKG file from the
+; command-line tools you will need to modify the variables with the appropriate
+; values: $(EPOCROOT), $(PLATFORM), $(TARGET)
+;
+;Languages
+&EN
+;
+; UID is the app's UID
+;
+#{"OpenGLParticles"},(0xEC9DD319),1,0,0
+;
+;Localised Vendor name
+%{"Vendor-EN"}
+;Unique Vendor name
+:"Vendor"
+;Supports Series 60 v 3.0
+[0x101F7961], 0, 0, 0, {"Series60ProductID"}
+;
+; Files to install
+; The PKG file has been set up with a default SDK root.
+; Symbols set up for the source location are Carbide.c++ specific symbols
+"$(EPOCROOT)Epoc32\release\$(PLATFORM)\$(TARGET)\OpenGLParticles_0xEC9DD319.exe"		-"!:\sys\bin\OpenGLParticles_0xEC9DD319.exe"
+"$(EPOCROOT)Epoc32\data\z\resource\apps\OpenGLParticles_0xEC9DD319.rsc"		-"!:\resource\apps\OpenGLParticles_0xEC9DD319.rsc"
+"$(EPOCROOT)Epoc32\data\z\private\10003a3f\apps\OpenGLParticles_0xEC9DD319_reg.rsc"	-"!:\private\10003a3f\import\apps\OpenGLParticles_0xEC9DD319_reg.rsc"
+"$(EPOCROOT)Epoc32\data\z\resource\apps\OpenGLParticles_0xEC9DD319.mif" 	-"!:\resource\apps\OpenGLParticles_0xEC9DD319.mif"
+"..\pictures\Particle.jpg"                                                	-"!:\private\EC9DD319\Particle.jpg"
+"..\pictures\ogles.jpg"                                                		-"!:\private\EC9DD319\ogles.jpg"
+
+;
+; Add any installation notes if applicable
+;"OpenGLParticles.txt"		-"!:\private\EC9DD319\OpenGLParticles.txt"
+
+;required for application to be covered by backup/restore facility 
+"..\sis\backup_registration.xml"		-"!:\private\EC9DD319\backup_registration.xml"
+

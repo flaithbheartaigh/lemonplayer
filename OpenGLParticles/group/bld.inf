@@ -1,0 +1,49 @@
+/*
+============================================================================
+ Name		: bld.inf
+ Author	  : zengcity
+ Copyright   : Your copyright notice
+ Description : This file provides the information required for building the
+				whole of a OpenGLParticles.
+============================================================================
+*/
+PRJ_PLATFORMS
+WINSCW ARMV5 GCCE
+
+PRJ_EXPORTS
+..\pictures\Particle.jpg 		..\release\wins\udeb\z\private\EC9DD319\Particle.jpg
+..\pictures\ogles.jpg           ..\release\wins\udeb\z\private\EC9DD319\ogles.jpg    		
+..\pictures\constellation\Aquarius.jpg  ..\release\wins\udeb\z\private\EC9DD319\Aquarius.jpg
+..\pictures\constellation\Aries.jpg  ..\release\wins\udeb\z\private\EC9DD319\Aries.jpg
+..\pictures\constellation\Cancer.jpg  ..\release\wins\udeb\z\private\EC9DD319\Cancer.jpg
+..\pictures\constellation\Capricorn.jpg  ..\release\wins\udeb\z\private\EC9DD319\Capricorn.jpg
+..\pictures\constellation\Gemini.jpg  ..\release\wins\udeb\z\private\EC9DD319\Gemini.jpg
+..\pictures\constellation\Leo.jpg  ..\release\wins\udeb\z\private\EC9DD319\Leo.jpg
+..\pictures\constellation\Libra.jpg  ..\release\wins\udeb\z\private\EC9DD319\Libra.jpg
+..\pictures\constellation\Pisces.jpg  ..\release\wins\udeb\z\private\EC9DD319\Pisces.jpg
+..\pictures\constellation\Sagittarius.jpg  ..\release\wins\udeb\z\private\EC9DD319\Sagittarius.jpg
+..\pictures\constellation\Scorpius.jpg  ..\release\wins\udeb\z\private\EC9DD319\Scorpius.jpg
+..\pictures\constellation\Taurus.jpg  ..\release\wins\udeb\z\private\EC9DD319\Taurus.jpg
+..\pictures\constellation\Virgo.jpg  ..\release\wins\udeb\z\private\EC9DD319\Virgo.jpg
+
+..\pictures\Particle.jpg 		..\release\winscw\udeb\z\private\EC9DD319\Particle.jpg
+..\pictures\ogles.jpg            ..\release\winscw\udeb\z\private\EC9DD319\ogles.jpg
+..\pictures\constellation\Aquarius.jpg  ..\release\winscw\udeb\z\private\EC9DD319\Aquarius.jpg
+..\pictures\constellation\Aries.jpg  ..\release\winscw\udeb\z\private\EC9DD319\Aries.jpg
+..\pictures\constellation\Cancer.jpg  ..\release\winscw\udeb\z\private\EC9DD319\Cancer.jpg
+..\pictures\constellation\Capricorn.jpg  ..\release\winscw\udeb\z\private\EC9DD319\Capricorn.jpg
+..\pictures\constellation\Gemini.jpg  ..\release\winscw\udeb\z\private\EC9DD319\Gemini.jpg
+..\pictures\constellation\Leo.jpg  ..\release\winscw\udeb\z\private\EC9DD319\Leo.jpg
+..\pictures\constellation\Libra.jpg  ..\release\winscw\udeb\z\private\EC9DD319\Libra.jpg
+..\pictures\constellation\Pisces.jpg  ..\release\winscw\udeb\z\private\EC9DD319\Pisces.jpg
+..\pictures\constellation\Sagittarius.jpg  ..\release\winscw\udeb\z\private\EC9DD319\Sagittarius.jpg
+..\pictures\constellation\Scorpius.jpg  ..\release\winscw\udeb\z\private\EC9DD319\Scorpius.jpg
+..\pictures\constellation\Taurus.jpg  ..\release\winscw\udeb\z\private\EC9DD319\Taurus.jpg
+..\pictures\constellation\Virgo.jpg  ..\release\winscw\udeb\z\private\EC9DD319\Virgo.jpg
+
+PRJ_MMPFILES
+
+gnumakefile icons_scalable_dc.mk
+
+OpenGLParticles.mmp
+
