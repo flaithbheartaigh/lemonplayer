@@ -1,0 +1,25 @@
+/*
+ ============================================================================
+ Name		: OpenGLParticles.hrh
+ Author	  : zengcity
+ Copyright   : Your copyright notice
+ Description : This file contains declarations for constants of OpenGLParticles.
+ The file can be included in C++ or resource file.
+ ============================================================================
+ */
+#ifndef __OPENGLPARTICLES_HRH__
+#define __OPENGLPARTICLES_HRH__
+
+#define _UID3 0xEC9DD319
+
+// OpenGLParticles enumerate command codes
+enum TOpenGLParticlesIds
+	{
+	EAbout = 0x6001
+	// start value must not be 0
+	};
+enum TNewsPacViewIds
+	{
+	EOpenGLParticlesAppViewId = 0x0001
+	};
+#endif // __OPENGLPARTICLES_HRH__

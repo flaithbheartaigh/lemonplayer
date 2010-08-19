@@ -1,0 +1,57 @@
+/*
+============================================================================
+ Name		: OpenGLParticles.mmp
+ Author	  : zengcity
+ Copyright   : Your copyright notice
+ Description : This is the project specification file for OpenGLParticles.
+============================================================================
+*/
+
+TARGET  OpenGLParticles_0xEC9DD319.exe
+TARGETTYPE  exe
+UID  0x100039CE 0xEC9DD319 
+
+TARGETPATH \system\apps\OpenGLParticles
+
+SOURCEPATH ..\src
+SOURCE 	OpenGLParticles.cpp
+SOURCE  OpenGLParticlesApplication.cpp 
+SOURCE  OpenGLParticlesDocument.cpp
+SOURCE  OpenGLParticlesAppUi.cpp
+SOURCE  OpenGLParticlesAppContainer.cpp
+SOURCE  OpenGLParticlesAppView.cpp
+
+SOURCEPATH ..\data
+
+START RESOURCE	OpenGLParticles.rss
+HEADER
+TARGET OpenGLParticles_0xEC9DD319.rsc
+TARGETPATH resource\apps
+END //RESOURCE
+
+START RESOURCE	OpenGLParticles_reg.rss
+TARGET OpenGLParticles_0xEC9DD319_reg.rsc
+TARGETPATH 	  \private\10003a3f\apps
+END //RESOURCE
+
+USERINCLUDE ..\inc
+USERINCLUDE ..\utils
+SYSTEMINCLUDE	 \epoc32\include
+
+LIBRARY		   euser.lib apparc.lib cone.lib eikcore.lib avkon.lib
+LIBRARY		   commonengine.lib efsrv.lib estor.lib
+LIBRARY        aknnotify.lib gdi.lib aknicon.lib eikcdlg.lib eikctl.lib 
+LIBRARY        hlplch.lib libgles_cm.lib ws32.lib imageconversion.lib fbscli.lib
+
+LANG	 SC
+
+VENDORID	  	  0
+SECUREID		  0xEC9DD319
+CAPABILITY	  	  ReadUserData 
+
+SOURCEPATH ..\src
+SOURCE Particles.cpp
+SOURCEPATH ..\Utils
+SOURCE Glutils.cpp Mathutils.cpp Textureutils.cpp Utils3d.cpp
+SOURCEPATH ..\src
+SOURCE Slideshow.cpp Slideshowrenderers.cpp
