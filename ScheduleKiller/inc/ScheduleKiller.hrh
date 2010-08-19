@@ -1,0 +1,43 @@
+/*
+ ============================================================================
+ Name		: ScheduleKiller.hrh
+ Author	  : zengcity
+ Copyright   : Your copyright notice
+ Description : This file contains declarations for constants of ScheduleKiller.
+ The file can be included in C++ or resource file.
+ ============================================================================
+ */
+#ifndef __SCHEDULEKILLER_HRH__
+#define __SCHEDULEKILLER_HRH__
+
+#define _UID3 0xE35F8580
+
+// ScheduleKiller enumerate command codes
+enum TScheduleKillerIds
+	{
+	ECommandAdd = 0x6001,
+	ECommandHelp,
+	ECommandAbout,
+	ECommandRule,
+	ECommandChange
+	// start value must not be 0
+	};
+enum TNewsPacViewIds
+	{
+	ESHHelpViewId = 0x0001,
+	ESHLogoViewId,
+	EScheduleKillerMainScreenViewId,
+	EScheduleKillerRuleScreenViewId,
+	EScheduleKillerSettingScreenViewId,
+	EScheduleKillerAppScreenViewId
+	};
+
+enum TListboxSettingPageIds
+    {
+    EListboxSettingName,
+    EListboxSettingType,
+    EListboxSettingCountdown,
+    EListboxSettingClocking,
+    EListboxSettingRule
+    };
+#endif // __SCHEDULEKILLER_HRH__
