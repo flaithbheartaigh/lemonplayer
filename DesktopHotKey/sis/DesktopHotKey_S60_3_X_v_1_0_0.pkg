@@ -1,0 +1,36 @@
+; Installation file for DesktopHotKey application
+;
+; This is an auto-generated PKG file by Carbide.
+; This file uses variables specific to Carbide builds that will not work
+; on command-line builds. If you want to use this generated PKG file from the
+; command-line tools you will need to modify the variables with the appropriate
+; values: $(EPOCROOT), $(PLATFORM), $(TARGET)
+;
+;Languages
+&EN
+;
+; UID is the app's UID
+;
+#{"DesktopHotKey"},(0xE7F2A52B),1,0,0
+;
+;Localised Vendor name
+%{"Vendor-EN"}
+;Unique Vendor name
+:"Vendor"
+;Supports Series 60 v 3.0
+[0x101F7961], 0, 0, 0, {"Series60ProductID"}
+;
+; Files to install
+; The PKG file has been set up with a default SDK root.
+; Symbols set up for the source location are Carbide.c++ specific symbols
+"$(EPOCROOT)Epoc32\release\$(PLATFORM)\$(TARGET)\DesktopHotKey_0xE7F2A52B.exe"		-"!:\sys\bin\DesktopHotKey_0xE7F2A52B.exe"
+"$(EPOCROOT)Epoc32\data\z\resource\apps\DesktopHotKey_0xE7F2A52B.rsc"		-"!:\resource\apps\DesktopHotKey_0xE7F2A52B.rsc"
+"$(EPOCROOT)Epoc32\data\z\private\10003a3f\apps\DesktopHotKey_0xE7F2A52B_reg.rsc"	-"!:\private\10003a3f\import\apps\DesktopHotKey_0xE7F2A52B_reg.rsc"
+"$(EPOCROOT)Epoc32\data\z\resource\apps\DesktopHotKey_0xE7F2A52B.mif" -"!:\resource\apps\DesktopHotKey_0xE7F2A52B.mif"
+;
+; Add any installation notes if applicable
+;"DesktopHotKey.txt"		-"!:\private\E7F2A52B\DesktopHotKey.txt"
+
+;required for application to be covered by backup/restore facility 
+"..\sis\backup_registration.xml"		-"!:\private\E7F2A52B\backup_registration.xml"
+
