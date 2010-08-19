@@ -76,7 +76,7 @@ void CLemonMenuBar::ConstructL()
 	//iFrame = CEikonEnv::Static()->CreateBitmapL(KFileMbm,EMbmLemontangramBottomsvg);
 	}
 
-void CLemonMenuBar::Draw(CFbsBitGc& gc,TBool aActive)
+void CLemonMenuBar::Draw(CBitmapContext& gc,TBool aActive)
 	{
 	MUIMgr* uiMgr = STATIC_CAST(CLemonTangramAppUi*,CEikonEnv::Static()->AppUi())->GetUIMgr();
 		

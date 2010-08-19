@@ -120,10 +120,7 @@ void CLemonTangramContainer::Draw(const TRect& /*aRect*/) const
 	gc.SetBrushColor(KRgbWhite);
 	gc.Clear();
 		
-	if (iDoubleBufferBmp)
-		{	//title
-			gc.BitBlt(TPoint(0,0),	iDoubleBufferBmp);
-		}
+	StateRender(gc);
 	}
 
 // ---------------------------------------------------------
@@ -226,6 +223,28 @@ void CLemonTangramContainer::StateDisplay(CFbsBitGc& gc)
 			StateInitDisplay(gc);
 			break;
 		case EGameStateMain:
+			//StateMainDisplay(gc);
+			break;
+		default:
+			break;
+		}	
+	}
+
+void CLemonTangramContainer::StateRender(CWindowGc& gc) const
+	{
+//	CWindowGc& gc = SystemGc();
+	
+	switch (iGameState)
+		{
+		case EGameStateLogo:
+		case EGameStateInit:			
+			if (iDoubleBufferBmp)
+				{	//title
+					gc.BitBlt(TPoint(0,0),	iDoubleBufferBmp);
+				}
+			break;
+			
+		case EGameStateMain:
 			StateMainDisplay(gc);
 			break;
 		default:
@@ -289,14 +308,9 @@ TKeyResponse CLemonTangramContainer::StateKey(const TKeyEvent& aKeyEvent,
 void CLemonTangramContainer::StateLogoInit()
 	{
 	iLogoState = 0;
-#ifdef EKA2
+
 	iLogo = LMSvgUtil::GetImageFromResourceL(EMbmLemontangramLog);
-#else
-	TFileName path;
-	CompleteWithAppPath(path);
-	path.Append(KTangMbmFile);
-	iLogo = CEikonEnv::Static()->CreateBitmapL(path,EMbmLemontangramLog);
-#endif
+
 	}
 
 void CLemonTangramContainer::StateLogoRelease()
@@ -309,19 +323,24 @@ void CLemonTangramContainer::StateLogoLoop()
 		{
 		StateChange(EGameStateInit);
 		StopTimer();
-		SetTimerTick(100000);
+		SetTimerTick(10000);
 		StartTimer();
 		}
 	}
 
-void CLemonTangramContainer::StateLogoDisplay(CFbsBitGc& gc)
+void CLemonTangramContainer::StateLogoDisplay(CFbsBitGc& aGc)
 	{
+//	CWindowGc& gc = SystemGc();
+//    gc.Activate(*DrawableWindow());
+    
 	if (iLogo)
 		{
 		int x = (iWidth-iLogo->SizeInPixels().iWidth) >> 1;
 		int y = (iHeight-iLogo->SizeInPixels().iHeight)>> 1;
-		gc.BitBlt(TPoint(x,y),iLogo);
+		aGc.BitBlt(TPoint(x,y),iLogo);
 		}
+	
+//	gc.Deactivate();
 	}
 
 void CLemonTangramContainer::StateInitInit()
@@ -337,16 +356,14 @@ void CLemonTangramContainer::StateInitRelease()
 
 void CLemonTangramContainer::StateInitLoop()
 	{
-	iLoadState = iManager->GetConvertedNum();
-	
 	if (iManager->GetConvertDown())
 		{
 		TFileName path;
 		GetAppPath(path);
 		path.Append(KFileTangram);
 
-		TRAPD(err,iManager->LoadImageDataFileL(path))
-		LTERR(err,ETLErrLoadPicDataXml,ETLErrSerious)
+		//TRAPD(err,iManager->LoadImageDataFileL(path))
+		//LTERR(err,ETLErrLoadPicDataXml,ETLErrSerious)
 
 		StateChange(EGameStateMain);
 		}
@@ -372,10 +389,15 @@ void CLemonTangramContainer::StateMainRelease()
 }
 void CLemonTangramContainer::StateMainLoop()
 	{}
-void CLemonTangramContainer::StateMainDisplay(CFbsBitGc& gc)
+void CLemonTangramContainer::StateMainDisplay(CBitmapContext& aGc) const
 	{
-	iManager->Draw(gc);
-	iMenu->Draw(gc);
+	//CWindowGc& gc = SystemGc();
+    //gc.Activate(*DrawableWindow());    
+    
+	iManager->Draw(aGc);
+	iMenu->Draw(aGc);
+	
+	//gc.Deactivate();
 	}
 
 TKeyResponse CLemonTangramContainer::StateMainKey(const TKeyEvent& aKeyEvent,
@@ -422,6 +444,8 @@ void CLemonTangramContainer::InitManager()
 
 	LTERR(err,ETLErrLoadPicture,ETLErrSerious);
 	
+	iManager->InitOpenGL(this,&Window());
+	
 	TFileName setup;
 	GetAppPath(setup);
 	setup.Append(KSetupSaveFile);
@@ -433,14 +457,14 @@ void CLemonTangramContainer::InitManager()
 		config->Get(KCfgSkinChoose,img);
 		delete config;
 	
-		TRAP(err,iManager->LoadImageFromFileL(img))
+		//TRAP(err,iManager->LoadImageFromFileL(img))
 	}
 	else 
 	{
 		//配置文件丢失 读取默认
 		LTERRFUN(ETLWarnConfigLost,ETLErrWarning);
 		err == KErrNone;
-		TRAP(err,iManager->LoadImageFromFileL(KNullDesC))
+		//TRAP(err,iManager->LoadImageFromFileL(KNullDesC))
 	}
 
 	LTERR(err,ETLErrLoadPicFileXml,ETLErrSerious);
@@ -479,7 +503,18 @@ void CLemonTangramContainer::OpenProcess()
 }
 void CLemonTangramContainer::SaveScreen()
 {
-	TRAPD(err,iManager->SaveScreenL())
+	CFbsBitmap* bitmap;
+	TRect   rect(TPoint(0,0),iCoeEnv->ScreenDevice()->SizeInPixels()); 	
+	TDisplayMode displayMode = iCoeEnv->ScreenDevice()->DisplayMode();	
+	
+	bitmap = new(ELeave) CFbsBitmap();
+	CleanupStack::PushL(bitmap);	
+	
+	bitmap->Create(rect.Size(),displayMode);
+	CleanupStack::Pop();	
+	
+	iCoeEnv->ScreenDevice()->CopyScreenToBitmap(bitmap,   rect);  
+	TRAPD(err,iManager->SaveScreenL(bitmap))
 	LTERR(err,ETLWarnSaveScreen,ETLErrWarning);
 }
 // End of File  

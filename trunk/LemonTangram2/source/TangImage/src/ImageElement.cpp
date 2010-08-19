@@ -13,7 +13,7 @@
 #include <eikenv.h>
 
 CImageElement::CImageElement()
-:iCenterX(0),iCenterY(0),iBitmapLoad(NULL),iBitmapRotate(NULL),iBitmapMask(NULL),
+:iCenterX(0),iCenterY(0),
 iState(KImageStateNone),iDegree(0),iSelected(EFalse),iFlip(EFalse)
 	{
 	// No implementation required
@@ -21,9 +21,6 @@ iState(KImageStateNone),iDegree(0),iSelected(EFalse),iFlip(EFalse)
 
 CImageElement::~CImageElement()
 	{
-	SAFE_DELETE(iBitmapLoad);
-	SAFE_DELETE(iBitmapRotate);
-	SAFE_DELETE(iBitmapMask);
 	}
 
 CImageElement* CImageElement::NewLC()
@@ -55,32 +52,6 @@ void CImageElement::SetPointion(TInt aX,TInt aY)
 	{
 	iCenterX = aX;
 	iCenterY = aY;
-	}
-
-void CImageElement::Draw(CBitmapContext& aGc)
-	{
-	if (iBitmapRotate && iBitmapMask)
-		{
-		TInt x,y;
-		x = iCenterX + iOffsetX;
-		y = iCenterY + iOffsetY;
-		TRect rect( TPoint( 0,0 ),iBitmapRotate->SizeInPixels() );
-		aGc.BitBltMasked(TPoint(x,y),iBitmapRotate,
-				rect,iBitmapMask,ETrue);
-		}
-	}
-
-void CImageElement::Draw(CBitmapContext& aGc, TInt aScrollX, TInt aScrollY)
-	{
-	if (iBitmapRotate && iBitmapMask)
-		{
-		TInt x,y;
-		x = iCenterX + iOffsetX + aScrollX;
-		y = iCenterY + iOffsetY + aScrollY;
-		TRect rect( TPoint( 0,0 ),iBitmapRotate->SizeInPixels() );
-		aGc.BitBltMasked(TPoint(x,y),iBitmapRotate,
-				rect,iBitmapMask,ETrue);
-		}
 	}
 
 void CImageElement::SetDegree(TInt aDegree)

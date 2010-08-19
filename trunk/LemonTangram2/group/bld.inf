@@ -9,16 +9,32 @@
 */
 
 
+PRJ_EXPORTS
+..\resource\setup.ini 				..\winscw\c\private\EAE107BA\setup.ini
+..\resource\mytangram.xml 			..\winscw\c\private\EAE107BA\mytangram.xml
+..\resource\tangmenu.zh.xml 		..\winscw\c\private\EAE107BA\tangmenu.zh.xml
+..\resource\tangmenu.en.xml 		..\winscw\c\private\EAE107BA\tangmenu.en.xml
+
+..\pictures\Particle.jpg 				..\release\winscw\udeb\z\private\EAE107BA\Particle.jpg
+..\pictures\ogles.jpg            		..\release\winscw\udeb\z\private\EAE107BA\ogles.jpg
+..\pictures\constellation\Aquarius.jpg  ..\release\winscw\udeb\z\private\EAE107BA\Aquarius.jpg
+..\pictures\constellation\Aries.jpg  	..\release\winscw\udeb\z\private\EAE107BA\Aries.jpg
+..\pictures\constellation\Cancer.jpg  	..\release\winscw\udeb\z\private\EAE107BA\Cancer.jpg
+..\pictures\constellation\Capricorn.jpg  	..\release\winscw\udeb\z\private\EAE107BA\Capricorn.jpg
+..\pictures\constellation\Gemini.jpg  	..\release\winscw\udeb\z\private\EAE107BA\Gemini.jpg
+..\pictures\constellation\Leo.jpg  		..\release\winscw\udeb\z\private\EAE107BA\Leo.jpg
+..\pictures\constellation\Libra.jpg  	..\release\winscw\udeb\z\private\EAE107BA\Libra.jpg
+..\pictures\constellation\Pisces.jpg  	..\release\winscw\udeb\z\private\EAE107BA\Pisces.jpg
+..\pictures\constellation\Sagittarius.jpg  	..\release\winscw\udeb\z\private\EAE107BA\Sagittarius.jpg
+..\pictures\constellation\Scorpius.jpg  ..\release\winscw\udeb\z\private\EAE107BA\Scorpius.jpg
+..\pictures\constellation\Taurus.jpg  	..\release\winscw\udeb\z\private\EAE107BA\Taurus.jpg
+..\pictures\constellation\Virgo.jpg  	..\release\winscw\udeb\z\private\EAE107BA\Virgo.jpg
 
 PRJ_MMPFILES
 
-#ifdef EKA2
 gnumakefile ..\help\build_help.mk
-//gnumakefile icons_scalable_dc.mk
 gnumakefile LemonTangrame_Image.mk
+
 LemonTangram_3x.mmp
-#else
-gnumakefile ..\help\build_help_2x.mk
-LemonTangram_2x.mmp
-#endif
+
 

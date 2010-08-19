@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<?xml:stylesheet href="file:///C:/S60/devices/S60_3rd_FP2_SDK_v1.1/epoc32/tools/cshlpcmp/xsl/ptml.xsl" title="PTML" type="text/xsl"?>
+<!DOCTYPE ptml SYSTEM "file:///C:/S60/devices/S60_3rd_FP2_SDK_v1.1/epoc32/tools/cshlpcmp/dtd/ptml.dtd">
+<ptml>
+<p style="comment"><manual formattype="font-size">Author: Nokia</manual></p>
+<p style="comment"><manual formattype="font-size">Date: 23 July 2002</manual></p>
+<p style="comment"><manual formattype="font-size">Version: 1</manual></p>
+<p style="heading 1">CloverTangram</p>
+<p style="category uid">0x20001D8E</p>
+<p style="heading 2">General_infomation Help</p>
+<p style="context"><manual formattype="font-size">General_Information </manual><cs style="context comment">The help</cs></p>
+<p style="index"><manual formattype="font-size">LemonTangram help</manual></p>
+<p><manual formattype="font-size">&break;&#27426;&#36814;&#20351;&#29992;&#19977;&#21494;&#33609;&#19971;&#24039;&#26495;.</manual></p>
+<p><manual formattype="font-size">&#21151;&#33021;&#31616;&#20171;:</manual></p>
+<p><manual formattype="font-size">&#20351;&#29992;&#19971;&#24039;&#26495;,&#25340;&#20986;&#19975;&#21315;&#30340;&#22270;&#24418;.</manual></p>
+<p><manual formattype="font-size">&#25353;&#38190;&#25805;&#20316;:</manual></p>
+<p><manual formattype="font-size">&#26041;&#21521;&#23548;&#33322;&#38190;,&#30456;&#24212;&#26041;&#21521;&#36873;&#25321;.</manual></p>
+<p><manual formattype="font-size">2,8,4,6,&#20998;&#21035;&#20026;&#19978;,&#19979;,&#24038;,&#21491;&#26041;&#21521;&#36873;&#25321;.</manual></p>
+<p><manual formattype="font-size">5&#38190;,&#20999;&#25442;&#36873;&#25321;&#26495;&#22359;&#21644;&#22266;&#23450;&#26495;&#22359;.</manual></p>
+<p><manual formattype="font-size">*,#,&#20998;&#21035;&#20026;&#21521;&#24038;,&#21491;&#26059;&#36716;&#26495;&#22359;.</manual></p>
+<p><manual formattype="font-size">1,3,&#20998;&#21035;&#20026;&#24038;&#21491;&#31227;&#21160;&#35270;&#22270;.</manual></p>
+<p><manual formattype="font-size">7,9&#20998;&#21035;&#20026;&#19978;&#19979;&#31227;&#21160;&#35270;&#22270;.</manual></p>
+<p><manual formattype="font-size">&#21151;&#33021;&#31616;&#20171;:</manual></p>
+<p><manual formattype="font-size">&#20445;&#23384;&#36827;&#24230;:&#20445;&#23384;&#24403;&#21069;&#36827;&#24230;.&#20250;&#35206;&#30422;&#19978;&#19968;&#27425;&#36827;&#24230;.</manual></p>
+<p><manual formattype="font-size">&#37325;&#32622;:&#24674;&#22797;&#20026;&#26368;&#21021;&#30340;&#22823;&#27491;&#26041;&#24418;&#29366;&#24577;.</manual></p>
+<p><manual formattype="font-size">&#25171;&#24320;:&#25171;&#24320;&#19978;&#19968;&#27425;&#20445;&#23384;&#30340;&#36827;&#24230;.</manual></p>
+<p><manual formattype="font-size">&#20445;&#23384;&#22270;&#29255;:&#20445;&#23384;&#24403;&#21069;&#23631;&#24149;&#30340;&#22270;&#24418;&#21040;&#25351;&#23450;&#30446;&#24405;.</manual></p>
+<p><manual formattype="font-size">&#40664;&#35748;&#20445;&#23384;&#30446;&#24405;&#22312;c:\tangram\snapshot</manual></p>
+<p><manual formattype="font-size">&#35774;&#32622;:&#21487;&#20197;&#35774;&#32622;&#25442;&#32932;,&#20445;&#23384;&#22270;&#29255;&#25991;&#20214;&#22841;&#31561;.</manual></p>
+<p><manual formattype="font-size">&#32852;&#31995;&#20316;&#32773;:</manual></p>
+<p><manual formattype="font-size">&#27426;&#36814;&#24847;&#35265;&#21644;&#24314;&#35758;.</manual></p>
+<p><manual formattype="font-size">&#32593;&#22336;:</manual> <manual formattype="font-size">www.iCloverSoft.com</manual></p>
+</ptml>

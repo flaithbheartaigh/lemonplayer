@@ -32,7 +32,7 @@ public:
 	static CLemonMenuBar* NewL();
 	static CLemonMenuBar* NewLC();
 
-	void Draw(CFbsBitGc& gc,TBool aActive);
+	void Draw(CBitmapContext& gc,TBool aActive);
 private:
 	CLemonMenuBar();
 	void ConstructL();

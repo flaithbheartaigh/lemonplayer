@@ -31,28 +31,26 @@
 #include "TangErrDefine.h"
 #include "LemonTangramAppUi.h"
 #include "AlphaBackground.h"
+#include "Slideshow.h"
+#include "TangImageData.h"
 
 
 CTangImageManager::CTangImageManager() :
-	iConverted(0), iConvertDown(0), iSelectedState(ESelectedStateChoose),
-	iDataArray(NULL),iScreenSave(NULL),iBitmapArray(NULL),
-	iBitmapFocus(NULL),iElements(NULL),iAcceleration(0),
-	iScrollX(0),iScrollY(0),iBackground(NULL)
+	iSelectedState(ESelectedStateChoose),
+	iDataArray(NULL),iScreenSave(NULL),
+	iElements(NULL),iAcceleration(0),
+	iScrollX(0),iScrollY(0)
 	{
 	// No implementation required
 	}
 
 CTangImageManager::~CTangImageManager()
 	{
-	SAFE_DELETE(iBackground);
+	SAFE_DELETE(iRender);	
 	SAFE_DELETE(iScreenSave);
 	SAFE_DELETE(iDataArray);
-	SAFE_DELETE(iBitmapArray);
-	SAFE_DELETE_ARRAY(iBitmapFocus,EBitmapFocusTotal);
-	SAFE_DELETE_ARRAY(iElements,EImageNumber);
 	
-	iLayer.Reset();
-	iLayer.Close();
+	SAFE_DELETE(iImageData);
 	}
 
 CTangImageManager* CTangImageManager::NewLC()
@@ -72,102 +70,16 @@ CTangImageManager* CTangImageManager::NewL()
 
 void CTangImageManager::ConstructL()
 	{
-	iElements = (CImageElement**)malloc(sizeof(CImageElement*) * EImageNumber);
-	for (TInt i=0; i<EImageNumber; i++)
-		iElements[i] = CImageElement::NewL();
-	
-	iBitmapFocus = (CFbsBitmap**)malloc(sizeof(CFbsBitmap*) * EBitmapFocusTotal);
-	for (TInt j=0; j<EBitmapFocusTotal; j++)
-		iBitmapFocus[j] = NULL;
-
-	TSize size = STATIC_CAST(CLemonTangramAppUi*,CEikonEnv::Static()->AppUi())->GetUIMgr()->DrawableSize();
-	iBackground = CAlphaBackground::NewL(size);
+	iImageData = CTangImageData::NewL();
+	iElements = iImageData->GetElements();
 	}
 
-void CTangImageManager::ConvertError()
+void CTangImageManager::InitOpenGL(CCoeControl* aParentControl, RWindow* aParentWindow)
 	{
-	//¶ÁÆ¬×ª»»´íÎó£¬¶ÁÈ¡Ä¬ÈÏ
-//	TFileName img;
-//	GetAppPath(img);
-//	img.Append(KFileTangImageDefault);
-//	LoadImageFromFileL(img);
+	iRender = CSlideshow::NewL(aParentControl,aParentWindow);
+	iRender->SetRedererState();
+	iRender->SetImageData(iImageData);
 	}
-
-void CTangImageManager::ConvertedOne()
-	{
-	iConverted++;
-	}
-
-void CTangImageManager::ConvertComplete()
-	{
-	CFbsBitmap** array = iBitmapArray->GetBitmapArray();
-	int count = iBitmapArray->GetBitmapCount();
-	//if (count != EImageNumber)
-	//	return;
-	for (TInt i=0; i<EImageNumber; i++)
-		{
-		iElements[i]->SetState(KImageStateLoad);
-		iElements[i]->SetBitmapLoad(array[i]);
-		iElements[i]->SetIndex(i);
-		
-		iLayer.Append(i);
-		}
-	iElements[6]->SetSelected(ETrue);
-	iSelectedIndex = 6;
-	iConvertDown = 1;
-	
-	//
-	iBitmapFocus[EBitmapActive] = array[7];
-	CTransparentBitmap *tran1 =  CTransparentBitmap::NewL(iBitmapFocus[EBitmapActive],
-			iBitmapFocus[EBitmapActiveMask],KRgbMagenta);
-	delete tran1;
-	iBitmapFocus[EBitmapFocus] = array[8];
-	CTransparentBitmap *tran2 =  CTransparentBitmap::NewL(iBitmapFocus[EBitmapFocus],
-			iBitmapFocus[EBitmapFocusMask],KRgbMagenta);
-	delete tran2;
-	}
-
-void CTangImageManager::LoadImageFromFileL(const TDesC& aFileName)
-	{
-
-	if (!iBitmapArray)
-		{
-		iBitmapArray = CImageArrayReader::NewL();		
-		iBitmapArray->SetNotify(this);
-		}
-	
-	if (aFileName.Compare(KNullDesC) != 0 && 
-		BaflUtils::FileExists(CCoeEnv::Static()->FsSession(),aFileName)) 
-		{		
-			LoadImageXmlByFileL(aFileName);
-		}
-		else
-		{
-			LoadImageXmlDefaultL();
-		}
-	}
-
-void CTangImageManager::LoadImageXmlDefaultL()
-{
-	TFileName file;
-	GetAppPath(file);
-	file.Append(KFileTangImageDefault);
-
-	iBitmapArray->LoadDataFromFileL(file);
-}
-
-void CTangImageManager::LoadImageXmlByFileL(const TDesC& aFileName)
-{
-	TFileName file;
-	GetAppPath(file);
-	file.Append(KFileTangImageDefault);
-
-	TRAPD(err,iBitmapArray->LoadDataFromFileL(aFileName))
-	if (err != KErrNone) {
-		LTERRFUN(ETLWarnLoadPicFileNextDefault,ETLErrWarning);
-		LoadImageXmlDefaultL();
-	}
-}
 
 void CTangImageManager::LoadImageDataFileL(const TDesC& aFileName)
 	{
@@ -176,41 +88,12 @@ void CTangImageManager::LoadImageDataFileL(const TDesC& aFileName)
 	iDataArray->LoadImageDataFileL(aFileName);
 	}
 
-void CTangImageManager::Draw(CBitmapContext& aGc)
-	{
-	if (iBackground)
-		iBackground->Draw(aGc);
-	//EImageNumber
-	
-	for(TInt i=0; i<iLayer.Count(); i++)
+void CTangImageManager::Draw(CBitmapContext& /*aGc*/) const
+	{	
+	if (iRender)
 		{
-		TInt index = iLayer[i];
-		if (iElements && index<7 && iElements[index])
-			//iElements[index]->Draw(aGc);
-			iElements[index]->Draw(aGc,iScrollX,iScrollY);
-		}
-		
-	
-	CImageElement* element = iElements[iSelectedIndex];
-	TInt x = element->GetPositionX();
-	TInt y = element->GetPositionY();
-	x += iScrollX;
-	y += iScrollY;
-	if (iSelectedState == ESelectedStateChoose)
-		{
-		x -= (iBitmapFocus[EBitmapFocus]->SizeInPixels().iWidth >> 1);
-		y -= (iBitmapFocus[EBitmapFocus]->SizeInPixels().iHeight >> 1);
-		TRect rect( TPoint( 0,0 ),iBitmapFocus[EBitmapFocus]->SizeInPixels() );
-		aGc.BitBltMasked(TPoint(x,y),iBitmapFocus[EBitmapFocus],
-				rect,iBitmapFocus[EBitmapFocusMask],ETrue);
-		}
-	else if (iSelectedState == ESelectedStateMove)
-		{
-		x -= (iBitmapFocus[EBitmapActive]->SizeInPixels().iWidth >> 1);
-		y -= (iBitmapFocus[EBitmapActive]->SizeInPixels().iHeight >> 1);
-		TRect rect( TPoint( 0,0 ),iBitmapFocus[EBitmapActive]->SizeInPixels() );
-		aGc.BitBltMasked(TPoint(x,y),iBitmapFocus[EBitmapActive],
-				rect,iBitmapFocus[EBitmapActiveMask],ETrue);		
+	    if ( iRender->GetState() != CSlideshow::ELoadingTextures )
+	    	iRender->Render();
 		}
 	}
 
@@ -233,6 +116,7 @@ TKeyResponse CTangImageManager::KeyChoose(const TKeyEvent& aKeyEvent,
 		TEventCode aType)
 	{
 	TInt index;
+	TInt iSelectedIndex = iImageData->GetSelected();
 	switch (aType)
 		{
 		case EEventKeyUp:
@@ -242,12 +126,10 @@ TKeyResponse CTangImageManager::KeyChoose(const TKeyEvent& aKeyEvent,
 				case EStdKeyUpArrow://
 					index = TangElementUtil::FindNearestVert(iElements,
 							iSelectedIndex,EMoveNorth);
-					if (index != iSelectedIndex)
+//					if (index != iSelectedIndex)
+					if (1)	
 						{
-						iElements[iSelectedIndex]->SetSelected(EFalse);
-						iElements[index]->SetSelected(ETrue);						
-						iSelectedIndex = index;		
-						ChangeLayer();
+						iImageData->SetSelected(index);
 						}
 					return EKeyWasConsumed;					
 					break;
@@ -255,12 +137,10 @@ TKeyResponse CTangImageManager::KeyChoose(const TKeyEvent& aKeyEvent,
 				case EStdKeyDownArrow://ok
 					index = TangElementUtil::FindNearestVert(iElements,
 							iSelectedIndex,EMoveSouth);
-					if (index != iSelectedIndex)
+//					if (index != iSelectedIndex)
+					if (1)		
 						{
-						iElements[iSelectedIndex]->SetSelected(EFalse);
-						iElements[index]->SetSelected(ETrue);						
-						iSelectedIndex = index;		
-						ChangeLayer();
+						iImageData->SetSelected(index);
 						}
 					return EKeyWasConsumed;					
 					break;
@@ -268,12 +148,10 @@ TKeyResponse CTangImageManager::KeyChoose(const TKeyEvent& aKeyEvent,
 				case EStdKeyLeftArrow://ok
 					index = TangElementUtil::FindNearestHori(iElements,
 							iSelectedIndex,EMoveWest);
-					if (index != iSelectedIndex)
+//					if (index != iSelectedIndex)
+					if (1)	
 						{
-						iElements[iSelectedIndex]->SetSelected(EFalse);
-						iElements[index]->SetSelected(ETrue);
-						iSelectedIndex = index;
-						ChangeLayer();
+						iImageData->SetSelected(index);
 						}
 					return EKeyWasConsumed;
 					break;
@@ -281,12 +159,10 @@ TKeyResponse CTangImageManager::KeyChoose(const TKeyEvent& aKeyEvent,
 				case EStdKeyRightArrow://ok
 					index = TangElementUtil::FindNearestHori(iElements,
 							iSelectedIndex,EMoveEast);
-					if (index != iSelectedIndex)
+//					if (index != iSelectedIndex)
+					if (1)
 						{
-						iElements[iSelectedIndex]->SetSelected(EFalse);
-						iElements[index]->SetSelected(ETrue);						
-						iSelectedIndex = index;		
-						ChangeLayer();
+						iImageData->SetSelected(index);
 						}
 					return EKeyWasConsumed;
 					break;
@@ -308,6 +184,7 @@ TKeyResponse CTangImageManager::KeyMove(const TKeyEvent& aKeyEvent,
 		TEventCode aType)
 	{
 	TInt x,y;
+	TInt iSelectedIndex = iImageData->GetSelected();
 	x = iElements[iSelectedIndex]->GetPositionX();
 	y = iElements[iSelectedIndex]->GetPositionY();
 	
@@ -318,13 +195,13 @@ TKeyResponse CTangImageManager::KeyMove(const TKeyEvent& aKeyEvent,
 				{
 				case '2'://up
 				case EKeyUpArrow://
-					y -= OffsetAccel();
+					y += OffsetAccel();
 					iElements[iSelectedIndex]->SetPointion(x,y);
 					return EKeyWasConsumed;					
 					break;
 				case '8'://down
 				case EKeyDownArrow://ok
-					y += OffsetAccel();
+					y -= OffsetAccel();
 					iElements[iSelectedIndex]->SetPointion(x,y);
 					return EKeyWasConsumed;					
 					break;
@@ -357,18 +234,18 @@ TKeyResponse CTangImageManager::KeyMove(const TKeyEvent& aKeyEvent,
 			switch (aKeyEvent.iScanCode)
 				{
 				case '2'://up
-				case EKeyUpArrow://
+				case EStdKeyUpArrow://
 				case '8'://down
-				case EKeyDownArrow://ok
+				case EStdKeyDownArrow://ok
 				case '4'://left
-				case EKeyLeftArrow://ok
+				case EStdKeyLeftArrow://ok
 				case '6'://right
-				case EKeyRightArrow://ok
+				case EStdKeyRightArrow://ok
 					ResetAccel();
 					return EKeyWasConsumed;
 					break;
-				case '*':
-				case '#':
+				case EStdKeyNkpAsterisk:
+				case EStdKeyHash:
 					ResetDegreeAccel();
 					return EKeyWasConsumed;
 					break;
@@ -442,46 +319,25 @@ void CTangImageManager::ResetDegreeAccel()
 void CTangImageManager::Rotate(TInt aIndex, TInt aDegree)
 	{
 	CImageElement* element = iElements[aIndex];
-	CFbsBitmap* rota = element->GetBitmapRotate();
-	CFbsBitmap* mask = element->GetBitmapMask();
 	int degree = element->GetDegree();
 	degree += aDegree;
 	TBool flip = element->GetFlip();
-
-	SAFE_DELETE(rota);
-	SAFE_DELETE(mask);
 
 	element->SetDegree(degree);
 
 	if (flip) {
 		degree = -degree;
 	}
-	CImageRotator* rotator = CImageRotator::NewL(element->GetBitmapLoad(),
-			element->GetBitmapRotateAdd(), element->GetBitmapMaskAdd(), degree, 
-			KRgbMagenta,flip);
-	element->SetOffsetX(rotator->GetOffsetX());
-	element->SetOffsetY(rotator->GetOffsetY());
-	delete rotator;
 	}
 
 void CTangImageManager::Flip(TInt aIndex)
 	{
 	CImageElement* element = iElements[aIndex];
-	CFbsBitmap* rota = element->GetBitmapRotate();
-	CFbsBitmap* mask = element->GetBitmapMask();
+	
 	int degree = element->GetDegree();
 	TBool flip = element->GetFlip();
 	flip = !flip;
 	element->SetFlip(flip);
-
-	SAFE_DELETE(rota);
-	SAFE_DELETE(mask);
-
-	CImageRotator* rotator = CImageRotator::NewL(element->GetBitmapLoad(),
-			element->GetBitmapRotateAdd(), element->GetBitmapMaskAdd(), degree, 
-			KRgbMagenta,flip);
-	
-	delete rotator;
 	}
 
 void CTangImageManager::SaveProcessL()
@@ -562,15 +418,32 @@ void CTangImageManager::SaveScreenL()
 		}
 	}
 
-void CTangImageManager::ChangeLayer()
+void CTangImageManager::SaveScreenL(CFbsBitmap *aBitmap)
 	{
-	TInt index = iLayer.Find(iSelectedIndex);
-	
-	if (index != KErrNotFound)
+	TBuf<KMaxName> name;
+	name.Copy(KSaveScreenDefault);
+	if (ShowInputDlgL(R_TEXT_DLG_SAVE_SCREEN_INPUT_NAME,name))
 		{
-		iLayer.Remove(index);
-		iLayer.Append(iSelectedIndex);
-		}
+		TFileName setup;
+		GetAppPath(setup);
+		setup.Append(KSetupSaveFile);
+		CConfiguration* config = CConfiguration::NewL(setup);
+		TFileName file;
+		config->Get(KCfgSaveFolder,file);
+		delete config;
+		file.Append(name);
+		file.Append(KSaveScreenFormat);	
+		
+		if (!BaflUtils::FileExists(CCoeEnv::Static()->FsSession(),file) || 
+				ShowConfirmationQueryL(R_TEXT_DLG_OVERWRITE_FILE))
+			{
+				iWaitDlgId = StartWaitingDlg(R_TEXT_DLG_SAVE_SCREEN);
+				
+				SAFE_DELETE(iScreenSave);
+				iScreenSave = CTangImageSave::NewL(file,this);				
+				iScreenSave->StartSave(aBitmap);
+			}
+		}	
 	}
 
 void CTangImageManager::SaveComplete()
@@ -578,4 +451,9 @@ void CTangImageManager::SaveComplete()
 	EndWaitingDlg(iWaitDlgId);
 	
 	ShowInfomationDlgL(R_TEXT_DLG_SAVE_SCREEN_SUCCESS);
+	}
+
+TInt CTangImageManager::GetConvertDown()
+	{
+	return iRender->GetState() == CSlideshow::ERunning;
 	}

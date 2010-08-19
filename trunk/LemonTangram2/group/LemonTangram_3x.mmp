@@ -97,6 +97,7 @@ USERINCLUDE    ..\source\Controller\inc
 USERINCLUDE    ..\source\LTUI\inc 
 USERINCLUDE    ..\source\TangFunc\inc
 USERINCLUDE    ..\source\LPDebug\inc
+USERINCLUDE    ..\source\OpenGLUtils\inc
 
 SYSTEMINCLUDE	 \epoc32\include
 SYSTEMINCLUDE	 \epoc32\include\libc
@@ -123,7 +124,7 @@ LIBRARY        ws32.lib
 LIBRARY        charconv.lib 
 LIBRARY        eikctl.lib 
 LIBRARY        eikcoctl.lib aknicon.lib bafl.lib
- 
+LIBRARY        libgles_cm.lib
 
 LANG 01 31 SC
 
@@ -148,3 +149,9 @@ DOCUMENT        LemonTangram.cshlp
 DOCUMENT        Custom.xml
 SOURCEPATH ..\source\LPDebug\src
 SOURCE FileLogger.cpp
+SOURCEPATH ..\source\TangImage\src
+SOURCE Slideshow.cpp
+SOURCEPATH ..\source\OpenGLUtils\src
+SOURCE Glutils.cpp Mathutils.cpp Textureutils.cpp Utils3d.cpp
+SOURCEPATH ..\source\TangImage\src
+SOURCE TangImageData.cpp

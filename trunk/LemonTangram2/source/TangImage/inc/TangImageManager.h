@@ -25,12 +25,14 @@ class CImageElement;
 class CTangImageDataReader;
 class CTangImageSave;
 class CAlphaBackground;
+class CSlideshow;
+class CTangImageData;
 
 /**
  *  CTangImageManager
  * 
  */
-class CTangImageManager : public CBase , public MImageArrayNotify , 
+class CTangImageManager : public CBase ,
 							public MSaveScreenNotify
 	{
 public:
@@ -40,28 +42,25 @@ public:
 	static CTangImageManager* NewL();
 	static CTangImageManager* NewLC();
 	
-	//MImageArrayNotify
-	virtual void ConvertError();
-	virtual void ConvertedOne();
-	virtual void ConvertComplete();
-	
 	//MSaveScreenNotify
 	virtual void SaveComplete();
 	
-	void LoadImageFromFileL(const TDesC& aFileName);
+	void InitOpenGL(CCoeControl* aParentControl, RWindow* aParentWindow);
+	
 	void LoadImageDataFileL(const TDesC& aFileName);
-	void Draw(CBitmapContext& aGc);
+	void Draw(CBitmapContext& aGc) const;
 	TKeyResponse OfferKeyEventL(const TKeyEvent& aKeyEvent,TEventCode aType);
 	void Rotate(TInt aIndex,TInt aDegree);
 	void Flip(TInt aIndex);
 	
-	TInt GetConvertedNum(){return iConverted;};
-	TInt GetConvertDown(){return iConvertDown;};
+	
+	TInt GetConvertDown();
 	
 	void SaveProcessL();
 	void ResetProcessL();
 	void OpenProcessL();
 	void SaveScreenL();
+	void SaveScreenL(CFbsBitmap *aBitmap);
 
 private:
 	CTangImageManager();
@@ -71,10 +70,7 @@ private:
 	TKeyResponse KeyMove(const TKeyEvent& aKeyEvent,TEventCode aType);
 	TKeyResponse KeyScroll(const TKeyEvent& aKeyEvent);
 	
-	void ChangeLayer();
 
-	void LoadImageXmlDefaultL();
-	void LoadImageXmlByFileL(const TDesC& aFileName);
 
 	TInt OffsetAccel(/*EImageElementState aDirection*/);
 	void ResetAccel();
@@ -85,31 +81,16 @@ private:
 		{
 		ESelectedStateMove,
 		ESelectedStateChoose
-		};
-	enum TBitmapFocus
-		{		
-		EBitmapActive = 0,
-		EBitmapActiveMask,
-		EBitmapFocus,
-		EBitmapFocusMask,
-		EBitmapFocusTotal
-		};
+		};	
 	
 private:
+	CTangImageData* iImageData;
 	CImageElement** iElements;
-	CImageArrayReader* iBitmapArray;
 	CTangImageDataReader* iDataArray;
 	CTangImageSave* iScreenSave;
-
-	TInt iConverted;
-	TInt iConvertDown;
 	
-	TInt iSelectedIndex;
+//	TInt iSelectedIndex;
 	TSelectedState iSelectedState;
-	
-	CFbsBitmap** iBitmapFocus;
-	
-	RArray<TInt> iLayer;
 	
 	TInt iWaitDlgId;
 
@@ -118,8 +99,8 @@ private:
 
 	TInt iScrollX;
 	TInt iScrollY;
-
-	CAlphaBackground* iBackground;
+	
+	CSlideshow* iRender;
 	
 	};
 

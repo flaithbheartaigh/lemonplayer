@@ -42,15 +42,6 @@ public:
 	
 	void SetState(EImageElementState aState){iState = aState;};
 	
-	void SetBitmapLoad(CFbsBitmap* aBitmap){iBitmapLoad = aBitmap;};
-	void SetBitmapRotate(CFbsBitmap* aBitmap){iBitmapRotate = aBitmap;};
-	void SetBitmapMask(CFbsBitmap* aBitmap){iBitmapMask = aBitmap;};
-	CFbsBitmap* GetBitmapLoad(){return iBitmapLoad;};	
-	CFbsBitmap* GetBitmapRotate() {return iBitmapRotate;};
-	CFbsBitmap* GetBitmapMask() {return iBitmapMask;};
-	CFbsBitmap*& GetBitmapLoadAdd(){return iBitmapLoad;};
-	CFbsBitmap*& GetBitmapRotateAdd() {return iBitmapRotate;};
-	CFbsBitmap*& GetBitmapMaskAdd() {return iBitmapMask;};
 	
 	void SetImageState(EImageElementState aState){iState = aState;};
 	EImageElementState GetImageState(){return iState;};
@@ -70,8 +61,6 @@ public:
 	void SetFlip(TBool aFlip) {iFlip = aFlip;};
 	TBool GetFlip() const {return iFlip;};
 	
-	void Draw(CBitmapContext& aGc);
-	void Draw(CBitmapContext& aGc,TInt aScrollX,TInt aScrollY);
 
 public:
 	CImageElement();
@@ -82,9 +71,6 @@ private:
 	TInt iCenterY;
 	TInt iOffsetX;
 	TInt iOffsetY;
-	CFbsBitmap* iBitmapLoad;
-	CFbsBitmap* iBitmapRotate;
-	CFbsBitmap* iBitmapMask;
 	EImageElementState iState;
 	TInt iDegree;
 	TInt iIndex;

@@ -163,14 +163,7 @@ void CTangImageDataReader::ParseImg(const RArray<TAttribute>& aAttributes)
 		{
 		iElements[index]->SetPointion(x,y);
 		iElements[index]->SetDegree(degree);
-		iElements[index]->SetFlip(flip);
-		CImageRotator* rotator = CImageRotator::NewL(iElements[index]->GetBitmapLoad(), 
-				iElements[index]->GetBitmapRotateAdd(),
-				iElements[index]->GetBitmapMaskAdd(),
-				degree, KRgbMagenta,flip);
-		iElements[index]->SetOffsetX(rotator->GetOffsetX());
-		iElements[index]->SetOffsetY(rotator->GetOffsetY());
-		delete rotator;
+		iElements[index]->SetFlip(flip);		
 		}
 	else
 		User::Leave(KErrNotSupported);
