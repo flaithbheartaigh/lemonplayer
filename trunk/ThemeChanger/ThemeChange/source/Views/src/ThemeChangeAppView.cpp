@@ -81,6 +81,10 @@ void CThemeChangeAppView::HandleCommandL(TInt aCommand)
 		case ECommandSettingTheme:
 		case ECommandSettingService:
 			break;
+		case ECommandRegister:
+			if (iContainer)
+				iContainer->StartPaymentWaitDlg();
+			break;
 		default:
 			AppUi()->HandleCommandL(aCommand);
 		}
@@ -95,7 +99,7 @@ void CThemeChangeAppView::HandleStatusPaneSizeChange()
  * 
  * */
 void CThemeChangeAppView::DoActivateL(const TVwsViewId& aPrevViewId,
-		TUid aCustomMessageId, const TDesC8& aCustomMessage)
+		TUid /*aCustomMessageId*/, const TDesC8& aCustomMessage)
 	{
 	if (iContainer == NULL)
 		{
@@ -139,5 +143,22 @@ void CThemeChangeAppView::DynInitMenuPaneL( TInt aResourceId,
 			aMenuPane->SetItemDimmed(ECommandStop, ETrue);			
 			}
 		}
+	else if (aResourceId == R_MENU_THEME)
+		{
+		if (iContainer->IsCurrentDeletable())
+			{
+			aMenuPane->SetItemDimmed(ECommandRemove, EFalse);
+			}
+		else
+			{
+			aMenuPane->SetItemDimmed(ECommandRemove, ETrue);	
+			}		
+		}
+	}
+
+void CThemeChangeAppView::StopWaitDlg()
+	{
+	if (iContainer)
+		iContainer->StopWaitDlg();
 	}
 // End of File

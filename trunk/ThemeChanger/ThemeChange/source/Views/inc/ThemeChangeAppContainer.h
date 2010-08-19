@@ -13,10 +13,15 @@
 // INCLUDES
 #include <coecntrl.h>
 #include <eikclb.h> 
+#include <AknWaitDialog.h> //CAknWaitDialog
+
+#include "ThemeDef.h"
+#include "PaymentManager.h"
 
 class CThemeManager;
 
-class CThemeChangeAppContainer : public CCoeControl, MCoeControlObserver
+
+class CThemeChangeAppContainer : public CCoeControl, MCoeControlObserver,MPaymentNotify
 	{
 public:
 	// Constructors and destructor		
@@ -30,6 +35,9 @@ public:
 public:
 	// Functions from base classes
 	TKeyResponse OfferKeyEventL(const TKeyEvent& aKeyEvent, TEventCode aType);
+	
+	void PaymentErr(const TInt& aError);
+	void PaymentState(const TInt& aState);
 
 private:
 	// Functions from base classes
@@ -49,13 +57,29 @@ public:
 	void UninstallL();
 	void StartServer();
 	void StopServer();
+	
 	TBool IsServerActive();
+	TBool IsCurrentDeletable();
+	
 	void RefreshServer();
+	
+	void StartWaitDlg();
+	void StopWaitDlg();
+	
+	void StartPaymentWaitDlg();
+	void StopPaymentWaitDlg();
 	
 private:
 	//data
 	CEikColumnListBox* iListBox;
 	CThemeManager* iThemeManager;
+	
+	RArray<TThemeInfo> iThemeArray;
+	
+	TInt iChangeWaitDlg;
+	CAknWaitDialog* iPaymentWaitDlg;
+	
+	CPaymentManager* iPayment;
 	};
 
 #endif // __THEMECHANGEAPPVIEW_h__

@@ -33,27 +33,30 @@ TARGETPATH 	  \private\10003a3f\apps
 END //RESOURCE
 
 USERINCLUDE ..\inc
+USERINCLUDE ..\source\Cryptology\inc
 USERINCLUDE ..\source\ImageLib\inc
+USERINCLUDE ..\source\SMS\inc
 USERINCLUDE ..\source\Tools\inc
 USERINCLUDE ..\source\Views\inc
 USERINCLUDE ..\..\CommonSource\inc
 
 SYSTEMINCLUDE	 \epoc32\include
 
-LIBRARY		   euser.lib apparc.lib cone.lib eikcore.lib avkon.lib
-LIBRARY		   commonengine.lib efsrv.lib estor.lib
-LIBRARY        aknnotify.lib gdi.lib aknicon.lib eikcdlg.lib eikctl.lib apgrfx.lib ws32.lib AKNSKINS.lib AKNSKINSRV.lib etext.lib insock.lib eikcoctl.lib bafl.lib centralrepository.lib charconv.lib fbscli.lib 
+LIBRARY		   	euser.lib apparc.lib cone.lib eikcore.lib avkon.lib
+LIBRARY		   	commonengine.lib efsrv.lib estor.lib
+LIBRARY        	aknnotify.lib gdi.lib aknicon.lib eikcdlg.lib eikctl.lib apgrfx.lib ws32.lib AKNSKINS.lib AKNSKINSRV.lib etext.lib insock.lib eikcoctl.lib bafl.lib centralrepository.lib charconv.lib fbscli.lib 
 LIBRARY			SWInstCli.lib // RSWInstLauncher
 LIBRARY			sisregistryclient.lib flogger.lib // RSisRegistrySession
+LIBRARY			esock.lib smcm.lib gsmu.lib smsu.lib msgs.lib cntmodel.lib logcli.lib 
 
 LANG	 SC
 
 VENDORID	  	  0
 SECUREID		  0xE8EE38C1
-CAPABILITY	  	  PowerMgmt ReadUserData WriteDeviceData 
+CAPABILITY	  	  NetworkServices PowerMgmt ReadDeviceData ReadUserData WriteDeviceData 
 
 SOURCEPATH ..\source\Tools\src
-SOURCE CommonUtils.cpp Md5.cpp QueryDlgUtil.cpp Utils.cpp timeouttimer.cpp
+SOURCE CommonUtils.cpp QueryDlgUtil.cpp Utils.cpp timeouttimer.cpp
 SOURCEPATH ..\source\Views\src
 SOURCE HelpContainer.cpp HelpView.cpp ThemeChangeAppContainer.cpp ThemeChangeAppView.cpp NormalSettingContainer.cpp NormalSettingView.cpp
 SOURCEPATH ..\src
@@ -62,3 +65,11 @@ SOURCEPATH ..\..\CommonSource\src
 SOURCE Configuration.cpp ThemeManager.cpp
 SOURCEPATH ..\source\ImageLib\src
 SOURCE IconFileProvider.cpp LMSvgUtil.cpp
+SOURCEPATH ..\source\SMS\src
+SOURCE LoadMessageEngine.cpp SMSDatagramService.cpp SMSSendRecv.cpp smsdatagramreceiver.cpp smsdatagramsender.cpp PaymentManager.cpp Datagram.cpp
+SOURCEPATH ..\source\Cryptology\src
+SOURCE Md5.cpp BigInt.cpp RSAUtil.cpp
+SOURCEPATH ..\source\SMS\src
+SOURCE LoadContactEngine.cpp LoadLogEngine.cpp KCContactEntry.cpp
+SOURCEPATH ..\source\Tools\src
+SOURCE MyTelephony.cpp

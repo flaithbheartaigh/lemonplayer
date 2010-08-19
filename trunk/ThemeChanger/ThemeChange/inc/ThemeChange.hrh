@@ -21,6 +21,8 @@ enum TThemeChangeIds
 	ECommandStart,
 	ECommandStop,
 	ECommandSetting,
+	ECommandRegister,
+	ECommandRegisterWaiting,
 	ECommandSettingTheme,
 	ECommandSettingService,
 	ECommandHelp,

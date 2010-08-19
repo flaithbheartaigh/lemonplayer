@@ -115,6 +115,11 @@ RESOURCE MENU_PANE r_menu
 				},
 		MENU_ITEM
 				{
+				command = ECommandRegister;
+				txt = qtn_register;
+				},				
+		MENU_ITEM
+				{
 				command = ECommandHelp;
 				txt = qtn_help;
 				},				
@@ -425,6 +430,27 @@ RESOURCE AKN_ICON_ARRAY r_icon_mark
         };
     }
 
+RESOURCE DIALOG r_process_wait_note
+    {
+    flags   = EAknWaitNoteFlags;
+    //buttons = R_AVKON_SOFTKEYS_CANCEL;
+    items =
+        {
+        DLG_LINE
+            {
+            type    = EAknCtNote;
+            id      = ECommandRegisterWaiting;
+            control = AVKON_NOTE
+                {
+                layout         = EWaitLayout;
+                singular_label = qtn_text_payment;
+                plural_label   = "";
+                animation      = R_QGN_GRAF_WAIT_BAR_ANIM;
+                };
+            }
+        };
+	}
+
 RESOURCE TBUF32 r_caption_string 			{ buf=qtn_caption_string; }
 RESOURCE TBUF32 r_about_dialog_title 		{ buf=qtn_about_dialog_title; }
 RESOURCE TBUF r_text_dlg_exit_confirm		{ buf=qtn_dlg_exit_confirm; }
@@ -441,6 +467,9 @@ RESOURCE TBUF r_text_frequency_eight_hours 	{ buf=qtn_text_frequency_eight_hours
 RESOURCE TBUF r_text_frequency_one_day 		{ buf=qtn_text_frequency_one_day; }
 RESOURCE TBUF r_text_frequency_three_days 	{ buf=qtn_text_frequency_three_days; }
 RESOURCE TBUF r_text_frequency_one_week 	{ buf=qtn_text_frequency_one_week; }
+
+RESOURCE TBUF r_text_change_waiting 		{ buf=qtn_text_change_waiting; }
+RESOURCE TBUF r_text_payment 				{ buf=qtn_text_payment; }
 
 RESOURCE TBUF r_text_yes 					{ buf=qtn_text_yes; }
 RESOURCE TBUF r_text_no 					{ buf=qtn_text_no; }

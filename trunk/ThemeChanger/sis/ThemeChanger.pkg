@@ -32,6 +32,7 @@
 "..\ThemeChange\resource\about_en.txt"	 								-"!:\private\E8EE38C1\about_en.txt"
 "..\ThemeChange\resource\about_zh.txt" 									-"!:\private\E8EE38C1\about_zh.txt"
 "config.ini"															-"C:\data\ThemeChanger\config.ini", FN
+"cfg.ini" 																-"!:\private\E8EE38C1\cfg.ini"
 
 "$(EPOCROOT)Epoc32\release\$(PLATFORM)\$(TARGET)\ThemeBackground.exe"		  -"!:\sys\bin\ThemeBackground.exe"
 
