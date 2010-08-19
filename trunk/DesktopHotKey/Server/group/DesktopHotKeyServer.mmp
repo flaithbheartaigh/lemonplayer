@@ -1,0 +1,35 @@
+/*
+* ==============================================================================
+*  Name        : cssyncserver.mmp
+*  Part of     : CSSync
+*  Interface   :
+*  Description :
+*  Version     :
+*
+*  Copyright (c) 2006 Nokia Corporation.
+*  This material, including documentation and any related
+*  computer programs, is protected by copyright controlled by
+*  Nokia Corporation.
+* ==============================================================================
+*/
+
+TARGET            DesktopHotKeyServer.exe
+TARGETTYPE        exe
+UID               0x0 0xEB080786
+EPOCSTACKSIZE     0x5000
+
+SOURCEPATH        ..\src
+SOURCE            DesktopHotKeySession.cpp
+SOURCE            DesktopHotKeyServer.cpp
+
+USERINCLUDE       ..\inc
+USERINCLUDE       ..\..\Common\inc
+SYSTEMINCLUDE     \epoc32\include
+
+LIBRARY           euser.lib
+
+VENDORID          0
+
+CAPABILITY        none
+
+// End of File
