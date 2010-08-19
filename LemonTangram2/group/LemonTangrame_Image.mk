@@ -51,11 +51,12 @@ CLEANLIB : do_nothing
 
 # The icons privately used by the application and the menu icon are built separately:
 RESOURCE :
-	mifconv $(ICONTARGETFILENAME_PRIVATE) /h$(HEADERFILENAME_PRIVATE) \
-	/c16 ..\gfx\log.bmp \
-	/c16 ..\gfx\bottomsvg.svg \
-	/1 ..\gfx\texture.bmp \
-	/c24 ..\gfx\background.bmp \
+	mifconv $(ICONTARGETFILENAME_PRIVATE)  \
+		 /H$(HEADERFILENAME_PRIVATE)  \
+		 /c24 ..\gfx\log.bmp  \
+		 ..\gfx\bottomsvg.svg  \
+		 /1 ..\gfx\texture.bmp  \
+		 /c24 ..\gfx\background.bmp  
 
 	mifconv $(ICONTARGETFILENAME) \
 		/c32 ..\gfx\LTIcon.svg

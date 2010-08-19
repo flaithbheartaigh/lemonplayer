@@ -76,7 +76,7 @@ void CLemonMenuItem::Clear()
 	SAFE_DELETE(iText);
 	}
 
-void CLemonMenuItem::Draw(CFbsBitGc& gc)
+void CLemonMenuItem::Draw(CBitmapContext& gc)
 	{
 	TRect rect;
 

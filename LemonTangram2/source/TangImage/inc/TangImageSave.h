@@ -45,6 +45,7 @@ public:
 	
 	CFbsBitGc& CreateBufferBitmapL();
 	void StartSave();
+	void StartSave(CFbsBitmap *aBitmap);
 	
 private:
 	CImageConvertor* iConvertor;

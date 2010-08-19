@@ -50,7 +50,7 @@ public:
 	
 	void HideMenu();
 	void LoadMenuL(const TDesC& aFileName);
-	void Draw(CFbsBitGc& gc);
+	void Draw(CBitmapContext& gc);
 	TKeyResponse OfferKeyEventL(const TKeyEvent& aKeyEvent,TEventCode aType);
 	
 private:

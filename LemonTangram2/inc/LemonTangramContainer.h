@@ -59,7 +59,7 @@ private:
 	void SizeChanged();
 	TInt CountComponentControls() const;
 	CCoeControl* ComponentControl(TInt aIndex) const;
-	void Draw(const TRect& aRect) const;
+	virtual void Draw(const TRect& aRect) const;
 	void HandleControlEventL(CCoeControl* aControl, TCoeEvent aEventType);
 	virtual TKeyResponse OfferKeyEventL(
 	                    const TKeyEvent& aKeyEvent,TEventCode aType);
@@ -68,6 +68,7 @@ private:
 	
 	void StateLoop();
 	void StateDisplay(CFbsBitGc& gc);
+	void StateRender(CWindowGc& gc) const;
 	void StateChange(TGameState aState);
 	TKeyResponse StateKey(const TKeyEvent& aKeyEvent,TEventCode aType);
 	
@@ -84,7 +85,7 @@ private:
 	void StateMainInit();
 	void StateMainLoop();
 	TKeyResponse StateMainKey(const TKeyEvent& aKeyEvent,TEventCode aType);
-	void StateMainDisplay(CFbsBitGc& gc);
+	void StateMainDisplay(CBitmapContext& gc) const;
 	void StateMainRelease();
 
 	void InitManager();

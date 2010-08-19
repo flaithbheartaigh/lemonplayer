@@ -92,7 +92,7 @@ void CLemonMenu::LoadMenuL(const TDesC& aFileName)
 	User::LeaveIfError(err);
 	}
 
-void CLemonMenu::Draw(CFbsBitGc& gc)
+void CLemonMenu::Draw(CBitmapContext& gc)
 	{
 	iMenuBar->Draw(gc,iMenuActive);
 	

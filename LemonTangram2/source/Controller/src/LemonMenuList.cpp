@@ -86,7 +86,7 @@ void CLemonMenuList::Clear()
 //		}	
 	}
 
-void CLemonMenuList::Draw(CFbsBitGc& gc)
+void CLemonMenuList::Draw(CBitmapContext& gc)
 	{
 	DrawFrame(gc);
 	
@@ -107,7 +107,7 @@ void CLemonMenuList::Draw(CFbsBitGc& gc)
 		}
 	}
 
-void CLemonMenuList::DrawFrame(CFbsBitGc& gc)
+void CLemonMenuList::DrawFrame(CBitmapContext& gc)
 	{
 	gc.SetBrushStyle( CGraphicsContext::ESolidBrush );
 	gc.SetBrushColor( iFrameColor );

@@ -10,7 +10,7 @@
 &EN,ZH
 
 ; standard SIS file header
-#{"CloverTangram","三叶草七巧板"},(0xEAE107BA),1,0,0
+#{"CloverTangram","三叶草七巧板"},(0xEAE107BA),2,0,0
 
 ;Localised Vendor name
 %{"iCloverSoft","iCloverSoft"}
@@ -24,18 +24,18 @@
 ;Files to install
 ;You should change the source paths to match that of your environment
 ;<source> <destination>
-"C:\S60\devices\S60_3rd_FP2_SDK_v1.1\Epoc32\release\gcce\urel\LemonTangram.exe"		-"!:\sys\bin\LemonTangram.exe"
+"$(EPOCROOT)Epoc32\release\gcce\urel\LemonTangram.exe"		-"!:\sys\bin\LemonTangram.exe"
 {
-"C:\S60\devices\S60_3rd_FP2_SDK_v1.1\Epoc32\data\z\resource\apps\LemonTangram.rsc"
-"C:\S60\devices\S60_3rd_FP2_SDK_v1.1\Epoc32\data\z\resource\apps\LemonTangram.r31"
+"$(EPOCROOT)Epoc32\data\z\resource\apps\LemonTangram.rsc"
+"$(EPOCROOT)Epoc32\data\z\resource\apps\LemonTangram.r31"
 } -"!:\resource\apps\LemonTangram.rsc"
-"C:\S60\devices\S60_3rd_FP2_SDK_v1.1\Epoc32\data\z\private\10003a3f\apps\LemonTangram_reg.rsc"	-"!:\private\10003a3f\import\apps\LemonTangram_reg.rsc"
-"C:\S60\devices\S60_3rd_FP2_SDK_v1.1\Epoc32\data\z\resource\apps\LemonTangram_aif.mif" -"!:\resource\apps\LemonTangram_aif.mif"
+"$(EPOCROOT)Epoc32\data\z\private\10003a3f\apps\LemonTangram_reg.rsc"	-"!:\private\10003a3f\import\apps\LemonTangram_reg.rsc"
+"$(EPOCROOT)Epoc32\data\z\resource\apps\LemonTangram_aif.mif" -"!:\resource\apps\LemonTangram_aif.mif"
 "..\help\LemonTangram.hlp"							 -"!:\resource\help\LemonTangram.hlp"
-"C:\S60\devices\S60_3rd_FP2_SDK_v1.1\epoc32\release\winscw\udeb\z\private\EAE107BA\lemontangram.mbm" -"!:\private\EAE107BA\lemontangram.mbm"
-"C:\S60\devices\S60_3rd_FP2_SDK_v1.1\epoc32\release\winscw\udeb\z\private\EAE107BA\lemontangram.mif" -"!:\private\EAE107BA\lemontangram.mif"
+"$(EPOCROOT)epoc32\release\winscw\udeb\z\private\EAE107BA\lemontangram.mbm" -"!:\private\EAE107BA\lemontangram.mbm"
+"$(EPOCROOT)epoc32\release\winscw\udeb\z\private\EAE107BA\lemontangram.mif" -"!:\private\EAE107BA\lemontangram.mif"
 
-"C:\S60\devices\S60_3rd_FP2_SDK_v1.1\epoc32\release\gcce\urel\SyExpat.dll"					-"!:\sys\bin\SyExpat.dll"
+"$(EPOCROOT)epoc32\release\gcce\urel\SyExpat.dll"					-"!:\sys\bin\SyExpat.dll"
 
 ; Add any installation notes if applicable
 ;"LemonTangram.txt"		-"!:\private\EAE107BA\LemonTangram.txt"
@@ -48,12 +48,18 @@
 "..\resource\tangvect.xml"		-"!:\private\EAE107BA\tangvect.xml"
 "..\resource\tangmenu.en.xml"	-"!:\private\EAE107BA\tangmenu.en.xml"
 "..\resource\tangmenu.zh.xml"	-"!:\private\EAE107BA\tangmenu.zh.xml"
-"..\resource\tangramvect\bigtriangle1.bmp" 	-"c:\tangramvect\bigtriangle1.bmp"
-"..\resource\tangramvect\bigtriangle2.bmp" 	-"c:\tangramvect\bigtriangle2.bmp"
-"..\resource\tangramvect\midtriangle.bmp" 	-"c:\tangramvect\midtriangle.bmp"
-"..\resource\tangramvect\smalltriangle1.bmp" -"c:\tangramvect\smalltriangle1.bmp"
-"..\resource\tangramvect\smalltriangle2.bmp" -"c:\tangramvect\smalltriangle2.bmp"
-"..\resource\tangramvect\rect.bmp" 					-"c:\tangramvect\rect.bmp"
-"..\resource\tangramvect\square.bmp" 				-"c:\tangramvect\square.bmp"
-"..\resource\tangramvect\active.jpg" 				-"c:\tangramvect\active.jpg"
-"..\resource\tangramvect\focus.jpg" 				-"c:\tangramvect\focus.jpg"
+
+"..\pictures\Particle.jpg"					-"!:\private\EAE107BA\Particle.jpg"
+"..\pictures\ogles.jpg"            			-"!:\private\EAE107BA\ogles.jpg"
+"..\pictures\constellation\Aquarius.jpg"  	-"!:\private\EAE107BA\Aquarius.jpg"
+"..\pictures\constellation\Aries.jpg"  		-"!:\private\EAE107BA\Aries.jpg"
+"..\pictures\constellation\Cancer.jpg"  	-"!:\private\EAE107BA\Cancer.jpg"
+"..\pictures\constellation\Capricorn.jpg"  	-"!:\private\EAE107BA\Capricorn.jpg"
+"..\pictures\constellation\Gemini.jpg"  	-"!:\private\EAE107BA\Gemini.jpg"
+"..\pictures\constellation\Leo.jpg"  		-"!:\private\EAE107BA\Leo.jpg"
+"..\pictures\constellation\Libra.jpg"  		-"!:\private\EAE107BA\Libra.jpg"
+"..\pictures\constellation\Pisces.jpg"  	-"!:\private\EAE107BA\Pisces.jpg"
+"..\pictures\constellation\Sagittarius.jpg" -"!:\private\EAE107BA\Sagittarius.jpg"
+"..\pictures\constellation\Scorpius.jpg"  	-"!:\private\EAE107BA\Scorpius.jpg"
+"..\pictures\constellation\Taurus.jpg"  	-"!:\private\EAE107BA\Taurus.jpg"
+"..\pictures\constellation\Virgo.jpg"  		-"!:\private\EAE107BA\Virgo.jpg"

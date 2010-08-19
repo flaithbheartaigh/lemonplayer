@@ -40,7 +40,7 @@ public:
 	void AddItem(CLemonMenuItem* aItem);
 	void Clear();
 	
-	void Draw(CFbsBitGc& gc);
+	void Draw(CBitmapContext& gc);
 	
 	void SetPositon(const TPoint& aPosition) {iPosition = aPosition;};
 	TPoint GetPosition() const {return iPosition;};
@@ -60,7 +60,7 @@ public:
 	TInt GetSelectedCommand();
 	
 private:
-	void DrawFrame(CFbsBitGc& gc);
+	void DrawFrame(CBitmapContext& gc);
 private:
 	RPointerArray<CLemonMenuItem> iItems;
 	TPoint iPosition;

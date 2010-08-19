@@ -133,3 +133,9 @@ void CTangImageSave::StartSave()
 	if(iDoubleBufferBmp)
 		iConvertor->EncodeToDesL(*iDoubleBufferBmp);
 	}
+
+void CTangImageSave::StartSave(CFbsBitmap *aBitmap)
+	{
+	if(aBitmap)
+		iConvertor->EncodeToDesL(*aBitmap);
+	}

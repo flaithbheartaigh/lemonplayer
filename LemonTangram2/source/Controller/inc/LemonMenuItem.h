@@ -39,7 +39,7 @@ public:
 	CLemonMenuList*& GetChildListAdd();
 	CLemonMenuList* GetChildList();
 	
-	void Draw(CFbsBitGc& gc);
+	void Draw(CBitmapContext& gc);
 	
 	void SetId(const TInt& aId){iId = aId;};
 	TInt GetId()const {return iId;};
