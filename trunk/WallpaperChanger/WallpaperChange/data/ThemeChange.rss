@@ -1,0 +1,478 @@
+/*
+============================================================================
+ Name		: ThemeChange.rss
+ Author	  : zengcity
+ Copyright   : Your copyright notice
+ Description : This file contains all the resources for the ThemeChange.
+============================================================================
+*/
+
+//  RESOURCE IDENTIFIER
+NAME	THEM // 4 letter ID
+
+//  INCLUDES
+
+#include <eikon.rh>
+#include <avkon.rsg>
+#include <avkon.rh>
+#include <appinfo.rh>
+#include "ThemeChange.hrh"
+#include "ThemeChange.rls"
+#include <avkon.mbg>
+#include <avkonicons.hrh>
+
+//  RESOURCE DEFINITIONS
+// -----------------------------------------------------------------------------
+//
+//	Define the resource file signature
+//	This resource should be empty.
+//
+// -----------------------------------------------------------------------------
+//
+RESOURCE RSS_SIGNATURE
+	{
+	}
+
+// -----------------------------------------------------------------------------
+//
+//	Default Document Name
+//
+// -----------------------------------------------------------------------------
+//
+RESOURCE TBUF r_default_document_name
+	{
+	buf="THEM";
+	}
+
+// -----------------------------------------------------------------------------
+//
+//	Define default menu and CBA key.
+//
+// -----------------------------------------------------------------------------
+//
+RESOURCE EIK_APP_INFO
+	{
+	}
+
+RESOURCE AVKON_VIEW r_view_app
+{
+	cba = r_main_options_exit;
+	menubar = r_menubar;
+}
+
+RESOURCE CBA r_main_options_exit
+ {
+ flags = 0;
+ buttons =
+     {
+     CBA_BUTTON {id=EAknSoftkeyOptions; 	txt=qtn_options;},
+     CBA_BUTTON {id=ECommandExit; 			txt=qtn_exit;}
+     };
+ }
+// -----------------------------------------------------------------------------
+//
+//   r_menubar
+//   Main menubar
+//
+// -----------------------------------------------------------------------------
+//
+RESOURCE MENU_BAR r_menubar
+	{
+	titles =
+		{
+		MENU_TITLE { menu_pane = r_menu; }
+		};
+	}
+
+// -----------------------------------------------------------------------------
+//
+//   r_menu
+//   Menu for "Options"
+//
+// -----------------------------------------------------------------------------
+//
+RESOURCE MENU_PANE r_menu
+	{
+	items =
+		{
+		// added the new Options menu command here
+		MENU_ITEM
+				{
+				command = ECommandSettingTheme;				
+				cascade = r_menu_theme;
+				txt = qtn_theme_current;
+				},
+		MENU_ITEM
+				{
+				command = ECommandSettingService;				
+				cascade  = r_menu_service;
+				txt = qtn_theme_service;
+				},
+		MENU_ITEM
+				{
+				command = ECommandSetting;
+				txt = qtn_settings;
+				},
+		MENU_ITEM
+				{
+				command = ECommandRegister;
+				txt = qtn_register;
+				},				
+		MENU_ITEM
+				{
+				command = ECommandHelp;
+				txt = qtn_help;
+				},				
+		MENU_ITEM
+				{
+				command = EAbout;
+				txt = qtn_about;
+				}
+		};
+	}
+
+// -----------------------------------------------------------------------------
+//
+//   r_menu
+//   Menu for "Options"
+//
+// -----------------------------------------------------------------------------
+//
+RESOURCE MENU_PANE r_menu_theme
+	{
+	items =
+		{
+		// added the new Options menu command here
+		MENU_ITEM
+				{
+				command = ECommandChoose;
+				txt = qtn_choose;
+				},
+		MENU_ITEM
+				{
+				command = ECommandRemove;
+				txt = qtn_remove;
+				}
+		};
+	}
+
+// -----------------------------------------------------------------------------
+//
+//   r_menu
+//   Menu for "Options"
+//
+// -----------------------------------------------------------------------------
+//
+RESOURCE MENU_PANE r_menu_service
+	{
+	items =
+		{
+		// added the new Options menu command here
+		MENU_ITEM
+				{
+				command = ECommandStart;
+				txt = qtn_active;
+				},
+		MENU_ITEM
+				{
+				command = ECommandStop;
+				txt = qtn_inactive;
+				}
+		};
+	}
+
+// -----------------------------------------------------------------------------
+//
+// About dialog resource.
+//
+// -----------------------------------------------------------------------------
+//
+RESOURCE DIALOG r_about_query_dialog
+	{
+	flags = EGeneralQueryFlags | EEikDialogFlagNoBorder | EEikDialogFlagNoShadow;
+	buttons = R_AVKON_SOFTKEYS_OK_EMPTY;
+	items=
+		{
+		DLG_LINE 
+			{
+			type = EAknCtPopupHeadingPane;
+			id = EAknMessageQueryHeaderId;
+			itemflags = EEikDlgItemNonFocusing;
+			control = AVKON_HEADING
+				{
+				};
+			},
+		DLG_LINE
+			{
+			type = EAknCtMessageQuery;
+			id = EAknMessageQueryContentId;
+			control = AVKON_MESSAGE_QUERY
+				{
+				};
+			}
+		};
+	}
+
+RESOURCE DIALOG r_confirmation_query
+   {
+   flags = EGeneralQueryFlags;
+   buttons = R_AVKON_SOFTKEYS_YES_NO;
+   items =
+       {
+       DLG_LINE
+           {
+           type = EAknCtQuery;
+           id = EGeneralQuery;
+           control = AVKON_CONFIRMATION_QUERY
+               {
+               layout = EConfirmationQueryLayout;
+               label = STRING_r_contacts_con_label_text;
+               };
+           }
+       };
+   }
+
+RESOURCE DIALOG r_dialog_input
+   {
+   flags = EGeneralQueryFlags;
+   buttons = R_AVKON_SOFTKEYS_OK_CANCEL;
+   items =
+       {
+       DLG_LINE
+           {
+           type = EAknCtQuery;
+           id = EGeneralQuery;
+           control = AVKON_DATA_QUERY
+               {
+               layout = EDataLayout;
+               label = qtn_dialog_url;
+               control = EDWIN
+                   {
+                   maxlength = 40;
+                   };
+               };
+           }
+       };
+   }
+// -----------------------------------------------------------------------------
+//
+// Resources for messages.
+//
+// -----------------------------------------------------------------------------
+//
+
+
+
+// ---------------------------------------------------------------------------- 
+//
+// r_localisable_app_info
+//
+// ---------------------------------------------------------------------------- 
+//
+RESOURCE LOCALISABLE_APP_INFO r_localisable_app_info
+	{
+	short_caption = qtn_caption_string;
+	caption_and_icon = 
+	CAPTION_AND_ICON_INFO
+		{
+		caption = qtn_caption_string;
+
+		number_of_icons = 1;
+	   	icon_file = "\\resource\\apps\\WallpaperChange_0xEAC842A2.mif";
+		};
+	}
+
+RESOURCE AVKON_VIEW r_view_ok_back
+    {    
+    cba = r_cba_ok_back;
+    }
+
+RESOURCE AVKON_VIEW r_view_ok_exit
+    {    
+    cba = r_cba_ok_exit;
+    }
+
+RESOURCE AVKON_VIEW r_view_null_back
+    {    
+    cba = r_cba_null_back;
+    }
+
+RESOURCE AVKON_VIEW r_view_change_back
+    {    
+    cba = r_cba_change_back;
+    }
+
+RESOURCE CBA r_cba_ok_back
+    {
+    flags = 0;
+    buttons =
+        {
+        CBA_BUTTON {id=EAknSoftkeyOk; 		txt=qtn_ok;},
+        CBA_BUTTON {id=EAknSoftkeyBack; 	txt=qtn_back;}
+        };
+    }
+
+RESOURCE CBA r_cba_ok_exit
+    {
+    flags = 0;
+    buttons =
+        {
+        CBA_BUTTON {id=EAknSoftkeyOk; 		txt=qtn_ok;},
+        CBA_BUTTON {id=EAknSoftkeyExit; 	txt=qtn_exit;}
+        };
+    }
+
+RESOURCE CBA r_cba_null_back
+    {
+    flags = 0;
+    buttons =
+        {
+        CBA_BUTTON {id=EAknSoftkeyOk; 		txt=qtn_null;},
+        CBA_BUTTON {id=EAknSoftkeyBack; 	txt=qtn_back;}
+        };
+    }
+
+RESOURCE CBA r_cba_change_back
+    {
+    flags = 0;
+    buttons =
+        {
+        CBA_BUTTON {id=EAknSoftkeyOk; 		txt=qtn_change;},
+        CBA_BUTTON {id=EAknSoftkeyBack; 	txt=qtn_back;}
+        };
+    }
+
+RESOURCE AVKON_SETTING_ITEM_LIST r_entry_settings_list
+	{
+	title = qtn_settings;
+	}
+
+// ---------------------------------------------------------
+//   
+//   ENUMERATED TEXT SETTING PAGE
+//
+// ---------------------------------------------------------
+//
+RESOURCE AVKON_SETTING_PAGE r_enumeratedtext_setting_page
+	{
+	type = EAknCtPopupSettingList;
+	editor_resource_id = r_popup_setting_list;
+	}
+	
+RESOURCE POPUP_SETTING_LIST r_popup_setting_list
+    {
+	flags = 0;
+    }
+    
+RESOURCE AVKON_POPUP_SETTING_TEXTS r_popup_setting_texts
+	{
+    setting_texts_resource = r_texts;
+	}
+	
+RESOURCE ARRAY r_texts
+    {
+    items =
+        {
+        AVKON_ENUMERATED_TEXT { value=0; text = "dummy";},
+        AVKON_ENUMERATED_TEXT { value=1; text = "dummy";},
+        AVKON_ENUMERATED_TEXT { value=2; text = "dummy";},
+        AVKON_ENUMERATED_TEXT { value=3; text = "dummy";},
+        AVKON_ENUMERATED_TEXT { value=4; text = "dummy";}
+        };
+    }    
+
+// ---------------------------------------------------------
+//   
+//   BINARY SETTING PAGE
+//
+// ---------------------------------------------------------
+//
+RESOURCE AVKON_SETTING_PAGE r_binary_setting_page
+	{
+	type = EEikCtEdwin;
+	}
+	
+RESOURCE AVKON_POPUP_SETTING_TEXTS r_binary_texts
+    {
+    setting_texts_resource = r_texts_binary;
+    }
+    
+RESOURCE ARRAY r_texts_binary
+    {
+    items =
+        {
+        AVKON_ENUMERATED_TEXT { value=1; text = "dummy1"; },
+        AVKON_ENUMERATED_TEXT { value=0; text = "dummy2"; }
+        };
+    } 
+
+RESOURCE AKN_ICON_ARRAY r_icon_mark
+    {
+    type = EAknIconArraySimple;
+    bmpfile = AVKON_ICON_FILE;
+    icons =
+        {
+        AKN_ICON
+            {
+            iconId = EMbmAvkonQgn_prop_radiobutt_on;
+            maskId = EMbmAvkonQgn_prop_radiobutt_on_mask;
+            },
+        AKN_ICON
+            {
+            iconId = EMbmAvkonQgn_prop_radiobutt_off;
+            maskId = EMbmAvkonQgn_prop_radiobutt_off_mask;
+            },
+        AKN_ICON
+            {
+            iconId = EMbmAvkonQgn_prop_mmc_memc_large;
+            maskId = EMbmAvkonQgn_prop_mmc_memc_large_mask;
+            }            
+        };
+    }
+
+RESOURCE DIALOG r_process_wait_note
+    {
+    flags   = EAknWaitNoteFlags;
+    //buttons = R_AVKON_SOFTKEYS_CANCEL;
+    items =
+        {
+        DLG_LINE
+            {
+            type    = EAknCtNote;
+            id      = ECommandRegisterWaiting;
+            control = AVKON_NOTE
+                {
+                layout         = EWaitLayout;
+                singular_label = qtn_text_payment;
+                plural_label   = "";
+                animation      = R_QGN_GRAF_WAIT_BAR_ANIM;
+                };
+            }
+        };
+	}
+
+RESOURCE TBUF32 r_caption_string 			{ buf=qtn_caption_string; }
+RESOURCE TBUF32 r_about_dialog_title 		{ buf=qtn_about_dialog_title; }
+RESOURCE TBUF r_text_dlg_exit_confirm		{ buf=qtn_dlg_exit_confirm; }
+RESOURCE TBUF r_help_file 					{ buf=qtn_help_file; }
+RESOURCE TBUF r_about_file 					{ buf=qtn_about_file; }
+
+RESOURCE TBUF r_setting_frequency_title 	{ buf=qtn_setting_frequency_title; }
+RESOURCE TBUF r_setting_autostart_title 	{ buf=qtn_setting_autostart_title; }
+
+RESOURCE TBUF r_confirm_save_config			{ buf=qtn_confirm_save_config; }
+
+RESOURCE TBUF r_text_frequency_one_hour 	{ buf=qtn_text_frequency_one_hour; }
+RESOURCE TBUF r_text_frequency_eight_hours 	{ buf=qtn_text_frequency_eight_hours; }
+RESOURCE TBUF r_text_frequency_one_day 		{ buf=qtn_text_frequency_one_day; }
+RESOURCE TBUF r_text_frequency_three_days 	{ buf=qtn_text_frequency_three_days; }
+RESOURCE TBUF r_text_frequency_one_week 	{ buf=qtn_text_frequency_one_week; }
+
+RESOURCE TBUF r_text_change_waiting 		{ buf=qtn_text_change_waiting; }
+RESOURCE TBUF r_text_payment 				{ buf=qtn_text_payment; }
+
+RESOURCE TBUF r_text_yes 					{ buf=qtn_text_yes; }
+RESOURCE TBUF r_text_no 					{ buf=qtn_text_no; }
+
+
+// End of File

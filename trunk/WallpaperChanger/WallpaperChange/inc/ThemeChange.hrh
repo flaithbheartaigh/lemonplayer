@@ -1,0 +1,42 @@
+/*
+ ============================================================================
+ Name		: ThemeChange.hrh
+ Author	  : zengcity
+ Copyright   : Your copyright notice
+ Description : This file contains declarations for constants of ThemeChange.
+ The file can be included in C++ or resource file.
+ ============================================================================
+ */
+#ifndef __THEMECHANGE_HRH__
+#define __THEMECHANGE_HRH__
+
+#define _UID3 0xEAC842A2
+
+// ThemeChange enumerate command codes
+enum TThemeChangeIds
+	{
+	EAbout = 0x6001,
+	ECommandChoose,
+	ECommandRemove,
+	ECommandStart,
+	ECommandStop,
+	ECommandSetting,
+	ECommandRegister,
+	ECommandRegisterWaiting,
+	ECommandSettingTheme,
+	ECommandSettingService,
+	ECommandHelp,
+	ECommandAbout,
+	ECommandExit
+	// start value must not be 0
+	};
+enum TNewsPacViewIds
+	{
+	EThemeChangeAppViewId = 0x0001,
+	EThemeChangeHelpView,
+	EThemeChangeSettingView
+	};
+
+
+
+#endif // __THEMECHANGE_HRH__

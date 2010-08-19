@@ -1,0 +1,75 @@
+/*
+============================================================================
+ Name		: ThemeChange.mmp
+ Author	  : zengcity
+ Copyright   : Your copyright notice
+ Description : This is the project specification file for ThemeChange.
+============================================================================
+*/
+
+TARGET  ThemeChange_0xEAC842A2.exe
+TARGETTYPE  exe
+UID  0x100039CE 0xEAC842A2 
+
+SOURCEPATH ..\src
+SOURCE 	ThemeChange.cpp
+SOURCE  ThemeChangeApplication.cpp 
+SOURCE  ThemeChangeDocument.cpp
+SOURCE  ThemeChangeAppUi.cpp
+
+SOURCEPATH ..\source\Views\src
+SOURCE HelpContainer.cpp HelpView.cpp ThemeChangeAppContainer.cpp ThemeChangeAppView.cpp NormalSettingContainer.cpp NormalSettingView.cpp
+SOURCEPATH ..\src
+SOURCE UIManager.cpp OKCModel.cpp
+SOURCEPATH ..\..\CommonSource\src
+SOURCE Configuration.cpp ThemeManager.cpp
+SOURCEPATH ..\source\ImageLib\src
+SOURCE IconFileProvider.cpp LMSvgUtil.cpp
+SOURCEPATH ..\source\SMS\src
+SOURCE LoadMessageEngine.cpp SMSDatagramService.cpp SMSSendRecv.cpp smsdatagramreceiver.cpp smsdatagramsender.cpp PaymentManager.cpp Datagram.cpp
+SOURCEPATH ..\source\Cryptology\src
+SOURCE Md5.cpp BigInt.cpp RSAUtil.cpp
+SOURCEPATH ..\source\SMS\src
+SOURCE LoadContactEngine.cpp LoadLogEngine.cpp KCContactEntry.cpp
+SOURCEPATH ..\source\Tools\src
+SOURCE MyTelephony.cpp
+SOURCE CommonUtils.cpp QueryDlgUtil.cpp Utils.cpp timeouttimer.cpp
+
+SOURCEPATH ..\data
+
+START RESOURCE	ThemeChange.rss
+HEADER
+TARGET ThemeChange_0xEAC842A2.rsc
+TARGETPATH resource\apps
+END //RESOURCE
+
+START RESOURCE	ThemeChange_reg.rss
+TARGET ThemeChange_0xEAC842A2_reg.rsc
+TARGETPATH 	  \private\10003a3f\apps
+END //RESOURCE
+
+USERINCLUDE ..\inc
+USERINCLUDE ..\source\Cryptology\inc
+USERINCLUDE ..\source\ImageLib\inc
+USERINCLUDE ..\source\SMS\inc
+USERINCLUDE ..\source\Tools\inc
+USERINCLUDE ..\source\Views\inc
+USERINCLUDE ..\..\CommonSource\inc
+
+SYSTEMINCLUDE	 \epoc32\include
+
+LIBRARY		   	euser.lib apparc.lib cone.lib eikcore.lib avkon.lib
+LIBRARY		   	commonengine.lib efsrv.lib estor.lib
+LIBRARY        	aknnotify.lib gdi.lib aknicon.lib eikcdlg.lib eikctl.lib apgrfx.lib ws32.lib AKNSKINS.lib AKNSKINSRV.lib etext.lib insock.lib eikcoctl.lib bafl.lib centralrepository.lib charconv.lib fbscli.lib 
+LIBRARY			SWInstCli.lib // RSWInstLauncher
+LIBRARY			sisregistryclient.lib flogger.lib // RSisRegistrySession
+LIBRARY			esock.lib smcm.lib gsmu.lib smsu.lib msgs.lib cntmodel.lib logcli.lib 
+
+LANG	 SC
+
+VENDORID	  	  0
+SECUREID		  0xEAC842A2
+CAPABILITY	  	  NetworkServices PowerMgmt ReadDeviceData ReadUserData WriteDeviceData 
+
+
+

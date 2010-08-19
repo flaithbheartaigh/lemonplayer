@@ -1,0 +1,30 @@
+/*
+* ==============================================================================
+*  Name        : bld.inf
+*  Part of     : CSSync
+*  Interface   :
+*  Description :
+*  Version     :
+*
+*  Copyright (c) 2004 - 2006 Nokia Corporation.
+*  This material, including documentation and any related
+*  computer programs, is protected by copyright controlled by
+*  Nokia Corporation.
+* ==============================================================================
+*/
+
+PRJ_EXPORTS
+..\config.ini										..\winscw\c\data\WallpaperChanger\config.ini
+..\sis\cfg.ini 										..\winscw\c\private\EAC842A2\cfg.ini
+..\WallpaperChange\resource\about_en.txt 			..\winscw\c\private\EAC842A2\about_en.txt
+..\WallpaperChange\resource\about_zh.txt 			..\winscw\c\private\EAC842A2\about_zh.txt
+..\WallpaperChange\resource\help_en.txt 			..\winscw\c\private\EAC842A2\help_en.txt
+..\WallpaperChange\resource\help_zh.txt 			..\winscw\c\private\EAC842A2\help_zh.txt
+
+PRJ_MMPFILES
+gnumakefile ..\WallpaperChange\group\icons_scalable_dc.mk
+
+..\WallpaperChange\group\WallpaperChange.mmp
+..\WallpaperBackground\group\WallpaperBackground.mmp
+..\WallpaperAutoStart\group\WallpaperAutoStart.mmp
+
