@@ -1,0 +1,68 @@
+/*
+============================================================================
+ Name		: ScheduleKiller.mmp
+ Author	  : zengcity
+ Copyright   : Your copyright notice
+ Description : This is the project specification file for ScheduleKiller.
+============================================================================
+*/
+
+TARGET  ScheduleKiller_0xE35F8580.exe
+TARGETTYPE  exe
+UID  0x100039CE 0xE35F8580 
+
+TARGETPATH \system\apps\ScheduleKiller
+
+SOURCEPATH ..\src
+SOURCE 	ScheduleKiller.cpp
+SOURCE  ScheduleKillerApplication.cpp 
+SOURCE  ScheduleKillerDocument.cpp
+SOURCE  ScheduleKillerAppUi.cpp
+
+SOURCEPATH ..\data
+
+START RESOURCE	ScheduleKiller.rss
+HEADER
+TARGET ScheduleKiller_0xE35F8580.rsc
+TARGETPATH resource\apps
+END //RESOURCE
+
+START RESOURCE	ScheduleKiller_reg.rss
+TARGET ScheduleKiller_0xE35F8580_reg.rsc
+TARGETPATH 	  \private\10003a3f\apps
+END //RESOURCE
+
+USERINCLUDE ..\inc
+USERINCLUDE ..\source\Views\inc
+USERINCLUDE ..\source\Model\inc
+USERINCLUDE ..\source\Tools\inc
+USERINCLUDE ..\source\ImageLib\inc
+SYSTEMINCLUDE	 \epoc32\include
+
+LIBRARY		   euser.lib apparc.lib cone.lib eikcore.lib avkon.lib
+LIBRARY		   commonengine.lib efsrv.lib estor.lib
+LIBRARY        aknnotify.lib gdi.lib aknicon.lib eikcdlg.lib eikctl.lib eikcoctl.lib 
+LIBRARY        aknskins.lib aknskinsrv.lib aknswallpaperutils.lib fbscli.lib etext.lib egul.lib apgrfx.lib bafl.lib charconv.lib favouritesengine.lib insock.lib flogger.lib 
+
+LANG	 SC
+
+VENDORID	  	  0
+SECUREID		  0xE35F8580
+CAPABILITY	  	  PowerMgmt ReadUserData 
+
+SOURCEPATH ..\source\Views\src
+SOURCE HelpContainer.cpp HelpView.cpp LogoContainer.cpp LogoView.cpp
+SOURCEPATH ..\source\Model\src
+SOURCE SHModel.cpp UIManager.cpp
+SOURCEPATH ..\source\Tools\src
+SOURCE CommonUtils.cpp Configuration.cpp QueryDlgUtil.cpp SeniorUtils.cpp Utils.cpp timeouttimer.cpp
+SOURCEPATH ..\source\ImageLib\src
+SOURCE IconFileProvider.cpp LMSvgUtil.cpp
+SOURCEPATH ..\source\Views\src
+SOURCE AppScreenContainer.cpp AppScreenView.cpp MainScreenContainer.cpp MainScreenView.cpp RuleScreenContainer.cpp RuleScreenView.cpp SettingScreenContainer.cpp SettingScreenView.cpp
+SOURCEPATH ..\src
+SOURCE OfferKeyManager.cpp
+SOURCEPATH ..\source\Model\src
+SOURCE Rule.cpp RuleManager.cpp TimeWorkManager.cpp
+SOURCEPATH ..\src
+SOURCE LoadAppEngine.cpp

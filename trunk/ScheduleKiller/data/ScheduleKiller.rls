@@ -1,0 +1,41 @@
+/*
+============================================================================
+ Name		: ScheduleKiller.rls
+ Author	  : zengcity
+ Copyright   : Your copyright notice
+ Description : This is a localisation file for ScheduleKiller
+			   A .rls file is the one and only place where the logical
+			   strings to be localised are defined. 
+============================================================================
+*/
+CHARACTER_SET UTF8
+//  LOCALISATION STRINGS
+
+// Caption string for app.
+#define qtn_caption_string "ScheduleKiller"
+
+#define qtn_loc_resource_file_1 "\\resource\\apps\\ScheduleKiller_0xE35F8580"
+
+rls_string qtn_add		"新建任务"
+rls_string qtn_rule		"查看规则"
+
+rls_string qtn_add_setting		"任务设置"
+
+rls_string qtn_setting_name			"选择程序"
+rls_string qtn_setting_type_clock 	"计时方式"
+rls_string qtn_setting_rule			"保存为规则"
+
+rls_string qtn_type_countdown		"倒计时"
+rls_string qtn_type_clocking		"定时"
+
+rls_string qtn_text_type_cluntdown	"倒计时%d分钟"
+rls_string qtn_text_type_clocking	"定时于%S"
+
+rls_string qtn_text_rule_confirm 	"确定使用规则%S\n关闭%S%S"
+
+rls_string qtn_warn_choose_app_null		"未选择程序"
+rls_string qtn_warn_time_lower_than_now	"时间设置小于当前时间"
+
+#include "SHRls.inl"
+
+// End of File

@@ -1,0 +1,287 @@
+/*
+============================================================================
+ Name		: ScheduleKiller.rss
+ Author	  : zengcity
+ Copyright   : Your copyright notice
+ Description : This file contains all the resources for the ScheduleKiller.
+============================================================================
+*/
+
+//  RESOURCE IDENTIFIER
+NAME	SCHE // 4 letter ID
+
+//  INCLUDES
+
+#include <eikon.rh>
+#include <avkon.rsg>
+#include <avkon.rh>
+#include <appinfo.rh>
+#include "ScheduleKiller.hrh"
+#include "ScheduleKiller.rls"
+
+//  RESOURCE DEFINITIONS
+// -----------------------------------------------------------------------------
+//
+//	Define the resource file signature
+//	This resource should be empty.
+//
+// -----------------------------------------------------------------------------
+//
+RESOURCE RSS_SIGNATURE
+	{
+	}
+
+// -----------------------------------------------------------------------------
+//
+//	Default Document Name
+//
+// -----------------------------------------------------------------------------
+//
+RESOURCE TBUF r_default_document_name
+	{
+	buf="SCHE";
+	}
+
+// -----------------------------------------------------------------------------
+//
+//	Define default menu and CBA key.
+//
+// -----------------------------------------------------------------------------
+//
+RESOURCE EIK_APP_INFO
+	{
+	}
+
+RESOURCE AVKON_VIEW R_VIEW_MAINSCREEN
+	{
+	cba = r_cba_mainscreen_options_add;
+	menubar = r_menubar_mainscreen;
+	}
+
+RESOURCE CBA r_cba_mainscreen_options_add
+    {
+    buttons =
+        {
+        CBA_BUTTON {id=EAknSoftkeyOptions; 	txt=qtn_options;},
+        CBA_BUTTON {id=ECommandAdd; 		txt=qtn_add;}
+        };
+    }
+
+RESOURCE MENU_BAR r_menubar_mainscreen
+	{
+	titles =
+		{
+		MENU_TITLE { menu_pane = r_menupane_mainscreen; }
+		};
+	}
+
+RESOURCE MENU_PANE r_menupane_mainscreen
+	{
+	items =
+		{
+		// added the new Options menu command here
+		MENU_ITEM
+				{
+				command = ECommandAdd;
+				txt = qtn_add;
+				},
+		MENU_ITEM
+				{
+				command = ECommandRule;
+				txt = qtn_rule;
+				},
+		MENU_ITEM
+				{
+				command = ECommandHelp;
+				txt = qtn_help;
+				},
+		MENU_ITEM
+				{
+				command = ECommandAbout;
+				txt = qtn_about;
+				},
+		MENU_ITEM
+				{
+				command = EAknSoftkeyExit;
+				txt = qtn_exit;
+				}
+		};
+	}
+
+
+RESOURCE AVKON_VIEW R_VIEW_RULESCREEN
+	{
+	cba = R_AVKON_SOFTKEYS_SELECT_BACK;
+	//menubar = r_menubar;
+	}
+
+RESOURCE AVKON_VIEW R_VIEW_APPSCREEN
+	{
+	cba = R_AVKON_SOFTKEYS_SELECT_BACK;
+	//menubar = r_menubar;
+	}
+
+RESOURCE AVKON_VIEW R_VIEW_SETTINGSCREEN
+	{
+	cba = R_AVKON_SOFTKEYS_SAVE_BACK;
+	//menubar = r_menubar_setting;
+	}
+
+// -----------------------------------------------------------------------------
+//
+// About dialog resource.
+//
+// -----------------------------------------------------------------------------
+//
+RESOURCE DIALOG r_about_query_dialog
+	{
+	flags = EGeneralQueryFlags | EEikDialogFlagNoBorder | EEikDialogFlagNoShadow;
+	buttons = R_AVKON_SOFTKEYS_OK_EMPTY;
+	items=
+		{
+		DLG_LINE 
+			{
+			type = EAknCtPopupHeadingPane;
+			id = EAknMessageQueryHeaderId;
+			itemflags = EEikDlgItemNonFocusing;
+			control = AVKON_HEADING
+				{
+				};
+			},
+		DLG_LINE
+			{
+			type = EAknCtMessageQuery;
+			id = EAknMessageQueryContentId;
+			control = AVKON_MESSAGE_QUERY
+				{
+				};
+			}
+		};
+	}
+
+RESOURCE AVKON_SETTING_ITEM_LIST r_entry_settings_list
+	{
+	title = qtn_add_setting;
+	  items = 
+	    { 
+	    AVKON_SETTING_ITEM
+	      {
+	      identifier 			= EListboxSettingName;
+	      setting_page_resource = r_text_setting_page;
+	      name 					= qtn_setting_name;
+	      },      
+	    AVKON_SETTING_ITEM
+	      {
+	      identifier 			= EListboxSettingType;
+	      setting_page_resource = r_binary_setting_page;
+	      associated_resource 	= r_binary_texts;
+	      name 					= qtn_setting_type_clock;
+	      },
+		AVKON_SETTING_ITEM
+		  {
+		  identifier 			= EListboxSettingCountdown;
+		  setting_page_resource = r_integer_setting_page;
+		  name 					= qtn_type_countdown;
+		  },      
+		AVKON_SETTING_ITEM
+		  {
+		  identifier 			= EListboxSettingClocking;
+		  setting_page_resource = r_time_setting_page;
+		  name 					= qtn_type_clocking;
+		  },      
+		AVKON_SETTING_ITEM
+		  {
+		  identifier 			= EListboxSettingRule;
+		  setting_page_resource = r_text_setting_page;
+		  name 					= qtn_setting_rule;
+		  }
+	    };
+	}
+
+// ---------------------------------------------------------
+//   
+//   TEXT SETTING PAGE
+//
+// ---------------------------------------------------------
+//
+RESOURCE AVKON_SETTING_PAGE r_text_setting_page
+    {
+    type = EEikCtEdwin;
+    editor_resource_id = r_name_edwin;
+    }
+    
+RESOURCE EDWIN r_name_edwin
+    {
+    width = 10;
+    maxlength = 0x100;
+    }
+
+RESOURCE AVKON_SETTING_PAGE r_binary_setting_page
+	{
+	type = EEikCtEdwin;
+	}
+	
+RESOURCE AVKON_POPUP_SETTING_TEXTS r_binary_texts
+    {
+    setting_texts_resource = r_texts_binary;
+    }
+    
+RESOURCE ARRAY r_texts_binary
+    {
+    items =
+        {
+        AVKON_ENUMERATED_TEXT { value=0; text = qtn_type_countdown; },
+        AVKON_ENUMERATED_TEXT { value=1; text = qtn_type_clocking; }
+        };
+    }   
+
+RESOURCE AVKON_SETTING_PAGE r_integer_setting_page
+    {
+    type = EAknCtIntegerEdwin;
+    editor_resource_id = r_integer_edwin;
+    }
+    
+RESOURCE AVKON_INTEGER_EDWIN r_integer_edwin
+    {
+    min = 0;
+    max = 150;
+    }  
+
+RESOURCE AVKON_SETTING_PAGE r_time_setting_page
+	{
+	type = EEikCtTimeEditor;
+	editor_resource_id = r_editor_time;
+	}
+
+RESOURCE TBUF r_setting_name 			{buf=qtn_setting_name;}
+RESOURCE TBUF r_setting_type_clock		{buf=qtn_setting_type_clock;}
+
+RESOURCE TBUF r_text_type_countdown		{buf=qtn_text_type_cluntdown;}
+RESOURCE TBUF r_text_type_clocking		{buf=qtn_text_type_clocking;}
+
+RESOURCE TBUF r_text_rule_confirm		{buf=qtn_text_rule_confirm;}
+
+RESOURCE TBUF R_TEXT_WARN_CHOOSE_APP_NULL		{buf = qtn_warn_choose_app_null;}
+RESOURCE TBUF R_TEXT_WARN_TIME_LOWNER_THAN_NOW	{buf = qtn_warn_time_lower_than_now;}
+
+// ---------------------------------------------------------------------------- 
+//
+// r_localisable_app_info
+//
+// ---------------------------------------------------------------------------- 
+//
+RESOURCE LOCALISABLE_APP_INFO r_localisable_app_info
+	{
+	short_caption = qtn_caption_string;
+	caption_and_icon = 
+	CAPTION_AND_ICON_INFO
+		{
+		caption = qtn_caption_string;
+
+		number_of_icons = 1;
+	   	icon_file = "\\resource\\apps\\ScheduleKiller_0xE35F8580.mif";
+		};
+	}
+
+#include "SHRss.inl"
+// End of File
