@@ -1,0 +1,69 @@
+/*
+============================================================================
+ Name		: CloverDemo.mmp
+ Author	  : zengcity
+ Copyright   : Your copyright notice
+ Description : This is the project specification file for CloverDemo.
+============================================================================
+*/
+
+TARGET  CloverDemo_0xECDEBC61.exe
+TARGETTYPE  exe
+UID  0x100039CE 0xECDEBC61 
+
+TARGETPATH \system\apps\CloverDemo
+
+SOURCEPATH ..\src
+SOURCE 	CloverDemo.cpp
+SOURCE  CloverDemoApplication.cpp 
+SOURCE  CloverDemoDocument.cpp
+SOURCE  CloverDemoAppUi.cpp
+SOURCE  CloverDemoAppContainer.cpp
+SOURCE  CloverDemoAppView.cpp
+
+SOURCEPATH ..\data
+
+START RESOURCE	CloverDemo.rss
+HEADER
+TARGET CloverDemo_0xECDEBC61.rsc
+TARGETPATH resource\apps
+END //RESOURCE
+
+START RESOURCE	CloverDemo_reg.rss
+TARGET CloverDemo_0xECDEBC61_reg.rsc
+TARGETPATH 	  \private\10003a3f\apps
+END //RESOURCE
+
+USERINCLUDE ..\inc
+USERINCLUDE ..\source\control\inc
+USERINCLUDE ..\source\corelib\tools\inc
+USERINCLUDE ..\source\gui\image\inc
+USERINCLUDE ..\source\ImageLib\inc
+USERINCLUDE ..\source\Tools\inc
+SYSTEMINCLUDE	 \epoc32\include
+SYSTEMINCLUDE	 \epoc32\include\libc
+
+LIBRARY		   euser.lib apparc.lib cone.lib eikcore.lib avkon.lib
+LIBRARY		   commonengine.lib efsrv.lib estor.lib
+LIBRARY        aknnotify.lib gdi.lib aknicon.lib eikcdlg.lib eikctl.lib fbscli.lib estlib.lib bitgdi.lib ws32.lib bafl.lib egul.lib imageconversion.lib favouritesengine.lib apgrfx.lib etext.lib charconv.lib 
+
+LANG	 SC
+
+VENDORID	  	  0
+SECUREID		  0xECDEBC61
+CAPABILITY	  	  ReadUserData 
+
+SOURCEPATH ..\source\corelib\tools\src
+SOURCE qeasingcurve.cpp
+SOURCEPATH ..\source\gui\image\src
+SOURCE CLBitmap.cpp
+SOURCEPATH ..\source\Tools\src
+SOURCE CommonUtils.cpp Configuration.cpp QueryDlgUtil.cpp SeniorUtils.cpp Utils.cpp timeouttimer.cpp
+SOURCEPATH ..\source\ImageLib\src
+SOURCE IconFileProvider.cpp LMSvgUtil.cpp
+SOURCEPATH ..\source\control\src
+SOURCE BackgroundControl.cpp CLListBox.cpp ListBoxContainerControl.cpp ListBoxItemControl.cpp ScrollControl.cpp ListBoxPainter.cpp ListBoxHighLightControl.cpp
+SOURCEPATH ..\src
+SOURCE AnimationFrame.cpp
+SOURCEPATH ..\source\corelib\tools\src
+SOURCE GuiEngine.cpp

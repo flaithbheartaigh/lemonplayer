@@ -1,0 +1,6 @@
+楼主用定点数，不四舍五入，边缘可能会少一像素吧？
+比如这句
+TUint16* PSrcLineColor= (TUint16*)((UInt8*)(Src.pdata)+Src_byte_width*(srcy_16>>8)) ;
+应该是(srcy_16+(1<<7))>>8吧？ 
+
+插值算法错误多多呀,在size为单数的情况下,错误;有时候size的情况下,显示完全错误.
