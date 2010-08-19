@@ -67,6 +67,7 @@ TInt CThemeManager::DisplayAll(RArray<TThemeInfo>& aArray)
 			pkg = skinInfoArray->At(i);
 			info.iPID = pkg->PID();
 			info.iName.Copy(pkg->Name());
+			info.iDeletable = pkg->IsDeletable();
 //			if (pos == 0)
 //				info.iLoacation = ESknLoactionPhone;
 //			else if (pos == 2)

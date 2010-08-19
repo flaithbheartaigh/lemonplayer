@@ -1,6 +1,6 @@
 CHARACTER_SET UTF8
 
-#define qtn_caption_string "ThemeChange"
+#define qtn_caption_string "主题变换"
 
 rls_string qtn_help 	"帮助"
 rls_string qtn_about 	"关于"
@@ -14,12 +14,13 @@ rls_string qtn_open		"打开"
 rls_string qtn_close	"关闭"
 rls_string qtn_remove	"删除"
 rls_string qtn_choose 	"设定"
+rls_string qtn_register	"注册"
 rls_string qtn_null 	""
 
 rls_string qtn_active 		"启动"
 rls_string qtn_inactive		"停止"
 
-rls_string qtn_theme_current 	"当前主题"
+rls_string qtn_theme_current 	"选中主题"
 rls_string qtn_theme_service 	"主题变换功能"
 
 rls_string qtn_loc_resource_file_1 "\\resource\\apps\\ThemeChange_0xE8EE38C1"
@@ -41,6 +42,9 @@ rls_string qtn_text_frequency_eight_hours	"8 小时"
 rls_string qtn_text_frequency_one_day		"1天"
 rls_string qtn_text_frequency_three_days	"3天"
 rls_string qtn_text_frequency_one_week		"1周"
+
+rls_string qtn_text_change_waiting			"设定中,请等待"
+rls_string qtn_text_payment					"注册中,请等待"
 
 rls_string qtn_text_yes			"是"
 rls_string qtn_text_no			"否"

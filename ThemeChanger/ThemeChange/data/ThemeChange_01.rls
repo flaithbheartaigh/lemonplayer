@@ -13,6 +13,7 @@ rls_string qtn_open		"Open"
 rls_string qtn_close	"Close"
 rls_string qtn_remove	"Remove"
 rls_string qtn_choose 	"Choose"
+rls_string qtn_register	"register"
 rls_string qtn_null 	""
 
 rls_string qtn_active 	"Active"
@@ -41,6 +42,9 @@ rls_string qtn_text_frequency_eight_hours	"8 hours"
 rls_string qtn_text_frequency_one_day		"1 day"
 rls_string qtn_text_frequency_three_days	"3 days"
 rls_string qtn_text_frequency_one_week		"1 week"
+
+rls_string qtn_text_change_waiting			"Changing,please wait"
+rls_string qtn_text_payment					"Paying,please wait"
 
 rls_string qtn_text_yes			"Yes"
 rls_string qtn_text_no			"No"

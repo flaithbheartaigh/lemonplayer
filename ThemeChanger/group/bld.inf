@@ -14,6 +14,7 @@
 */
 
 PRJ_EXPORTS
+..\sis\cfg.ini 									..\winscw\c\private\E8EE38C1\cfg.ini
 ..\ThemeChange\resource\about_en.txt 			..\winscw\c\private\E8EE38C1\about_en.txt
 ..\ThemeChange\resource\about_zh.txt 			..\winscw\c\private\E8EE38C1\about_zh.txt
 ..\ThemeChange\resource\help_en.txt 			..\winscw\c\private\E8EE38C1\help_en.txt

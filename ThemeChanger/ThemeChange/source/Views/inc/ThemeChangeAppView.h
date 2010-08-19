@@ -34,6 +34,8 @@ public:
 	void HandleStatusPaneSizeChange();
 	void DynInitMenuPaneL( TInt aResourceId, CEikMenuPane* aMenuPane );
 	
+	void StopWaitDlg();
+	
 private:
 	CThemeChangeAppView();
 	void ConstructL();

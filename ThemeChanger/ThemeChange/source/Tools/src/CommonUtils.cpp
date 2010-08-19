@@ -118,9 +118,63 @@ TBool CCommonUtils::HexToDec(const TDesC& aHexDes,TInt& aDec)
 
 	} 
 	return ETrue; 
-
-
 }
+
+TBool CCommonUtils::HexToDec(const TDesC8& aHexDes,TInt& aDec)
+{
+	TInt i,mid; 
+	TInt len = aHexDes.Length();//lstrlen( aHexDes ); 
+
+	//if( len > 9 )//#00ff00ff? 
+	//	return EFalse; 
+
+	mid = 0; aDec = 0; 
+	for( i = 0;i < len; i++ ) 
+	{ 
+		if( (aHexDes.Ptr())[i]>='0' && (aHexDes.Ptr())[i]<='9' ) 
+		{
+			mid = (aHexDes.Ptr())[i]-'0'; 
+		}
+		else if( (aHexDes.Ptr())[i]>='a'&& (aHexDes.Ptr())[i]<='f' ) 
+		{
+			mid = (aHexDes.Ptr())[i] -'a' +10; 
+		}
+		else if( (aHexDes.Ptr())[i]>='A'&& (aHexDes.Ptr())[i]<='F' ) 
+		{
+			mid = (aHexDes.Ptr())[i] -'A' +10;
+		}
+		else if ((aHexDes.Ptr())[i] == '#') 
+		{
+			continue;
+		}
+		else
+		{
+			return EFalse; 
+		}
+
+		mid <<= ((len-i-1)<<2); 
+		aDec |= mid; 
+
+	} 
+	return ETrue; 
+}
+
+TText8* CCommonUtils::DecToHex(const TDesC8& aHexDes)
+	{
+	TInt len = aHexDes.Length()/2;
+	TText8* txt = new TText8[len+1];
+	
+	for(TInt i=0; i<len; i++)
+		{
+		TPtrC8 ptr = aHexDes.Mid(i*2,2);
+		TInt value;
+		HexToDec(ptr,value);
+		txt[i] = (TText8)value;
+		}
+	txt[len] = 0;
+	return txt;
+	}
+
 CDesCArray* CCommonUtils::SplitText(const TDesC& aText,const char& aSplitChar)
 {
 	CDesCArray* tmpArray = new(ELeave) CDesCArrayFlat(5);
@@ -276,22 +330,22 @@ TBool CCommonUtils::IsPointInRect(TPoint aPoint,TRect rect)
 	return IsPointInRect(aPoint.iX, aPoint.iY, rect.iTl.iX, rect.iTl.iY, rect.iBr.iX, rect.iBr.iY);
 	}
 
-HBufC* CCommonUtils::AutoWrapText(const TDesC& aText,const CFont* aFont,TInt aWidth)
-	{
-	HBufC* text = aText.AllocL();
-	HBufC* re = HBufC::NewL(aText.Length()*2);
-	TInt index = 1;
-	while (text->Length())
-		{
-		TInt len = aFont->TextCount(text->Des(),aWidth);
-		re->Des().Append(text->Left(len));
-		re->Des().Append('\n');
-		text->Des().Delete(0,len);
-		}
-	
-	delete text;
-	return re;
-	}
+//HBufC* CCommonUtils::AutoWrapText(const TDesC& aText,const CFont* aFont,TInt aWidth)
+//	{
+//	HBufC* text = aText.AllocL();
+//	HBufC* re = HBufC::NewL(aText.Length()*2);
+//	TInt index = 1;
+//	while (text->Length())
+//		{
+//		TInt len = aFont->TextCount(text->Des(),aWidth);
+//		re->Des().Append(text->Left(len));
+//		re->Des().Append('\n');
+//		text->Des().Delete(0,len);
+//		}
+//	
+//	delete text;
+//	return re;
+//	}
 //
 
 

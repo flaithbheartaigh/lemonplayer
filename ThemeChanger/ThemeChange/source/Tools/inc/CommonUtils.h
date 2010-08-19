@@ -34,6 +34,8 @@ class CCommonUtils
 
 		
 		static TBool HexToDec(const TDesC& aHexDes,TInt& aDec);
+		static TBool HexToDec(const TDesC8& aHexDes,TInt& aDec);
+		static TText8* DecToHex(const TDesC8& aHexDes);
 
 
 		//=====================================×Ö·û²Ù×÷=====================================
@@ -67,7 +69,7 @@ class CCommonUtils
 		static TBool IsPointInRect(TInt x,TInt y,TRect rect);
 		static TBool IsPointInRect(TPoint aPoint,TRect rect);
 		
-		static HBufC* AutoWrapText(const TDesC& aText,const CFont* aFont,TInt aWidth);
+//		static HBufC* AutoWrapText(const TDesC& aText,const CFont* aFont,TInt aWidth);
 
 	private:
 		~CCommonUtils();    

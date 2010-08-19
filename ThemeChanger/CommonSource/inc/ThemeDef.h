@@ -8,7 +8,7 @@
 #ifndef THEMEDEF_H_
 #define THEMEDEF_H_
 
-class TAknsPkgID;
+#include <aknspkgid.h>		//TAknsPkgID
 
 enum TSknLocation
 	{
@@ -22,6 +22,7 @@ struct TThemeInfo
 	TAknsPkgID 	iPID;
 	TFileName	iName;
 //	TInt 		iLoacation;
+	TBool		iDeletable;
 	};
 
 #endif /* THEMEDEF_H_ */

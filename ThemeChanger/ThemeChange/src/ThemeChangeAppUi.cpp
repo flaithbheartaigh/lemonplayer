@@ -15,6 +15,7 @@
 #include <f32file.h>
 #include <s32file.h>
 #include <apgcli.h>
+#include <AknsConstants.h>  // for KAknsMessageSkinChange
 
 #include <ThemeChange_0xE8EE38C1.rsg>
 
@@ -47,11 +48,11 @@ void CThemeChangeAppUi::ConstructL()
 	iDataModel = COKCModel::NewL();
 	iUIMgr = CUIManager::NewL();
 	// Create view object
-	CThemeChangeAppView* appView= CThemeChangeAppView::NewL();
+	appView= CThemeChangeAppView::NewL();
 	AddViewL(appView);
-	CHelpView* helpView = CHelpView::NewL();
+	helpView = CHelpView::NewL();
 	AddViewL(helpView);
-	CNormalSettingView* settingView = CNormalSettingView::NewL();
+	settingView = CNormalSettingView::NewL();
 	AddViewL(settingView);
 	
 	SetDefaultViewL(*appView);
@@ -121,6 +122,17 @@ void CThemeChangeAppUi::HandleCommandL(TInt aCommand)
 //
 void CThemeChangeAppUi::HandleStatusPaneSizeChange()
 	{
+	}
+
+void CThemeChangeAppUi::HandleResourceChangeL( TInt aType )
+	{ 	    
+	CAknAppUi::HandleResourceChangeL(aType);
+	
+	if ( aType == KAknsMessageSkinChange )    // 主题模式改变         
+		{         
+		if (appView)
+			appView->StopWaitDlg();
+		}	
 	}
 
 COKCModel* CThemeChangeAppUi::GetModel()

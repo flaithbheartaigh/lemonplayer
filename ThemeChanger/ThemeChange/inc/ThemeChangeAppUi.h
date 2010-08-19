@@ -17,6 +17,9 @@
 #include "UIManager.h"
 
 // FORWARD DECLARATIONS
+class CThemeChangeAppView;
+class CHelpView ;
+class CNormalSettingView;
 
 // CLASS DECLARATION
 /**
@@ -36,6 +39,7 @@ private:
 	// Functions from base classes
 	void HandleCommandL(TInt aCommand);
 	void HandleStatusPaneSizeChange();
+	void HandleResourceChangeL(TInt aType);
 	
 	void About();
 	
@@ -45,6 +49,9 @@ public:
 	
 private:
 	// Data
+	CThemeChangeAppView* appView;
+	CHelpView* helpView ;
+	CNormalSettingView* settingView;
 	
 	COKCModel* iDataModel;
 	CUIManager* iUIMgr;

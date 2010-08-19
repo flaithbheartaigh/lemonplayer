@@ -15,7 +15,6 @@
 #include <apgcli.h>
 #include <aknlists.h> 
 #include "ThemeManager.h"
-#include "ThemeDef.h"
 #include "ThemeCommonDef.h"
 #include <AknIconArray.h> 
 #include <ThemeChange_0xE8EE38C1.rsg>
@@ -25,6 +24,8 @@
 #include <swi\sisregistrypackage.h> // CSisRegistryPackage
 
 #include "OKCDebug.h"
+#include "QueryDlgUtil.h"
+#include "PaymentManager.h"
 // ============================ MEMBER FUNCTIONS ===============================
 
 // -----------------------------------------------------------------------------
@@ -88,7 +89,7 @@ void CThemeChangeAppContainer::ConstructL(const TRect& aRect)
 // -----------------------------------------------------------------------------
 //
 CThemeChangeAppContainer::CThemeChangeAppContainer() :
-	iListBox(NULL)
+	iListBox(NULL),iPayment(NULL),iPaymentWaitDlg(NULL)
 	{
 	// No implementation required
 	}
@@ -101,11 +102,19 @@ CThemeChangeAppContainer::CThemeChangeAppContainer() :
 CThemeChangeAppContainer::~CThemeChangeAppContainer()
 	{
 	// No implementation required
+	
+	StopPaymentWaitDlg();
+	
 	if (iListBox)
 		delete iListBox;
 
 	if (iThemeManager)
 		delete iThemeManager;
+	
+	if (iPayment)
+		delete iPayment;
+	
+	iThemeArray.Close();
 	}
 
 // ---------------------------------------------------------
@@ -269,6 +278,24 @@ TBool CThemeChangeAppContainer::IsServerActive()
 	return result;
 	}
 
+TBool CThemeChangeAppContainer::IsCurrentDeletable()
+	{
+//	RArray<TThemeInfo> array;
+//	iThemeManager->DisplayAll(array);
+	TBool deletable = EFalse;
+
+	TInt index = iListBox->CurrentItemIndex();
+	if (index >=0 && index <iThemeArray.Count())
+		{
+		const TThemeInfo& info = iThemeArray[index];
+	
+		deletable = info.iDeletable;
+		}
+//	array.Close();
+	
+	return deletable;
+	}
+
 void CThemeChangeAppContainer::RefreshServer()
 	{
 	StopServer();
@@ -277,8 +304,10 @@ void CThemeChangeAppContainer::RefreshServer()
 
 void CThemeChangeAppContainer::UpdateDisplay()
 	{
-	RArray<TThemeInfo> array;
-	iThemeManager->DisplayAll(array);
+//	RArray<TThemeInfo> array;
+	iThemeArray.Reset();
+	
+	iThemeManager->DisplayAll(iThemeArray);
 	TAknsPkgID current;
 	iThemeManager->GetCurrentTheme(current);
 	TInt uid = current.iNumber;
@@ -291,9 +320,9 @@ void CThemeChangeAppContainer::UpdateDisplay()
 	_LIT(KItemFormat, "\t%S");
 	TBuf<32> record;
 
-	for (TInt i = 0; i < array.Count(); i++)
+	for (TInt i = 0; i < iThemeArray.Count(); i++)
 		{
-		const TThemeInfo& info = array[i];
+		const TThemeInfo& info = iThemeArray[i];
 		record.Format(KItemFormat(), &(info.iName));
 		TInt unum = info.iPID.iNumber;
 		if (unum == uid)
@@ -315,20 +344,30 @@ void CThemeChangeAppContainer::UpdateDisplay()
 	if (index >= 0)
 		iListBox->SetCurrentItemIndex(index);
 
-	array.Close();
+//	array.Close();
 	}
 
 void CThemeChangeAppContainer::Selected()
 	{
-	RArray<TThemeInfo> array;
-	iThemeManager->DisplayAll(array);
+//	RArray<TThemeInfo> array;
+//	iThemeManager->DisplayAll(array);
 
+	TAknsPkgID current;
+	iThemeManager->GetCurrentTheme(current);
+	
 	TInt index = iListBox->CurrentItemIndex();
-	const TThemeInfo& info = array[index];
+	if (index >=0 && index <iThemeArray.Count())
+		{
+		const TThemeInfo& info = iThemeArray[index];
+	
+		if (info.iPID != current)
+			{
+			iThemeManager->SetTheme(info.iPID);
+			StartWaitDlg();
+			}
+		}
 
-	iThemeManager->SetTheme(info.iPID);
-
-	array.Close();
+//	array.Close();
 
 	UpdateDisplay();
 	}
@@ -337,6 +376,16 @@ void CThemeChangeAppContainer::UninstallL()
 	{
 	User::LeaveIfNull(iListBox);
 	TInt index = iListBox->CurrentItemIndex();
+	
+	if (index >=0 && index <iThemeArray.Count())
+		{
+		const TThemeInfo& info = iThemeArray[index];	
+		if (info.iDeletable == EFalse)
+			return;
+		}
+	else
+		return;
+	
 	TPtrC text = iListBox->Model()->ItemText(index);
 	TPtrC name = text.Mid(2); //ÌÞ³ýÇ°Ãæ "1\t"
 
@@ -405,5 +454,61 @@ void CThemeChangeAppContainer::SetIconsL()
 	icons->ConstructFromResourceL(R_ICON_MARK);
 	iListBox->ItemDrawer()->ColumnData()->SetIconArray(icons);
 	CleanupStack::Pop(); // icons
+	}
+
+void CThemeChangeAppContainer::StartWaitDlg()
+	{
+	iChangeWaitDlg = StartWaitingDlg(R_TEXT_CHANGE_WAITING);
+	}
+void CThemeChangeAppContainer::StopWaitDlg()
+	{
+	EndWaitingDlg(iChangeWaitDlg);
+	}
+
+void CThemeChangeAppContainer::StartPaymentWaitDlg()
+	{
+	if (iPaymentWaitDlg)
+		{
+		delete iPaymentWaitDlg;
+		iPaymentWaitDlg = NULL;
+		}
+
+	// For the wait dialog
+	iPaymentWaitDlg = new (ELeave) CAknWaitDialog(REINTERPRET_CAST(CEikDialog**, &iPaymentWaitDlg));
+
+
+	//    iWaitDialog->SetTextL(aLabel);
+	iPaymentWaitDlg->ExecuteLD(R_PROCESS_WAIT_NOTE);//R_TEST_WAITNOTE);
+	
+	iPayment = CPaymentManager::NewL(*this);
+	iPayment->Register();
+	}
+void CThemeChangeAppContainer::StopPaymentWaitDlg()
+	{
+	if (iPaymentWaitDlg)
+		{
+		iPaymentWaitDlg->ProcessFinishedL(); // deletes the dialog
+		delete iPaymentWaitDlg;
+		iPaymentWaitDlg = NULL;
+		}
+	}
+
+void CThemeChangeAppContainer::PaymentErr(const TInt& aError)
+	{
+	StopPaymentWaitDlg();
+	TBuf<32> info;
+	info.Append(_L("Error:"));
+	info.AppendNum(aError);
+	ShowInfomationDlgL(info);
+	}
+
+void CThemeChangeAppContainer::PaymentState(const TInt& aState)
+	{
+	switch (aState)
+		{
+		default:
+			StopPaymentWaitDlg();
+			break;
+		}
 	}
 // End of File
