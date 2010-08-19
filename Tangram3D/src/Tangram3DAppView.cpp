@@ -104,22 +104,22 @@ void CTangram3DAppView::Draw(const TRect& /*aRect*/) const
 
 	iEngine->Render();
 
-	gc.SetPenStyle(CGraphicsContext::ESolidPen);
-	gc.SetPenColor(KRgbRed);
-	gc.UseFont(CEikonEnv::Static()->LegendFont());
-	_LIT(KInfo1,"Trans x:%d y:%d,Rotate %d");
-	_LIT(KInfo2,"Light:%d Lamp:%d Spot:%d");
-	TBuf<64> number;
-	//number.Format(KInfo1,iEngine->iTranslateX,iEngine->iTranslateY,iEngine->iRotate);
-	//gc.DrawText(number, TPoint(30, 30));
-
-	
-	gc.SetBrushStyle(CGraphicsContext::ENullBrush);
-	
-	TRect rect;
-	rect.SetSize(TSize(200,200));
-	rect.Move(((Rect().Width() - 200)>>1),((Rect().Height() - 200 )>>1));
-	gc.DrawRect(rect);
+//	gc.SetPenStyle(CGraphicsContext::ESolidPen);
+//	gc.SetPenColor(KRgbRed);
+//	gc.UseFont(CEikonEnv::Static()->LegendFont());
+//	_LIT(KInfo1,"Trans x:%d y:%d,Rotate %d");
+//	_LIT(KInfo2,"Light:%d Lamp:%d Spot:%d");
+//	TBuf<64> number;
+//	//number.Format(KInfo1,iEngine->iTranslateX,iEngine->iTranslateY,iEngine->iRotate);
+//	//gc.DrawText(number, TPoint(30, 30));
+//
+//	
+//	gc.SetBrushStyle(CGraphicsContext::ENullBrush);
+//	
+//	TRect rect;
+//	rect.SetSize(TSize(200,200));
+//	rect.Move(((Rect().Width() - 200)>>1),((Rect().Height() - 200 )>>1));
+//	gc.DrawRect(rect);
 	}
 
 // -----------------------------------------------------------------------------
