@@ -1,0 +1,29 @@
+/*
+ ============================================================================
+ Name		: DesktopHotKey.hrh
+ Author	  : zengcity
+ Copyright   : Your copyright notice
+ Description : This file contains declarations for constants of DesktopHotKey.
+ The file can be included in C++ or resource file.
+ ============================================================================
+ */
+#ifndef __DESKTOPHOTKEY_HRH__
+#define __DESKTOPHOTKEY_HRH__
+
+#define _UID3 0xE4ED7F71
+
+// DesktopHotKey enumerate command codes
+enum TDesktopHotKeyIds
+	{
+	ECommandHelp = 0x6001,
+	ECommandAbout
+	// start value must not be 0
+	};
+enum TNewsPacViewIds
+	{
+	EDesktopHotKeyAppViewId = 0x0001,
+	ESHHelpViewId,
+	ESHLogoViewId,
+	EScheduleKillerMainScreenViewId
+	};
+#endif // __DESKTOPHOTKEY_HRH__
