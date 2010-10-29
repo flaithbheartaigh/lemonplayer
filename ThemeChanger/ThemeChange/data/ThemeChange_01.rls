@@ -1,5 +1,5 @@
 
-#define qtn_caption_string "ThemeChange"
+#define qtn_caption_string "ThemeAssistant"
 
 rls_string qtn_help "Help"
 rls_string qtn_about "About"

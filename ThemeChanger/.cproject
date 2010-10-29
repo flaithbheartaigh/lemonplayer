@@ -4,11 +4,8 @@
 <cproject>
 <storageModule buildFromInf="true" buildingTestComps="true" cleanLevel="0" concurrentBuildJobs="4" defaultMMPChangedAction="0" infBuildComponents="" infFileLocation="group\bld.inf" macrosFile="" makeEngineToUse="make" manageDependencies="true" moduleId="com.nokia.carbide.cdt.builder.carbideCPPBuilder" overrideMakeEngine="false" overrideWorkspaceSettings="false" promptForMMPChangedAction="true" useConcurrentBuilding="true" useDebugMode="false" useIncrementalBuilder="false" useKeepGoing="false" useMMPMacros="true"/>
 <storageModule moduleId="org.eclipse.cdt.core.settings">
-
-
-
-<cconfiguration id="Emulator Debug (WINSCW) [S60_3rd_FP2_SDK_v1.1_2]">
-<storageModule buildSystemId="com.nokia.carbide.cdt.builder.CarbideConfigurationDataProvider" id="Emulator Debug (WINSCW) [S60_3rd_FP2_SDK_v1.1_2]" moduleId="org.eclipse.cdt.core.settings" name="Emulator Debug (WINSCW) [S60_3rd_FP2_SDK_v1.1_2]">
+<cconfiguration id="Emulator Debug (WINSCW) [S60_3rd_FP2_SDK_v1.1]">
+<storageModule buildSystemId="com.nokia.carbide.cdt.builder.CarbideConfigurationDataProvider" id="Emulator Debug (WINSCW) [S60_3rd_FP2_SDK_v1.1]" moduleId="org.eclipse.cdt.core.settings" name="Emulator Debug (WINSCW) [S60_3rd_FP2_SDK_v1.1]">
 <externalSettings/>
 <extensions>
 <extension id="org.eclipse.cdt.core.PE" point="org.eclipse.cdt.core.BinaryParser"/>
@@ -24,18 +21,17 @@
 <extension id="com.nokia.carbide.cdt.builder.MakmakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
 </extensions>
 </storageModule>
-<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
-<storageModule moduleId="org.eclipse.cdt.core.language.mapping"/>
 <storageModule moduleId="CarbideConfigurationDataProvider">
 <ENV_VAR_DATA_ID/>
 <ARGUMENTS_DATA_ID ABLDFREEZEARGSSTORAGE="-r"/>
 <ROM_BUILDER_DATA_ID ROMBUILDWORKINGDIRECTORYSTORAGE="C:\"/>
 </storageModule>
-<storageModule filesCache="C:\work\ThemeChanger\ThemeAutoStart\group\ThemeAutoStart.mmp;C:\work\ThemeChanger\ThemeChange\group\ThemeChange.mmp;C:\work\ThemeChanger\group\bld.inf;C:\work\ThemeChanger\ThemeBackground\group\ThemeBackground.mmp;" includesCache="C:/work/ThemeChanger/ThemeChange/inc[LOCAL];C:/work/ThemeChanger/ThemeChange/source/Cryptology/inc[LOCAL];C:/work/ThemeChanger/ThemeChange/source/ImageLib/inc[LOCAL];C:/work/ThemeChanger/ThemeChange/source/SMS/inc[LOCAL];C:/work/ThemeChanger/ThemeChange/source/Tools/inc[LOCAL];C:/work/ThemeChanger/ThemeChange/source/Views/inc[LOCAL];C:/work/ThemeChanger/CommonSource/inc[LOCAL];C:/work/ThemeChanger/ThemeBackground/inc[LOCAL];C:/work/ThemeChanger/ThemeAutoStart/inc[LOCAL];C:/S60/devices/S60_3rd_FP2_SDK_v1.1_2/epoc32/include;" macrosCache="__EXE__;__WINSCW__;__SUPPORT_CPP_EXCEPTIONS__;__SYMBIAN32__;__S60_3X__;_UNICODE;__SERIES60_3X__;_DEBUG;__S60_32__;__WINS__;__CW32__;" moduleId="configDataCache" sourcesCache="/ThemeChanger/CommonSource;/ThemeChanger/ThemeAutoStart;/ThemeChanger/ThemeBackground;/ThemeChanger/ThemeChange;" timestampCache="1271662852078" useMmpMacrosCache="true"/>
+<storageModule filesCache="C:\MyWork\ThemeChanger\ThemeChange\group\ThemeChange.mmp;C:\MyWork\ThemeChanger\group\bld.inf;C:\MyWork\ThemeChanger\ThemeBackground\group\ThemeBackground.mmp;" includesCache="C:/MyWork/ThemeChanger/ThemeChange/inc[LOCAL];C:/MyWork/ThemeChanger/ThemeChange/source/Cryptology/inc[LOCAL];C:/MyWork/ThemeChanger/ThemeChange/source/ImageLib/inc[LOCAL];C:/MyWork/ThemeChanger/ThemeChange/source/SMS/inc[LOCAL];C:/MyWork/ThemeChanger/ThemeChange/source/Tools/inc[LOCAL];C:/MyWork/ThemeChanger/ThemeChange/source/Views/inc[LOCAL];C:/MyWork/ThemeChanger/CommonSource/inc[LOCAL];C:/MyWork/ThemeChanger/ThemeBackground/inc[LOCAL];C:/S60/devices/S60_3rd_FP2_SDK_v1.1/epoc32/include;" macrosCache="__EXE__;__WINSCW__;__SUPPORT_CPP_EXCEPTIONS__;__SYMBIAN32__;__S60_3X__;_UNICODE;__SERIES60_3X__;_DEBUG;__S60_32__;__WINS__;__CW32__;" moduleId="configDataCache" sourcesCache="/ThemeChanger/CommonSource;/ThemeChanger/ThemeBackground;/ThemeChanger/ThemeChange;" timestampCache="1287138020159" useMmpMacrosCache="true"/>
 <storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
+<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
 </cconfiguration>
-<cconfiguration id="Phone Release (GCCE) [S60_3rd_FP2_SDK_v1.1_2]">
-<storageModule buildSystemId="com.nokia.carbide.cdt.builder.CarbideConfigurationDataProvider" id="Phone Release (GCCE) [S60_3rd_FP2_SDK_v1.1_2]" moduleId="org.eclipse.cdt.core.settings" name="Phone Release (GCCE) [S60_3rd_FP2_SDK_v1.1_2]">
+<cconfiguration id="Phone Release (GCCE) [S60_3rd_FP2_SDK_v1.1]">
+<storageModule buildSystemId="com.nokia.carbide.cdt.builder.CarbideConfigurationDataProvider" id="Phone Release (GCCE) [S60_3rd_FP2_SDK_v1.1]" moduleId="org.eclipse.cdt.core.settings" name="Phone Release (GCCE) [S60_3rd_FP2_SDK_v1.1]">
 <externalSettings/>
 <extensions>
 <extension id="org.eclipse.cdt.core.PE" point="org.eclipse.cdt.core.BinaryParser"/>
@@ -51,15 +47,13 @@
 </extensions>
 </storageModule>
 <storageModule moduleId="CarbideConfigurationDataProvider">
-<SIS_BUILDER_DATA_ID CERTIFICATESTORAGE="D:\SymbianSign\dev20100329.cer" CREATESTUBSTORAGE="false" ENABLEDSTORAGE="true" KEYSTORAGE="D:\SymbianSign\private.key" PARTIALUPGRADESTORAGE="false" PKGFILESTORAGE="sis\ThemeChanger.pkg" SIGNINGTYPESTORAGE="2"/>
+<SIS_BUILDER_DATA_ID CERTIFICATESTORAGE="C:\MyWork\ThemeChanger\sis\peter.cer" CREATESTUBSTORAGE="false" ENABLEDSTORAGE="true" KEYSTORAGE="C:\MyWork\ThemeChanger\sis\tencent.key" PARTIALUPGRADESTORAGE="false" PKGFILESTORAGE="sis\ThemeChanger.pkg" SIGNINGTYPESTORAGE="2"/>
 <ENV_VAR_DATA_ID/>
 <ARGUMENTS_DATA_ID ABLDFREEZEARGSSTORAGE="-r"/>
 <ROM_BUILDER_DATA_ID ROMBUILDWORKINGDIRECTORYSTORAGE="C:\"/>
 </storageModule>
-<storageModule filesCache="C:\work\ThemeChanger\ThemeAutoStart\group\ThemeAutoStart.mmp;C:\work\ThemeChanger\ThemeChange\group\ThemeChange.mmp;C:\work\ThemeChanger\group\bld.inf;C:\work\ThemeChanger\ThemeBackground\group\ThemeBackground.mmp;" includesCache="C:/work/ThemeChanger/ThemeChange/inc[LOCAL];C:/work/ThemeChanger/ThemeChange/source/Cryptology/inc[LOCAL];C:/work/ThemeChanger/ThemeChange/source/ImageLib/inc[LOCAL];C:/work/ThemeChanger/ThemeChange/source/SMS/inc[LOCAL];C:/work/ThemeChanger/ThemeChange/source/Tools/inc[LOCAL];C:/work/ThemeChanger/ThemeChange/source/Views/inc[LOCAL];C:/work/ThemeChanger/CommonSource/inc[LOCAL];C:/work/ThemeChanger/ThemeBackground/inc[LOCAL];C:/work/ThemeChanger/ThemeAutoStart/inc[LOCAL];C:/S60/devices/S60_3rd_FP2_SDK_v1.1_2/epoc32/include;" macrosCache="__GENERIC_MARM__;__EXE__;__SYMBIAN32__;__SUPPORT_CPP_EXCEPTIONS__;__EPOC32__;__EABI__;__GCCE__;NDEBUG;__MARM__;_UNICODE;__S60_3X__;__SERIES60_3X__;__MARM_ARMV5__;__S60_32__;" moduleId="configDataCache" sourcesCache="/ThemeChanger/CommonSource;/ThemeChanger/ThemeAutoStart;/ThemeChanger/ThemeBackground;/ThemeChanger/ThemeChange;" timestampCache="1271662852093" useMmpMacrosCache="true"/>
-<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
+<storageModule filesCache="C:\MyWork\ThemeChanger\ThemeChange\group\ThemeChange.mmp;C:\MyWork\ThemeChanger\group\bld.inf;C:\MyWork\ThemeChanger\ThemeBackground\group\ThemeBackground.mmp;" includesCache="C:/MyWork/ThemeChanger/ThemeChange/inc[LOCAL];C:/MyWork/ThemeChanger/ThemeChange/source/Cryptology/inc[LOCAL];C:/MyWork/ThemeChanger/ThemeChange/source/ImageLib/inc[LOCAL];C:/MyWork/ThemeChanger/ThemeChange/source/SMS/inc[LOCAL];C:/MyWork/ThemeChanger/ThemeChange/source/Tools/inc[LOCAL];C:/MyWork/ThemeChanger/ThemeChange/source/Views/inc[LOCAL];C:/MyWork/ThemeChanger/CommonSource/inc[LOCAL];C:/MyWork/ThemeChanger/ThemeBackground/inc[LOCAL];C:/S60/devices/S60_3rd_FP2_SDK_v1.1/epoc32/include;" macrosCache="__GENERIC_MARM__;__EXE__;__SYMBIAN32__;__SUPPORT_CPP_EXCEPTIONS__;__EPOC32__;__EABI__;__GCCE__;NDEBUG;__MARM__;_UNICODE;__S60_3X__;__SERIES60_3X__;__MARM_ARMV5__;__S60_32__;" moduleId="configDataCache" sourcesCache="/ThemeChanger/CommonSource;/ThemeChanger/ThemeBackground;/ThemeChanger/ThemeChange;" timestampCache="1287138051393" useMmpMacrosCache="true"/>
 <storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
-<storageModule moduleId="org.eclipse.cdt.core.language.mapping"/>
 </cconfiguration>
 </storageModule>
 </cproject>

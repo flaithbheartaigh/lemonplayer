@@ -25,7 +25,6 @@
 
 #include "OKCDebug.h"
 #include "QueryDlgUtil.h"
-#include "PaymentManager.h"
 // ============================ MEMBER FUNCTIONS ===============================
 
 // -----------------------------------------------------------------------------
@@ -89,7 +88,7 @@ void CThemeChangeAppContainer::ConstructL(const TRect& aRect)
 // -----------------------------------------------------------------------------
 //
 CThemeChangeAppContainer::CThemeChangeAppContainer() :
-	iListBox(NULL),iPayment(NULL),iPaymentWaitDlg(NULL)
+	iListBox(NULL),iPaymentWaitDlg(NULL)
 	{
 	// No implementation required
 	}
@@ -110,9 +109,6 @@ CThemeChangeAppContainer::~CThemeChangeAppContainer()
 
 	if (iThemeManager)
 		delete iThemeManager;
-	
-	if (iPayment)
-		delete iPayment;
 	
 	iThemeArray.Close();
 	}
@@ -480,8 +476,6 @@ void CThemeChangeAppContainer::StartPaymentWaitDlg()
 	//    iWaitDialog->SetTextL(aLabel);
 	iPaymentWaitDlg->ExecuteLD(R_PROCESS_WAIT_NOTE);//R_TEST_WAITNOTE);
 	
-	iPayment = CPaymentManager::NewL(*this);
-	iPayment->Register();
 	}
 void CThemeChangeAppContainer::StopPaymentWaitDlg()
 	{
@@ -493,22 +487,4 @@ void CThemeChangeAppContainer::StopPaymentWaitDlg()
 		}
 	}
 
-void CThemeChangeAppContainer::PaymentErr(const TInt& aError)
-	{
-	StopPaymentWaitDlg();
-	TBuf<32> info;
-	info.Append(_L("Error:"));
-	info.AppendNum(aError);
-	ShowInfomationDlgL(info);
-	}
-
-void CThemeChangeAppContainer::PaymentState(const TInt& aState)
-	{
-	switch (aState)
-		{
-		default:
-			StopPaymentWaitDlg();
-			break;
-		}
-	}
 // End of File

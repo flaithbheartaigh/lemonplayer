@@ -131,7 +131,8 @@ TBool CAOManager::GetTime(TTime& aTime)
 			TInt64 timer = aTime.Int64();
 
 			TInt64 offset[EFrequencyTotal] = {
-					20000000ll,//3600000000,			//1 hour 60*60
+//					20000000ll,
+					3600000000ll,			//1 hour 60*60
 					28800000000ll,		//8 hours,
 					86400000000ll,		//1 day
 					259200000000ll,		//3 days

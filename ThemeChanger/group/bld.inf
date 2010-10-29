@@ -25,5 +25,5 @@ gnumakefile ..\ThemeChange\group\icons_scalable_dc.mk
 
 ..\ThemeChange\group\ThemeChange.mmp
 ..\ThemeBackground\group\ThemeBackground.mmp
-..\ThemeAutoStart\group\ThemeAutoStart.mmp
+//..\ThemeAutoStart\group\ThemeAutoStart.mmp
 

@@ -294,36 +294,36 @@ void CNormalSettingContainer::LoadListL()
 
 
 //  /* Binary popup setting item */	¿ª»úÆô¶¯
-    CAknBinaryPopupSettingItem* item10 = new (ELeave) CAknBinaryPopupSettingItem(EItemAutoStart, iBinary);
-    CleanupStack::PushL(item10);
-    // The same resource id can be used for multiple binary setting pages.
-    text = StringLoader::LoadLC(R_SETTING_AUTOSTART_TITLE);
-    item10->ConstructL(isNumberedStyle, EItemAutoStart, text->Des(), icons, R_BINARY_SETTING_PAGE, -1, 0, R_BINARY_TEXTS);
-    CleanupStack::PopAndDestroy();
-    
-    // Load texts dynamically.
-    texts = item10->EnumeratedTextArray();
-    texts->ResetAndDestroy();
-    // Text 1
-    text = StringLoader::LoadLC(R_TEXT_NO);
-    enumText = new (ELeave) CAknEnumeratedText(0, text);
-    CleanupStack::Pop(text);
-    CleanupStack::PushL(enumText);
-    texts->AppendL(enumText);
-    CleanupStack::Pop(enumText);
-    // Text 2
-    text = StringLoader::LoadLC(R_TEXT_YES);
-    enumText = new (ELeave) CAknEnumeratedText(1, text);
-    CleanupStack::Pop(text);
-    CleanupStack::PushL(enumText);
-    texts->AppendL(enumText);
-    CleanupStack::Pop(enumText);
-
-    // Sets the correct text visible
-    item10->LoadL();
-
-    iItemList->SettingItemArray()->AppendL(item10);
-    CleanupStack::Pop(item10);
+//    CAknBinaryPopupSettingItem* item10 = new (ELeave) CAknBinaryPopupSettingItem(EItemAutoStart, iBinary);
+//    CleanupStack::PushL(item10);
+//    // The same resource id can be used for multiple binary setting pages.
+//    text = StringLoader::LoadLC(R_SETTING_AUTOSTART_TITLE);
+//    item10->ConstructL(isNumberedStyle, EItemAutoStart, text->Des(), icons, R_BINARY_SETTING_PAGE, -1, 0, R_BINARY_TEXTS);
+//    CleanupStack::PopAndDestroy();
+//    
+//    // Load texts dynamically.
+//    texts = item10->EnumeratedTextArray();
+//    texts->ResetAndDestroy();
+//    // Text 1
+//    text = StringLoader::LoadLC(R_TEXT_NO);
+//    enumText = new (ELeave) CAknEnumeratedText(0, text);
+//    CleanupStack::Pop(text);
+//    CleanupStack::PushL(enumText);
+//    texts->AppendL(enumText);
+//    CleanupStack::Pop(enumText);
+//    // Text 2
+//    text = StringLoader::LoadLC(R_TEXT_YES);
+//    enumText = new (ELeave) CAknEnumeratedText(1, text);
+//    CleanupStack::Pop(text);
+//    CleanupStack::PushL(enumText);
+//    texts->AppendL(enumText);
+//    CleanupStack::Pop(enumText);
+//
+//    // Sets the correct text visible
+//    item10->LoadL();
+//
+//    iItemList->SettingItemArray()->AppendL(item10);
+//    CleanupStack::Pop(item10);
 
     // Required when there is only one setting item.
     iItemList->SettingItemArray()->RecalculateVisibleIndicesL();
