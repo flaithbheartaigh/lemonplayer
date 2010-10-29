@@ -699,7 +699,7 @@ CBigInt CBigInt::Sub(const CBigInt& A)
 			}
 		else
 			{
-			num = 0x100000000 + m_ulValue[i];
+			num = 0x100000000ll + m_ulValue[i];
 			X.m_ulValue[i] = (unsigned long) (num - carry - A.m_ulValue[i]);
 			carry = 1;
 			}
@@ -723,7 +723,7 @@ CBigInt CBigInt::Sub(unsigned long A)
 		X.Mov(0);
 		return X;
 		}
-	unsigned __int64 num = 0x100000000 + X.m_ulValue[0];
+	unsigned __int64 num = 0x100000000ll + X.m_ulValue[0];
 	X.m_ulValue[0] = (unsigned long) (num - A);
 	int i = 1;
 	while (X.m_ulValue[i] == 0)
@@ -917,7 +917,7 @@ unsigned long CBigInt::Mod(unsigned long A)
 	for (int i = m_nLength - 1; i >= 0; i--)
 		{
 		div = m_ulValue[i];
-		div += carry * 0x100000000;
+		div += carry * 0x100000000ll;
 		carry = (unsigned long) (div % A);
 		}
 	return carry;

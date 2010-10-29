@@ -1,6 +1,6 @@
 CHARACTER_SET UTF8
 
-#define qtn_caption_string "主题变换"
+#define qtn_caption_string "主题助手"
 
 rls_string qtn_help 	"帮助"
 rls_string qtn_about 	"关于"
@@ -21,7 +21,7 @@ rls_string qtn_active 		"启动"
 rls_string qtn_inactive		"停止"
 
 rls_string qtn_theme_current 	"选中主题"
-rls_string qtn_theme_service 	"主题变换功能"
+rls_string qtn_theme_service 	"主题更换功能"
 
 rls_string qtn_loc_resource_file_1 "\\resource\\apps\\ThemeChange_0xE8EE38C1"
 

@@ -16,12 +16,11 @@
 #include <AknWaitDialog.h> //CAknWaitDialog
 
 #include "ThemeDef.h"
-#include "PaymentManager.h"
 
 class CThemeManager;
 
 
-class CThemeChangeAppContainer : public CCoeControl, MCoeControlObserver,MPaymentNotify
+class CThemeChangeAppContainer : public CCoeControl, MCoeControlObserver
 	{
 public:
 	// Constructors and destructor		
@@ -35,9 +34,6 @@ public:
 public:
 	// Functions from base classes
 	TKeyResponse OfferKeyEventL(const TKeyEvent& aKeyEvent, TEventCode aType);
-	
-	void PaymentErr(const TInt& aError);
-	void PaymentState(const TInt& aState);
 
 private:
 	// Functions from base classes
@@ -79,7 +75,6 @@ private:
 	TInt iChangeWaitDlg;
 	CAknWaitDialog* iPaymentWaitDlg;
 	
-	CPaymentManager* iPayment;
 	};
 
 #endif // __THEMECHANGEAPPVIEW_h__
