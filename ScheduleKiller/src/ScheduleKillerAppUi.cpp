@@ -15,7 +15,7 @@
 #include <f32file.h>
 #include <s32file.h>
 
-#include <ScheduleKiller_0xE35F8580.rsg>
+#include <CloverTask.rsg>
 
 #include "ScheduleKiller.hrh"
 #include "ScheduleKiller.pan"
@@ -25,6 +25,7 @@
 #include "Utils.h"
 #include "MacroUtil.h"
 #include "QueryDlgUtil.h"
+#include "SeniorUtils.h"
 
 #include "AppScreenView.h"
 #include "MainScreenView.h"
@@ -34,6 +35,13 @@
 #include "LogoView.h"
 // ============================ MEMBER FUNCTIONS ===============================
 
+_LIT(KFeedbackLink,"http://tieba.baidu.com/f?kw=iCloverSoft");
+
+TInt OpenLink(TAny* /*aAny*/)
+	{
+	CSeniorUtils::StartBroswerApp(KFeedbackLink);
+	return EFalse;
+	}
 
 // -----------------------------------------------------------------------------
 // CScheduleKillerAppUi::ConstructL()
@@ -63,7 +71,8 @@ void CScheduleKillerAppUi::ConstructL()
 	iLogoView = CLogoView::NewL();
 	AddViewL(iLogoView);
 	
-	SetDefaultViewL(*iLogoView);
+//	SetDefaultViewL(*iLogoView);
+	SetDefaultViewL(*iMainView);
 
 	//add your code here...
 
@@ -102,7 +111,7 @@ void CScheduleKillerAppUi::HandleCommandL(TInt aCommand)
 		{
 		case EEikCmdExit:
 		case EAknSoftkeyExit:
-			Exit();
+			ExitApp();
 			break;
 		case ECommandAbout:
 			About();
@@ -186,10 +195,18 @@ void CScheduleKillerAppUi::About()
 		}
 	file.Close();
 
-	ShowModalAboutDlgL(R_ABOUT_DIALOG_TITLE,iText->Des());
-	
+	TCallBack callback(OpenLink);
+	ShowModalAboutLinkDlgL(R_ABOUT_DIALOG_TITLE,iText->Des(),KFeedbackLink,callback);
 	
 	delete iText;
+	}
+
+void CScheduleKillerAppUi::ExitApp()
+	{
+	if (GetModel()->IsEmputy())
+		Exit();
+	else if (ShowConfirmationQueryL(R_TEXT_CONFIRM_EXIT_TASK_RUNNING))
+		Exit();
 	}
 
 // End of File

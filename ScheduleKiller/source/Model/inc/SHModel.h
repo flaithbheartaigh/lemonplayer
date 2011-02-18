@@ -76,6 +76,7 @@ public:
 	void SetRule(const TInt& aType,const TInt& aCountdown,const TTime& aClock);
 	
 	TBool IsEmputy() const {return iEmputy;};
+	void SetEmputy(TBool aEmputy) {iEmputy = aEmputy;};
 	
 	CRuleManager* GetRuleManager() const {return iRuleManager;};
 	

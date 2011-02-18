@@ -14,7 +14,7 @@ ZDIR=$(EPOCROOT)epoc32\data\z
 endif
 
 TARGETDIR=$(ZDIR)\resource\apps
-ICONTARGETFILENAME=$(TARGETDIR)\ScheduleKiller_0xE35F8580.mif
+ICONTARGETFILENAME=$(TARGETDIR)\CloverTask.mif
 
 ICONDIR=..\gfx
 

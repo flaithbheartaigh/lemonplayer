@@ -54,6 +54,7 @@ public:
 	
 private:
 	void About();
+	void ExitApp();
 
 private:
 	// Data

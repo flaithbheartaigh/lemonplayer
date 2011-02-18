@@ -58,12 +58,27 @@ RESOURCE AVKON_VIEW R_VIEW_MAINSCREEN
 	menubar = r_menubar_mainscreen;
 	}
 
+RESOURCE AVKON_VIEW R_VIEW_MAINSCREEN_TASK_RUNNING
+	{
+	cba = r_cba_mainscreen_options_task_running;
+	menubar = r_menubar_mainscreen;
+	}
+
 RESOURCE CBA r_cba_mainscreen_options_add
     {
     buttons =
         {
         CBA_BUTTON {id=EAknSoftkeyOptions; 	txt=qtn_options;},
         CBA_BUTTON {id=ECommandAdd; 		txt=qtn_add;}
+        };
+    }
+
+RESOURCE CBA r_cba_mainscreen_options_task_running
+    {
+    buttons =
+        {
+        CBA_BUTTON {id=EAknSoftkeyOptions; 	txt=qtn_options;},
+        CBA_BUTTON {id=ECommandHidden; 		txt=qtn_hidden;}
         };
     }
 
@@ -87,6 +102,11 @@ RESOURCE MENU_PANE r_menupane_mainscreen
 				},
 		MENU_ITEM
 				{
+				command = ECommandRemove;
+				txt = qtn_remove_task;
+				},				
+		MENU_ITEM
+				{
 				command = ECommandRule;
 				txt = qtn_rule;
 				},
@@ -108,11 +128,10 @@ RESOURCE MENU_PANE r_menupane_mainscreen
 		};
 	}
 
-
 RESOURCE AVKON_VIEW R_VIEW_RULESCREEN
 	{
-	cba = R_AVKON_SOFTKEYS_SELECT_BACK;
-	//menubar = r_menubar;
+	cba = R_AVKON_SOFTKEYS_OPTIONS_BACK;
+	menubar = r_menubar_rulescreen;
 	}
 
 RESOURCE AVKON_VIEW R_VIEW_APPSCREEN
@@ -123,8 +142,34 @@ RESOURCE AVKON_VIEW R_VIEW_APPSCREEN
 
 RESOURCE AVKON_VIEW R_VIEW_SETTINGSCREEN
 	{
-	cba = R_AVKON_SOFTKEYS_SAVE_BACK;
+	cba = R_AVKON_SOFTKEYS_OK_BACK;
 	//menubar = r_menubar_setting;
+	}
+
+RESOURCE MENU_BAR r_menubar_rulescreen
+	{
+	titles =
+		{
+		MENU_TITLE { menu_pane = r_menupane_rulescreen; }
+		};
+	}
+
+RESOURCE MENU_PANE r_menupane_rulescreen
+	{
+	items =
+		{
+		// added the new Options menu command here
+		MENU_ITEM
+				{
+				command = ECommandOpen;
+				txt = qtn_open;
+				},
+		MENU_ITEM
+				{
+				command = ECommandRemove;
+				txt = qtn_remove;
+				}
+		};
 	}
 
 // -----------------------------------------------------------------------------
@@ -264,6 +309,9 @@ RESOURCE TBUF r_text_rule_confirm		{buf=qtn_text_rule_confirm;}
 RESOURCE TBUF R_TEXT_WARN_CHOOSE_APP_NULL		{buf = qtn_warn_choose_app_null;}
 RESOURCE TBUF R_TEXT_WARN_TIME_LOWNER_THAN_NOW	{buf = qtn_warn_time_lower_than_now;}
 
+RESOURCE TBUF R_TEXT_CONFIRM_DELETE_RULE		{buf = qtn_text_confirm_delete_rule;}
+RESOURCE TBUF R_TEXT_CONFIRM_EXIT_TASK_RUNNING	{buf = qtn_text_confirm_exit_task_running;}
+
 // ---------------------------------------------------------------------------- 
 //
 // r_localisable_app_info
@@ -279,7 +327,7 @@ RESOURCE LOCALISABLE_APP_INFO r_localisable_app_info
 		caption = qtn_caption_string;
 
 		number_of_icons = 1;
-	   	icon_file = "\\resource\\apps\\ScheduleKiller_0xE35F8580.mif";
+	   	icon_file = "\\resource\\apps\\CloverTask.mif";
 		};
 	}
 

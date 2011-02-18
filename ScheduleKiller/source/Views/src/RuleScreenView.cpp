@@ -65,12 +65,16 @@ void CRuleScreenView::HandleCommandL(TInt aCommand)
 	{
 	switch (aCommand)
 		{
-		case EAknSoftkeySelect:
+		case ECommandRemove:
+			if (iContainer)
+				iContainer->Delete();
+			break;
+		case ECommandOpen:
 			if (iContainer)
 				if (!iContainer->Select())
 					break;
 			//需要返回,不用break
-		case EAknSoftkeyCancel:
+		case EAknSoftkeyBack:
 			SHChangeView(EScheduleKillerMainScreenViewId);
 			break;
 		default:

@@ -339,6 +339,7 @@ void CAppScreenContainer::GetAppInfo(CGulIcon* aIcon, const TDesC& aInfo,
 			iListBox->ItemDrawer()->ColumnData()->IconArray();
 
 	icons->AppendL(aIcon);
+//	__LOGDES_TOFILE(aInfo);
 	items->AppendL(aInfo);
 	iUids.Append(aUid);
 

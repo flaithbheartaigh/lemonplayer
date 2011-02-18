@@ -148,6 +148,39 @@ void CRuleManager::WriteToFile(RFile& file,CRule* aRule)
 	file.Write(KRuleSymbolEnd);
 	}
 
+void CRuleManager::WriteToFile(RPointerArray<CRule>* aRules)
+	{
+	TFileName filename;
+	GetAppPath(filename);
+	filename.Append(KRuleFile);
+	
+	int pos = filename.LocateReverse('\\');
+	if (pos != KErrNotFound)
+		{
+		TPtrC dirName = filename.Left(pos + 1);
+		CCoeEnv::Static()->FsSession().MkDirAll(dirName);
+		}
+
+	RFile file;
+	TInt err;
+
+	err = file.Replace(CCoeEnv::Static()->FsSession(), filename,
+			EFileWrite);
+	if (KErrNone != err)
+		{
+		return;
+		}
+	CleanupClosePushL(file);
+	
+	for(TInt i=0; i<aRules->Count(); i++)
+		{
+		CRule* rule = (*aRules)[i];
+		WriteToFile(file,rule);
+		}
+
+	CleanupStack::PopAndDestroy(); // file	
+	}
+
 void CRuleManager::TimeFormat(const TTime& aTime,TDes8& aDes)
 	{
 	TDateTime time = aTime.DateTime();
@@ -266,12 +299,33 @@ void CRuleManager::ReadFromFile(RFile& file)
 
 TBool CRuleManager::Select(const TInt& aIndex)
 	{
-	if (aIndex < iRules->Count())
+	if (aIndex >=0 && aIndex < iRules->Count())
 		{
 		if (Confirm(aIndex))
 			return Execute(aIndex);
 		}
 	return EFalse;
+	}
+
+TBool CRuleManager::Delete(const TInt& aIndex)
+	{
+	if (aIndex >=0 && aIndex < iRules->Count())
+		{
+			if (ShowConfirmationQueryL(R_TEXT_CONFIRM_DELETE_RULE))
+				return DeleteRule(aIndex);
+		}
+	return EFalse;	
+	}
+
+TBool CRuleManager::DeleteRule(const TInt& aIndex)
+	{
+	CRule* rule = (*iRules)[aIndex];
+	iRules->Remove(aIndex);
+	delete rule;
+	
+	WriteToFile(iRules);
+	
+	return ETrue;
 	}
 
 TBool CRuleManager::Confirm(const TInt& aIndex)

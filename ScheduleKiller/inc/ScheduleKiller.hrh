@@ -10,16 +10,19 @@
 #ifndef __SCHEDULEKILLER_HRH__
 #define __SCHEDULEKILLER_HRH__
 
-#define _UID3 0xE35F8580
+#define _UID3 0x2003717D
 
 // ScheduleKiller enumerate command codes
 enum TScheduleKillerIds
 	{
 	ECommandAdd = 0x6001,
+	ECommandOpen,
+	ECommandRemove,
 	ECommandHelp,
 	ECommandAbout,
 	ECommandRule,
-	ECommandChange
+	ECommandChange,
+	ECommandHidden
 	// start value must not be 0
 	};
 enum TNewsPacViewIds

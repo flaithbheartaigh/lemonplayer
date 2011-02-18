@@ -12,12 +12,14 @@ CHARACTER_SET UTF8
 //  LOCALISATION STRINGS
 
 // Caption string for app.
-#define qtn_caption_string "ScheduleKiller"
+#define qtn_caption_string "定时关闭"
 
-#define qtn_loc_resource_file_1 "\\resource\\apps\\ScheduleKiller_0xE35F8580"
+#define qtn_loc_resource_file_1 "\\resource\\apps\\CloverTask"
 
-rls_string qtn_add		"新建任务"
-rls_string qtn_rule		"查看规则"
+rls_string qtn_add			"新建任务"
+rls_string qtn_remove_task	"停止任务"
+rls_string qtn_rule			"查看规则"
+rls_string qtn_hidden		"隐藏"
 
 rls_string qtn_add_setting		"任务设置"
 
@@ -35,6 +37,9 @@ rls_string qtn_text_rule_confirm 	"确定使用规则%S\n关闭%S%S"
 
 rls_string qtn_warn_choose_app_null		"未选择程序"
 rls_string qtn_warn_time_lower_than_now	"时间设置小于当前时间"
+
+rls_string qtn_text_confirm_delete_rule			"确定删除此规则"
+rls_string qtn_text_confirm_exit_task_running	"有任务正在运行,退出后将不能定时关闭程序,确定退出"
 
 #include "SHRls.inl"
 

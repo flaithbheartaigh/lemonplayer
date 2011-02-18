@@ -207,3 +207,47 @@ TBool ShowModalAboutDlgL(const TInt& aTextHeaderId,const TDesC& aDes)
 		
 	return ETrue;
 	}
+
+TBool ShowModalAboutLinkDlgL(const TInt& aTextHeaderId,const TDesC& aDes,TCallBack &aCallBack)
+	{
+	CAknMessageQueryDialog* dlg = new (ELeave) CAknMessageQueryDialog();
+	
+	dlg->PrepareLC(R_ABOUT_QUERY_DIALOG);
+	
+	HBufC* title = StringLoader::LoadLC(aTextHeaderId);
+	dlg->QueryHeading()->SetTextL(*title);
+	CleanupStack::PopAndDestroy(); //title
+		
+	dlg->SetMessageTextL(aDes);
+	
+	dlg->SetLink(aCallBack);
+		
+	dlg->RunLD();
+		
+	return ETrue;	
+	}
+
+TBool ShowModalAboutLinkDlgL(const TInt& aTextHeaderId,const TDesC& aMsg,const TDesC& aLink,
+		TCallBack &aCallBack)
+	{
+	CAknMessageQueryDialog* dlg = new (ELeave) CAknMessageQueryDialog();
+	
+	dlg->PrepareLC(R_ABOUT_QUERY_DIALOG);
+	
+	HBufC* title = StringLoader::LoadLC(aTextHeaderId);
+	dlg->QueryHeading()->SetTextL(*title);
+	CleanupStack::PopAndDestroy(); //title
+		
+	HBufC* text = HBufC::NewL(aMsg.Length() + aLink.Length());
+	text->Des().Format(aMsg,&aLink);
+	dlg->SetMessageTextL(text->Des());
+	delete text;
+	
+	dlg->SetLinkTextL(aLink);
+	dlg->SetLink(aCallBack);
+		
+	dlg->RunLD();
+		
+	return ETrue;	
+	}
+

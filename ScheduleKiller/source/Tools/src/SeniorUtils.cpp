@@ -36,14 +36,14 @@ void CSeniorUtils::ShowApplication()
 // Òþ²ØÓ¦ÓÃ³ÌÐò
 void CSeniorUtils::HideApplication()
 	{
-	//	RWsSession aWsSession = CEikonEnv::Static()->WsSession();
-	//	TApaTask aTask(aWsSession);
-	//	TInt aId = CEikonEnv::Static()->RootWin().Identifier();
-	//	aTask.SetWgId(aId);
-	//	if (aWsSession.GetFocusWindowGroup() == aId)
-	//	{
-	//		aTask.SendToBackground();
-	// 	}
+	RWsSession aWsSession = CEikonEnv::Static()->WsSession();
+	TApaTask aTask(aWsSession);
+	TInt aId = CEikonEnv::Static()->RootWin().Identifier();
+	aTask.SetWgId(aId);
+	if (aWsSession.GetFocusWindowGroup() == aId)
+		{
+		aTask.SendToBackground();
+		}
 	}
 
 TThreadId CSeniorUtils::StartBroswerApp(const TDesC& aUrl)

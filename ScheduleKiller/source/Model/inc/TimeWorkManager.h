@@ -48,6 +48,8 @@ private:
 	// Override to handle leaves from RunL(). Default implementation causes
 	// the active scheduler to panic.
 	TInt RunError(TInt aError);
+	
+	void AtTime();
 
 private:
 	enum TTimeWorkManagerState

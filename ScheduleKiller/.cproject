@@ -2,10 +2,10 @@
 <?fileVersion 4.0.0?>
 
 <cproject>
-<storageModule buildFromInf="true" buildingTestComps="true" cleanLevel="0" concurrentBuildJobs="4" defaultMMPChangedAction="0" infBuildComponents="" infFileLocation="group/bld.inf" macrosFile="" makeEngineToUse="make" manageDependencies="true" moduleId="com.nokia.carbide.cdt.builder.carbideCPPBuilder" overrideMakeEngine="false" overrideWorkspaceSettings="false" promptForMMPChangedAction="true" useConcurrentBuilding="true" useDebugMode="false" useIncrementalBuilder="false" useKeepGoing="false" useMMPMacros="true"/>
+<storageModule buildFromInf="true" buildingTestComps="true" cleanLevel="0" concurrentBuildJobs="4" defaultMMPChangedAction="0" infBuildComponents="" infFileLocation="group\bld.inf" macrosFile="" makeEngineToUse="make" manageDependencies="true" moduleId="com.nokia.carbide.cdt.builder.carbideCPPBuilder" overrideMakeEngine="false" overrideWorkspaceSettings="false" promptForMMPChangedAction="true" useConcurrentBuilding="true" useDebugMode="false" useIncrementalBuilder="false" useKeepGoing="false" useMMPMacros="true"/>
 <storageModule moduleId="org.eclipse.cdt.core.settings">
-<cconfiguration id="Emulator Debug (WINSCW) [S60_3rd_FP2_SDK_v1.1_3]">
-<storageModule buildSystemId="com.nokia.carbide.cdt.builder.CarbideConfigurationDataProvider" id="Emulator Debug (WINSCW) [S60_3rd_FP2_SDK_v1.1_3]" moduleId="org.eclipse.cdt.core.settings" name="Emulator Debug (WINSCW) [S60_3rd_FP2_SDK_v1.1_3]">
+<cconfiguration id="Emulator Debug (WINSCW) [S60_3rd_FP2_SDK_v1.1]">
+<storageModule buildSystemId="com.nokia.carbide.cdt.builder.CarbideConfigurationDataProvider" id="Emulator Debug (WINSCW) [S60_3rd_FP2_SDK_v1.1]" moduleId="org.eclipse.cdt.core.settings" name="Emulator Debug (WINSCW) [S60_3rd_FP2_SDK_v1.1]">
 <externalSettings/>
 <extensions>
 <extension id="org.eclipse.cdt.core.PE" point="org.eclipse.cdt.core.BinaryParser"/>
@@ -26,13 +26,13 @@
 <ARGUMENTS_DATA_ID ABLDFREEZEARGSSTORAGE="-r"/>
 <ROM_BUILDER_DATA_ID ROMBUILDWORKINGDIRECTORYSTORAGE="C:\"/>
 </storageModule>
-<storageModule filesCache="C:\workspace_carbide\ScheduleKiller\group\ScheduleKiller.mmp;C:\workspace_carbide\ScheduleKiller\group\bld.inf;" includesCache="C:/workspace_carbide/ScheduleKiller/inc[LOCAL];C:/workspace_carbide/ScheduleKiller/source/Views/inc[LOCAL];C:/workspace_carbide/ScheduleKiller/source/Model/inc[LOCAL];C:/workspace_carbide/ScheduleKiller/source/Tools/inc[LOCAL];C:/workspace_carbide/ScheduleKiller/source/ImageLib/inc[LOCAL];C:/S60/devices/S60_3rd_FP2_SDK_v1.1_3/epoc32/include;" macrosCache="__EXE__;__WINSCW__;__SUPPORT_CPP_EXCEPTIONS__;__SYMBIAN32__;__S60_3X__;_UNICODE;__SERIES60_3X__;_DEBUG;__S60_32__;__WINS__;__CW32__;" moduleId="configDataCache" sourcesCache="/ScheduleKiller/data;/ScheduleKiller/inc;/ScheduleKiller/source;/ScheduleKiller/src;source;data;" timestampCache="1281942099546" useMmpMacrosCache="true"/>
+<storageModule filesCache="C:\MyWork\ScheduleKiller\group\bld.inf;C:\MyWork\ScheduleKiller\group\ScheduleKiller.mmp;" includesCache="C:/MyWork/ScheduleKiller/inc[LOCAL];C:/MyWork/ScheduleKiller/source/Views/inc[LOCAL];C:/MyWork/ScheduleKiller/source/Model/inc[LOCAL];C:/MyWork/ScheduleKiller/source/Tools/inc[LOCAL];C:/MyWork/ScheduleKiller/source/ImageLib/inc[LOCAL];C:/S60/devices/S60_3rd_FP2_SDK_v1.1/epoc32/include;" macrosCache="__EXE__;__WINSCW__;__SUPPORT_CPP_EXCEPTIONS__;__SYMBIAN32__;__S60_3X__;_UNICODE;__SERIES60_3X__;_DEBUG;__S60_32__;__WINS__;__CW32__;" moduleId="configDataCache" sourcesCache="/ScheduleKiller/data;/ScheduleKiller/inc;/ScheduleKiller/source;/ScheduleKiller/src;" timestampCache="1297824197262" useMmpMacrosCache="true"/>
 <storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
-<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
 <storageModule moduleId="org.eclipse.cdt.core.language.mapping"/>
+<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
 </cconfiguration>
-<cconfiguration id="Phone Release (GCCE) [S60_3rd_FP2_SDK_v1.1_3]">
-<storageModule buildSystemId="com.nokia.carbide.cdt.builder.CarbideConfigurationDataProvider" id="Phone Release (GCCE) [S60_3rd_FP2_SDK_v1.1_3]" moduleId="org.eclipse.cdt.core.settings" name="Phone Release (GCCE) [S60_3rd_FP2_SDK_v1.1_3]">
+<cconfiguration id="Phone Release (GCCE) [S60_3rd_FP2_SDK_v1.1]">
+<storageModule buildSystemId="com.nokia.carbide.cdt.builder.CarbideConfigurationDataProvider" id="Phone Release (GCCE) [S60_3rd_FP2_SDK_v1.1]" moduleId="org.eclipse.cdt.core.settings" name="Phone Release (GCCE) [S60_3rd_FP2_SDK_v1.1]">
 <externalSettings/>
 <extensions>
 <extension id="org.eclipse.cdt.core.PE" point="org.eclipse.cdt.core.BinaryParser"/>
@@ -48,15 +48,68 @@
 </extensions>
 </storageModule>
 <storageModule moduleId="CarbideConfigurationDataProvider">
-<SIS_BUILDER_DATA_ID CERTIFICATESTORAGE="D:\SymbianSign\dev20100329.cer" CREATESTUBSTORAGE="false" ENABLEDSTORAGE="true" KEYSTORAGE="D:\SymbianSign\private.key" PARTIALUPGRADESTORAGE="false" PKGFILESTORAGE="sis\ScheduleKiller_S60_3_X_v_1_0_0.pkg" SIGNINGTYPESTORAGE="2"/>
+<SIS_BUILDER_DATA_ID CERTIFICATESTORAGE="C:\MyWork\ScheduleKiller\sis\20110126.cer" CREATESTUBSTORAGE="false" ENABLEDSTORAGE="true" KEYSTORAGE="C:\MyWork\ScheduleKiller\sis\tencent.key" PARTIALUPGRADESTORAGE="false" PKGFILESTORAGE="sis\CloverTask_S60V3.pkg" SIGNINGTYPESTORAGE="2"/>
 <ENV_VAR_DATA_ID/>
 <ARGUMENTS_DATA_ID ABLDFREEZEARGSSTORAGE="-r"/>
 <ROM_BUILDER_DATA_ID ROMBUILDWORKINGDIRECTORYSTORAGE="C:\"/>
 </storageModule>
-<storageModule filesCache="C:\workspace_carbide\ScheduleKiller\group\ScheduleKiller.mmp;C:\workspace_carbide\ScheduleKiller\group\bld.inf;" includesCache="C:/workspace_carbide/ScheduleKiller/inc[LOCAL];C:/workspace_carbide/ScheduleKiller/source/Views/inc[LOCAL];C:/workspace_carbide/ScheduleKiller/source/Model/inc[LOCAL];C:/workspace_carbide/ScheduleKiller/source/Tools/inc[LOCAL];C:/workspace_carbide/ScheduleKiller/source/ImageLib/inc[LOCAL];C:/S60/devices/S60_3rd_FP2_SDK_v1.1_3/epoc32/include;" macrosCache="__GENERIC_MARM__;__EXE__;__SYMBIAN32__;__SUPPORT_CPP_EXCEPTIONS__;__EPOC32__;__EABI__;__GCCE__;NDEBUG;__MARM__;_UNICODE;__S60_3X__;__SERIES60_3X__;__MARM_ARMV5__;__S60_32__;" moduleId="configDataCache" sourcesCache="/ScheduleKiller/data;/ScheduleKiller/inc;/ScheduleKiller/source;/ScheduleKiller/src;data;source;" timestampCache="1281942099562" useMmpMacrosCache="true"/>
+<storageModule filesCache="C:\MyWork\ScheduleKiller\group\bld.inf;C:\MyWork\ScheduleKiller\group\ScheduleKiller.mmp;" includesCache="C:/MyWork/ScheduleKiller/inc[LOCAL];C:/MyWork/ScheduleKiller/source/Views/inc[LOCAL];C:/MyWork/ScheduleKiller/source/Model/inc[LOCAL];C:/MyWork/ScheduleKiller/source/Tools/inc[LOCAL];C:/MyWork/ScheduleKiller/source/ImageLib/inc[LOCAL];C:/S60/devices/S60_3rd_FP2_SDK_v1.1/epoc32/include;" macrosCache="__GENERIC_MARM__;__EXE__;__SYMBIAN32__;__SUPPORT_CPP_EXCEPTIONS__;__EPOC32__;__EABI__;__GCCE__;NDEBUG;__MARM__;_UNICODE;__S60_3X__;__SERIES60_3X__;__MARM_ARMV5__;__S60_32__;" moduleId="configDataCache" sourcesCache="/ScheduleKiller/data;/ScheduleKiller/inc;/ScheduleKiller/source;/ScheduleKiller/src;" timestampCache="1297824197277" useMmpMacrosCache="true"/>
 <storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
 <storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
 <storageModule moduleId="org.eclipse.cdt.core.language.mapping"/>
+</cconfiguration>
+<cconfiguration id="Emulator Debug (WINSCW) [S60_3rd_MR]">
+<storageModule buildSystemId="com.nokia.carbide.cdt.builder.CarbideConfigurationDataProvider" id="Emulator Debug (WINSCW) [S60_3rd_MR]" moduleId="org.eclipse.cdt.core.settings" name="Emulator Debug (WINSCW) [S60_3rd_MR]">
+<externalSettings/>
+<extensions>
+<extension id="org.eclipse.cdt.core.PE" point="org.eclipse.cdt.core.BinaryParser"/>
+<extension id="org.eclipse.cdt.core.ELF" point="org.eclipse.cdt.core.BinaryParser"/>
+<extension id="com.nokia.cdt.debug.cw.symbian.SymbianE32" point="org.eclipse.cdt.core.BinaryParser"/>
+<extension id="com.nokia.carbide.cdt.builder.MakeDefErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+<extension id="com.nokia.carbide.cdt.builder.SBSv2ErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+<extension id="com.nokia.carbide.cdt.builder.GCCErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+<extension id="com.nokia.carbide.cdt.builder.MWLDErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+<extension id="com.nokia.carbide.cdt.builder.MWCCErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+<extension id="com.nokia.carbide.cdt.builder.CarbideMakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+<extension id="com.nokia.carbide.cdt.builder.RCOMPErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+<extension id="com.nokia.carbide.cdt.builder.MakmakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+</extensions>
+</storageModule>
+<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
+<storageModule moduleId="org.eclipse.cdt.core.language.mapping"/>
+<storageModule moduleId="CarbideConfigurationDataProvider">
+<ENV_VAR_DATA_ID/>
+<ARGUMENTS_DATA_ID ABLDFREEZEARGSSTORAGE="-r"/>
+<ROM_BUILDER_DATA_ID ROMBUILDWORKINGDIRECTORYSTORAGE="C:\"/>
+</storageModule>
+<storageModule filesCache="C:\MyWork\ScheduleKiller\group\bld.inf;C:\MyWork\ScheduleKiller\group\ScheduleKiller.mmp;" includesCache="C:/MyWork/ScheduleKiller/inc[LOCAL];C:/MyWork/ScheduleKiller/source/Views/inc[LOCAL];C:/MyWork/ScheduleKiller/source/Model/inc[LOCAL];C:/MyWork/ScheduleKiller/source/Tools/inc[LOCAL];C:/MyWork/ScheduleKiller/source/ImageLib/inc[LOCAL];C:/Symbian/9.1/S60_3rd_MR/Epoc32/include;" macrosCache="__SERIES60_30__;__EXE__;__WINSCW__;__SUPPORT_CPP_EXCEPTIONS__;__SYMBIAN32__;_UNICODE;__SERIES60_3X__;_DEBUG;__WINS__;__CW32__;" moduleId="configDataCache" sourcesCache="/ScheduleKiller/data;/ScheduleKiller/inc;/ScheduleKiller/source;/ScheduleKiller/src;" timestampCache="1297824197293" useMmpMacrosCache="true"/>
+<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
+</cconfiguration>
+<cconfiguration id="Phone Release (GCCE) [S60_3rd_MR]">
+<storageModule buildSystemId="com.nokia.carbide.cdt.builder.CarbideConfigurationDataProvider" id="Phone Release (GCCE) [S60_3rd_MR]" moduleId="org.eclipse.cdt.core.settings" name="Phone Release (GCCE) [S60_3rd_MR]">
+<externalSettings/>
+<extensions>
+<extension id="org.eclipse.cdt.core.PE" point="org.eclipse.cdt.core.BinaryParser"/>
+<extension id="org.eclipse.cdt.core.ELF" point="org.eclipse.cdt.core.BinaryParser"/>
+<extension id="com.nokia.cdt.debug.cw.symbian.SymbianE32" point="org.eclipse.cdt.core.BinaryParser"/>
+<extension id="com.nokia.carbide.cdt.builder.MakeDefErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+<extension id="com.nokia.carbide.cdt.builder.SBSv2ErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+<extension id="com.nokia.carbide.cdt.builder.GCCEErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+<extension id="com.nokia.carbide.cdt.builder.CarbideMakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+<extension id="com.nokia.carbide.cdt.builder.RCOMPErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+<extension id="com.nokia.carbide.cdt.builder.Elf2E32ErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+<extension id="com.nokia.carbide.cdt.builder.MakmakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+</extensions>
+</storageModule>
+<storageModule moduleId="CarbideConfigurationDataProvider">
+<SIS_BUILDER_DATA_ID CERTIFICATESTORAGE="C:\MyWork\ScheduleKiller\sis\20110126.cer" CREATESTUBSTORAGE="false" ENABLEDSTORAGE="true" KEYSTORAGE="C:\MyWork\ScheduleKiller\sis\tencent.key" PARTIALUPGRADESTORAGE="false" PKGFILESTORAGE="sis\CloverTask_S60V3.pkg" SIGNINGTYPESTORAGE="2"/>
+<ENV_VAR_DATA_ID/>
+<ARGUMENTS_DATA_ID ABLDFREEZEARGSSTORAGE="-r"/>
+<ROM_BUILDER_DATA_ID ROMBUILDWORKINGDIRECTORYSTORAGE="C:\"/>
+</storageModule>
+<storageModule filesCache="C:\MyWork\ScheduleKiller\group\bld.inf;C:\MyWork\ScheduleKiller\group\ScheduleKiller.mmp;" includesCache="C:/MyWork/ScheduleKiller/inc[LOCAL];C:/MyWork/ScheduleKiller/source/Views/inc[LOCAL];C:/MyWork/ScheduleKiller/source/Model/inc[LOCAL];C:/MyWork/ScheduleKiller/source/Tools/inc[LOCAL];C:/MyWork/ScheduleKiller/source/ImageLib/inc[LOCAL];C:/Symbian/9.1/S60_3rd_MR/Epoc32/include;" macrosCache="__GENERIC_MARM__;__SERIES60_30__;__EXE__;__SYMBIAN32__;__SUPPORT_CPP_EXCEPTIONS__;__EPOC32__;__EABI__;__GCCE__;NDEBUG;__MARM__;_UNICODE;__SERIES60_3X__;__MARM_ARMV5__;" moduleId="configDataCache" sourcesCache="/ScheduleKiller/data;/ScheduleKiller/inc;/ScheduleKiller/source;/ScheduleKiller/src;" timestampCache="1297838748377" useMmpMacrosCache="true"/>
+<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
+<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
 </cconfiguration>
 </storageModule>
 </cproject>

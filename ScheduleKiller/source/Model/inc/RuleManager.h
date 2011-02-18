@@ -65,6 +65,7 @@ public:
 	void Init();
 	
 	TBool Select(const TInt& aIndex);
+	TBool Delete(const TInt& aIndex);
 	
 	static void TimeFormat(const TTime& aTime,TDes8& aDes);
 	static void TimeSet(const TDesC& aDes,TTime& aTime);
@@ -73,12 +74,15 @@ private:
 	//new func
 	void WriteToFile(CRule* aRule);
 	void WriteToFile(RFile& file,CRule* aRule);
+	void WriteToFile(RPointerArray<CRule>* aRules);
 
 	void ReadFromFile();
 	void ReadFromFile(RFile& file);
 	
 	TBool Confirm(const TInt& aIndex);
 	TBool Execute(const TInt& aIndex);
+	
+	TBool DeleteRule(const TInt& aIndex);
 	
 private:
 	RPointerArray<CRule>* iRules;

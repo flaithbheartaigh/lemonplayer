@@ -112,13 +112,18 @@ TBool CLoadAppEngine::SegmentLoop()
 		CFbsBitmap* AppIcon(NULL);
 		CFbsBitmap* AppIconMsk(NULL);
 		MAknsSkinInstance* skin = AknsUtils::SkinInstance();
+		CGulIcon* icon;
 		TRAPD(err, AknsUtils::CreateAppIconLC(skin, appInfo.iUid, EAknsAppIconTypeList, AppIcon, AppIconMsk);CleanupStack::Pop(2));
-		AknIconUtils::SetSize(AppIcon, TSize(32, 32), EAspectRatioNotPreserved);
-		if (err != KErrNone)
+		
+		if (err == KErrNone)
 			{
-			AknsUtils::CreateGulIconL(skin, KAknsIIDQgnMenuUnknownLst, ETrue);
+			AknIconUtils::SetSize(AppIcon, TSize(32, 32), EAspectRatioNotPreserved);
+			icon = CGulIcon::NewL(AppIcon, AppIconMsk);
 			}
-		CGulIcon* icon = CGulIcon::NewL(AppIcon, AppIconMsk);
+		else
+			{
+			icon = AknsUtils::CreateGulIconL(skin, KAknsIIDQgnMenuUnknownLst, ETrue);
+			}
 		//icons->AppendL(icon);
 
 		//__LOGDES_TOFILE(appInfo.iCaption)

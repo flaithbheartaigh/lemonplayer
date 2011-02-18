@@ -98,6 +98,6 @@ void CLogoView::DoDeactivate()
 
 void CLogoView::TimerExpired()
 	{
-	SHModel()->GetRuleManager()->Init();
+//	SHModel()->GetRuleManager()->Init();
 	AppUi()->ActivateLocalViewL(TUid::Uid(EScheduleKillerMainScreenViewId));
 	}

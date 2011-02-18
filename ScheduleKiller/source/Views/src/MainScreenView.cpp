@@ -9,10 +9,12 @@
 
 // INCLUDE FILES
 #include <aknviewappui.h>
-
+#include <eikmenup.h> 
+#include <eikbtgpc.h> 
 #include "MainScreenView.h"
 
 #include "SHPlatform.h"
+#include "SeniorUtils.h"
 //copy from ScheduleKillerAppView.cpp
 //#include "ScheduleKiller.hrh"
 //#include <ScheduleKiller_UID3.rsg>
@@ -50,9 +52,9 @@ CMainScreenView* CMainScreenView::NewL()
 void CMainScreenView::ConstructL()
 	{
 	BaseConstructL(R_VIEW_MAINSCREEN);
-
 	//add your code here...
 
+	SHModel()->GetRuleManager()->Init();
 	}
 /**
  * 
@@ -68,11 +70,19 @@ void CMainScreenView::HandleCommandL(TInt aCommand)
 		case ECommandAdd:
 			SHChangeViewParam(EScheduleKillerSettingScreenViewId,KViewChangeFromMain);
 			break;
+		case ECommandRemove:
+			SHModel()->SetEmputy(ETrue);
+			SHModel()->GetTimeWorkManager()->Cancel();
+			UpdateCBA();
+			break;
 		case ECommandRule:
 			SHChangeView(EScheduleKillerRuleScreenViewId);
 			break;
 		case ECommandHelp:
 			SHChangeView(ESHHelpViewId);
+			break;
+		case ECommandHidden:
+			CSeniorUtils::HideApplication();
 			break;
 		default:
 			AppUi()->HandleCommandL(aCommand);
@@ -82,6 +92,24 @@ void CMainScreenView::HandleStatusPaneSizeChange()
 	{
 	if (iContainer != NULL)
 		iContainer->SetRect(ClientRect());
+	}
+
+void CMainScreenView::DynInitMenuPaneL( TInt aResourceId, 
+                                               CEikMenuPane* aMenuPane )
+	{
+	if (aResourceId == R_MENUPANE_MAINSCREEN)
+		{
+		if (SHModel()->IsEmputy())
+			{
+				aMenuPane->SetItemDimmed(ECommandAdd,  EFalse);
+				aMenuPane->SetItemDimmed(ECommandRemove, ETrue);	
+			}
+		else
+			{
+				aMenuPane->SetItemDimmed(ECommandAdd,  ETrue);
+				aMenuPane->SetItemDimmed(ECommandRemove, EFalse);	
+			}
+		}
 	}
 
 /**
@@ -99,7 +127,19 @@ void CMainScreenView::DoActivateL(const TVwsViewId& /*aPrevViewId*/,
 		//add your init code ...
 
 		}
+	UpdateCBA();
 	}
+
+void CMainScreenView::UpdateCBA()
+	{
+	CEikButtonGroupContainer* cba = CEikButtonGroupContainer::Current();         
+	if (SHModel()->IsEmputy())
+		cba-> SetCommandSetL(R_CBA_MAINSCREEN_OPTIONS_ADD); 
+	else
+		cba-> SetCommandSetL(R_CBA_MAINSCREEN_OPTIONS_TASK_RUNNING); 
+	cba-> DrawNow();
+	}
+
 void CMainScreenView::DoDeactivate()
 	{
 	if (iContainer != NULL)
