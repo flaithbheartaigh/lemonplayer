@@ -66,6 +66,7 @@ void CSettingScreenContainer::ConstructL(const TRect& aRect)
 // -----------------------------------------------------------------------------
 //
 CSettingScreenContainer::CSettingScreenContainer()
+:iNumber(30)
 	{
 	// No implementation required
 	}
@@ -215,6 +216,17 @@ TBool CSettingScreenContainer::Save()
 		{
 		TTime time;
 		time.HomeTime();
+		
+		//iDate会被重置,丢失年月日等数据,因此需要重新赋值.
+		TDateTime dt;
+		dt.SetYear(time.DateTime().Year());
+		dt.SetMonth(time.DateTime().Month());
+		dt.SetDay(time.DateTime().Day());
+		dt.SetHour(iDate.DateTime().Hour());
+		dt.SetMinute(iDate.DateTime().Minute());
+		dt.SetSecond(0);
+		
+		iDate = dt;
 		if (iDate > time)
 			SHModel()->SetTime(iDate);
 		else

@@ -6,7 +6,7 @@
  */
 #ifndef SHPLATFORM_H_
 #define SHPLATFORM_H_
-#include <ScheduleKiller_0xE35F8580.rsg>
+#include <CloverTask.rsg>
 #include <ScheduleKiller.mbg>
 #include "ScheduleKiller.hrh"
 #include "ScheduleKillerAppUi.h"

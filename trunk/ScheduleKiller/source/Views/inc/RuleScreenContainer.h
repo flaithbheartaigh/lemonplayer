@@ -61,6 +61,7 @@ public:
 	TKeyResponse OfferKeyEventL(const TKeyEvent& aKeyEvent, TEventCode aType);
 
 	TBool Select();
+	TBool Delete();
 private:
 	// Functions from base classes
 	void SizeChanged();

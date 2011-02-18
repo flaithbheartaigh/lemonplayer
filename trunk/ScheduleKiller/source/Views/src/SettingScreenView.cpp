@@ -65,7 +65,8 @@ void CSettingScreenView::HandleCommandL(TInt aCommand)
 	{
 	switch (aCommand)
 		{
-		case EAknSoftkeySave:
+//		case EAknSoftkeySave:
+		case EAknSoftkeyOk:
 			if (iContainer)
 				if (!iContainer->Save())
 					break;

@@ -7,11 +7,11 @@
 ============================================================================
 */
 
-TARGET  ScheduleKiller_0xE35F8580.exe
+TARGET  CloverTask.exe
 TARGETTYPE  exe
-UID  0x100039CE 0xE35F8580 
+UID  0x100039CE 0x2003717D
 
-TARGETPATH \system\apps\ScheduleKiller
+TARGETPATH \system\apps\CloverTask
 
 SOURCEPATH ..\src
 SOURCE 	ScheduleKiller.cpp
@@ -23,12 +23,12 @@ SOURCEPATH ..\data
 
 START RESOURCE	ScheduleKiller.rss
 HEADER
-TARGET ScheduleKiller_0xE35F8580.rsc
+TARGET CloverTask.rsc
 TARGETPATH resource\apps
 END //RESOURCE
 
 START RESOURCE	ScheduleKiller_reg.rss
-TARGET ScheduleKiller_0xE35F8580_reg.rsc
+TARGET CloverTask_reg.rsc
 TARGETPATH 	  \private\10003a3f\apps
 END //RESOURCE
 
@@ -42,12 +42,12 @@ SYSTEMINCLUDE	 \epoc32\include
 LIBRARY		   euser.lib apparc.lib cone.lib eikcore.lib avkon.lib
 LIBRARY		   commonengine.lib efsrv.lib estor.lib
 LIBRARY        aknnotify.lib gdi.lib aknicon.lib eikcdlg.lib eikctl.lib eikcoctl.lib 
-LIBRARY        aknskins.lib aknskinsrv.lib aknswallpaperutils.lib fbscli.lib etext.lib egul.lib apgrfx.lib bafl.lib charconv.lib favouritesengine.lib insock.lib flogger.lib 
+LIBRARY        aknskins.lib aknskinsrv.lib aknswallpaperutils.lib fbscli.lib etext.lib egul.lib apgrfx.lib bafl.lib charconv.lib favouritesengine.lib insock.lib flogger.lib ws32.lib 
 
 LANG	 SC
 
 VENDORID	  	  0
-SECUREID		  0xE35F8580
+SECUREID		  0x2003717D
 CAPABILITY	  	  PowerMgmt ReadUserData 
 
 SOURCEPATH ..\source\Views\src

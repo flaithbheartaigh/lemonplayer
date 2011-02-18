@@ -63,16 +63,32 @@ void CTimeWorkManager::RunL()
 		{
 		// Do something the first time RunL() is called
 		iState = EInitialized;
+		
+		AtTime();
 		}
 	else if (iState != EError)
 		{
-		// Do something
-		KillProcess();
-
-		//退出程序
-		User::Exit(0);
+		switch (iStatus.Int())
+			{
+			case KErrNone:
+				{
+				// Do something
+				KillProcess();
+				//退出程序
+				User::Exit(0);		
+				}
+				break;
+			case KErrAbort:
+				AtTime();
+				break;
+			default:
+				break;
+			}	
 		}
-	
+	}
+
+void CTimeWorkManager::AtTime()
+	{
 	TTime time = SHModel()->GetTime();
 	TTime now;
 	now.HomeTime();

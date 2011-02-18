@@ -124,7 +124,9 @@ TKeyResponse CRuleScreenContainer::OfferKeyEventL(const TKeyEvent& aKeyEvent,
 		case EKeyDevice3:
 			Select();
 			return EKeyWasConsumed;
-			break;
+		case EKeyBackspace:
+			Delete();
+			return EKeyWasConsumed;
 		default:
 			break;
 		}
@@ -206,7 +208,6 @@ void CRuleScreenContainer::UpdateDisplay()
 	RPointerArray<CRule>* rules = SHModel()->GetRuleManager()->Rules();
 
 	items->Reset();
-	_LIT(KItemFormat, "\tItem\titem");
 
 	if (rules)
 		{
@@ -260,5 +261,17 @@ void CRuleScreenContainer::UpdateDisplay()
 TBool CRuleScreenContainer::Select()
 	{
 	TInt index = iListBox->CurrentItemIndex();
-	return SHModel()->GetRuleManager()->Select(index);
+	TInt re = SHModel()->GetRuleManager()->Select(index);
+	if (re)
+		SHChangeView(EScheduleKillerMainScreenViewId);
+	return re;
+	}
+
+TBool CRuleScreenContainer::Delete()
+	{
+	TInt index = iListBox->CurrentItemIndex();
+	TBool re = SHModel()->GetRuleManager()->Delete(index);
+	if (re)
+		UpdateDisplay();
+	return re;
 	}

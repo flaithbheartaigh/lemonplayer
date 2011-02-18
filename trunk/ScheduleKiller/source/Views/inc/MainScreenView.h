@@ -36,10 +36,12 @@ public:
 	TUid Id() const;
 	void HandleCommandL(TInt aCommand);
 	void HandleStatusPaneSizeChange();
-
+	void DynInitMenuPaneL( TInt aResourceId, CEikMenuPane* aMenuPane );
 private:
 	CMainScreenView();
 	void ConstructL();
+	
+	void UpdateCBA();
 
 protected:
 	void DoActivateL(const TVwsViewId& aPrevViewId, TUid aCustomMessageId,

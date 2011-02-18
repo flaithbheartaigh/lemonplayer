@@ -16,7 +16,7 @@ endif
 # -------------------------------------------------------------------
 
 # For the icons used by the application code (engine in this case)
-TARGETDIR_PRIVATE=$(ZDIR)\private\E35F8580
+TARGETDIR_PRIVATE=$(ZDIR)\private\2003717D
 ICONTARGETFILENAME_PRIVATE=$(TARGETDIR_PRIVATE)\ScheduleKiller.mbm
 IMAGETARGETFILENAME_PRIVATE=$(TARGETDIR_PRIVATE)\ScheduleKiller.mif
 

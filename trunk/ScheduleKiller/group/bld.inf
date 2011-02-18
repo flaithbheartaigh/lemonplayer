@@ -16,5 +16,5 @@ gnumakefile ScheduleKiller_Image.mk
 ScheduleKiller.mmp
 
 PRJ_EXPORTS
-..\resource\about_zh.txt	..\winscw\c\private\E35F8580\about_zh.txt
-..\resource\help_zh.txt		..\winscw\c\private\E35F8580\help_zh.txt
+..\resource\about_zh.txt	..\winscw\c\private\2003717D\about_zh.txt
+..\resource\help_zh.txt		..\winscw\c\private\2003717D\help_zh.txt
