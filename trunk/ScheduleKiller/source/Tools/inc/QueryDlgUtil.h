@@ -22,4 +22,7 @@ TBool ShowModalAboutDlgL(const TInt& aTextHeaderId,const TInt& aTextResourceId);
 TBool ShowModalAboutDlgL(const TInt& aTextHeaderId,const TDesC& aDes);
 TBool ShowModalAboutLinkDlgL(const TInt& aTextHeaderId,const TDesC& aDes,TCallBack &aCallBack);
 TBool ShowModalAboutLinkDlgL(const TInt& aTextHeaderId,const TDesC& aMsg,const TDesC& aLink,TCallBack &aCallBack);
+TBool ShowModalAboutLinkDlgL(const TInt& aTitleHeaderId,const TDesC& aMsg,const TInt& aTextHeaderId,
+		TCallBack &aCallBack);
+
 #endif

@@ -12,16 +12,16 @@
 #include "MacroUtil.h"
 
 CSHModel::CSHModel()
-:iEmputy(ETrue)
 	{
 	// No implementation required
 	}
 
 CSHModel::~CSHModel()
 	{
-	SAFE_DELETE(iRule);
-	SAFE_DELETE_ACTIVE(iTimeWork);
+	SAFE_DELETE(iRule)
+	SAFE_DELETE_ACTIVE(iTimeWork)
 	SAFE_DELETE(iRuleManager)
+	SAFE_DELETE(iTaskInfoManager)
 	}
 
 CSHModel* CSHModel::NewLC()
@@ -44,6 +44,7 @@ void CSHModel::ConstructL()
 	iRuleManager = CRuleManager::NewL();
 	iTimeWork = CTimeWorkManager::NewL();
 	iRule = CRule::NewL();
+	iTaskInfoManager = CTaskInfoManager::NewL();
 	}
 
 void CSHModel::SetRule(const TInt& aType,const TInt& aCountdown,const TTime& aClock)

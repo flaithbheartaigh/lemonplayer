@@ -37,9 +37,16 @@ rls_string qtn_text_rule_confirm 	"确定使用规则%S\n关闭%S%S"
 
 rls_string qtn_warn_choose_app_null		"未选择程序"
 rls_string qtn_warn_time_lower_than_now	"时间设置小于当前时间"
+rls_string qtn_warn_duplicate_task		"已存在于任务列表中"
 
 rls_string qtn_text_confirm_delete_rule			"确定删除此规则"
 rls_string qtn_text_confirm_exit_task_running	"有任务正在运行,退出后将不能定时关闭程序,确定退出"
+
+rls_string qtn_rule_lunch_run			"设置此规则启动运行"
+rls_string qtn_rule_cancel_lunch_run	"取消此规则启动运行"
+
+rls_string qtn_text_shutdown			"关机"
+rls_string qtn_text_sina_weibo			"新浪微博"
 
 #include "SHRls.inl"
 

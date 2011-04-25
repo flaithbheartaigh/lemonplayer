@@ -19,6 +19,7 @@
 #include <StringLoader.h> 
 
 #include "ShPlatform.h"
+#include "LMSvgUtil.h"
 
 CRuleScreenContainer::CRuleScreenContainer()
 	{
@@ -50,7 +51,7 @@ void CRuleScreenContainer::ConstructL(const TRect& aRect)
 	{
 	CreateWindowL();
 
-	iListBox = new (ELeave) CAknDoubleStyleListBox ();
+	iListBox = new (ELeave) CAknDoubleGraphicStyleListBox ();
 	iListBox->ConstructL(this,EAknListBoxSelectionList);
 	iListBox->SetContainerWindowL(*this);
 
@@ -59,7 +60,7 @@ void CRuleScreenContainer::ConstructL(const TRect& aRect)
 	iListBox->ScrollBarFrame()->SetScrollBarVisibilityL(
 			CEikScrollBarFrame::EOff, CEikScrollBarFrame::EAuto);
 
-	//SetIconsL();
+	SetIconsL();
 	UpdateDisplay();
 
 	SetRect(aRect);
@@ -104,6 +105,17 @@ void CRuleScreenContainer::HandleControlEventL(CCoeControl* /*aControl*/,
 	{
 	// TODO: Add your control event handler code here
 	}
+
+void CRuleScreenContainer::HandleResourceChange( TInt aType )
+    {
+    CCoeControl::HandleResourceChange( aType );
+    if  ( aType == KEikDynamicLayoutVariantSwitch )
+    	{
+        TRect rect;
+        AknLayoutUtils::LayoutMetricsRect(AknLayoutUtils::EMainPane, rect);
+        SetRect(rect);
+        }
+    }
 
 //------------------------------------------------------------------
 //CRuleScreenContainer::OfferKeyEventL(
@@ -192,16 +204,20 @@ void CRuleScreenContainer::SizeChanged()
  */
 void CRuleScreenContainer::SetIconsL()
 	{
-//	CAknIconArray* icons = new (ELeave) CAknIconArray(2);
-//	CleanupStack::PushL(icons);
-//	icons->ConstructFromResourceL(R_ICON_MARK);
-//	iListBox->ItemDrawer()->ColumnData()->SetIconArray(icons);
-//	CleanupStack::Pop(); // icons
+	CAknIconArray* icons = new (ELeave) CAknIconArray(2);
+	CleanupStack::PushL(icons);
+	
+	CGulIcon* icon = LMSvgUtil::GetIconFormResourceL(EMbmSchedulekillerFav,EMbmSchedulekillerFav_mask);
+	icons->AppendL(icon);
+//	icons->ConstructFromResourceL(R_RULE_LIST_ICON_MARK);
+	CleanupStack::Pop(); // icons
+	
+	iListBox->ItemDrawer()->ColumnData()->SetIconArray(icons);
+
 	}
 //格式:\t名字\程序 倒计时/定时 %d分钟/时间
 void CRuleScreenContainer::UpdateDisplay()
 	{
-
 	CTextListBoxModel* model = iListBox->Model();
 	CDesCArray* items = static_cast<CDesCArray*> (model->ItemTextArray());
 	
@@ -223,6 +239,8 @@ void CRuleScreenContainer::UpdateDisplay()
 			TInt len = rulename.Length() + appname.Length() + 16;
 			HBufC* record = HBufC::NewL(len);
 			TPtr ptr = record->Des();
+			if (rule->IsLunchRun())
+				ptr.AppendNum(0);
 			ptr.Append('\t');
 			ptr.Append(rulename);
 			ptr.Append('\t');
@@ -274,4 +292,19 @@ TBool CRuleScreenContainer::Delete()
 	if (re)
 		UpdateDisplay();
 	return re;
+	}
+
+TBool CRuleScreenContainer::LunchRun()
+	{
+	TInt index = iListBox->CurrentItemIndex();
+	TBool re = SHModel()->GetRuleManager()->LunchRun(index);
+	if (re)
+		UpdateDisplay();
+	return re;
+	}
+
+CRule* CRuleScreenContainer::GetRule()
+	{
+	TInt index = iListBox->CurrentItemIndex();
+	return SHModel()->GetRuleManager()->GetRule(index);
 	}

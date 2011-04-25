@@ -251,3 +251,29 @@ TBool ShowModalAboutLinkDlgL(const TInt& aTextHeaderId,const TDesC& aMsg,const T
 	return ETrue;	
 	}
 
+TBool ShowModalAboutLinkDlgL(const TInt& aTitleHeaderId,const TDesC& aMsg,const TInt& aTextHeaderId,
+		TCallBack &aCallBack)
+	{
+	CAknMessageQueryDialog* dlg = new (ELeave) CAknMessageQueryDialog();
+	
+	dlg->PrepareLC(R_ABOUT_QUERY_DIALOG);
+	
+	HBufC* title = StringLoader::LoadLC(aTitleHeaderId);
+	dlg->QueryHeading()->SetTextL(*title);
+	CleanupStack::PopAndDestroy(); //title
+		
+	HBufC* msg = StringLoader::LoadL(aTextHeaderId);	
+	HBufC* text = HBufC::NewL(aMsg.Length() + msg->Length() + 8);
+	text->Des().Format(aMsg,msg);
+	dlg->SetMessageTextL(text->Des());
+	delete text;
+	
+	dlg->SetLinkTextL(msg->Des());
+	delete msg;
+	
+	dlg->SetLink(aCallBack);
+		
+	dlg->RunLD();
+		
+	return ETrue;	
+	}

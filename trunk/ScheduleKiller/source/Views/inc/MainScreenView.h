@@ -37,12 +37,13 @@ public:
 	void HandleCommandL(TInt aCommand);
 	void HandleStatusPaneSizeChange();
 	void DynInitMenuPaneL( TInt aResourceId, CEikMenuPane* aMenuPane );
+	
+	void UpdateCBA();
+	
 private:
 	CMainScreenView();
 	void ConstructL();
 	
-	void UpdateCBA();
-
 protected:
 	void DoActivateL(const TVwsViewId& aPrevViewId, TUid aCustomMessageId,
 			const TDesC8& aCustomMessage);

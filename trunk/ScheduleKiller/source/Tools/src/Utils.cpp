@@ -70,3 +70,16 @@ void GetAppPath(TDes& aAppPath)
 #endif	
 }
 
+void GetResourcePath(TDes& aAppPath)
+{
+#if defined ( EKA2 )
+    TParsePtrC parse((CEikonEnv::Static()->EikAppUi()->Application())->ResourceFileName());
+    aAppPath.Insert(0, parse.Drive());
+#else
+    CompleteWithAppPath(aAppPath);
+#endif
+#ifdef __WINS__
+	aAppPath[0] = 'c';
+#endif		
+}
+

@@ -19,6 +19,9 @@ public:
 	static CFbsBitmap* GetImageFromResourceL(TInt aId);
 	static void GetImageAndMaskFormResourceL(CFbsBitmap*& aBitmap,
 			CFbsBitmap*& aBitmapMask,TInt aBitmapId, TInt aMaskId);
+	static CGulIcon* GetIconFormResourceL(TInt aBitmapId, TInt aMaskId);
+	static void GetImageAndMaskFormResourcePathL(CFbsBitmap*& aBitmap,
+			CFbsBitmap*& aBitmapMask,TInt aBitmapId, TInt aMaskId);
 };
 
 #endif /*YICHAUTILE_H_*/

@@ -35,7 +35,7 @@
 #include "LogoView.h"
 // ============================ MEMBER FUNCTIONS ===============================
 
-_LIT(KFeedbackLink,"http://tieba.baidu.com/f?kw=iCloverSoft");
+_LIT(KFeedbackLink,"http://weibo.cn/home.php?uid=1458507835");
 
 TInt OpenLink(TAny* /*aAny*/)
 	{
@@ -147,6 +147,9 @@ void CScheduleKillerAppUi::SHError(const TSHErrInfo& aInfo,const TSHErrState& aS
 	case ELAWarnTimeLowerThanNow:
 		ShowInfomationDlgL(R_TEXT_WARN_TIME_LOWNER_THAN_NOW);
 		break;
+	case ELAWarnDuplicateTask:
+		ShowInfomationDlgL(R_TEXT_WARN_DUPLICATE_TASK);
+		break;
 	default:
 		break;
 	}
@@ -196,14 +199,14 @@ void CScheduleKillerAppUi::About()
 	file.Close();
 
 	TCallBack callback(OpenLink);
-	ShowModalAboutLinkDlgL(R_ABOUT_DIALOG_TITLE,iText->Des(),KFeedbackLink,callback);
+	ShowModalAboutLinkDlgL(R_ABOUT_DIALOG_TITLE,iText->Des(),R_TEXT_SINA_WEIBO,callback);
 	
 	delete iText;
 	}
 
 void CScheduleKillerAppUi::ExitApp()
 	{
-	if (GetModel()->IsEmputy())
+	if (GetModel()->GetTaskInfoManager()->ExistTask() == FALSE)
 		Exit();
 	else if (ShowConfirmationQueryL(R_TEXT_CONFIRM_EXIT_TASK_RUNNING))
 		Exit();

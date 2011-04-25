@@ -17,7 +17,7 @@
 #include <coecntrl.h>
 #include <eikclb.h> 
 #include <aknlists.h> 
-
+#include "Rule.h"
 // CLASS DECLARATION
 
 /**
@@ -62,6 +62,10 @@ public:
 
 	TBool Select();
 	TBool Delete();
+	TBool LunchRun();
+	
+	CRule* GetRule();
+	
 private:
 	// Functions from base classes
 	void SizeChanged();
@@ -69,13 +73,14 @@ private:
 	CCoeControl* ComponentControl(TInt aIndex) const;
 	void Draw(const TRect& aRect) const;
 	void HandleControlEventL(CCoeControl* aControl, TCoeEvent aEventType);
-
+	void HandleResourceChange( TInt aType );
+	
 	void UpdateDisplay();
 	void SetIconsL();
 
 private:
 	//data
-	CAknDoubleStyleListBox* iListBox;
+	CAknDoubleGraphicStyleListBox* iListBox;
 	};
 
 #endif // RULESCREENCONTAINER_H

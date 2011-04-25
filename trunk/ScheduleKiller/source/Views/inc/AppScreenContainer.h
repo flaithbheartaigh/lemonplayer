@@ -73,11 +73,10 @@ private:
 	CCoeControl* ComponentControl(TInt aIndex) const;
 	void Draw(const TRect& aRect) const;
 	void HandleControlEventL(CCoeControl* aControl, TCoeEvent aEventType);
-
+	void HandleResourceChange( TInt aType );
+	
 	void UpdateDisplay();
 	void SetIconsL();
-
-	TInt GetAppsL();
 	
 	CAknSearchField* CreateFindBoxL(CEikListBox* aListBox,
 			CTextListBoxModel* aModel,
@@ -90,6 +89,7 @@ private:
 	RArray<TUid>	iUids;
 	
 	CLoadAppEngine* iAppEngine;
+	TInt iAppRefresh;
 	};
 
 #endif

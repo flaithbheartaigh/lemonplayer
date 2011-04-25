@@ -52,6 +52,8 @@ TThreadId CSeniorUtils::StartBroswerApp(const TDesC& aUrl)
 	if (aUrl.Length() <= 0)
 		return id;
 
+	const TInt KUCBrowser	= 0x2001F848;
+	const TInt KQQBrowser	= 0x20027215;
 	const TInt KBrowserUid1 = 0x1020724D;
 	const TInt KBrowserUid2 = 0x10008D39;
 
@@ -59,16 +61,21 @@ TThreadId CSeniorUtils::StartBroswerApp(const TDesC& aUrl)
 	User::LeaveIfError(appArcSession.Connect()); // connect to AppArc server
 
 	HBufC* param = HBufC::NewLC(aUrl.Length() + 8);
-	param->Des().Format(_L( "4 %S" ), &aUrl);
+//	param->Des().Format(_L( "4 %S" ), &aUrl);
+	param->Des().Append(aUrl);
 
 	// Wap Browser's constants UId
-	TUid browserId(TUid::Uid(KBrowserUid1));
+	TUid browserId;
 
 	TApaAppInfo appInfo;
-	if (appArcSession.GetAppInfo(appInfo, browserId) != KErrNone)
-		{
+	if (appArcSession.GetAppInfo(appInfo, TUid::Uid(KUCBrowser)) == KErrNone)
+		browserId = TUid::Uid(KUCBrowser);
+	else if (appArcSession.GetAppInfo(appInfo, TUid::Uid(KQQBrowser)) == KErrNone)
+		browserId = TUid::Uid(KQQBrowser);
+	else if (appArcSession.GetAppInfo(appInfo, TUid::Uid(KBrowserUid1)) == KErrNone)
+		browserId = TUid::Uid(KBrowserUid1);
+	else 
 		browserId = TUid::Uid(KBrowserUid2);
-		}
 
 	TApaTaskList taskList(CEikonEnv::Static()->WsSession());
 	TApaTask task = taskList.FindApp(browserId);
@@ -82,16 +89,6 @@ TThreadId CSeniorUtils::StartBroswerApp(const TDesC& aUrl)
 	else
 		{
 		appArcSession.StartDocument(*param, browserId, id);
-		//	appArcSession.Close();
-
-		//	User::After(2*1000*1000);
-
-		//	TApaTask task = taskList.FindApp( uid );
-
-		//	if ( task.Exists() )
-		//	{
-		//		task.SendMessage( TUid::Uid(0), *pHtsUrl8 ); // UID is not used
-		//	}
 		}
 
 	appArcSession.Close();

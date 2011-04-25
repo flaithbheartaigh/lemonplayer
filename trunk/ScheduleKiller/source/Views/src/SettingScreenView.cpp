@@ -78,6 +78,7 @@ void CSettingScreenView::HandleCommandL(TInt aCommand)
 			AppUi()->HandleCommandL(aCommand);
 		}
 	}
+
 void CSettingScreenView::HandleStatusPaneSizeChange()
 	{
 	if (iContainer != NULL)

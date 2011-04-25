@@ -17,5 +17,6 @@ void GetFilePathByName(const TDesC& aFileName, TDes& aFilePath);
 void GetExtNameFromFileName(const TDesC& aFileName, TDes& aExtName);
 TInt GetRandomInterval(TInt aBeginMinutes, TInt64 aSeed);
 void GetAppPath(TDes& aAppPath);
+void GetResourcePath(TDes& aAppPath);
 
 #endif

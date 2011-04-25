@@ -36,7 +36,7 @@ USERINCLUDE ..\inc
 USERINCLUDE ..\source\Views\inc
 USERINCLUDE ..\source\Model\inc
 USERINCLUDE ..\source\Tools\inc
-USERINCLUDE ..\source\ImageLib\inc
+USERINCLUDE ..\source\ImageLib\inc ..\source\control\inc ..\source\model\inc
 SYSTEMINCLUDE	 \epoc32\include
 
 LIBRARY		   euser.lib apparc.lib cone.lib eikcore.lib avkon.lib
@@ -48,7 +48,7 @@ LANG	 SC
 
 VENDORID	  	  0
 SECUREID		  0x2003717D
-CAPABILITY	  	  PowerMgmt ReadUserData 
+CAPABILITY	  	  PowerMgmt ReadDeviceData ReadUserData SwEvent 
 
 SOURCEPATH ..\source\Views\src
 SOURCE HelpContainer.cpp HelpView.cpp LogoContainer.cpp LogoView.cpp
@@ -64,5 +64,7 @@ SOURCEPATH ..\src
 SOURCE OfferKeyManager.cpp
 SOURCEPATH ..\source\Model\src
 SOURCE Rule.cpp RuleManager.cpp TimeWorkManager.cpp
-SOURCEPATH ..\src
-SOURCE LoadAppEngine.cpp
+SOURCEPATH ..\source\control\src
+SOURCE DetailListItemDrawer.cpp DetailListBox.cpp
+SOURCEPATH ..\source\Model\src
+SOURCE TaskInfoManager.cpp LoadAppEngine.cpp

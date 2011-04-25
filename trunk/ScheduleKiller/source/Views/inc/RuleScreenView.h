@@ -36,6 +36,7 @@ public:
 	TUid Id() const;
 	void HandleCommandL(TInt aCommand);
 	void HandleStatusPaneSizeChange();
+	void DynInitMenuPaneL( TInt aResourceId, CEikMenuPane* aMenuPane );
 
 private:
 	CRuleScreenView();
