@@ -22,7 +22,8 @@ enum TSHErrInfo
 {
 	ESHErrNone = 0,
 	ELAWarnChooseAppNull,			//未选择程序	,
-	ELAWarnTimeLowerThanNow			//时间是在过去
+	ELAWarnTimeLowerThanNow,		//时间是在过去
+	ELAWarnDuplicateTask			//重复任务
 };
 
 #endif /* LAERROR_H_ */

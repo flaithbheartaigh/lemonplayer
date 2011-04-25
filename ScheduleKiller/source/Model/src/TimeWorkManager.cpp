@@ -13,6 +13,7 @@
 
 CTimeWorkManager::CTimeWorkManager() :
 	CActive(EPriorityStandard) // Standard priority
+	,iNotify(NULL)
 	{
 	}
 
@@ -73,9 +74,7 @@ void CTimeWorkManager::RunL()
 			case KErrNone:
 				{
 				// Do something
-				KillProcess();
-				//退出程序
-				User::Exit(0);		
+				KillProcess();	
 				}
 				break;
 			case KErrAbort:
@@ -89,7 +88,7 @@ void CTimeWorkManager::RunL()
 
 void CTimeWorkManager::AtTime()
 	{
-	TTime time = SHModel()->GetTime();
+	TTime time = SHModel()->GetTaskInfoManager()->GetMinTime();
 	TTime now;
 	now.HomeTime();
 	if (time > now)
@@ -106,13 +105,14 @@ TInt CTimeWorkManager::RunError(TInt aError)
 
 void CTimeWorkManager::KillProcess()
 	{
-	TUid uid = SHModel()->GetUid();
-
-	TApaTaskList taskList(CEikonEnv::Static()->WsSession());
-	TApaTask task = taskList.FindApp(uid);
-	if (task.Exists())
-		{
-		task.EndTask();
-		task.KillTask();
-		}
+	SHModel()->GetTaskInfoManager()->TimeOut();
+	
+	//刷新界面
+	if (iNotify)
+		iNotify->TimeOut();
+	
+	if (SHModel()->GetTaskInfoManager()->ExistTask())
+		AtTime();
+	else
+		User::Exit(0);
 	}

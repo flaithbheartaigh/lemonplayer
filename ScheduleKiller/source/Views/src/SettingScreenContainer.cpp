@@ -117,9 +117,13 @@ CAknSettingItem* CSettingScreenContainer::CreateSettingItemL(TInt aSettingId)
 
 void CSettingScreenContainer::EditItemL(TBool aCalledFromMenu)
 	{
-	TInt
-			currentItem =
+	TInt currentItem =
 					((CAknSettingItemList*) this)->ListBox()->View()->CurrentItemIndex();
+	if (currentItem == 0)
+		{
+		JumpToAppView();
+		return;
+		}
 	CAknSettingItemList::EditItemL(currentItem, aCalledFromMenu);
 	(*SettingItemArray())[currentItem]->UpdateListBoxTextL();
 	(*SettingItemArray())[currentItem]->StoreL();
@@ -132,6 +136,11 @@ void CSettingScreenContainer::EditItemL(TBool aCalledFromMenu)
 //    
 void CSettingScreenContainer::EditItemL(TInt aIndex, TBool aCalledFromMenu)
 	{
+	if (aIndex == 0)
+		{
+		JumpToAppView();
+		return;
+		}
 	CAknSettingItemList::EditItemL(aIndex, aCalledFromMenu);
 	(*SettingItemArray())[aIndex]->UpdateListBoxTextL();
 	(*SettingItemArray())[aIndex]->StoreL();
@@ -148,8 +157,7 @@ TKeyResponse CSettingScreenContainer::OfferKeyEventL(
 
 	if (aKeyEvent.iCode == EKeyDevice3 && index == EListboxSettingName)
 		{
-		SHModel()->SetRule(iBinary,iNumber,iDate);
-		SHChangeView(EScheduleKillerAppScreenViewId);
+		JumpToAppView();
 		return EKeyWasConsumed;
 		}
 	else
@@ -197,6 +205,7 @@ void CSettingScreenContainer::InitDataFromApp()
 TBool CSettingScreenContainer::Save()
 	{
 	CSHModel* model = SHModel();
+
 	//检查数据
 	if (iText.Length() == 0)
 		{
@@ -205,16 +214,14 @@ TBool CSettingScreenContainer::Save()
 		}
 	
 	//拷贝数据
+	TTime time;
 	if (iBinary == 0)
 		{
-		TTime time;
 		time.HomeTime();
 		time += TTimeIntervalMinutes(iNumber);
-		SHModel()->SetTime(time);
 		}
 	else
 		{
-		TTime time;
 		time.HomeTime();
 		
 		//iDate会被重置,丢失年月日等数据,因此需要重新赋值.
@@ -227,25 +234,50 @@ TBool CSettingScreenContainer::Save()
 		dt.SetSecond(0);
 		
 		iDate = dt;
-		if (iDate > time)
-			SHModel()->SetTime(iDate);
-		else
+		if (iDate <= time)
 			{
 			SHErrFun(ELAWarnTimeLowerThanNow,ESHErrWarning);
 			return EFalse;
 			}
 		}
-	model->SetUid(model->GetTransUid());
-	model->SetName(model->GetTransName());
+//	re = model->GetTaskInfoManager()->AppendTask(model->GetTransUid(),model->GetTransName(),time);
+//	
+//	//已存在
+//	if (re == EFalse)
+//		{
+//		SHErrFun(ELAWarnTimeLowerThanNow,ESHErrWarning);
+//		return EFalse;
+//		}
+	
+	TInt err = model->GetTaskInfoManager()->AppendTask(model->GetTransName(),model->GetTransUid(),iBinary,
+			iNumber,iDate);
+	
+	if (err == CTaskInfoManager::ETaskErrDuplicate)
+		{
+		SHErrFun(ELAWarnDuplicateTask,ESHErrWarning);
+		return EFalse;
+		}
+	if (err == CTaskInfoManager::ETaskErrTimeOut)
+		{
+		SHErrFun(ELAWarnTimeLowerThanNow,ESHErrWarning);
+		return EFalse;
+		}
+	
 	//保存规则
 	if (iRule.Length())
 		{
 		SHModel()->GetRuleManager()->AppendRule(iText,model->GetTransUid(),iBinary,iNumber,iDate,iRule);
 		}
 	//重启定时器
-	SHModel()->GetTimeWorkManager()->StartL(1000);
+//	SHModel()->GetTimeWorkManager()->StartL(1000);
 	
 	return ETrue;
+	}
+
+void CSettingScreenContainer::JumpToAppView()
+	{
+	SHModel()->SetRule(iBinary,iNumber,iDate);
+	SHChangeView(EScheduleKillerAppScreenViewId);
 	}
 // End of File
 

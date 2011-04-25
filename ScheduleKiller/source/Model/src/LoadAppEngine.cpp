@@ -9,9 +9,12 @@
  */
 
 #include "LoadAppEngine.h"
+#include "AppDefine.h"
+
+const TInt MAX_APP_REFRESH_NUMBER = 10;
 
 CLoadAppEngine::CLoadAppEngine(MLoadAppEngineNotify* aNotify) :
-	CActive(EPriorityStandard), iNotify(aNotify) // Standard priority
+	CActive(EPriorityStandard), iNotify(aNotify),iAppRefresh(0) // Standard priority
 	{
 	}
 
@@ -93,8 +96,11 @@ TInt CLoadAppEngine::RunError(TInt aError)
 void CLoadAppEngine::SegmentInit()
 	{
 	User::LeaveIfError(iALS->Connect());
-	User::LeaveIfError(iALS->GetAllApps());
-	iAppIndex = 0;
+//	User::LeaveIfError(iALS->GetAllApps(0));
+//	User::LeaveIfError(iALS->GetEmbeddableApps());
+	User::LeaveIfError(iALS->GetFilteredApps(TApaAppCapability::ENonNative,0));
+//	User::LeaveIfError(iALS->GetFilteredApps(TApaAppCapability::ENonNative,TApaAppCapability::EEmbeddableUiNotStandAlone));
+	iAppIndex = ICON_INDEX_APP_START;
 	}
 
 TBool CLoadAppEngine::SegmentLoop()
@@ -104,8 +110,12 @@ TBool CLoadAppEngine::SegmentLoop()
 
 	while (!(iALS->GetNextApp(appInfo)))
 		{
-		//errCode = iALS->GetNextApp(appInfo);
-
+		TBuf<0x100> name;
+		name.Copy(appInfo.iCaption);
+		name.TrimAll();
+		if (name.Length() == 0)
+			continue;
+		
 		if (appInfo.iFullName.Right(8).CompareF(_L(".fakeapp")) == 0) //不统计J2ME
 			continue;
 
@@ -124,22 +134,20 @@ TBool CLoadAppEngine::SegmentLoop()
 			{
 			icon = AknsUtils::CreateGulIconL(skin, KAknsIIDQgnMenuUnknownLst, ETrue);
 			}
-		//icons->AppendL(icon);
 
-		//__LOGDES_TOFILE(appInfo.iCaption)
 		TBuf<KApaMaxAppCaption> record;
 		record.AppendNum(iAppIndex++);
 		record.Append('\t');
 		record.Append(appInfo.iCaption);
 
-		//items->AppendL(record);
-
-		//iUids.Append(appInfo.iUid);
-
 		if (iNotify)
 			iNotify->GetAppInfo(icon, record, appInfo.iUid);
 
-		return ETrue;
+		if (++iAppRefresh > MAX_APP_REFRESH_NUMBER)
+			{
+			iAppRefresh = 0;
+			return ETrue;
+			}
 		}
 
 	//结束

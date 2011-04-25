@@ -19,31 +19,57 @@
 #include <aknscontrolcontext.h>
 #include <AknsSkinInstance.h>
 #include <aknsutils.h>
-// FORWARD DECLARATIONS
 
+#include <aknbutton.h>
+#include <eikclb.h>
+
+#include "TimeWorkManager.h"
+#include "DetailListBox.h"
+// FORWARD DECLARATIONS
+class CMainScreenView;
 // CLASS DECLARATION
 
 /**
  *  CMainScreenContainer  container control class.
  *  
  */
-class CMainScreenContainer : public CCoeControl, MCoeControlObserver
+class CMainScreenContainer : public CCoeControl
+							,public MCoeControlObserver 
+							,public MTimeWorkNotify
+							,public MDetailListBoxNotify
 	{
 public:
 	// Constructors and destructor		
 	~CMainScreenContainer();
-	static CMainScreenContainer* NewL(const TRect& aRect);
-	static CMainScreenContainer* NewLC(const TRect& aRect);
+	static CMainScreenContainer* NewL(const TRect& aRect,CMainScreenView* aParent);
+	static CMainScreenContainer* NewLC(const TRect& aRect,CMainScreenView* aParent);
 
 private:
+	enum TControls
+		{
+		ECtrlBtnAdd = 0,
+		ECtrlBtnRemove,
+		ECtrlBtnRules,
+		ECtrlBtnAbout,
+		ECtrlBtnExit,
+		ECtrlList,
+		ECtrlTotal,
+		};
 	// New functions
 	void ConstructL(const TRect& aRect);
-	CMainScreenContainer();
+	CMainScreenContainer(CMainScreenView* aParent);
 
 public:
 	// Functions from base classes
+	void HandlePointerEventL(const TPointerEvent& aPointerEvent);
 	TKeyResponse OfferKeyEventL(const TKeyEvent& aKeyEvent, TEventCode aType);
-
+	void HandleResourceChange( TInt aType );
+	
+	virtual void TimeOut();
+	
+	void HandleListEvent(MDetailListBoxNotify::TEventType aEvent);
+	
+	void RemoveTask();	
 private:
 	// Functions from base classes
 	void SizeChanged();
@@ -53,34 +79,35 @@ private:
 	void HandleControlEventL(CCoeControl* aControl, TCoeEvent aEventType);
 	
 	TTypeUid::Ptr MopSupplyObject(TTypeUid aId);
-
-	void DrawClock() const;
-	void DrawApp() const;
-	void DrawClockDigital(TInt& aNumber,const TPoint& aPoint) const;
 	
-	TInt ParseLeftTime(TInt aSecend,RArray<TInt>& aArray ) const;
-	TInt ParseNumber(TInt aNumber,RArray<TInt>& aArray) const;
+	void InitButtons();
+	void ReleaseButtons();
+	CAknButton* CreateButton(const TInt	aResourceId);
 	
-	void InitClockDigital();
-	void InitIcon();
-	void InitTest();
-	
-	void KillProcess();
+	void InitList();
+	void ReleaseList();
+	void UpdateDisplay();
 	
 	void Start();
 	void Stop();
 	static TInt Period( TAny* aPtr );
 	void DoPeriodTask();	
 	void Update();
+	void Layout();
 private:
-	//data
-	RPointerArray<CGulIcon> *iClock;
-	CGulIcon* iIcon;
 	CPeriodic* iPeriodicTimer;
 	
-	TBool	iInitIcon;
-	
 	CAknsBasicBackgroundControlContext* iBgContext;
+	
+	CAknButton*	iBtnAdd;
+	CAknButton*	iBtnRemove;
+	CAknButton*	iBtnRules;
+	CAknButton*	iBtnAbout;
+	CAknButton*	iBtnExit;
+	
+	CDetailListBox* iListBox;
+	
+	CMainScreenView* iParent;
 	};
 
 #endif

@@ -50,7 +50,7 @@ public:
 
 private:	
 	void ModifyItemL(TInt aIndex);
-	
+	void JumpToAppView();
 private:	
 	TBuf<0x100>		iText;
 	TFileName		iRule;

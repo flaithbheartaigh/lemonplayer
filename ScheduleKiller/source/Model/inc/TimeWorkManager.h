@@ -13,6 +13,13 @@
 
 #include <e32base.h>	// For CActive, link against: euser.lib
 #include <e32std.h>		// For RTimer, link against: euser.lib
+
+class MTimeWorkNotify
+	{
+public:
+	virtual void TimeOut() = 0;
+	};
+
 class CTimeWorkManager : public CActive
 	{
 public:
@@ -29,6 +36,8 @@ public:
 	// New functions
 	// Function for making the initial request
 	void StartL(TTimeIntervalMicroSeconds32 aDelay);
+	
+	void SetNotify(MTimeWorkNotify* aNotify);
 
 private:
 	// C++ constructor
@@ -63,11 +72,13 @@ private:
 public:
 	//new func
 	void KillProcess();
+	
 
 private:
 	TInt iState; // State of the active object
 	RTimer iTimer; // Provides async timing service
-
+	
+	MTimeWorkNotify* iNotify;
 	};
 
 #endif // TIMEWORKMANAGER_H

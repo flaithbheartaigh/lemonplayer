@@ -21,14 +21,18 @@
 #include <eikclbd.h>
 #include <w32std.h>
 #include <GULICON.H>
-
+#include <stringloader.h> 
 #include "SHPlatform.h"
 #include "MacroUtil.h"
 #include "SHDebug.h"
+#include "LmSvgUtil.h"
+#include "AppDefine.h"
 
 const TInt KAknExListFindBoxTextLength = 20;
+const TInt MAX_APP_REFRESH_NUMBER = 10;
 
 CAppScreenContainer::CAppScreenContainer()
+:iAppRefresh(0)
 	{
 	// No implementation required
 	}
@@ -72,12 +76,21 @@ void CAppScreenContainer::ConstructL(const TRect& aRect)
 			CEikScrollBarFrame::EOff, CEikScrollBarFrame::EAuto);
 
 	SetIconsL();
-	//GetAppsL();
 
 	iFindBox = CreateFindBoxL(iListBox, iListBox->Model(),
 			CAknSearchField::ESearch);
 	//	UpdateDisplay();
 
+	CGulIcon* icon = LMSvgUtil::GetIconFormResourceL(EMbmSchedulekillerShutdown,
+			EMbmSchedulekillerShutdown_mask);
+	HBufC* name = StringLoader::LoadL(R_TEXT_SHUTDOWN);
+	TBuf<16> info;
+	info.AppendNum(ICON_INDEX_SHUTDOWN);
+	info.Append('\t');
+	info.Append(name->Des());
+	delete name;
+	GetAppInfo(icon,info,UID_SHUTDOWN);
+	
 	iAppEngine = CLoadAppEngine::NewL(this);
 	iAppEngine->StartL(1000);
 
@@ -126,6 +139,17 @@ void CAppScreenContainer::HandleControlEventL(CCoeControl* /*aControl*/,
 	{
 	// TODO: Add your control event handler code here
 	}
+
+void CAppScreenContainer::HandleResourceChange( TInt aType )
+    {
+    CCoeControl::HandleResourceChange( aType );
+    if  ( aType == KEikDynamicLayoutVariantSwitch )
+    	{
+        TRect rect;
+        AknLayoutUtils::LayoutMetricsRect(AknLayoutUtils::EMainPane, rect);
+        SetRect(rect);
+        }
+    }
 
 //------------------------------------------------------------------
 //CAppList::OfferKeyEventL(
@@ -269,66 +293,6 @@ void CAppScreenContainer::UpdateDisplay()
 
 	}
 
-TInt CAppScreenContainer::GetAppsL()
-	{
-	CTextListBoxModel* model = iListBox->Model();
-	CDesCArray* items = static_cast<CDesCArray*> (model->ItemTextArray());
-	items->Reset();
-
-	CArrayPtr<CGulIcon>* icons =
-			iListBox->ItemDrawer()->ColumnData()->IconArray();
-	//	icons->Reset();
-
-	TInt num = 0;
-	RApaLsSession ls;
-
-	User::LeaveIfError(ls.Connect());
-	CleanupClosePushL(ls);
-
-	User::LeaveIfError(ls.GetAllApps());
-	ls.AppCount(num);
-
-	TInt errCode(KErrNone);
-	TApaAppInfo appInfo;
-
-	TInt index = 0;
-
-	while (!errCode)
-		{
-		errCode = ls.GetNextApp(appInfo);
-
-		if (appInfo.iFullName.Right(8).CompareF(_L(".fakeapp")) == 0) //²»Í³¼ÆJ2ME
-			continue;
-
-		CFbsBitmap* AppIcon(NULL);
-		CFbsBitmap* AppIconMsk(NULL);
-		MAknsSkinInstance* skin = AknsUtils::SkinInstance();
-		TRAPD(err, AknsUtils::CreateAppIconLC(skin, appInfo.iUid, EAknsAppIconTypeList, AppIcon, AppIconMsk);CleanupStack::Pop(2));
-		AknIconUtils::SetSize(AppIcon, TSize(32, 32), EAspectRatioNotPreserved);
-		if (err != KErrNone)
-			{
-			AknsUtils::CreateGulIconL(skin, KAknsIIDQgnMenuUnknownLst, ETrue);
-			}
-		CGulIcon* icon = CGulIcon::NewL(AppIcon, AppIconMsk);
-		icons->AppendL(icon);
-
-		//__LOGDES_TOFILE(appInfo.iCaption)
-		TBuf<KApaMaxAppCaption> record;
-		record.AppendNum(index++);
-		record.Append('\t');
-		record.Append(appInfo.iCaption);
-
-		items->AppendL(record);
-
-		iUids.Append(appInfo.iUid);
-		}
-	CleanupStack::PopAndDestroy();
-
-	iListBox->HandleItemAdditionL();
-
-	return num;
-	}
-
 void CAppScreenContainer::GetAppInfo(CGulIcon* aIcon, const TDesC& aInfo,
 		const TUid aUid)
 	{
@@ -343,7 +307,11 @@ void CAppScreenContainer::GetAppInfo(CGulIcon* aIcon, const TDesC& aInfo,
 	items->AppendL(aInfo);
 	iUids.Append(aUid);
 
-	iListBox->HandleItemAdditionL();
+	if (++iAppRefresh > MAX_APP_REFRESH_NUMBER)
+		{
+		iAppRefresh = 0;
+		iListBox->HandleItemAdditionL();
+		}
 	}
 
 void CAppScreenContainer::Selected()

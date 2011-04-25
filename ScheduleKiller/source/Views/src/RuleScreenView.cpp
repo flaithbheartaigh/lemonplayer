@@ -71,9 +71,13 @@ void CRuleScreenView::HandleCommandL(TInt aCommand)
 			break;
 		case ECommandOpen:
 			if (iContainer)
-				if (!iContainer->Select())
-					break;
-			//需要返回,不用break
+				iContainer->Select();
+			break;
+		case ECommandRuleLunchRun:
+		case ECommandRuleCancelLunchRun:
+			if (iContainer)
+				iContainer->LunchRun();
+			break;
 		case EAknSoftkeyBack:
 			SHChangeView(EScheduleKillerMainScreenViewId);
 			break;
@@ -90,7 +94,7 @@ void CRuleScreenView::HandleStatusPaneSizeChange()
 /**
  * 
  * */
-void CRuleScreenView::DoActivateL(const TVwsViewId& aPrevViewId,
+void CRuleScreenView::DoActivateL(const TVwsViewId& /*aPrevViewId*/,
 		TUid /*aCustomMessageId*/, const TDesC8& /*aCustomMessage*/)
 	{
 	if (iContainer == NULL)
@@ -110,6 +114,42 @@ void CRuleScreenView::DoDeactivate()
 		AppUi()->RemoveFromViewStack(*this, iContainer);
 		delete iContainer;
 		iContainer = NULL;
+		}
+	}
+
+void CRuleScreenView::DynInitMenuPaneL(TInt aResourceId,
+		CEikMenuPane* aMenuPane)
+	{
+	if (aResourceId == R_MENUPANE_RULESCREEN)
+		{
+		if (iContainer)
+			{
+			CRule* rule = iContainer->GetRule();
+
+			if (rule)
+				{
+				if (rule->IsLunchRun())
+					{
+					aMenuPane->SetItemDimmed(ECommandRuleLunchRun, ETrue);
+					aMenuPane->SetItemDimmed(ECommandRuleCancelLunchRun, EFalse);
+					}
+				else
+					{
+					aMenuPane->SetItemDimmed(ECommandRuleLunchRun, EFalse);
+					aMenuPane->SetItemDimmed(ECommandRuleCancelLunchRun, ETrue);
+					}
+				
+				aMenuPane->SetItemDimmed(ECommandRemove, EFalse);
+				aMenuPane->SetItemDimmed(ECommandOpen, EFalse);
+				}
+			else
+				{
+				aMenuPane->SetItemDimmed(ECommandRemove, ETrue);
+				aMenuPane->SetItemDimmed(ECommandOpen, ETrue);
+				aMenuPane->SetItemDimmed(ECommandRuleLunchRun, ETrue);
+				aMenuPane->SetItemDimmed(ECommandRuleCancelLunchRun, ETrue);
+				}
+			}
 		}
 	}
 // End of File

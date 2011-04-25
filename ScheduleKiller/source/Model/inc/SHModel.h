@@ -18,6 +18,7 @@
 #include "RuleManager.h"
 #include "TimeWorkManager.h"
 #include "Rule.h"
+#include "TaskInfoManager.h"
 // CLASS DECLARATION
 
 /**
@@ -56,16 +57,7 @@ private:
 	 */
 	void ConstructL();
 	
-public:
-	TUid GetUid() const {return iUid;};
-	void SetUid(const TUid& aUid) {iUid = aUid; iEmputy = EFalse;};
-	
-	TTime GetTime() const {return iTime;};
-	void SetTime(const TTime& aTime) {iTime = aTime;};
-	
-	const TDesC& GetName() const {return iName;};
-	void SetName(const TDesC& aName) {iName.Copy(aName);};
-	
+public:	
 	TUid GetTransUid() const {return iTransUid;};
 	void SetTransUid(const TUid& aUid) {iTransUid = aUid;};
 	
@@ -75,26 +67,21 @@ public:
 	CRule* GetRule() const {return iRule;};
 	void SetRule(const TInt& aType,const TInt& aCountdown,const TTime& aClock);
 	
-	TBool IsEmputy() const {return iEmputy;};
-	void SetEmputy(TBool aEmputy) {iEmputy = aEmputy;};
-	
 	CRuleManager* GetRuleManager() const {return iRuleManager;};
 	
 	CTimeWorkManager* GetTimeWorkManager() const {return iTimeWork;};
+	
+	CTaskInfoManager* GetTaskInfoManager() const {return iTaskInfoManager;};
 private:
-	TUid iUid;
-	TTime iTime;
-	TBuf<0x100> iName;
 	
 	TUid iTransUid;
 	TBuf<0x100> iTransName;
 	
 	CRule* iRule;
 	
-	TBool iEmputy;
-	
 	CRuleManager* iRuleManager;
 	CTimeWorkManager* iTimeWork;
+	CTaskInfoManager* iTaskInfoManager;
 	};
 
 #endif // SHMODEL_H

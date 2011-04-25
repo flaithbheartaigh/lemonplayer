@@ -16,8 +16,12 @@ NAME	SCHE // 4 letter ID
 #include <avkon.rsg>
 #include <avkon.rh>
 #include <appinfo.rh>
+#include <avkon.mbg>
+#include <ScheduleKiller.mbg>
 #include "ScheduleKiller.hrh"
 #include "ScheduleKiller.rls"
+
+#define THIS_APP_BITMAP_FILE            "\\resource\\apps\\ScheduleKiller.mif"
 
 //  RESOURCE DEFINITIONS
 // -----------------------------------------------------------------------------
@@ -168,6 +172,16 @@ RESOURCE MENU_PANE r_menupane_rulescreen
 				{
 				command = ECommandRemove;
 				txt = qtn_remove;
+				},
+		MENU_ITEM
+				{
+				command = ECommandRuleLunchRun;
+				txt = qtn_rule_lunch_run;
+				},
+		MENU_ITEM
+				{
+				command = ECommandRuleCancelLunchRun;
+				txt = qtn_rule_cancel_lunch_run;
 				}
 		};
 	}
@@ -243,6 +257,76 @@ RESOURCE AVKON_SETTING_ITEM_LIST r_entry_settings_list
 	    };
 	}
 
+RESOURCE AVKON_BUTTON r_button_add
+    {
+    flags  = KAknButtonNoFrame;
+    states =
+        {
+        AVKON_BUTTON_STATE
+            {
+            bmpfile = THIS_APP_BITMAP_FILE; 
+            bmpid =  EMbmSchedulekillerAdd;
+            bmpmask =  EMbmSchedulekillerAdd_mask;
+            }  
+        };
+    }
+
+RESOURCE AVKON_BUTTON r_button_remove
+    {
+    flags  = KAknButtonNoFrame;
+    states =
+        {
+        AVKON_BUTTON_STATE
+            {
+            bmpfile = THIS_APP_BITMAP_FILE; 
+            bmpid =  EMbmSchedulekillerRemove;
+            bmpmask =  EMbmSchedulekillerRemove_mask;
+            }  
+        };
+    }
+
+RESOURCE AVKON_BUTTON r_button_rules
+    {
+    flags  = KAknButtonNoFrame;
+    states =
+        {
+        AVKON_BUTTON_STATE
+            {
+            bmpfile = THIS_APP_BITMAP_FILE; 
+            bmpid =  EMbmSchedulekillerRules;
+            bmpmask =  EMbmSchedulekillerRules_mask;
+            }  
+        };
+    }
+
+RESOURCE AVKON_BUTTON r_button_about
+    {
+    flags  = KAknButtonNoFrame;
+    states =
+        {
+        AVKON_BUTTON_STATE
+            {
+            bmpfile = THIS_APP_BITMAP_FILE; 
+            bmpid =  EMbmSchedulekillerAbout;
+            bmpmask =  EMbmSchedulekillerAbout_mask;
+            }  
+        };
+    }
+
+RESOURCE AVKON_BUTTON r_button_exit
+    {
+    flags  = KAknButtonNoFrame;
+    states =
+        {
+        AVKON_BUTTON_STATE
+            {
+            bmpfile = THIS_APP_BITMAP_FILE; 
+            bmpid =  EMbmSchedulekillerExit;
+            bmpmask =  EMbmSchedulekillerExit_mask;
+            }  
+        };
+    }
+
 // ---------------------------------------------------------
 //   
 //   TEXT SETTING PAGE
@@ -298,6 +382,20 @@ RESOURCE AVKON_SETTING_PAGE r_time_setting_page
 	editor_resource_id = r_editor_time;
 	}
 
+RESOURCE AKN_ICON_ARRAY r_rule_list_icon_mark
+{
+	type = EAknIconArraySimple;
+	bmpfile = THIS_APP_BITMAP_FILE;
+	icons =
+	{
+		AKN_ICON
+		{
+		iconId = EMbmSchedulekillerFav;
+		maskId = EMbmSchedulekillerFav_mask;
+		}      
+	};
+}
+
 RESOURCE TBUF r_setting_name 			{buf=qtn_setting_name;}
 RESOURCE TBUF r_setting_type_clock		{buf=qtn_setting_type_clock;}
 
@@ -308,9 +406,13 @@ RESOURCE TBUF r_text_rule_confirm		{buf=qtn_text_rule_confirm;}
 
 RESOURCE TBUF R_TEXT_WARN_CHOOSE_APP_NULL		{buf = qtn_warn_choose_app_null;}
 RESOURCE TBUF R_TEXT_WARN_TIME_LOWNER_THAN_NOW	{buf = qtn_warn_time_lower_than_now;}
+RESOURCE TBUF R_TEXT_WARN_DUPLICATE_TASK		{buf = qtn_warn_duplicate_task;}
 
 RESOURCE TBUF R_TEXT_CONFIRM_DELETE_RULE		{buf = qtn_text_confirm_delete_rule;}
 RESOURCE TBUF R_TEXT_CONFIRM_EXIT_TASK_RUNNING	{buf = qtn_text_confirm_exit_task_running;}
+
+RESOURCE TBUF R_TEXT_SHUTDOWN			{buf = qtn_text_shutdown;}
+RESOURCE TBUF R_TEXT_SINA_WEIBO			{buf = qtn_text_sina_weibo;}
 
 // ---------------------------------------------------------------------------- 
 //

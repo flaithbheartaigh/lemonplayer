@@ -15,9 +15,6 @@
 
 #include "SHPlatform.h"
 #include "SeniorUtils.h"
-//copy from ScheduleKillerAppView.cpp
-//#include "ScheduleKiller.hrh"
-//#include <ScheduleKiller_UID3.rsg>
 
 // ============================ MEMBER FUNCTIONS ===============================
 CMainScreenView::CMainScreenView()
@@ -71,9 +68,8 @@ void CMainScreenView::HandleCommandL(TInt aCommand)
 			SHChangeViewParam(EScheduleKillerSettingScreenViewId,KViewChangeFromMain);
 			break;
 		case ECommandRemove:
-			SHModel()->SetEmputy(ETrue);
-			SHModel()->GetTimeWorkManager()->Cancel();
-			UpdateCBA();
+			if (iContainer)
+				iContainer->RemoveTask();
 			break;
 		case ECommandRule:
 			SHChangeView(EScheduleKillerRuleScreenViewId);
@@ -97,19 +93,19 @@ void CMainScreenView::HandleStatusPaneSizeChange()
 void CMainScreenView::DynInitMenuPaneL( TInt aResourceId, 
                                                CEikMenuPane* aMenuPane )
 	{
-	if (aResourceId == R_MENUPANE_MAINSCREEN)
-		{
-		if (SHModel()->IsEmputy())
-			{
-				aMenuPane->SetItemDimmed(ECommandAdd,  EFalse);
-				aMenuPane->SetItemDimmed(ECommandRemove, ETrue);	
-			}
-		else
-			{
-				aMenuPane->SetItemDimmed(ECommandAdd,  ETrue);
-				aMenuPane->SetItemDimmed(ECommandRemove, EFalse);	
-			}
-		}
+//	if (aResourceId == R_MENUPANE_MAINSCREEN)
+//		{
+//		if (SHModel()->GetTaskInfoManager()->ExistTask() == FALSE)
+//			{
+//				aMenuPane->SetItemDimmed(ECommandAdd,  EFalse);
+//				aMenuPane->SetItemDimmed(ECommandRemove, ETrue);	
+//			}
+//		else
+//			{
+//				aMenuPane->SetItemDimmed(ECommandAdd,  ETrue);
+//				aMenuPane->SetItemDimmed(ECommandRemove, EFalse);	
+//			}
+//		}
 	}
 
 /**
@@ -120,7 +116,8 @@ void CMainScreenView::DoActivateL(const TVwsViewId& /*aPrevViewId*/,
 	{
 	if (iContainer == NULL)
 		{
-		iContainer = CMainScreenContainer::NewL(ClientRect());
+		iContainer = CMainScreenContainer::NewL(ClientRect(),this);
+//		iContainer = CMainScreenContainer::NewL(AppUi()->ApplicationRect(),this);
 		iContainer->SetMopParent(this);
 		AppUi()->AddToStackL(*this, iContainer);
 
@@ -133,7 +130,7 @@ void CMainScreenView::DoActivateL(const TVwsViewId& /*aPrevViewId*/,
 void CMainScreenView::UpdateCBA()
 	{
 	CEikButtonGroupContainer* cba = CEikButtonGroupContainer::Current();         
-	if (SHModel()->IsEmputy())
+	if (SHModel()->GetTaskInfoManager()->ExistTask() == FALSE)
 		cba-> SetCommandSetL(R_CBA_MAINSCREEN_OPTIONS_ADD); 
 	else
 		cba-> SetCommandSetL(R_CBA_MAINSCREEN_OPTIONS_TASK_RUNNING); 

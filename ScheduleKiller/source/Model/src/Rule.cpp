@@ -11,7 +11,7 @@
 #include "Rule.h"
 
 CRule::CRule()
-:iName(NULL),iRuleName(NULL)
+:iName(NULL),iRuleName(NULL),iLunch(0),iFavCount(0)
 	{
 	// No implementation required
 	}

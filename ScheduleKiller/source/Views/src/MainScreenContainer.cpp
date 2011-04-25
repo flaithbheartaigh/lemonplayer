@@ -12,8 +12,12 @@
 
 #include <akniconutils.h> 	//AknIconUtils
 #include <aknsutils.h> 		//AknsUtils 
+#include <aknlists.h>
 #include "SHPlatform.h"
 #include "MacroUtil.h"
+#include "DetailListBox.h"
+#include "UI_Layout.h"
+#include "MainScreenView.h"
 
 // ================= MEMBER FUNCTIONS =======================
 
@@ -22,9 +26,10 @@
 // Two-phased constructor.
 // -----------------------------------------------------------------------------
 //
-CMainScreenContainer* CMainScreenContainer::NewL(const TRect& aRect)
+CMainScreenContainer* CMainScreenContainer::NewL(const TRect& aRect,
+		CMainScreenView* aParent)
 	{
-	CMainScreenContainer* self = CMainScreenContainer::NewLC(aRect);
+	CMainScreenContainer* self = CMainScreenContainer::NewLC(aRect, aParent);
 	CleanupStack::Pop(self);
 	return self;
 	}
@@ -34,9 +39,10 @@ CMainScreenContainer* CMainScreenContainer::NewL(const TRect& aRect)
 // Two-phased constructor.
 // -----------------------------------------------------------------------------
 //
-CMainScreenContainer* CMainScreenContainer::NewLC(const TRect& aRect)
+CMainScreenContainer* CMainScreenContainer::NewLC(const TRect& aRect,
+		CMainScreenView* aParent)
 	{
-	CMainScreenContainer* self = new (ELeave) CMainScreenContainer;
+	CMainScreenContainer* self = new (ELeave) CMainScreenContainer(aParent);
 	CleanupStack::PushL(self);
 	self->ConstructL(aRect);
 	return self;
@@ -54,8 +60,13 @@ void CMainScreenContainer::ConstructL(const TRect& aRect)
 
 	iPeriodicTimer = CPeriodic::NewL(CActive::EPriorityStandard);
 	//InitTest();
-	InitClockDigital();
-	InitIcon();
+	InitButtons();
+	InitList();
+	
+//	SHModel()->GetRuleManager()->AutoLunch();
+//	SHModel()->GetRuleManager()->FavLunch();
+	//	SHModel()->GetTaskInfoManager()->InitTest();
+	UpdateDisplay();
 
 	iBgContext = CAknsBasicBackgroundControlContext::NewL(
 			KAknsIIDQsnBgAreaMain, aRect, ETrue);
@@ -64,8 +75,8 @@ void CMainScreenContainer::ConstructL(const TRect& aRect)
 	ActivateL();
 
 	//add your code here ...
-	//if (SHModel()->IsEmputy() == EFalse)
-	Start();
+	if (SHModel()->GetTaskInfoManager()->ExistTask())
+		Start();
 	}
 
 // -----------------------------------------------------------------------------
@@ -73,8 +84,8 @@ void CMainScreenContainer::ConstructL(const TRect& aRect)
 // C++ default constructor can NOT contain any code, that might leave.
 // -----------------------------------------------------------------------------
 //
-CMainScreenContainer::CMainScreenContainer() :
-	iInitIcon(EFalse), iIcon(NULL)
+CMainScreenContainer::CMainScreenContainer(CMainScreenView* aParent) :
+	iParent(aParent), iBtnAdd(NULL)
 	{
 	// No implementation required
 	}
@@ -87,13 +98,10 @@ CMainScreenContainer::CMainScreenContainer() :
 CMainScreenContainer::~CMainScreenContainer()
 	{
 		// No implementation required
-
 		SAFE_DELETE(iBgContext)
 
-		SAFE_DELETE(iIcon)
-
-	iClock->ResetAndDestroy();
-	delete iClock;
+	ReleaseButtons();
+	ReleaseList();
 
 		SAFE_DELETE_ACTIVE(iPeriodicTimer)
 	}
@@ -104,7 +112,20 @@ CMainScreenContainer::~CMainScreenContainer()
 //
 TInt CMainScreenContainer::CountComponentControls() const
 	{
-	return 0; // return nbr of controls inside this container
+	TInt count = 0;
+	if (iBtnAdd)
+		count++;
+	if (iBtnRemove)
+		count++;
+	if (iBtnRules)
+		count++;
+	if (iBtnAbout)
+		count++;
+	if (iBtnExit)
+		count++;
+	if (iListBox)
+		count++;
+	return count; // return nbr of controls inside this container
 	}
 
 // ---------------------------------------------------------
@@ -115,6 +136,18 @@ CCoeControl* CMainScreenContainer::ComponentControl(TInt aIndex) const
 	{
 	switch (aIndex)
 		{
+		case ECtrlBtnAdd:
+			return iBtnAdd;
+		case ECtrlBtnRemove:
+			return iBtnRemove;
+		case ECtrlBtnRules:
+			return iBtnRules;
+		case ECtrlBtnAbout:
+			return iBtnAbout;
+		case ECtrlBtnExit:
+			return iBtnExit;
+		case ECtrlList:
+			return iListBox;
 		default:
 			return NULL;
 		}
@@ -137,11 +170,6 @@ void CMainScreenContainer::Draw(const TRect& /*aRect*/) const
 	MAknsControlContext* cc = AknsDrawUtils::ControlContext(this);
 	AknsDrawUtils::Background(skin, cc, this, gc, drawRect);
 
-	if (SHModel()->IsEmputy() == EFalse)
-		{
-		DrawClock();
-		DrawApp();
-		}
 	}
 
 // -----------------------------------------------------------------------------
@@ -151,6 +179,8 @@ void CMainScreenContainer::Draw(const TRect& /*aRect*/) const
 //
 void CMainScreenContainer::SizeChanged()
 	{
+	TRect rect = Rect();
+	TSize size = rect.Size();
 	if (iBgContext)
 		{
 		iBgContext->SetRect(Rect());
@@ -159,8 +189,75 @@ void CMainScreenContainer::SizeChanged()
 			iBgContext->SetParentPos(PositionRelativeToScreen());
 			}
 		}
+	Layout();
 
 	DrawNow();
+	}
+
+void CMainScreenContainer::Layout()
+	{
+	TRect rect = Rect();
+	TSize size = rect.Size();
+	TInt count = 0;
+	TInt x, y;
+	if (iListBox)
+		count = iListBox->Model()->NumberOfItems();
+
+	if (iBtnAdd)
+		{
+		if (count)
+			{
+			TInt cw = rect.Width() * LIST_CONTENT_WIDTH_RATE / 100;
+			cw += LIST_DELETE_ICON_SIZE.iWidth;
+
+			x = (rect.Width() - cw - FUNCTION_BUTTON_SIZE.iWidth) / 2 + cw;
+			y = (size.iHeight - FUNCTION_BUTTON_SIZE.iHeight) / 2;
+			iBtnAdd->SetRect(TRect(TPoint(x, y), FUNCTION_BUTTON_SIZE));
+			}
+		else
+			{
+			x = (size.iWidth - FUNCTION_BUTTON_SIZE.iWidth) / 2;
+			y = (size.iHeight - FUNCTION_BUTTON_SIZE.iHeight) / 2;
+			iBtnAdd->SetRect(TRect(TPoint(x, y), FUNCTION_BUTTON_SIZE));
+			}
+		}
+
+	x = 0;
+	y = rect.Height() - BOTTOM_BUTTON_SIZE.iHeight;
+
+	if (iBtnRules)
+		iBtnRules->SetRect(TRect(TPoint(x, y), BOTTOM_BUTTON_SIZE));
+
+	x += BOTTOM_BUTTON_SIZE.iWidth;
+	if (iBtnAbout)
+		iBtnAbout->SetRect(TRect(TPoint(x, y), BOTTOM_BUTTON_SIZE));
+
+	x = rect.Width() - BOTTOM_BUTTON_SIZE.iWidth;
+	if (iBtnExit)
+		iBtnExit->SetRect(TRect(TPoint(x, y), BOTTOM_BUTTON_SIZE));
+
+	if (iListBox && count)
+		{
+		//		TInt ih = iListBox->ItemDrawer()->ItemCellSize().iHeight;
+		TInt ih = iListBox->ItemHeight();
+		TInt cw = rect.Width() * LIST_CONTENT_WIDTH_RATE / 100;
+		cw += LIST_DELETE_ICON_SIZE.iWidth;
+
+		TInt chList = (rect.Height()) * LIST_CONTENT_HEIGHT_RATE / 100;
+		chList = ((chList / ih) + (chList % ih ? 1 : 0)) * ih;
+		TInt chReal = ih * count;
+
+		iListBox->SetShowItems(chList / ih);
+
+		TInt ch = chReal < chList ? chReal : chList;
+
+		x = (rect.Width() - cw - FUNCTION_BUTTON_SIZE.iWidth) / 2;
+		y = (rect.Height() - ch) / 2;
+
+		iListBox->SetRect(TRect(TPoint(x, y), TSize(cw, ch)));
+		}
+	else if (iListBox && count == 0)
+		iListBox->SetRect(TRect(TPoint(0, 0), TSize(0, 0)));
 	}
 
 // ---------------------------------------------------------
@@ -168,224 +265,190 @@ void CMainScreenContainer::SizeChanged()
 //	 CCoeControl* aControl,TCoeEvent aEventType)
 // ---------------------------------------------------------
 //
-void CMainScreenContainer::HandleControlEventL(CCoeControl* /*aControl*/,
-		TCoeEvent /*aEventType*/)
+void CMainScreenContainer::HandleControlEventL(CCoeControl* aControl,
+		TCoeEvent aEventType)
 	{
 	// TODO: Add your control event handler code here
+	switch (aEventType)
+		{
+		case EEventStateChanged:
+			{
+			if (aControl == iBtnAdd)
+				{
+				iParent->HandleCommandL(ECommandAdd);
+				}
+			else if (aControl == iBtnRemove)
+				{
+				iParent->HandleCommandL(ECommandRemove);
+				}
+			else if (aControl == iBtnRules)
+				{
+				iParent->HandleCommandL(ECommandRule);
+				}
+			else if (aControl == iBtnAbout)
+				{
+				iParent->HandleCommandL(ECommandAbout);
+				}
+			else if (aControl == iBtnExit)
+				{
+				iParent->HandleCommandL(EAknSoftkeyExit);
+				}
+			}
+			break;
+
+		default:
+			break;
+		}
+	}
+
+void CMainScreenContainer::HandlePointerEventL(
+		const TPointerEvent& aPointerEvent)
+	{
+	TPoint point = aPointerEvent.iPosition;
+	if (iListBox == NULL)
+		return;
+
+	TInt type = aPointerEvent.iType;
+	if (type == TPointerEvent::EButton1Down)
+		{
+		if (iListBox->Rect().Contains(point))
+			{
+			if (iListBox->IsFocused() == FALSE)
+				iListBox->SetFocus(TRUE);
+			}
+		else
+			{
+			if (iListBox->IsFocused())
+				iListBox->SetFocus(FALSE);
+			}
+		}
+	
+	if (iListBox->IsFocused())
+		{
+		iListBox->OfferPointerEventL(aPointerEvent);
+		DrawNow();
+		return;
+		}
+	
+	CCoeControl::HandlePointerEventL(aPointerEvent);
 	}
 TKeyResponse CMainScreenContainer::OfferKeyEventL(const TKeyEvent& aKeyEvent,
-		TEventCode /*aType*/)
+		TEventCode aType)
 	{
-	// See if we have a selection
 	TInt code = aKeyEvent.iCode;
 	switch (code)
 		{
+		case EKeyBackspace:
+			RemoveTask();
+			return EKeyWasConsumed;
 		default:
 			// Let Listbox take care of its key handling           
 			break;
 		}
+	
+	if (iListBox)
+		{
+		if (iListBox->IsFocused() == FALSE)
+			iListBox->SetFocus(TRUE);
+		return iListBox->OfferKeyEventL(aKeyEvent, aType);
+		}		
+
+//	if (iListBox && (aType == EEventKeyUp) && 
+//			(aKeyEvent.iCode == EKeyUpArrow || aKeyEvent.iCode == EKeyDownArrow))
+//		{
+//		iListBox->SetFocus(TRUE);
+//		return EKeyWasConsumed;
+//		}
+	
 	return EKeyWasNotConsumed;
 	}
 
-void CMainScreenContainer::DrawClock() const
+void CMainScreenContainer::HandleResourceChange(TInt aType)
 	{
-	RArray<TInt> array;
-	TTime time = SHModel()->GetTime();
-	TTime now;
-	now.HomeTime();
-
-	if (time > now)
-		ParseLeftTime((TInt) (time.MicroSecondsFrom(now).Int64() / 1000000ll),
-				array);
-
-	TInt x, y;
-	TInt count = array.Count();
-	x = (Rect().Width() - (count - 1) * SHUI()->GetClockSingleDigitalWidth()
-			- SHUI()->GetClockColonWidth()) / 2;
-	y = (Rect().Height() - SHUI()->GetContentHeight()) / 2;
-	for (TInt i = 0; i < count; i++)
+	CCoeControl::HandleResourceChange(aType);
+	if (aType == KEikDynamicLayoutVariantSwitch)
 		{
-		TInt index = array[i];
-		DrawClockDigital(index, TPoint(x, y));
-		if (index < 10)
-			x += SHUI()->GetClockSingleDigitalWidth();
-		else
-			x += SHUI()->GetClockColonWidth();
-		}
-
-	array.Close();
-	}
-
-void CMainScreenContainer::DrawApp() const
-	{
-	const TDesC& name = SHModel()->GetName();
-	const CFont* font = SHUI()->GetFont();
-
-	TInt padding = 4;
-	TInt fontWidth = font->MeasureText(name);
-	TInt x = (Rect().Width() - SHUI()->GetIconSize().iWidth - fontWidth
-			- padding) / 2;
-	TInt y = (Rect().Height() - SHUI()->GetContentHeight()) / 2
-			+ SHUI()->GetClockHeight() + SHUI()->GetPadding();
-	TSize size = SHUI()->GetIconSize();
-
-	CFbsBitmap* b1 = iIcon->Bitmap();
-	CFbsBitmap* b2 = iIcon->Mask();
-	AknIconUtils::SetSize(b1, size, EAspectRatioNotPreserved);
-	AknIconUtils::SetSize(b2, size, EAspectRatioNotPreserved);
-
-	CWindowGc& gc = SystemGc();
-	TPoint point = TPoint(x, y);
-
-	gc.BitBltMasked(point, b1, size, b2, EFalse);
-	//gc.BitBlt(point, b1);
-
-	x += size.iWidth + padding;
-	size.iWidth = fontWidth;
-	TRect rect = TRect(TPoint(x, y), size);
-
-	TRgb color;
-	AknsUtils::GetCachedColor(AknsUtils::SkinInstance(), color,
-			KAknsIIDQsnTextColors, EAknsCIQsnTextColorsCG1/*EAknsCIQsnLineColorsCG1 */);	
-	gc.SetPenStyle(CGraphicsContext::ESolidPen);
-	gc.SetPenColor(color);
-	gc.UseFont(font);
-	gc.DrawText(name, rect, rect.Height() / 2 + font->AscentInPixels() / 2,
-			CGraphicsContext::ELeft, 0);
-	gc.DiscardFont();
-	}
-
-void CMainScreenContainer::DrawClockDigital(TInt& aNumber, const TPoint& aPoint) const
-	{
-	CWindowGc& gc = SystemGc();
-	if (aNumber >= 0)
-		{
-		TInt index = aNumber;
-		if (aNumber > 9)
-			index = 10;
-		CGulIcon* icon = (*iClock)[index];
-
-		TSize size;
-		if (aNumber < 10)
-			size = SHUI()->GetClockSingleDigtalSize();
-		else
-			size = SHUI()->GetClockColonSize();
-		CFbsBitmap* b1 = icon->Bitmap();
-		CFbsBitmap* b2 = icon->Mask();
-
-		AknIconUtils::SetSize(b1, size, EAspectRatioNotPreserved);
-		AknIconUtils::SetSize(b2, size, EAspectRatioNotPreserved);
-
-		//		TRect rect = TRect(aPoint, size);
-		gc.BitBltMasked(aPoint, b1, size, b2, EFalse);
-		//		gc.BitBlt(aPoint, b1);
+		TRect rect;
+		AknLayoutUtils::LayoutMetricsRect(AknLayoutUtils::EMainPane, rect);
+		//        AknLayoutUtils::LayoutMetricsRect(AknLayoutUtils::EScreen, rect);
+		SetRect(rect);
 		}
 	}
 
-TInt CMainScreenContainer::ParseLeftTime(TInt aSecend, RArray<TInt>& aArray) const
+CAknButton* CMainScreenContainer::CreateButton(const TInt aResourceId)
 	{
-	TInt minute, secend;
-	minute = aSecend / 60;
-	secend = aSecend % 60;
+	CAknButton* button = CAknButton::NewL();
+	button->ConstructFromResourceL(aResourceId);
+	button->SetContainerWindowL(*this);
+	button->SetObserver(this);
+	button->MakeVisible(ETrue);
+	//	button->ActivateL();
 
-	if (minute >= 10)
-		{
-		ParseNumber(minute, aArray);
-		}
-	else if (minute > 0)
-		{
-		aArray.Append(0);
-		aArray.Append(minute);
-		}
+	return button;
+	}
+
+void CMainScreenContainer::InitButtons()
+	{
+	iBtnAdd = CreateButton(R_BUTTON_ADD);
+	iBtnRemove = CreateButton(R_BUTTON_REMOVE);
+	iBtnRules = CreateButton(R_BUTTON_RULES);
+	iBtnAbout = CreateButton(R_BUTTON_ABOUT);
+	iBtnExit = CreateButton(R_BUTTON_EXIT);
+	}
+
+void CMainScreenContainer::ReleaseButtons()
+	{
+		SAFE_DELETE(iBtnAdd)
+		SAFE_DELETE(iBtnRemove)
+		SAFE_DELETE(iBtnRules)
+		SAFE_DELETE(iBtnAbout)
+		SAFE_DELETE(iBtnExit)
+	}
+
+void CMainScreenContainer::InitList()
+	{
+	iListBox = new (ELeave) CDetailListBox();
+	iListBox->ConstructL(this);
+	iListBox->SetContainerWindowL(*this);
+
+	iListBox->SetItemHeightL(LIST_DELETE_AREA_SIZE.iHeight);
+	// Creates scrollbar.
+	iListBox->CreateScrollBarFrameL(ETrue);
+	
+	if (SHModel()->GetTaskInfoManager()->GetTaskList().Count() <=4)
+		iListBox->ScrollBarFrame()->SetScrollBarVisibilityL(
+				CEikScrollBarFrame::EOff, CEikScrollBarFrame::EOff);
 	else
-		{
-		aArray.Append(0);
-		aArray.Append(0);
-		}
+		iListBox->ScrollBarFrame()->SetScrollBarVisibilityL(
+				CEikScrollBarFrame::EOff, CEikScrollBarFrame::EAuto);
+	iListBox->SetNotify(this);
 
-	aArray.Append(10); //:
-
-	aArray.Append(secend / 10);
-	aArray.Append(secend % 10);
-
-	return KErrNone;
 	}
 
-TInt CMainScreenContainer::ParseNumber(TInt aNumber, RArray<TInt>& aArray) const
+void CMainScreenContainer::UpdateDisplay()
 	{
-	TInt high = aNumber / 10;
-	TInt low = aNumber % 10;
+	CTextListBoxModel* model = iListBox->Model();
+	CDesCArray* items = static_cast<CDesCArray*> (model->ItemTextArray());
 
-	while (high)
+	items->Reset();
+
+	RPointerArray<TaskInfo>& array =
+			SHModel()->GetTaskInfoManager()->GetTaskList();
+
+	for (TInt i = 0; i < array.Count(); i++)
 		{
-		aArray.Insert(low, 0);
-
-		low = high % 10;
-		high = high / 10;
+		items->AppendL(KNullDesC);
 		}
-	aArray.Insert(low, 0);
 
-	return KErrNone;
+	//	if (array.Count())
+	//		iListBox->SetCurrentItemIndex(0);
+
+	iListBox->HandleItemAdditionL();
 	}
 
-void CMainScreenContainer::InitClockDigital()
+void CMainScreenContainer::ReleaseList()
 	{
-	iClock = new RPointerArray<CGulIcon> (4);
-
-	iClock->Append(AknsUtils::CreateGulIconL(AknsUtils::SkinInstance(),
-			KAknsIIDQsnCpClockDigitalNewZero, ETrue));
-	iClock->Append(AknsUtils::CreateGulIconL(AknsUtils::SkinInstance(),
-			KAknsIIDQsnCpClockDigitalNewOne, ETrue));
-	iClock->Append(AknsUtils::CreateGulIconL(AknsUtils::SkinInstance(),
-			KAknsIIDQsnCpClockDigitalNewTwo, ETrue));
-	iClock->Append(AknsUtils::CreateGulIconL(AknsUtils::SkinInstance(),
-			KAknsIIDQsnCpClockDigitalNewThree, ETrue));
-	iClock->Append(AknsUtils::CreateGulIconL(AknsUtils::SkinInstance(),
-			KAknsIIDQsnCpClockDigitalNewFour, ETrue));
-	iClock->Append(AknsUtils::CreateGulIconL(AknsUtils::SkinInstance(),
-			KAknsIIDQsnCpClockDigitalNewFive, ETrue));
-	iClock->Append(AknsUtils::CreateGulIconL(AknsUtils::SkinInstance(),
-			KAknsIIDQsnCpClockDigitalNewSix, ETrue));
-	iClock->Append(AknsUtils::CreateGulIconL(AknsUtils::SkinInstance(),
-			KAknsIIDQsnCpClockDigitalNewSeven, ETrue));
-	iClock->Append(AknsUtils::CreateGulIconL(AknsUtils::SkinInstance(),
-			KAknsIIDQsnCpClockDigitalNewEight, ETrue));
-	iClock->Append(AknsUtils::CreateGulIconL(AknsUtils::SkinInstance(),
-			KAknsIIDQsnCpClockDigitalNewNine, ETrue));
-	iClock->Append(AknsUtils::CreateGulIconL(AknsUtils::SkinInstance(),
-			KAknsIIDQsnCpClockDigitalNewColon, ETrue));
-	}
-
-void CMainScreenContainer::InitIcon()
-	{
-	CFbsBitmap* AppIcon(NULL);
-	CFbsBitmap* AppIconMsk(NULL);
-	MAknsSkinInstance* skin = AknsUtils::SkinInstance();
-	TSize size = SHUI()->GetIconSize();
-	TRAPD(err, AknsUtils::CreateAppIconLC(skin, SHModel()->GetUid(), EAknsAppIconTypeList, AppIcon, AppIconMsk);CleanupStack::Pop(2));
-		//	AknIconUtils::SetSize(AppIcon, size, EAspectRatioNotPreserved);
-		//	AknIconUtils::SetSize(AppIconMsk, size, EAspectRatioNotPreserved);
-		SAFE_DELETE(iIcon);
-	if (err == KErrNone)
-		{
-		iIcon = CGulIcon::NewL(AppIcon, AppIconMsk);
-		}
-	else
-		{
-		iIcon = AknsUtils::CreateGulIconL(skin, KAknsIIDQgnMenuUnknownLst,
-				ETrue);
-		}
-	}
-
-void CMainScreenContainer::InitTest()
-	{
-	TTime time;
-	time.HomeTime();
-	//	time += TTimeIntervalSeconds(10);
-	time += TTimeIntervalMinutes(30);
-	SHModel()->SetName(_L("Radio"));
-	SHModel()->SetTime(time);
-	SHModel()->SetUid(TUid::Uid(0x101FF976));
+		SAFE_DELETE(iListBox)
 	}
 
 void CMainScreenContainer::Start()
@@ -395,6 +458,7 @@ void CMainScreenContainer::Start()
 		iPeriodicTimer->Start(1, 1000000, TCallBack(
 				CMainScreenContainer::Period, this));
 		}
+	SHModel()->GetTimeWorkManager()->StartL(1000);
 	}
 void CMainScreenContainer::Stop()
 	{
@@ -420,27 +484,7 @@ void CMainScreenContainer::DoPeriodTask()
 
 void CMainScreenContainer::Update()
 	{
-	if (!iInitIcon)
-		{
-		if (!SHModel()->IsEmputy())
-			{
-			iInitIcon = ETrue;
-			InitIcon(); //重新初始icon
-			}
-		}
-	}
-
-void CMainScreenContainer::KillProcess()
-	{
-	TUid uid = SHModel()->GetUid();
-
-	TApaTaskList taskList(CEikonEnv::Static()->WsSession());
-	TApaTask task = taskList.FindApp(uid);
-	if (task.Exists())
-		{
-		task.EndTask();
-		task.KillTask();
-		}
+	SHModel()->GetTaskInfoManager()->ConvertClockNumber();
 	}
 
 TTypeUid::Ptr CMainScreenContainer::MopSupplyObject(TTypeUid aId)
@@ -450,6 +494,43 @@ TTypeUid::Ptr CMainScreenContainer::MopSupplyObject(TTypeUid aId)
 		return MAknsControlContext::SupplyMopObject(aId, iBgContext);
 		}
 	return CCoeControl::MopSupplyObject(aId);
+	}
+
+void CMainScreenContainer::TimeOut()
+	{
+	if (SHModel()->GetTaskInfoManager()->ExistTask())
+		{
+		//刷新界面
+		UpdateDisplay();
+		}
+	}
+
+void CMainScreenContainer::HandleListEvent(
+		MDetailListBoxNotify::TEventType aEvent)
+	{
+	switch (aEvent)
+		{
+		case MDetailListBoxNotify::EEventRemove:
+			{
+			RemoveTask();
+			}
+			break;
+		default:
+			break;
+		}
+	}
+
+void CMainScreenContainer::RemoveTask()
+	{
+	if (!iListBox->IsFocused())
+		return;
+	
+	TInt index = iListBox->CurrentItemIndex();
+	SHModel()->GetTaskInfoManager()->RemoveTask(index);
+	UpdateDisplay();
+	Layout();
+	iListBox->SetFocus(FALSE);
+	iParent->UpdateCBA();
 	}
 // End of File
 

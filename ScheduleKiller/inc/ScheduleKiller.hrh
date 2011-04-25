@@ -21,6 +21,8 @@ enum TScheduleKillerIds
 	ECommandHelp,
 	ECommandAbout,
 	ECommandRule,
+	ECommandRuleLunchRun,
+	ECommandRuleCancelLunchRun,
 	ECommandChange,
 	ECommandHidden
 	// start value must not be 0

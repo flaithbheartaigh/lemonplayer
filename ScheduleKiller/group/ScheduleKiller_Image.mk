@@ -17,6 +17,7 @@ endif
 
 # For the icons used by the application code (engine in this case)
 TARGETDIR_PRIVATE=$(ZDIR)\private\2003717D
+#TARGETDIR_PRIVATE=$(ZDIR)\resource\apps
 ICONTARGETFILENAME_PRIVATE=$(TARGETDIR_PRIVATE)\ScheduleKiller.mbm
 IMAGETARGETFILENAME_PRIVATE=$(TARGETDIR_PRIVATE)\ScheduleKiller.mif
 
@@ -49,7 +50,14 @@ RESOURCE :
 		
 	mifconv $(IMAGETARGETFILENAME_PRIVATE)  \
 		 /H$(HEADERFILENAME_PRIVATE)  \
-		 /c24 ..\gfx\logo.bmp  
+		 /c24 ..\gfx\logo.bmp  \
+		 /c32,8 ..\gfx\exit.svg  \
+		 ..\gfx\remove.svg  \
+		 ..\gfx\add.svg  \
+		 ..\gfx\rules.svg  \
+		 ..\gfx\about.svg  \
+		 ..\gfx\fav.svg  \
+		 ..\gfx\shutdown.svg
 FREEZE : do_nothing
 
 SAVESPACE : do_nothing

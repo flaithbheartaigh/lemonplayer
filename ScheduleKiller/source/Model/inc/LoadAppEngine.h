@@ -89,6 +89,7 @@ private:
 	
 	RApaLsSession *iALS;  
 	TInt iAppIndex;
+	TInt iAppRefresh;
 	};
 
 #endif // LOADAPPENGINE_H
